@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca530aa45e5f43cb8ca677ef92d9801, type: 3}
+  m_Name: ThiefType_171
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.ThiefTypeDef
+  id: 171
+  displayName: 171
+  description: "Vigarista. Especialista em Pessoa: guardas, caixas e curiosos. L\xE1bia pra baixar o alerta."
+  icon: {fileID: 0}
+  type: 3
+  hasSpecialty: 1
+  specialty: 2
+  baseSkill: 35
+  baseStealth: 30
+  baseNerves: 35
+  skillPerLevel: 7
+  stealthPerLevel: 4
+  nervesPerLevel: 4
+  policeCountdownBonus: 0
+  escapeLootBonus: 0
+  arrestChanceReduction: 0
+  ability: {fileID: 11400000, guid: f0614a38a031d421fac12231934763a3, type: 2}
+  signatureSideJob: {fileID: 11400000, guid: 1cf22fc5e8bd242aa80b696d26a6e5bf, type: 2}
+  portrait: {fileID: 0}
+  animator: {fileID: 0}
+  color: {r: 0.85, g: 0.3, b: 0.35, a: 1}
+  actionSfx: {fileID: 0}
+  barks:
+  - Deixa que eu converso.
+  - Boa noite, sou da companhia de luz.
+  - Confia, chefia.

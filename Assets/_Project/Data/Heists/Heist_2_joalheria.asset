@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_2_joalheria
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: joalheria
+  displayName: Joalheria Brilho Eterno
+  description: "Vitrine cheia de ouro e um alarme novinho em folha. Vai precisar de algu\xE9m que entenda de computador."
+  icon: {fileID: 0}
+  tier: 2
+  briefing: "Vitrine cheia de ouro e um alarme novinho em folha. Vai precisar de algu\xE9m que entenda de computador."
+  unlockedByDefault: 0
+  unlockedBy: {fileID: 11400000, guid: 42e1ab2969eb241aeb1dd04713e920c4, type: 2}
+  rooms:
+  - name: Vitrine
+    kind: 0
+    obstacle: 2
+    difficulty: 450
+    loot: 300
+    alertPerSecond: 2
+  - name: "Sala de C\xE2meras"
+    kind: 3
+    obstacle: 1
+    difficulty: 550
+    loot: 400
+    alertPerSecond: 3
+  - name: "Escrit\xF3rio"
+    kind: 4
+    obstacle: 0
+    difficulty: 600
+    loot: 800
+    alertPerSecond: 3
+  - name: Cofre
+    kind: 5
+    obstacle: 1
+    difficulty: 700
+    loot: 1500
+    alertPerSecond: 4
+  jailSeconds: 120
+  mapPosition: {x: -3, y: 1.5}
+  buildingPrefab: {fileID: 0}

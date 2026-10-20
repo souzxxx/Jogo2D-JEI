@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_5_banco-central
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: banco-central
+  displayName: Banco Central de Nova Guanabara
+  description: "O golpe do s\xE9culo. Dona Cida passou trinta anos planejando: um t\xFAnel saindo de uma loja de material de constru\xE7\xE3o at\xE9 o cofre do Banco Central."
+  icon: {fileID: 0}
+  tier: 5
+  briefing: "O golpe do s\xE9culo. Dona Cida passou trinta anos planejando: um t\xFAnel saindo de uma loja de material de constru\xE7\xE3o at\xE9 o cofre do Banco Central."
+  unlockedByDefault: 0
+  unlockedBy: {fileID: 11400000, guid: ee5e41db40494413795657b7615b49a5, type: 2}
+  rooms:
+  - name: "T\xFAnel"
+    kind: 6
+    obstacle: 0
+    difficulty: 2300
+    loot: 10000
+    alertPerSecond: 1
+  - name: "T\xFAnel Fundo"
+    kind: 6
+    obstacle: 1
+    difficulty: 2500
+    loot: 20000
+    alertPerSecond: 1.5
+  - name: Subsolo
+    kind: 7
+    obstacle: 2
+    difficulty: 2700
+    loot: 40000
+    alertPerSecond: 5
+  - name: "Corredor de Seguran\xE7a"
+    kind: 1
+    obstacle: 1
+    difficulty: 2900
+    loot: 60000
+    alertPerSecond: 6
+  - name: "Sala de C\xE2meras"
+    kind: 3
+    obstacle: 1
+    difficulty: 3100
+    loot: 90000
+    alertPerSecond: 6
+  - name: "Antec\xE2mara"
+    kind: 4
+    obstacle: 0
+    difficulty: 3300
+    loot: 130000
+    alertPerSecond: 7
+  - name: Cofre Central
+    kind: 5
+    obstacle: 0
+    difficulty: 3800
+    loot: 250000
+    alertPerSecond: 8
+  jailSeconds: 300
+  mapPosition: {x: 6, y: 0}
+  buildingPrefab: {fileID: 0}

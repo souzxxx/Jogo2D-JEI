@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca530aa45e5f43cb8ca677ef92d9801, type: 3}
+  m_Name: ThiefType_PeNaTabua
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.ThiefTypeDef
+  id: pe-na-tabua
+  displayName: "P\xE9-na-T\xE1bua"
+  description: "Motorista. N\xE3o abre nada, mas sem ele a fuga \xE9 no desespero: d\xE1 mais tempo antes da pol\xEDcia chegar e segura o loot e a crew na fuga."
+  icon: {fileID: 0}
+  type: 0
+  hasSpecialty: 0
+  specialty: 0
+  baseSkill: 25
+  baseStealth: 30
+  baseNerves: 40
+  skillPerLevel: 7
+  stealthPerLevel: 4
+  nervesPerLevel: 4
+  policeCountdownBonus: 4
+  escapeLootBonus: 0.1
+  arrestChanceReduction: 0.15
+  ability: {fileID: 11400000, guid: 76c6c641fca9241acbf386a44a0b2f21, type: 2}
+  signatureSideJob: {fileID: 11400000, guid: 51edbb76a1d1840b7afaaf11b961cef3, type: 2}
+  portrait: {fileID: 0}
+  animator: {fileID: 0}
+  color: {r: 0.95, g: 0.65, b: 0.2, a: 1}
+  actionSfx: {fileID: 0}
+  barks:
+  - Segura que eu dirijo!
+  - "A van t\xE1 ligada, chefia."
+  - "Conhe\xE7o um atalho."

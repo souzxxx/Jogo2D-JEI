@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e04e55dd0bfa14aa8b4e50a7aa2557bd, type: 3}
+  m_Name: NamePool
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.NamePoolDef
+  firstNames:
+  - Juninho
+  - "Ti\xE3o"
+  - "Z\xE9 Carlos"
+  - Marquinhos
+  - Dinho
+  - Paulinho
+  - Beto
+  - Nando
+  - Toninho
+  - Celinha
+  - Rosinha
+  - "Vav\xE1"
+  - Lucinha
+  - Marcinho
+  - Biel
+  - Cris
+  - Duda
+  - Fabinho
+  - Kelly
+  - Sheila
+  - Jaque
+  - Robson
+  - Wellington
+  - Cleiton
+  - Gilmar

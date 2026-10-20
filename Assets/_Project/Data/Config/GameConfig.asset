@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fbae7fedb5849eea1a5c54cd56fad1, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.GameConfig
+  startingMoney: 0
+  startingCrew: 0300000001000000i
+  startingCrewSlots: 3
+  startingHeistSlots: 2
+  eventChancePerRoom: 0.3
+  noSpecialistPowerFactor: 0.35
+  noSpecialistAlertMult: 2
+  stealthAlertFactor: 0.5
+  policeCountdownSeconds: 10
+  hastyEscapeLootKeep: 0.8
+  forcedEscapeLootKeep: 0.5
+  baseArrestChance: 0.4
+  xpPerRoom: 1
+  speedFast: 2
+  maxLevel: 10
+  xpPerLevelFactor: 5
+  recruitCandidates: 3
+  recruitRefreshSeconds: 300
+  recruitBaseCost: 50
+  recruitCostGrowthPerLevel: 1.8
+  bailCostPerJailSecond: 2
+  scavengeIncomePerSecond: 1
+  offlineCapHours: 4
+  offlineRate: 0.5
+  fameDivisor: 10000
+  wantedDifficultyMult: 1.25
+  wantedLootMult: 1.5
+  wantedAlertMult: 1.1
+  autosaveSeconds: 10

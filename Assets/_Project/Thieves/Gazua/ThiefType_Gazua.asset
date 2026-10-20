@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ca530aa45e5f43cb8ca677ef92d9801, type: 3}
+  m_Name: ThiefType_Gazua
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.ThiefTypeDef
+  id: gazua
+  displayName: Gazua
+  description: 'Arrombador. Especialista em Fechadura: portas, cadeados e cofres.'
+  icon: {fileID: 0}
+  type: 1
+  hasSpecialty: 1
+  specialty: 0
+  baseSkill: 35
+  baseStealth: 30
+  baseNerves: 30
+  skillPerLevel: 7
+  stealthPerLevel: 4
+  nervesPerLevel: 4
+  policeCountdownBonus: 0
+  escapeLootBonus: 0
+  arrestChanceReduction: 0
+  ability: {fileID: 11400000, guid: 4701f8bc51b2c4e36bdd6b46977e99fb, type: 2}
+  signatureSideJob: {fileID: 11400000, guid: aa585039910da4d2683b7682dda175f6, type: 2}
+  portrait: {fileID: 0}
+  animator: {fileID: 0}
+  color: {r: 0.75, g: 0.75, b: 0.8, a: 1}
+  actionSfx: {fileID: 0}
+  barks:
+  - "Essa fechadura \xE9 de brinquedo."
+  - "D\xE1 licen\xE7a que eu abro."
+  - Cadeado vagabundo, moleza.

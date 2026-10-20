@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_3_cambio
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: cambio
+  displayName: "Casa de C\xE2mbio D\xF3lar F\xE1cil"
+  description: "D\xF3lar, marco alem\xE3o e cruzeiro velho. O dono n\xE3o confia em banco, ent\xE3o t\xE1 tudo l\xE1 dentro."
+  icon: {fileID: 0}
+  tier: 3
+  briefing: "D\xF3lar, marco alem\xE3o e cruzeiro velho. O dono n\xE3o confia em banco, ent\xE3o t\xE1 tudo l\xE1 dentro."
+  unlockedByDefault: 0
+  unlockedBy: {fileID: 11400000, guid: 3540c87700a5d479aad0bb378967e3da, type: 2}
+  rooms:
+  - name: Fachada
+    kind: 0
+    obstacle: 0
+    difficulty: 800
+    loot: 1500
+    alertPerSecond: 3
+  - name: "Balc\xE3o"
+    kind: 2
+    obstacle: 2
+    difficulty: 900
+    loot: 2500
+    alertPerSecond: 3.5
+  - name: Corredor
+    kind: 1
+    obstacle: 1
+    difficulty: 950
+    loot: 3000
+    alertPerSecond: 4
+  - name: "Escrit\xF3rio do Gerente"
+    kind: 4
+    obstacle: 2
+    difficulty: 1050
+    loot: 4000
+    alertPerSecond: 4
+  - name: Cofre
+    kind: 5
+    obstacle: 0
+    difficulty: 1200
+    loot: 7000
+    alertPerSecond: 5
+  jailSeconds: 180
+  mapPosition: {x: 0, y: 0}
+  buildingPrefab: {fileID: 0}

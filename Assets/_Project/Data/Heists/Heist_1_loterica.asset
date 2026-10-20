@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_1_loterica
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: loterica
+  displayName: "Lot\xE9rica do Seu Z\xE9"
+  description: "O Seu Z\xE9 guarda o dinheiro das apostas num cofrinho atr\xE1s do balc\xE3o. Dona Cida diz que \xE9 o golpe perfeito pra come\xE7ar: pouca gente e nenhuma c\xE2mera."
+  icon: {fileID: 0}
+  tier: 1
+  briefing: "O Seu Z\xE9 guarda o dinheiro das apostas num cofrinho atr\xE1s do balc\xE3o. Dona Cida diz que \xE9 o golpe perfeito pra come\xE7ar: pouca gente e nenhuma c\xE2mera."
+  unlockedByDefault: 1
+  unlockedBy: {fileID: 0}
+  rooms:
+  - name: Entrada
+    kind: 0
+    obstacle: 2
+    difficulty: 250
+    loot: 50
+    alertPerSecond: 1.5
+  - name: "Balc\xE3o"
+    kind: 2
+    obstacle: 2
+    difficulty: 300
+    loot: 150
+    alertPerSecond: 2
+  - name: Cofrinho
+    kind: 5
+    obstacle: 0
+    difficulty: 350
+    loot: 300
+    alertPerSecond: 2.5
+  jailSeconds: 60
+  mapPosition: {x: -6, y: 0}
+  buildingPrefab: {fileID: 0}

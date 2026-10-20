@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_4_cassino
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: cassino
+  displayName: Cassino Clandestino
+  description: "Debaixo de uma pastelaria da Zona Norte funciona o cassino mais animado da cidade. Muito seguran\xE7a, muito dinheiro vivo, e ningu\xE9m vai chamar a pol\xEDcia\u2026 em tese."
+  icon: {fileID: 0}
+  tier: 4
+  briefing: "Debaixo de uma pastelaria da Zona Norte funciona o cassino mais animado da cidade. Muito seguran\xE7a, muito dinheiro vivo, e ningu\xE9m vai chamar a pol\xEDcia\u2026 em tese."
+  unlockedByDefault: 0
+  unlockedBy: {fileID: 11400000, guid: e7fe8f60b2cd9444e93638b1468af13f, type: 2}
+  rooms:
+  - name: Pastelaria
+    kind: 0
+    obstacle: 2
+    difficulty: 1400
+    loot: 5000
+    alertPerSecond: 4
+  - name: Corredor
+    kind: 1
+    obstacle: 0
+    difficulty: 1500
+    loot: 8000
+    alertPerSecond: 4.5
+  - name: "Sal\xE3o de Jogos"
+    kind: 2
+    obstacle: 2
+    difficulty: 1700
+    loot: 15000
+    alertPerSecond: 5
+  - name: "Sala de C\xE2meras"
+    kind: 3
+    obstacle: 1
+    difficulty: 1800
+    loot: 17000
+    alertPerSecond: 5.5
+  - name: "Escrit\xF3rio do Bicheiro"
+    kind: 4
+    obstacle: 2
+    difficulty: 1900
+    loot: 25000
+    alertPerSecond: 5.5
+  - name: Cofre
+    kind: 5
+    obstacle: 0
+    difficulty: 2100
+    loot: 30000
+    alertPerSecond: 6
+  jailSeconds: 240
+  mapPosition: {x: 3, y: 1.5}
+  buildingPrefab: {fileID: 0}

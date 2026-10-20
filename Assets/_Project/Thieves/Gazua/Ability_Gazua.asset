@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab1e9b7684972490481cf6fb2a0a48c7, type: 3}
+  m_Name: Ability_Gazua
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.SimpleAbilityDef
+  id: pe-de-cabra
+  displayName: "P\xE9-de-cabra"
+  description: 'Limpa na hora uma sala de Fechadura, mas faz barulho: +15 de alerta.'
+  icon: {fileID: 0}
+  sfx: {fileID: 0}
+  alertDelta: 15
+  freezeAlertSeconds: 0
+  completeCurrentRoom: 1
+  requireRoomObstacle: 1
+  roomObstacle: 0
+  perfectEscape: 0

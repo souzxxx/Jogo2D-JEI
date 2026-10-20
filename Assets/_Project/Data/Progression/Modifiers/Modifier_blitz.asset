@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eecd146b2d7d4963af91cbe079d36ff, type: 3}
+  m_Name: Modifier_blitz
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistModifierDef
+  id: blitz
+  displayName: "Blitz na \xE1rea"
+  description: "Pol\xEDcia chega 3 s mais r\xE1pido."
+  icon: {fileID: 0}
+  lockDifficultyMult: 1
+  systemDifficultyMult: 1
+  personDifficultyMult: 1
+  lootMult: 1
+  alertMult: 1
+  firstRoomsAlertMult: 1
+  firstRoomsCount: 0
+  policeCountdownDelta: -3
+  weight: 1
