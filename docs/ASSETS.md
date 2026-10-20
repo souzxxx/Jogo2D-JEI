@@ -23,13 +23,42 @@
 | Paleta | _a definir pelo Miguel na Sprint 0_ (colar a imagem da paleta aqui) |
 | Fonte da UI | _a definir pelo Enzo na Sprint 0_ (pixel, legível, com acentos) |
 
+## Packs do craftpix: NÃO vão pro GitHub
+
+A licença do craftpix (<https://craftpix.net/file-licenses/>) permite usar no jogo, mas **não permite redistribuir os arquivos**, e o repositório é público. Por isso `Assets/ThirdParty/Craftpix/` está no `.gitignore`.
+
+**Como pegar os packs:**
+1. Baixe o `AFirma-ThirdParty-Craftpix.zip` do Drive do grupo.
+2. Extraia **na raiz do repositório**. Ele já cria `Assets/ThirdParty/Craftpix/...`.
+3. Abra o Unity.
+
+O zip tem os arquivos `.meta`. **Não importe os packs por conta própria**: cada importação gera GUIDs novos, e prefab/cena que usar sprite do pack quebra na máquina dos outros.
+
+**Pack novo?**
+1. Combine no grupo.
+2. Coloque em `Assets/ThirdParty/Craftpix/<Categoria>/<Pack>/` e abra o Unity uma vez pra gerar os `.meta`.
+3. Gere o zip de novo e suba no Drive.
+4. Adicione o pack na tabela abaixo e nos créditos do README.
+
 ## Packs
 
-| Pack | Fonte | Usado pra | Quem trouxe | Status |
-|---|---|---|---|---|
-| _ex.: Interior pixel art tileset_ | craftpix | salas dos prédios | Miguel | proposto |
+| Pack (craftpix.net) | ID | Pasta em `Assets/ThirdParty/Craftpix/` | Ideia de uso | Quem trouxe | Status |
+|---|---|---|---|---|---|
+| Bandits Pixel Art Character Sprite Sheets Pack | 979751 | `Personagens/Bandits` | base pros ladrões da crew | Leonardo | baixado |
+| Gangster Pixel Character Sprite Sheets Pack 2 | 326415 | `Personagens/Gangsters2` | base pros ladrões / capangas do cassino | Leonardo | baixado |
+| City Man Pixel Character Sprite Pack 2 | 389916 | `Personagens/CityMan2` | civis, clientes, Seu Zé | Leonardo | baixado |
+| Free Homeless Character Sprite Sheets | 724171 | `Personagens/Homeless` | figurantes de rua, novato da Dona Cida | Leonardo | baixado |
+| Police Character Sprites Pixel Art | 642886 | `Personagens/Police` | policiais e Delegado Bastos | Leonardo | baixado |
+| SWAT 2D Pixel Art Character Sprite Pack | 879529 | `Personagens/SWAT` | polícia de choque (Procurado alto) | Leonardo | baixado |
+| Free Soldier Sprite Sheets | 507107 | `Personagens/Soldiers` | seguranças do Banco Central | Leonardo | baixado |
+| Urban Animals Sprite Sheet Pixel Art Pack | 222276 | `Personagens/UrbanAnimals` | ambiente (gato, cachorro, rato) | Leonardo | baixado |
+| Free SWAT Dialog Portraits | 163543 | `Retratos/SWATPortraits` | retratos de diálogo / jornal | Leonardo | baixado |
+| Free Pixel Art Street 2D Backgrounds | 891123 | `Cenario/StreetBackgrounds` | fundo parallax da cidade | Leonardo | baixado |
+| Night City Street Game Background Tiles | 891154 | `Cenario/NightCityTiles` | paredes, janelas, decoração dos prédios e rua | Leonardo | baixado |
+| Free Currency Loot Vector Icons | 482753 | `UI/CurrencyLootIcons` | ícones de dinheiro/loot na UI | Leonardo | baixado |
 
-Status: proposto → aprovado → em uso.
+Status: proposto → baixado → aprovado (direção de arte) → em uso.
+Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.
 
 ## Animações de cada ladrão (dono do ladrão faz)
 

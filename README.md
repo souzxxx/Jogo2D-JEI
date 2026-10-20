@@ -28,9 +28,10 @@ Idle de assalto 2D feito em Unity para o Projeto 2D de Jogos Digitais e Interaç
    git clone https://github.com/souzxxx/Jogo2D-JEI.git
    ```
 3. Configure o merge de cenas do Unity (uma vez por máquina): [docs/CONTRIBUINDO.md](docs/CONTRIBUINDO.md#configurar-o-smart-merge-uma-vez-por-máquina).
-4. Unity Hub → **Add → Add project from disk** → selecione a pasta clonada. A primeira abertura demora (importação).
-5. Abra a sua sandbox (`Assets/_Project/Sandbox/<SeuNome>/`) e dê Play. **F1** abre o painel de debug.
-6. Pra jogar o fluxo completo: abra `Assets/_Project/Scenes/Boot.unity` e dê Play.
+4. Baixe o `AFirma-ThirdParty-Craftpix.zip` do Drive do grupo e extraia **na raiz do repositório** (os packs do craftpix não vão pro GitHub: [docs/ASSETS.md](docs/ASSETS.md)).
+5. Unity Hub → **Add → Add project from disk** → selecione a pasta clonada. A primeira abertura demora (importação).
+6. Abra a sua sandbox (`Assets/_Project/Sandbox/<SeuNome>/`) e dê Play. **F1** abre o painel de debug.
+7. Pra jogar o fluxo completo: abra `Assets/_Project/Scenes/Boot.unity` e dê Play.
 
 ## Documentação
 
@@ -71,9 +72,22 @@ Assets/ThirdParty/   packs de terceiros (craftpix etc.)
 Leonardo de Souza Lima e Silva · Nicolas Volf · Enzo Canavero · Miguel Damásio
 
 ### Assets de terceiros
-| Asset | Autor / Fonte | Licença | Link | Usado em |
-|---|---|---|---|---|
-| _preencher a cada pack adicionado_ | | | | |
+Os arquivos dos packs não estão no repositório (licença do craftpix não permite redistribuir). Lista completa em [docs/ASSETS.md](docs/ASSETS.md).
+
+| Asset | Autor / Fonte | Licença |
+|---|---|---|
+| Bandits Pixel Art Character Sprite Sheets Pack | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Gangster Pixel Character Sprite Sheets Pack 2 | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| City Man Pixel Character Sprite Pack 2 | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Free Homeless Character Sprite Sheets | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Police Character Sprites Pixel Art | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| SWAT 2D Pixel Art Character Sprite Pack | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Free Soldier Sprite Sheets | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Urban Animals Sprite Sheet Pixel Art Pack | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Free SWAT Dialog Portraits | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Free Pixel Art Street 2D Backgrounds | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Night City Street Game Background Tiles | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Free Currency Loot Vector Icons | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
 
 ### Ferramentas de IA
 | Ferramenta | Pra quê |

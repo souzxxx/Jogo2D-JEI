@@ -113,3 +113,8 @@ InitTestScene*.unity*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Packs do craftpix: a licença não permite redistribuir os arquivos.
+# Eles circulam pelo Drive do grupo (ver docs/ASSETS.md), com os .meta, pra todo mundo ter os mesmos GUIDs.
+/Assets/ThirdParty/Craftpix/
+/Assets/ThirdParty/Craftpix.meta
