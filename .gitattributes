@@ -1,0 +1,45 @@
+# Normaliza fim de linha
+* text=auto
+
+# Arquivos YAML do Unity: merge com o UnityYAMLMerge (ver docs/CONTRIBUINDO.md)
+*.unity          merge=unityyamlmerge eol=lf
+*.prefab         merge=unityyamlmerge eol=lf
+*.asset          merge=unityyamlmerge eol=lf
+*.meta           merge=unityyamlmerge eol=lf
+*.mat            merge=unityyamlmerge eol=lf
+*.anim           merge=unityyamlmerge eol=lf
+*.controller     merge=unityyamlmerge eol=lf
+*.overrideController merge=unityyamlmerge eol=lf
+*.physicsMaterial2D merge=unityyamlmerge eol=lf
+*.playable       merge=unityyamlmerge eol=lf
+*.mask           merge=unityyamlmerge eol=lf
+*.spriteatlas    merge=unityyamlmerge eol=lf
+*.spriteatlasv2  merge=unityyamlmerge eol=lf
+*.lighting       merge=unityyamlmerge eol=lf
+*.scenetemplate  merge=unityyamlmerge eol=lf
+
+# Código e texto
+*.cs     text diff=csharp eol=lf
+*.asmdef text eol=lf
+*.json   text eol=lf
+*.md     text eol=lf
+*.shader text eol=lf
+*.uss    text eol=lf
+*.uxml   text eol=lf
+
+# Binários
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.psd  binary
+*.aseprite binary
+*.ase  binary
+*.gif  binary
+*.wav  binary
+*.mp3  binary
+*.ogg  binary
+*.ttf  binary
+*.otf  binary
+*.fbx  binary
+*.blend binary
+*.zip  binary
