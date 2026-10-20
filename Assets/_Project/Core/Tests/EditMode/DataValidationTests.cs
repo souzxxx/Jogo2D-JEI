@@ -68,6 +68,26 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void Events_AlwaysHaveAChoiceWithoutRequirement()
+        {
+            foreach (var e in db.events)
+                Assert.IsTrue(e.choices.Exists(c => !c.requiresType), e.displayName + ": toda crew precisa ter pelo menos uma saída.");
+        }
+
+        [Test]
+        public void Headlines_FillPlaceholders()
+        {
+            var result = new HeistResult { outcome = HeistOutcome.CleanEscape, moneyGained = 1500 };
+            var line = db.headlines.Pick(result, "Lotérica do Seu Zé", new System.Random(1));
+            StringAssert.DoesNotContain("{golpe}", line);
+            StringAssert.DoesNotContain("{valor}", line);
+
+            result.arrestedThiefIds.Add("x");
+            var arrested = db.headlines.Pick(result, "Lotérica", new System.Random(1));
+            CollectionAssert.Contains(db.headlines.withArrests, arrested);
+        }
+
+        [Test]
         public void Ids_AreUniqueAndFilled()
         {
             AssertUnique(db.traits);

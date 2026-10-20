@@ -68,7 +68,7 @@ Assets/ThirdParty/   packs de terceiros (craftpix etc.)
 ## Créditos
 
 ### Equipe
-Leonardo de Souza Lima e Silva · Nicolas · Enzo Canavero · Miguel Damásio
+Leonardo de Souza Lima e Silva · Nicolas Volf · Enzo Canavero · Miguel Damásio
 
 ### Assets de terceiros
 | Asset | Autor / Fonte | Licença | Link | Usado em |

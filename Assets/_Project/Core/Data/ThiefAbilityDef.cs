@@ -9,6 +9,8 @@ namespace AFirma.Core
     public abstract class ThiefAbilityDef : DefBase
     {
         public AudioClip sfx;
+        [Tooltip("Efeito visual da habilidade. A Cena do Golpe instancia na sala atual quando escuta AbilityUsed.")]
+        public GameObject vfxPrefab;
 
         public virtual bool CanUse(IHeistControl heist, out string reason)
         {
