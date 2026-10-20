@@ -27,8 +27,19 @@ namespace AFirma.Tests
         public IEnumerator SetUp()
         {
             // O GameLoop já inicializou com o save real; troca por um save em memória pra não sujar o PlayerPrefs.
+            // Mantém os serviços que cada frente registrou: o teste tem que rodar com os reais, não com os mocks.
+            var economy = Services.Economy;
+            var progression = Services.Progression;
+            var crew = Services.Crew;
+            var heist = Services.Heist;
+            var audio = Services.Audio;
             Services.ResetAll();
             Services.Register(new InMemorySave());
+            Services.Register(economy);
+            Services.Register(progression);
+            Services.Register(crew);
+            Services.Register(heist);
+            Services.Register(audio);
             Services.Initialize();
             yield return null;
         }
