@@ -1,0 +1,37 @@
+# Dono de cada pasta é chamado pra revisar quando alguém mexe nela.
+# Ver docs/ARQUITETURA.md
+
+/Assets/_Project/Core/              @souzxxx
+/Assets/_Project/Heist/             @souzxxx
+/Assets/_Project/Crew/              @souzxxx
+/Assets/_Project/Thieves/PeNaTabua/ @souzxxx
+/Assets/_Project/Data/Crew/         @souzxxx
+/Assets/_Project/Data/Events/       @souzxxx
+/Assets/_Project/Data/Resources/    @souzxxx
+/Assets/_Project/Scenes/Boot.unity  @souzxxx
+
+/Assets/_Project/Economy/           @NicolasVolf
+/Assets/_Project/Progression/       @NicolasVolf
+/Assets/_Project/Narrative/         @NicolasVolf
+/Assets/_Project/Thieves/171/       @NicolasVolf
+/Assets/_Project/Data/Config/       @NicolasVolf
+/Assets/_Project/Data/Economy/      @NicolasVolf
+/Assets/_Project/Data/Progression/  @NicolasVolf
+/Assets/_Project/Data/Narrative/    @NicolasVolf
+/docs/BALANCEAMENTO.md              @NicolasVolf
+/docs/GDD.md                        @NicolasVolf
+
+/Assets/_Project/UI/                @canavero
+/Assets/_Project/Audio/             @canavero
+/Assets/_Project/Thieves/Disquete/  @canavero
+/Assets/_Project/Scenes/MainMenu.unity @canavero
+/Assets/_Project/Scenes/Hideout.unity  @canavero
+
+/Assets/_Project/HeistScene/        @EuMiguelll
+/Assets/_Project/Thieves/Gazua/     @EuMiguelll
+/Assets/_Project/Scenes/Heist.unity @EuMiguelll
+/Assets/_Project/Data/Heists/       @EuMiguelll @NicolasVolf
+/docs/ASSETS.md                     @EuMiguelll @canavero
+
+/Packages/                          @souzxxx
+/ProjectSettings/                   @souzxxx

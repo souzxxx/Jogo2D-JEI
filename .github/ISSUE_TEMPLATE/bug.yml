@@ -1,0 +1,34 @@
+name: Bug
+description: Algo que não funciona como deveria
+labels: ["bug"]
+body:
+  - type: textarea
+    id: oque
+    attributes:
+      label: O que aconteceu
+      description: E o que deveria ter acontecido.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Como reproduzir
+      value: |
+        1. 
+        2. 
+    validations:
+      required: true
+  - type: dropdown
+    id: onde
+    attributes:
+      label: Onde
+      options:
+        - Editor (Play)
+        - Build WebGL (itch)
+        - Os dois
+    validations:
+      required: true
+  - type: textarea
+    id: console
+    attributes:
+      label: Erro no Console / prints

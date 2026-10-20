@@ -1,0 +1,39 @@
+name: Tarefa
+description: Uma tarefa do board (feature, arte, conteúdo, doc)
+labels: []
+body:
+  - type: textarea
+    id: contexto
+    attributes:
+      label: Contexto
+      description: Por que essa tarefa existe? Qual parte do escopo ela cobre?
+    validations:
+      required: true
+  - type: textarea
+    id: tarefas
+    attributes:
+      label: O que fazer
+      description: Checklist do que precisa ser feito.
+      value: |
+        - [ ] 
+    validations:
+      required: true
+  - type: textarea
+    id: pronto
+    attributes:
+      label: Pronto quando
+      description: Critérios objetivos pra considerar feito.
+      value: |
+        - [ ] 
+    validations:
+      required: true
+  - type: textarea
+    id: independencia
+    attributes:
+      label: Trabalhar sem depender de ninguém
+      description: Qual mock, evento ou dado usar enquanto a outra parte não existe.
+  - type: input
+    id: refs
+    attributes:
+      label: Referências
+      description: Seção do ESCOPO, ARQUITETURA, etc.
