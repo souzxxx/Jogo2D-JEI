@@ -67,10 +67,11 @@ O loot volta pro esconderijo, vira upgrade, recruta gente melhor e libera golpes
 
 O enunciado avalia **12 rubricas**: Blueprint (Conceito e Narrativa) · Mecânicas · Feedback e Clareza de Interação · UI/HUD e Menus · Engajamento e Imersão · Level design e Progressão · Design de Som e Música · Efeitos Visuais e Polimento Gráfico · Replayability · Balanceamento · Gerenciamento de Estados e Erros · GDD (DDE). Conceitos: A (8,5–10), B (6–8,5), C (4–6), D (0–4).
 
-Proposta a levar ao professor (ele valida):
+Validado com o professor em 20/10:
 
 - **Peso 2:** Mecânicas · Balanceamento (sistemas, onde o time é forte)
 - **Descartadas:** Design de Som e Música · Efeitos Visuais (o time ainda faz som e VFX, mas sem risco na nota)
+- **Removida pelo professor:** Level design e Progressão, por ser um jogo idle. Os prédios continuam no jogo como palco do golpe.
 - **Obrigatórias (não podem ser descartadas nem dobradas):** Gerenciamento de Estados e Erros · GDD
 
 Cada rubrica tem um dono e um checklist para chegar no A em [`RUBRICA.md`](RUBRICA.md).
@@ -220,7 +221,7 @@ Cada upgrade tem níveis e o custo cresce a cada nível.
 | Rádio da polícia | +segundos na contagem da polícia |
 | Ponto de bico | +% de renda dos bicos |
 
-### 6.9 Mapa e golpes (level design)
+### 6.9 Mapa e golpes
 Os golpes formam uma escada. Cada um libera o próximo e apresenta algo novo:
 
 | # | Golpe | Salas | O que ensina / introduz | Libera com |
@@ -364,7 +365,7 @@ Detalhes em [`ARQUITETURA.md`](ARQUITETURA.md).
 | **Leonardo** | Motor do Golpe + Crew + Core | Simulação do golpe, alerta, decisões, eventos, ativas, fuga; sistema de ladrões e recrutamento; save; build WebGL | Pé-na-Tábua | Mecânicas (×2), Estados e Erros |
 | **Nicolas** | Economia + Progressão | Cr$, upgrades, bicos, offline, mapa e liberação de golpes, modificadores, prestígio e Fama, planilha de balanceamento, narrativa (bips, briefings, manchetes) | 171 | Balanceamento (×2), Replayability, Blueprint |
 | **Enzo** | Interface + Áudio | Todos os menus e telas, HUD, popups, jornal, tutorial, identidade visual da UI, música, SFX, mixer, página do itch | Disquete | UI/Menus, Engajamento, Som |
-| **Miguel** | Cena do Golpe | Salas modulares, os 5 prédios, crew andando, guardas, câmeras, luzes, VFX, câmera 2D, feedback no mundo | Gazua | Feedback, Level design, VFX |
+| **Miguel** | Cena do Golpe | Salas modulares, os 5 prédios, crew andando, guardas, câmeras, luzes, VFX, câmera 2D, feedback no mundo | Gazua | Feedback, VFX |
 
 GitHub: Leonardo `souzxxx` · Nicolas `NicolasVolf` · Enzo `canavero` · Miguel `EuMiguelll`
 
@@ -373,7 +374,7 @@ GitHub: Leonardo `souzxxx` · Nicolas `NicolasVolf` · Enzo `canavero` · Miguel
 - Os créditos dos seus assets
 - A sua seção no GDD
 
-**Se faltar tempo, corta primeiro:** tasks que só servem Som ou VFX (rubricas descartadas), depois os golpes extras e o polimento de UI. **Nunca corta:** o que serve Mecânicas, Balanceamento, Estados e Erros e GDD. Se o professor mudar as rubricas de peso 2 ou as descartadas, os donos continuam os mesmos; só muda essa ordem de corte.
+**Se faltar tempo, corta primeiro:** tasks que só servem Som ou VFX (rubricas descartadas), depois o visual próprio dos prédios 2 a 5 (podem reaproveitar as salas modulares da Lotérica), os golpes extras e o polimento de UI. **Nunca corta:** o que serve Mecânicas, Balanceamento, Estados e Erros e GDD.
 
 ## 14. Cronograma
 

@@ -4,10 +4,13 @@ Fonte: enunciado do Projeto 2D (12 rubricas, conceitos A/B/C/D).
 
 **Meta: A+** = 7 rubricas A **incluindo as de peso 2**, no máximo 1 C, nenhum D (as descartadas não contam).
 
-**Proposta ao professor** (registrar na planilha de acompanhamento depois de validar):
+**Validado com o professor em 20/10** (registrar na planilha de acompanhamento):
 - **Peso 2:** Mecânicas · Balanceamento
 - **Descartadas:** Design de Som e Música · Efeitos Visuais
+- **Removida pelo professor:** Level design e Progressão (não se aplica a um jogo idle)
 - **Obrigatórias, não podem ser descartadas nem dobradas:** Estados e Erros · GDD
+
+Contam nota 9 rubricas.
 
 Toda issue do board tem a label `rubrica:*` da rubrica que ela ajuda. Filtre por label pra ver como cada rubrica está.
 
@@ -18,15 +21,15 @@ Toda issue do board tem a label `rubrica:*` da rubrica que ela ajuda. Filtre por
 | Feedback e Clareza de Interação | 1 | Miguel | `rubrica:feedback` |
 | UI/HUD e Menus | 1 | Enzo | `rubrica:ui-menus` |
 | Engajamento e Imersão | 1 | Enzo | `rubrica:engajamento` |
-| Level design e Progressão | 1 | Miguel | `rubrica:level-design` |
-| Design de Som e Música | descartada* | Enzo | `rubrica:som` |
-| Efeitos Visuais e Polimento | descartada* | Miguel | `rubrica:vfx` |
+| Level design e Progressão | removida | — | `rubrica:level-design` |
+| Design de Som e Música | descartada | Enzo | `rubrica:som` |
+| Efeitos Visuais e Polimento | descartada | Miguel | `rubrica:vfx` |
 | Replayability | 1 | Nicolas | `rubrica:replay` |
 | Balanceamento | **2** | Nicolas | `rubrica:balanceamento` |
 | Estados e Erros | 1 (obrigatória) | Leonardo | `rubrica:estados-erros` |
 | GDD (DDE) | 1 (obrigatória) | Nicolas | `rubrica:gdd` |
 
-\* Se o professor não aceitar descartar Som/VFX, os donos continuam os mesmos e essas tasks sobem de prioridade.
+Os prédios continuam no jogo (são o palco do golpe), mas não têm mais rubrica própria: o que importava do Level design foi pra Engajamento, UI/Menus e Balanceamento. As issues antigas com `rubrica:level-design` não contam nota.
 
 ---
 
@@ -69,6 +72,7 @@ Toda issue do board tem a label `rubrica:*` da rubrica que ela ajuda. Filtre por
 - [ ] Hover, clique e transições com feedback (som + animação).
 - [ ] Números de dinheiro animados; formatação Cr$ consistente.
 - [ ] Funciona bem em 1280×720 e em tela cheia no navegador.
+- [ ] O mapa mostra claramente o que está liberado, bloqueado e qual o próximo golpe.
 
 ## Engajamento e Imersão · Enzo
 **O A pede:** experiência muito envolvente: desafio ajustado, ritmo, feedback claro e objetivos motivadores.
@@ -77,21 +81,15 @@ Toda issue do board tem a label `rubrica:*` da rubrica que ela ajuda. Filtre por
 - [ ] Dicas de primeira vez nos momentos certos.
 - [ ] Playtest com pelo menos 3 pessoas de fora, com anotações (Sprint 2/3).
 - [ ] Música e ambiente reforçam a tensão do golpe.
-
-## Level design e Progressão · Miguel
-**O A pede:** níveis que guiam o jogador, introduzem complexidade aos poucos, desafios variados e progressão bem ajustada.
-- [ ] Ordem de introdução dos obstáculos como no escopo 6.9 (Lotérica só Pessoa/Fechadura → Joalheria introduz Sistema → …).
-- [ ] Cada prédio tem layout e visual próprios, legíveis (corte lateral).
+- [ ] Cada golpe novo apresenta algo novo, na ordem do escopo 6.9 (Lotérica só Pessoa/Fechadura → Joalheria introduz Sistema → …).
 - [ ] O Banco Central é um "final de ciclo" memorável (túnel, cofre central).
-- [ ] O mapa mostra claramente o que está liberado, bloqueado e qual o próximo.
-- [ ] A curva bate com as metas de tempo do BALANCEAMENTO.md.
 
-## Design de Som e Música · Enzo · (descartada)
+## Design de Som e Música · Enzo · descartada
 - [ ] 4 faixas (menu, esconderijo, golpe com camadas, sirene).
 - [ ] SFX de UI e de golpe, sem buracos nos momentos chave.
 - [ ] Mixer com volumes salvos.
 
-## Efeitos Visuais e Polimento · Miguel · (descartada)
+## Efeitos Visuais e Polimento · Miguel · descartada
 - [ ] Luzes 2D (lanternas, alarme, viatura).
 - [ ] Partículas (faísca, notas, fumaça, poeira do túnel).
 - [ ] Pós-processamento (vinheta por alerta, bloom leve).
