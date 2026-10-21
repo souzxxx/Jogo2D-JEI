@@ -52,7 +52,7 @@
 **Os 4 tipos de ladrão.**
 | Tipo | Papel | Personalidade |
 |---|---|---|
-| Pé-na-Tábua | motorista, cuida da fuga | _dono escreve_ |
+| Pé-na-Tábua | motorista, cuida da fuga | Ex-motorista de lotação pirata, conhece a cidade pelos buracos da rua. Fala como quem tá dirigindo ("segura", "retrovisor limpo"), nunca desliga o motor e ninguém mexe no rádio dele. Medo: lombada eletrônica. |
 | Gazua | arrombador, fechaduras e cofres | _dono escreve_ |
 | Disquete | hacker, câmeras e alarmes | _dono escreve_ |
 | 171 | vigarista, pessoas e lábia | _dono escreve_ |
@@ -74,24 +74,39 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 
 **Golpe.**
 - Sequência de 3 a 7 salas; a última é o cofre. Cada sala tem um obstáculo (Fechadura, Sistema ou Pessoa), uma dificuldade, um loot e uma taxa de alerta.
-- A crew limpa a sala sozinha. Com o especialista do obstáculo vai rápido; sem ele, vai mais devagar e o alerta sobe o dobro.
-- Entre salas o golpe pausa: **próxima sala** ou **meter o pé**.
-- Eventos aleatórios (30% por sala) pausam com 2 ou 3 escolhas, que podem exigir um tipo de ladrão ou testar um atributo.
-- Cada ladrão tem uma **habilidade ativa** de uso único por golpe.
-- **Alerta 100 = sirene:** começa a contagem da polícia. Saídas possíveis:
+- **Limpar a sala (automático):** o poder é a Perícia do melhor especialista do obstáculo; sem especialista, 35% da maior Perícia da crew. Tempo = dificuldade × modificador ÷ poder (nunca menos de 0,5 s).
+- **Loot:** loot da sala × modificador × manhas (Fominha +20%, Mão-boba +30% em sala de Pessoa) entra na sacola, e todo mundo ganha XP.
+- **Alerta por segundo:** taxa da sala × (1 − 0,5 × Discrição média/100) × 2 sem especialista × modificador × manhas (Boca-aberta +20%) × (1 − Fama Sangue-frio%). Não sobe com a crew parada na porta nem durante um evento.
+- **Porta:** entre salas o golpe pausa e mostra a próxima (obstáculo, loot estimado, se tem especialista): **próxima sala** ou **meter o pé**.
+- **Eventos:** 30% por sala (Pé-frio +50%), filtrados por golpe e tipo de sala e sorteados por peso. Cada um tem 2 ou 3 escolhas: algumas pedem um tipo de ladrão (indisponível mostra o motivo), outras testam um atributo (chance = base + por ponto × melhor atributo da crew). Efeitos: alerta, % da sacola, atraso ou prender alguém (vai em cana no fim do golpe). Todo evento tem pelo menos uma escolha sem requisito; se mesmo assim a crew não tiver nenhuma escolha possível, o evento não abre. O primeiro golpe tem o evento roteirizado do Seu Zé. Hoje são 13 eventos, 3 deles do Pé-na-Tábua.
+- **Habilidades (uma vez por golpe; o botão diz o motivo quando não dá):**
+
+| Ladrão | Habilidade | Efeito |
+|---|---|---|
+| Pé-na-Tábua | Cavalo de pau | Fuga perfeita a qualquer hora, até com a polícia chegando: 100% da sacola e ninguém preso (nem quem um evento ia prender) |
+| Gazua | Pé-de-cabra | Limpa na hora a sala de Fechadura, com +15 de alerta |
+| Disquete | Loop na câmera | Congela o alerta por 15 s |
+| 171 | Lábia | −25 de alerta (não dá pra usar com o alerta zerado) |
+
+- **Alerta 100 = sirene:** começa a contagem da polícia: 10 s + Rádio da polícia + Pé-na-Tábua (+4 s) + modificador (Blitz −3 s), nunca menos de 3 s. A contagem corre com a crew trabalhando e parada na porta, e pausa em evento e na pausa do jogo. Saídas possíveis:
 
 | Quando sai | Sacola | Prisão |
 |---|---|---|
 | Antes da sirene | 100% | ninguém |
-| Durante a contagem | 80% (+ Pé-na-Tábua) | ninguém |
-| Contagem zerou | 50% (+ Pé-na-Tábua) | chance por ladrão |
+| Durante a contagem (inclusive limpando o cofre) | 80% (+10% com Pé-na-Tábua) | ninguém |
+| Contagem zerou | 50% (+10% com Pé-na-Tábua) | chance por ladrão: (40% − 15 pontos com Pé-na-Tábua) × (1 − 0,5 × Discrição dele/100) |
 | Cavalo de pau (a qualquer hora) | 100% | ninguém |
+
+- **Fim do golpe:** paga sacola × saída × (1 + Lavanderia%) × (1 + Fama Esquema%), uma vez só. Limpar o cofre libera o próximo golpe. Presos vão em cana pelo tempo do golpe e o resto volta disponível. O jornal recebe resultado, XP e nível de cada ladrão e quem subiu de nível.
 
 **Crew.**
 - **Ladrão:** tipo, nível 1–10, Perícia, Discrição, Nervos, 1 manha, estado (disponível, no golpe, no bico, preso).
-- **Recrutamento:** 3 candidatos que trocam a cada 5 min.
-- **Vagas:** a crew começa com 3 (até 8 com Quartos); o golpe começa com 2 (até 4 com Van).
-- **Prisão:** tempo real, ou fiança em Cr$.
+- **Atributos efetivos:** base × manha × (1 + Ferramentas% na Perícia, Tênis de molinha% na Discrição). Nenhum upgrade mexe em Nervos.
+- **XP e nível:** 1 XP por sala limpa (Cria da rua +30%, a fração vai somando sala a sala). O próximo nível custa 5 × nível atual e cada nível soma o ganho do tipo de ladrão. No nível 10 para e não guarda XP.
+- **Manhas (8):** Fominha (+20% de loot, −15% de Discrição), Pé-frio (+50% de chance de evento), Sangue-frio (+30% de Nervos), Boca-aberta (+20% de alerta), Pão-duro (−40% na fiança), Cria da rua (+30% de XP), Supersticioso (+20% de Nervos, −10% de Perícia), Mão-boba (+30% de loot em sala de Pessoa).
+- **Recrutamento:** 3 candidatos que trocam a cada 5 min de tempo real, ou na hora por Cr$ 25 (−10% por nível de Contatos). Nível sorteado de 1 a 1 + Contatos, mais os níveis da Fama Lenda de graça. Custo = Cr$ 50 × 1,8^(nível sorteado − 1) × (1 − Fama Reputação%).
+- **Vagas:** a crew começa com 3 (até 8 com Quartos); o golpe começa com 2 (até 4 com Van). Demitir nunca tira o último ladrão nem quem está no golpe.
+- **Prisão:** tempo do golpe × (1 − Advogado%), em tempo real (corre com o jogo fechado). Fiança = segundos restantes × Cr$ 2 × manha (Pão-duro) × (1 − Advogado%). Preso não vai pra golpe nem pra bico; preso de novo fica com a pena mais longa.
 
 **Economia.**
 - **Cr$** vem dos golpes e dos bicos.
@@ -106,8 +121,9 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 
 **Estados e erros.**
 - Save automático com backup.
-- Golpe interrompido vira "meteu o pé".
-- Anti dead-end: catar latinha, novato grátis, prisão que acaba sozinha, Lotérica sempre aberta.
+- Golpe interrompido vira "meteu o pé": paga a sacola salva, a crew volta e ninguém é preso.
+- No load: quem cumpriu a pena com o jogo fechado sai; ladrão "no golpe" ou "no bico" sem golpe ou bico de verdade volta pra disponível.
+- Anti dead-end: catar latinha; se ninguém está fora da cadeia e não dá pra recrutar (sem Cr$ ou sem vaga), a Dona Cida manda um novato com um bip; a prisão acaba sozinha; a Lotérica nunca fica bloqueada.
 
 _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.md)._
 
@@ -204,3 +220,8 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 20/10/2026 | Todas | Primeira versão do GDD a partir do escopo | Início do projeto |
 | 20/10/2026 | Mechanics | Fuga durante a sirene passa a custar 20% da sacola | Dar função ao Cavalo de pau e manter a sirene como aposta |
 | 20/10/2026 | Blueprint | Tipos renomeados pra Pé-na-Tábua, Gazua, Disquete e 171; Atirador vira 171 (vigarista) | Tom malandro charmoso, sem violência |
+| 21/10/2026 | Mechanics | Golpe e crew descritos com as regras implementadas: alerta, sirene, saídas, prisão, eventos, habilidades, XP, manhas, recrutamento e fiança | Fim da Sprint 1: motor e crew reais no jogo |
+| 21/10/2026 | Mechanics | A Discrição de cada ladrão reduz a chance dele ser preso na fuga forçada | O ESCOPO já pedia; dá peso à Discrição fora do alerta |
+| 21/10/2026 | Mechanics | Fama Lenda dá níveis de graça no recruta (o preço é o do nível sorteado); trocar candidatos fica mais barato com Contatos | Bônus de Fama que não se anula; Contatos com o efeito "troca mais barata" do ESCOPO |
+| 21/10/2026 | Mechanics | Lábia não pode ser usada com o alerta zerado; evento sem nenhuma escolha possível não abre | Habilidade não é gasta à toa; golpe nunca trava |
+| 21/10/2026 | Blueprint | Personalidade do Pé-na-Tábua | Dono do ladrão escreveu |
