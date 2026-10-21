@@ -110,7 +110,17 @@ namespace AFirma.Tests
             Services.Config.eventChancePerRoom = 1f;
         }
 
-        public static void Tick(float seconds) => ((ITickable)Services.Heist).Tick(seconds);
+        /// <summary>Avança esse tempo de jogo em frames de até MaxTickSeconds, como o GameLoop faria.</summary>
+        public static void Tick(float seconds)
+        {
+            var tickable = (ITickable)Services.Heist;
+            while (seconds > 0f)
+            {
+                float step = Math.Min(seconds, HeistRunner.MaxTickSeconds);
+                tickable.Tick(step);
+                seconds -= step;
+            }
+        }
 
         /// <summary>Tica até a condição valer. Retorna quantos segundos de jogo passaram.</summary>
         public static float TickUntil(Func<bool> condition, float step = 0.05f, float maxSeconds = 300f)

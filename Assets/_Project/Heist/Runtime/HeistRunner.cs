@@ -37,6 +37,9 @@ namespace AFirma.Heist
         static GameState S => Services.State;
         static GameConfig Cfg => Services.Config;
 
+        /// <summary>O golpe nunca anda mais que isso de tempo real num frame (aba em segundo plano, travada).</summary>
+        public const float MaxTickSeconds = 0.5f;
+
         public HeistRunner(Random rng = null)
         {
             this.rng = rng ?? new Random();
@@ -157,8 +160,9 @@ namespace AFirma.Heist
 
         public void Tick(float deltaSeconds)
         {
-            if (!IsRunning) return;
-            float dt = deltaSeconds * Math.Max(0.1f, Speed);
+            if (!IsRunning || GameClock.Paused) return;
+            // Aba em segundo plano no WebGL volta com um frame de minutos: sem o teto a polícia chegaria de uma vez.
+            float dt = Math.Min(deltaSeconds, MaxTickSeconds) * Math.Max(0.1f, Speed);
 
             if (siren && phase != HeistPhase.AwaitingEvent)
             {

@@ -180,7 +180,7 @@ namespace AFirma.Tests
 
             Assert.AreEqual(HeistPhase.AwaitingDoor, runner.Phase);
             Assert.AreEqual(7f, runner.PoliceSecondsLeft, 0.001f);
-            CollectionAssert.AreEqual(new[] { 9f, 8f, 7f }, ticks);
+            CollectionAssert.AreEqual(new[] { 9.5f, 9f, 8.5f, 8f, 7.5f, 7f }, ticks); // um aviso por frame de 0,5 s
         }
 
         [Test]
