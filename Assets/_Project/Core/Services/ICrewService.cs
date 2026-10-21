@@ -18,6 +18,7 @@ namespace AFirma.Core
         float GetSkill(ThiefState thief);
         float GetStealth(ThiefState thief);
         float GetNerves(ThiefState thief);
+        /// <summary>XP do nível atual pro próximo. 0 no nível máximo (mostre "MÁX", não divida por ele).</summary>
         int XpToNextLevel(ThiefState thief);
 
         bool CanRecruit(RecruitCandidate candidate, out string reason);
