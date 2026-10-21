@@ -10,8 +10,7 @@ namespace AFirma.Heist
     ///
     /// Regras reais (HeistRules): especialista, poder, tempo, loot com manhas, decisão de porta,
     /// alerta, sirene, contagem da polícia, as 4 saídas, prisão, pagamento e XP. Eventos: EventRules.
-    /// Habilidades ainda seguem o comportamento do mock
-    /// e ganham as regras completas nas próximas tasks do board.
+    /// Habilidades: cada ThiefAbilityDef mexe no golpe só pelo IHeistControl.
     /// </summary>
     public class HeistRunner : IHeistService, ITickable
     {

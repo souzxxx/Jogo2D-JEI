@@ -29,6 +29,11 @@ namespace AFirma.Core
                 reason = "Não tem esse tipo de obstáculo nesta sala.";
                 return false;
             }
+            if (alertDelta < 0f && heist.Alert <= 0f)
+            {
+                reason = "Ninguém desconfia de nada ainda."; // baixar alerta zerado só gastaria a habilidade
+                return false;
+            }
             reason = null;
             return true;
         }

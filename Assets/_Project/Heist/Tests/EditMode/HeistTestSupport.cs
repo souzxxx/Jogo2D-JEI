@@ -92,6 +92,16 @@ namespace AFirma.Tests
         public static EventChoice SafeChoice(EventEffect success = null) =>
             new EventChoice { label = "Seguro", success = success ?? new EventEffect { resultText = "Deu certo." } };
 
+        /// <summary>Troca a habilidade de um tipo de ladrão numa cópia do ThiefTypeDef (o asset do projeto fica intacto).</summary>
+        public static void GiveAbility(ThiefType type, ThiefAbilityDef ability)
+        {
+            var types = Services.Db.thiefTypes;
+            int index = types.FindIndex(t => t != null && t.type == type);
+            var copy = Track(Object.Instantiate(types[index]));
+            copy.ability = ability;
+            types[index] = copy;
+        }
+
         /// <summary>Só esses eventos entram no sorteio, e toda sala tem evento (chance 100%).</summary>
         public static void OnlyTheseEvents(params HeistEventDef[] events)
         {
