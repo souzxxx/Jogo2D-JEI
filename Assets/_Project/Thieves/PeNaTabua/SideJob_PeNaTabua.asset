@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: AFirma.Core::AFirma.Core.SideJobDef
   id: lotacao-pirata
   displayName: "Lota\xE7\xE3o pirata"
-  description: "Rende o dobro com um P\xE9-na-T\xE1bua."
+  description: "Van velha fazendo linha pirata pela Zona Norte. Rende o dobro com um P\xE9-na-T\xE1bua."
   icon: {fileID: 0}
   requiresThief: 1
   hasPreferredType: 1

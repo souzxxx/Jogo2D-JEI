@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_feira-na-rua
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: feira-na-rua
+  displayName: Feira na rua da van
+  description: "A feira de quarta fechou a rua onde a van t\xE1 estacionada. Barraca de pastel pra todo lado."
+  icon: {fileID: 0}
+  body: "A feira de quarta fechou a rua onde a van t\xE1 estacionada. Barraca de pastel pra todo lado."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 1
+  roomObstacle: 0
+  minTier: 2
+  weight: 1
+  choices:
+  - label: "Sair pela contram\xE3o"
+    requiresType: 1
+    requiredType: 0
+    check: 3
+    baseChance: 0.55
+    chancePerStatPoint: 0.006
+    success:
+      resultText: "Saiu pela rua de tr\xE1s e ningu\xE9m viu nada."
+      alertDelta: -15
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "Contram\xE3o bem na frente da feirante. Ela gritou pro bairro inteiro."
+      alertDelta: 20
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: Esperar a feira desmontar
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Desmontaram \xE0s duas. A crew ficou na moita at\xE9 l\xE1."
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 10
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Comprar pastel e fingir que \xE9 cliente"
+    requiresType: 0
+    requiredType: 0
+    check: 3
+    baseChance: 0.6
+    chancePerStatPoint: 0.004
+    success:
+      resultText: "Ningu\xE9m desconfia de quem t\xE1 comendo pastel de queijo."
+      alertDelta: -5
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "O pasteleiro reconheceu o macac\xE3o da firma."
+      alertDelta: 10
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
