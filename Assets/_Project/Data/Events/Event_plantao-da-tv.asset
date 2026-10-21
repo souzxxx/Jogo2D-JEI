@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_plantao-da-tv
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: plantao-da-tv
+  displayName: "Plant\xE3o da TV Guanabara"
+  description: "A TV da guarita interrompeu a novela pro plant\xE3o. Os guardas grudaram na tela."
+  icon: {fileID: 0}
+  body: "A TV da guarita interrompeu a novela pro plant\xE3o. Os guardas grudaram na tela."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 1
+  roomObstacle: 0
+  minTier: 1
+  weight: 1
+  choices:
+  - label: Trabalhar quietinho enquanto dura
+    requiresType: 0
+    requiredType: 0
+    check: 2
+    baseChance: 0.6
+    chancePerStatPoint: 0.004
+    success:
+      resultText: "Ningu\xE9m tirou o olho da TV."
+      alertDelta: -15
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "O plant\xE3o acabou antes da hora."
+      alertDelta: 10
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Comentar a not\xEDcia com o guarda"
+    requiresType: 1
+    requiredType: 3
+    check: 3
+    baseChance: 0.5
+    chancePerStatPoint: 0.006
+    success:
+      resultText: Virou papo de meia hora. A crew trabalhou em paz.
+      alertDelta: -25
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "Ele estranhou o comentarista de macac\xE3o."
+      alertDelta: 20
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0

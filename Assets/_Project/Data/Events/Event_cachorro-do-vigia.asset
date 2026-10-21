@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_cachorro-do-vigia
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: cachorro-do-vigia
+  displayName: O cachorro do vigia
+  description: Um vira-lata do tamanho de um bezerro dorme atravessado na porta. Dorme, por enquanto.
+  icon: {fileID: 0}
+  body: Um vira-lata do tamanho de um bezerro dorme atravessado na porta. Dorme, por enquanto.
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 0
+  roomObstacle: 2
+  minTier: 1
+  weight: 1
+  choices:
+  - label: "Oferecer o p\xE3o com mortadela"
+    requiresType: 1
+    requiredType: 3
+    check: 3
+    baseChance: 0.6
+    chancePerStatPoint: 0.006
+    success:
+      resultText: "O Rex virou amigo de inf\xE2ncia."
+      alertDelta: -10
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: O Rex preferiu a canela.
+      alertDelta: 15
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: Esperar ele pegar no sono de novo
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Dez minutos de sil\xEAncio e ningu\xE9m foi mordido."
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 6
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0

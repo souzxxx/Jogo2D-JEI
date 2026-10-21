@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_viatura-na-esquina
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: viatura-na-esquina
+  displayName: Viatura na esquina
+  description: "Uma viatura parou na esquina com o giroflex ligado. N\xE3o \xE9 com voc\xEAs... ainda."
+  icon: {fileID: 0}
+  body: "Uma viatura parou na esquina com o giroflex ligado. N\xE3o \xE9 com voc\xEAs... ainda."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 1
+  roomObstacle: 0
+  minTier: 3
+  weight: 0.8
+  choices:
+  - label: Tirar a van dali
+    requiresType: 1
+    requiredType: 0
+    check: 3
+    baseChance: 0.6
+    chancePerStatPoint: 0.005
+    success:
+      resultText: A van sumiu na esquina certa.
+      alertDelta: -10
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "Fechou um fusca da pol\xEDcia. Que vergonha."
+      alertDelta: 20
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Ficar quietinho at\xE9 passar"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Passou. O cora\xE7\xE3o n\xE3o."
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 8
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: Largar parte da sacola e apressar
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Sa\xEDram mais leves e mais r\xE1pidos."
+      alertDelta: -15
+      bagPercentDelta: -15
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0

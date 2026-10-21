@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_seguranca-novato
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: seguranca-novato
+  displayName: "Seguran\xE7a novato"
+  description: "Um seguran\xE7a novato, crach\xE1 ainda no pl\xE1stico, encara a crew. Ele quer mostrar servi\xE7o."
+  icon: {fileID: 0}
+  body: "Um seguran\xE7a novato, crach\xE1 ainda no pl\xE1stico, encara a crew. Ele quer mostrar servi\xE7o."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 0
+  roomObstacle: 2
+  minTier: 4
+  weight: 1.2
+  choices:
+  - label: "Dizer que \xE9 da dedetiza\xE7\xE3o"
+    requiresType: 1
+    requiredType: 3
+    check: 3
+    baseChance: 0.55
+    chancePerStatPoint: 0.006
+    success:
+      resultText: Ele ainda mostrou onde tinha barata.
+      alertDelta: -20
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: Ele chamou o supervisor pra confirmar.
+      alertDelta: 25
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Molhar a m\xE3o dele"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Ele guardou o dinheiro e esqueceu a cara de voc\xEAs."
+      alertDelta: 0
+      bagPercentDelta: -10
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: Trancar ele no almoxarifado
+    requiresType: 0
+    requiredType: 0
+    check: 1
+    baseChance: 0.4
+    chancePerStatPoint: 0.005
+    success:
+      resultText: "Ficou l\xE1, ouvindo o jogo no radinho."
+      alertDelta: -5
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "Ele agarrou algu\xE9m pelo colarinho e n\xE3o largou mais."
+      alertDelta: 15
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 1
