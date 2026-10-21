@@ -340,37 +340,8 @@ namespace AFirma.Tests
             CollectionAssert.AreEqual(mockOrder, runnerOrder);
         }
 
-        // ---------------- Sirene, eventos, habilidades e recuperação (mesmo comportamento do mock por enquanto) ----------------
-
-        [Test]
-        public void Siren_FleeingDuringTheCountdown_KeepsLessOfTheBag()
-        {
-            runner.StartHeist(MakeHeist(Room(ObstacleType.Lock, loot: 100), Room(ObstacleType.Lock)), Crew(AddThief(ThiefType.Locksmith, 50)));
-            TickUntil(() => runner.Phase == HeistPhase.AwaitingDoor);
-
-            runner.AddAlert(100f);
-            Assert.IsTrue(runner.SirenActive);
-            Assert.AreEqual(10f, runner.PoliceSecondsLeft, 0.001f);
-            runner.Flee();
-
-            Assert.AreEqual(HeistOutcome.HastyEscape, runner.LastResult.outcome);
-            Assert.AreEqual(80.0, runner.LastResult.moneyGained);
-        }
-
-        [Test]
-        public void Siren_WhenTheCountdownRunsOut_ForcedEscapeKeepsHalf()
-        {
-            runner.StartHeist(MakeHeist(Room(ObstacleType.Lock, loot: 100), Room(ObstacleType.Lock, difficulty: 100000)),
-                              Crew(AddThief(ThiefType.Locksmith, 50)));
-            TickUntil(() => runner.Phase == HeistPhase.AwaitingDoor);
-            runner.AddAlert(100f);
-            runner.ChooseDoor(true);
-
-            TickUntil(() => !runner.IsRunning, step: 0.25f, maxSeconds: 20f);
-
-            Assert.AreEqual(HeistOutcome.ForcedEscape, runner.LastResult.outcome);
-            Assert.AreEqual(50.0, runner.LastResult.moneyGained);
-        }
+        // ---------------- Eventos, habilidades e recuperação (mesmo comportamento do mock por enquanto) ----------------
+        // Alerta, sirene, saídas e prisão: HeistAlertTests.
 
         [Test]
         public void TutorialEvent_PausesTheFirstLoterica_UntilTheChoice()

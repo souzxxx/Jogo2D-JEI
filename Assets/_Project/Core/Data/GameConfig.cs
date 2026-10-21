@@ -21,9 +21,13 @@ namespace AFirma.Core
         [Tooltip("Quanto a Discrição média reduz o alerta (0.5 = até -50%).")]
         public float stealthAlertFactor = 0.5f;
         public float policeCountdownSeconds = 10f;
+        [Tooltip("A contagem nunca fica menor que isso, nem com Blitz na área.")]
+        public float minPoliceCountdownSeconds = 3f;
         [Range(0f, 1f)] public float hastyEscapeLootKeep = 0.8f;
         [Range(0f, 1f)] public float forcedEscapeLootKeep = 0.5f;
         [Range(0f, 1f)] public float baseArrestChance = 0.4f;
+        [Tooltip("Quanto a Discrição do ladrão reduz a chance de ele ser preso (0.5 = até -50%).")]
+        public float stealthArrestFactor = 0.5f;
         public int xpPerRoom = 1;
         public float speedFast = 2f;
 

@@ -36,7 +36,10 @@ Regras de bolso:
 |---|---|---|
 | Tempo pra limpar sala | `dificuldade × multModificador / poder` | Motor do Golpe |
 | Poder | Perícia do melhor especialista; sem especialista: `0,35 × maior Perícia` | Motor do Golpe |
-| Alerta por segundo | `alertaSala × (1 − 0,5 × Discrição média/100) × (2 sem especialista) × modificadores` | Motor do Golpe |
+| Alerta por segundo | `alertaSala × (1 − 0,5 × Discrição média/100) × (2 sem especialista) × modificador × (Troca de turno nas primeiras salas) × manhas × (1 − Fama Sangue-frio%)` | `HeistRules.AlertPerSecond` |
+| Contagem da polícia | `10 s + modificador (Blitz −3) + Rádio da polícia + Pé-na-Tábua`, mínimo 3 s | `HeistRules.PoliceCountdown` |
+| Sacola na saída | antes da sirene 100% · fuga apressada 80% · fuga forçada 50% · Cavalo de pau 100% (Pé-na-Tábua +10% nas fugas com sirene) | `HeistRules.LootKeep` |
+| Chance de prisão (só fuga forçada) | `(0,4 − 0,15 com Pé-na-Tábua) × (1 − 0,5 × Discrição do ladrão/100)` | `HeistRules.ArrestChance` |
 | Custo de upgrade | `custoBase × crescimento^nível` | `Formulas.UpgradeCost` |
 | XP pro próximo nível | `5 × nível` | `Formulas.XpToNextLevel` |
 | Fama no prestígio | `floor(√(loot do ciclo / 10.000))` | `Formulas.FameForLoot` |

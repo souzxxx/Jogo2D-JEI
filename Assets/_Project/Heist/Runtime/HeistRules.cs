@@ -64,5 +64,77 @@ namespace AFirma.Heist
             }
             return Math.Round(room.loot * mult);
         }
+
+        /// <summary>
+        /// Alerta por segundo enquanto a crew trabalha:
+        /// taxa da sala × (1 − stealthAlertFactor × Discrição média/100) × (noSpecialistAlertMult sem especialista)
+        /// × contexto × (firstRoomsAlertMult nas primeiras salas) × manhas × (1 − Fama Sangue-frio%).
+        /// </summary>
+        public static float AlertPerSecond(RoomData room, int roomIndex, HeistContext ctx, IReadOnlyList<ThiefState> crew,
+                                           ICrewService crewService, GameDatabase db, float fameAlertReductionPercent)
+        {
+            var cfg = db.config;
+            float stealth = 0f;
+            foreach (var thief in crew) stealth += crewService.GetStealth(thief);
+            if (crew.Count > 0) stealth /= crew.Count;
+
+            float rate = room.alertPerSecond * (1f - cfg.stealthAlertFactor * Clamp01(stealth / 100f));
+            if (!HasSpecialist(room.obstacle, crew, db)) rate *= cfg.noSpecialistAlertMult;
+            rate *= ctx.alertMult;
+            if (roomIndex < ctx.firstRoomsCount) rate *= ctx.firstRoomsAlertMult;
+            foreach (var thief in crew)
+            {
+                var trait = db.GetTrait(thief.traitId);
+                if (trait != null) rate *= trait.modifiers.alertMult;
+            }
+            rate *= 1f - Clamp01(fameAlertReductionPercent / 100f);
+            return Math.Max(0f, rate);
+        }
+
+        /// <summary>Segundos até a polícia chegar: base + modificador + Rádio da polícia + Pé-na-Tábua, com um mínimo.</summary>
+        public static float PoliceCountdown(HeistContext ctx, IReadOnlyList<ThiefState> crew, GameDatabase db, float radioSeconds)
+        {
+            var cfg = db.config;
+            float seconds = cfg.policeCountdownSeconds + ctx.policeCountdownDelta + radioSeconds + DriverBonus(crew, db, d => d.policeCountdownBonus);
+            return Math.Max(cfg.minPoliceCountdownSeconds, seconds);
+        }
+
+        /// <summary>Fração da sacola que chega no caixa em cada saída. O Pé-na-Tábua salva um pouco nas fugas com sirene.</summary>
+        public static float LootKeep(HeistOutcome outcome, IReadOnlyList<ThiefState> crew, GameDatabase db)
+        {
+            var cfg = db.config;
+            float bonus = DriverBonus(crew, db, d => d.escapeLootBonus);
+            switch (outcome)
+            {
+                case HeistOutcome.HastyEscape: return Math.Min(1f, cfg.hastyEscapeLootKeep + bonus);
+                case HeistOutcome.ForcedEscape: return Math.Min(1f, cfg.forcedEscapeLootKeep + bonus);
+                default: return 1f;
+            }
+        }
+
+        /// <summary>
+        /// Chance de um ladrão ser preso na fuga forçada:
+        /// (baseArrestChance − redução do Pé-na-Tábua) × (1 − stealthArrestFactor × Discrição dele/100).
+        /// </summary>
+        public static float ArrestChance(ThiefState thief, IReadOnlyList<ThiefState> crew, ICrewService crewService, GameDatabase db)
+        {
+            var cfg = db.config;
+            float chance = Math.Max(0f, cfg.baseArrestChance - DriverBonus(crew, db, d => d.arrestChanceReduction));
+            return chance * (1f - cfg.stealthArrestFactor * Clamp01(crewService.GetStealth(thief) / 100f));
+        }
+
+        /// <summary>Maior passiva de fuga da crew. Dois motoristas não somam.</summary>
+        public static float DriverBonus(IReadOnlyList<ThiefState> crew, GameDatabase db, Func<ThiefTypeDef, float> pick)
+        {
+            float best = 0f;
+            foreach (var thief in crew)
+            {
+                var def = db.GetThiefType(thief.type);
+                if (def != null) best = Math.Max(best, pick(def));
+            }
+            return best;
+        }
+
+        static float Clamp01(float value) => Math.Min(1f, Math.Max(0f, value));
     }
 }

@@ -8,8 +8,9 @@ namespace AFirma.Heist
     /// Motor do Golpe (Leonardo). Substitui o MockHeistService e dispara os mesmos eventos, na mesma ordem
     /// (ARQUITETURA › Ciclo de vida de um golpe).
     ///
-    /// Já tem as regras reais da sala (HeistRules): especialista, poder, tempo, loot com manhas e a decisão de porta.
-    /// Alerta, sirene, saídas, pagamento, eventos e habilidades ainda seguem o comportamento do mock
+    /// Regras reais (HeistRules): especialista, poder, tempo, loot com manhas, decisão de porta,
+    /// alerta, sirene, contagem da polícia, as 4 saídas e prisão.
+    /// Pagamento, eventos e habilidades ainda seguem o comportamento do mock
     /// e ganham as regras completas nas próximas tasks do board.
     /// </summary>
     public class HeistRunner : IHeistService, ITickable
@@ -26,6 +27,7 @@ namespace AFirma.Heist
         float freezeTimer;
         float delayTimer;
         float policeLeft;
+        float fameAlertReduction;
         bool siren;
         double bag;
         int roomIndex;
@@ -96,6 +98,7 @@ namespace AFirma.Heist
             PendingDoor = null; PendingEvent = null; LastResult = null;
             CurrentHeist = heist;
             Context = Services.Progression.GetContext(heist);
+            fameAlertReduction = Services.Progression.GetFamePerkTotal(FamePerkEffect.AlertReductionPercent);
 
             foreach (var thief in crew) Services.Crew.SetStatus(thief, ThiefStatus.OnHeist);
 
@@ -189,7 +192,7 @@ namespace AFirma.Heist
             GameEvents.RaiseRoomProgress(roomIndex, roomProgress);
 
             if (freezeTimer > 0f) freezeTimer -= dt;
-            else AddAlert(room.alertPerSecond * Context.alertMult * dt);
+            else AddAlert(HeistRules.AlertPerSecond(room, roomIndex, Context, crew, Services.Crew, Services.Db, fameAlertReduction) * dt);
 
             if (phase == HeistPhase.Working && roomProgress >= 1f) ClearRoom();
         }
@@ -338,21 +341,8 @@ namespace AFirma.Heist
         void StartSiren()
         {
             siren = true;
-            policeLeft = Cfg.policeCountdownSeconds + Context.policeCountdownDelta
-                         + Services.Economy.GetUpgradeTotal(UpgradeEffect.PoliceRadioSeconds) + DriverBonus(d => d.policeCountdownBonus);
-            policeLeft = Math.Max(3f, policeLeft);
+            policeLeft = HeistRules.PoliceCountdown(Context, crew, Services.Db, Services.Economy.GetUpgradeTotal(UpgradeEffect.PoliceRadioSeconds));
             GameEvents.RaiseSirenStarted(policeLeft);
-        }
-
-        float DriverBonus(Func<ThiefTypeDef, float> pick)
-        {
-            float best = 0f;
-            foreach (var thief in crew)
-            {
-                var def = Services.Db.GetThiefType(thief.type);
-                if (def != null) best = Math.Max(best, pick(def));
-            }
-            return best;
         }
 
         public void FreezeAlert(float seconds) => freezeTimer = Math.Max(freezeTimer, seconds);
@@ -395,22 +385,17 @@ namespace AFirma.Heist
 
         void Finish(HeistOutcome outcome, bool completed)
         {
-            float escapeBonus = DriverBonus(d => d.escapeLootBonus);
-            float keep = outcome == HeistOutcome.HastyEscape ? Cfg.hastyEscapeLootKeep + escapeBonus
-                : outcome == HeistOutcome.ForcedEscape ? Cfg.forcedEscapeLootKeep + escapeBonus
-                : 1f;
-            keep = Math.Min(1f, keep);
+            float keep = HeistRules.LootKeep(outcome, crew, Services.Db);
 
+            // Cavalo de pau salva todo mundo, até quem um evento ia prender. Fora isso, só a fuga forçada sorteia prisão.
             var arrested = new List<ThiefState>();
             if (outcome != HeistOutcome.PerfectEscape)
             {
                 arrested.AddRange(pendingArrests);
                 if (outcome == HeistOutcome.ForcedEscape)
-                {
-                    float chance = Math.Max(0f, Cfg.baseArrestChance - DriverBonus(d => d.arrestChanceReduction));
                     foreach (var thief in crew)
-                        if (!arrested.Contains(thief) && rng.NextDouble() < chance) arrested.Add(thief);
-                }
+                        if (!arrested.Contains(thief) && rng.NextDouble() < HeistRules.ArrestChance(thief, crew, Services.Crew, Services.Db))
+                            arrested.Add(thief);
             }
 
             double money = Math.Round(bag * keep * (1 + Services.Economy.GetUpgradeTotal(UpgradeEffect.LaundryPercent) / 100.0));
