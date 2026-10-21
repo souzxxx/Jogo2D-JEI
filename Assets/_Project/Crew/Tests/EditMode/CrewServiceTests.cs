@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using AFirma.Core;
 using AFirma.Crew;
 using NUnit.Framework;
+using static AFirma.Tests.CrewTestSupport;
 
 namespace AFirma.Tests
 {
@@ -11,15 +12,10 @@ namespace AFirma.Tests
         CrewService crew;
 
         [SetUp]
-        public void SetUp()
-        {
-            TestSupport.InitServicesWithMocks();
-            crew = new CrewService(new System.Random(1));
-            Services.Register((ICrewService)crew);
-        }
+        public void SetUp() => crew = InitWithCrew();
 
         [TearDown]
-        public void TearDown() => TestSupport.Teardown();
+        public void TearDown() => Teardown();
 
         // ---------------- Atributos efetivos ----------------
 
@@ -207,27 +203,6 @@ namespace AFirma.Tests
 
             Assert.AreEqual(5, crew.MaxCrewSize);
             Assert.AreEqual(3, crew.HeistSlots);
-        }
-
-        // ---------------- Apoio ----------------
-
-        static ThiefState Thief(ThiefType type, string traitId = null, int level = 1)
-        {
-            var thief = new ThiefState
-            {
-                id = "teste-" + Services.State.crew.Count,
-                firstName = "Zé",
-                nickname = type.ToString(),
-                type = type,
-                level = level,
-                skill = 50f,
-                stealth = 40f,
-                nerves = 30f,
-                traitId = traitId,
-                status = ThiefStatus.Available
-            };
-            Services.State.crew.Add(thief);
-            return thief;
         }
     }
 }

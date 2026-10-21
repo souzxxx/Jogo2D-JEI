@@ -39,6 +39,10 @@ namespace AFirma.Core
         public float recruitRefreshSeconds = 300f;
         public double recruitBaseCost = 50;
         public float recruitCostGrowthPerLevel = 1.8f;
+        [Tooltip("Trocar os candidatos na hora, pagando.")]
+        public double recruitRefreshCost = 25;
+        [Tooltip("Desconto na troca paga por nível de Contatos (0.1 = -10% por nível).")]
+        public float recruitRefreshDiscountPerContacts = 0.1f;
         public double bailCostPerJailSecond = 2;
 
         [Header("Economia")]

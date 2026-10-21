@@ -7,9 +7,9 @@ namespace AFirma.Crew
     /// <summary>
     /// Crew real (Leonardo). Substitui o MockCrewService.
     ///
-    /// Regras próprias: atributos efetivos (manha + Ferramentas/Tênis), XP e nível até o máximo, estados e novato grátis.
-    /// Recrutamento, demissão, vagas, prisão e fiança ainda seguem o comportamento do mock
-    /// e ganham as regras completas nas tasks de recrutamento e de prisão.
+    /// Regras próprias: atributos efetivos (manha + Ferramentas/Tênis), XP e nível até o máximo, estados, novato grátis,
+    /// recrutamento (Contatos, Fama Lenda e Reputação), demissão e vagas.
+    /// Prisão e fiança ainda seguem o comportamento do mock e ganham as regras completas na task de prisão.
     /// </summary>
     public class CrewService : ICrewService, ITickable
     {
@@ -100,23 +100,28 @@ namespace AFirma.Crew
             return trait != null ? trait.modifiers : null;
         }
 
-        // ---------------- Recrutamento (igual ao mock por enquanto) ----------------
+        // ---------------- Recrutamento ----------------
 
+        /// <summary>Candidatos do painel Contatos. Trocam sozinhos a cada recruitRefreshSeconds de tempo real.</summary>
         public IReadOnlyList<RecruitCandidate> Candidates
         {
             get
             {
-                if (S.candidates.Count == 0 || GameClock.NowUnix >= S.candidatesRefreshAtUnix) GenerateCandidates();
+                if (CandidatesExpired) GenerateCandidates();
                 return S.candidates;
             }
         }
 
+        // Recrutar os 3 não adianta a troca: a lista nova só vem no horário.
+        bool CandidatesExpired => S.candidatesRefreshAtUnix == 0 || GameClock.NowUnix >= S.candidatesRefreshAtUnix;
+
         public float SecondsToCandidatesRefresh => Math.Max(0, S.candidatesRefreshAtUnix - GameClock.NowUnix);
 
-        public double PaidRefreshCost => Cfg.recruitBaseCost * 0.5;
+        public double PaidRefreshCost => CrewRules.PaidRefreshCost(Services.Economy.GetUpgradeTotal(UpgradeEffect.ContactsLevel), Cfg);
 
         public bool CanRecruit(RecruitCandidate candidate, out string reason)
         {
+            if (candidate == null || !S.candidates.Contains(candidate)) { reason = "Esse candidato já foi embora."; return false; }
             if (S.crew.Count >= MaxCrewSize) { reason = "Sem vaga no esconderijo. Compre Quartos."; return false; }
             if (!Services.Economy.CanAfford(candidate.cost)) { reason = "Falta " + Formulas.Money(candidate.cost - Services.Economy.Money) + "."; return false; }
             reason = null;
@@ -157,18 +162,21 @@ namespace AFirma.Crew
             return true;
         }
 
+        /// <summary>Nível sorteado de 1 a 1 + Contatos, mais os níveis da Fama Lenda (de graça). Preço pela Reputação.</summary>
         void GenerateCandidates()
         {
             S.candidates.Clear();
-            int maxLevel = 1 + (int)Services.Economy.GetUpgradeTotal(UpgradeEffect.ContactsLevel);
+            int maxRolled = 1 + (int)Services.Economy.GetUpgradeTotal(UpgradeEffect.ContactsLevel);
+            int bonusLevels = (int)Services.Progression.GetFamePerkTotal(FamePerkEffect.RecruitBonusLevels);
+            float discount = Services.Progression.GetFamePerkTotal(FamePerkEffect.RecruitDiscountPercent);
             for (int i = 0; i < Cfg.recruitCandidates; i++)
             {
                 var type = (ThiefType)rng.Next(4);
-                int level = rng.Next(1, maxLevel + 1);
+                int rolled = rng.Next(1, maxRolled + 1);
                 S.candidates.Add(new RecruitCandidate
                 {
-                    thief = ThiefFactory.Create(Db, type, level, rng),
-                    cost = Math.Round(Cfg.recruitBaseCost * Math.Pow(Cfg.recruitCostGrowthPerLevel, level - 1))
+                    thief = ThiefFactory.Create(Db, type, Math.Min(Cfg.maxLevel, rolled + bonusLevels), rng),
+                    cost = CrewRules.RecruitCost(rolled, discount, Cfg)
                 });
             }
             S.candidatesRefreshAtUnix = GameClock.NowUnix + (long)Cfg.recruitRefreshSeconds;
@@ -224,6 +232,7 @@ namespace AFirma.Crew
             releaseCheckTimer += deltaSeconds;
             if (releaseCheckTimer < 1f) return;
             releaseCheckTimer = 0f;
+            if (CandidatesExpired) GenerateCandidates();
             foreach (var thief in S.crew.ToArray())
                 if (thief.status == ThiefStatus.Jailed && GameClock.NowUnix >= thief.jailReleaseUnix)
                     Release(thief);
