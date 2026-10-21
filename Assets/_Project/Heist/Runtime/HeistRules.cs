@@ -123,6 +123,17 @@ namespace AFirma.Heist
             return chance * (1f - cfg.stealthArrestFactor * Clamp01(crewService.GetStealth(thief) / 100f));
         }
 
+        /// <summary>O que entra no caixa: sacola × saída × (1 + Lavanderia%) × (1 + Fama Esquema%).</summary>
+        public static double Payment(double bag, float keep, float laundryPercent, float esquemaPercent) =>
+            Math.Round(bag * keep * (1 + laundryPercent / 100.0) * (1 + esquemaPercent / 100.0));
+
+        /// <summary>XP por sala limpa, com a manha (Cria da rua ×1,3). Pode dar fração: o runner vai somando sala a sala.</summary>
+        public static float XpPerRoom(ThiefState thief, GameDatabase db)
+        {
+            var trait = db.GetTrait(thief.traitId);
+            return db.config.xpPerRoom * (trait != null ? trait.modifiers.xpMult : 1f);
+        }
+
         /// <summary>Maior passiva de fuga da crew. Dois motoristas não somam.</summary>
         public static float DriverBonus(IReadOnlyList<ThiefState> crew, GameDatabase db, Func<ThiefTypeDef, float> pick)
         {

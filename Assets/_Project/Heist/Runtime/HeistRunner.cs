@@ -9,8 +9,8 @@ namespace AFirma.Heist
     /// (ARQUITETURA › Ciclo de vida de um golpe).
     ///
     /// Regras reais (HeistRules): especialista, poder, tempo, loot com manhas, decisão de porta,
-    /// alerta, sirene, contagem da polícia, as 4 saídas e prisão.
-    /// Pagamento, eventos e habilidades ainda seguem o comportamento do mock
+    /// alerta, sirene, contagem da polícia, as 4 saídas, prisão, pagamento e XP.
+    /// Eventos e habilidades ainda seguem o comportamento do mock
     /// e ganham as regras completas nas próximas tasks do board.
     /// </summary>
     public class HeistRunner : IHeistService, ITickable
@@ -20,6 +20,8 @@ namespace AFirma.Heist
         readonly HashSet<string> usedAbilities = new HashSet<string>();
         readonly List<ThiefState> pendingArrests = new List<ThiefState>();
         readonly List<string> leveledUp = new List<string>();
+        readonly Dictionary<string, float> xpEarned = new Dictionary<string, float>();
+        readonly Dictionary<string, int> xpGiven = new Dictionary<string, int>();
 
         HeistPhase phase = HeistPhase.Idle;
         float alert;
@@ -93,6 +95,8 @@ namespace AFirma.Heist
             usedAbilities.Clear();
             pendingArrests.Clear();
             leveledUp.Clear();
+            xpEarned.Clear();
+            xpGiven.Clear();
             alert = 0f; freezeTimer = 0f; delayTimer = 0f; policeLeft = 0f; siren = false;
             bag = 0; roomsCleared = 0;
             PendingDoor = null; PendingEvent = null; LastResult = null;
@@ -205,9 +209,7 @@ namespace AFirma.Heist
             roomsCleared++;
             S.activeHeist.bag = bag;
 
-            foreach (var thief in crew)
-                if (Services.Crew.AddXp(thief, Cfg.xpPerRoom) && !leveledUp.Contains(thief.id))
-                    leveledUp.Add(thief.id);
+            foreach (var thief in crew) GiveRoomXp(thief);
 
             GameEvents.RaiseRoomCleared(roomIndex, room, loot);
             GameEvents.RaiseBagChanged(bag);
@@ -230,6 +232,20 @@ namespace AFirma.Heist
                 sirenActive = siren
             };
             GameEvents.RaiseDoorDecisionRequested(PendingDoor);
+        }
+
+        /// <summary>Soma o XP fracionado da sala e entrega só a parte inteira. O resto fica pra próxima sala.</summary>
+        void GiveRoomXp(ThiefState thief)
+        {
+            xpEarned.TryGetValue(thief.id, out var earned);
+            earned += HeistRules.XpPerRoom(thief, Services.Db);
+            xpEarned[thief.id] = earned;
+
+            xpGiven.TryGetValue(thief.id, out var given);
+            int xp = (int)Math.Floor(earned + 0.0001f) - given;
+            if (xp <= 0) return;
+            xpGiven[thief.id] = given + xp;
+            if (Services.Crew.AddXp(thief, xp) && !leveledUp.Contains(thief.id)) leveledUp.Add(thief.id);
         }
 
         // ---------------- Decisões ----------------
@@ -398,10 +414,7 @@ namespace AFirma.Heist
                             arrested.Add(thief);
             }
 
-            double money = Math.Round(bag * keep * (1 + Services.Economy.GetUpgradeTotal(UpgradeEffect.LaundryPercent) / 100.0));
-            Services.Economy.Add(money, "golpe " + CurrentHeist.id);
-            S.cycleLoot += money;
-            S.lifetimeLoot += money;
+            double money = Pay(bag, keep, "golpe " + CurrentHeist.id);
 
             var result = new HeistResult
             {
@@ -419,6 +432,9 @@ namespace AFirma.Heist
 
             foreach (var thief in crew)
             {
+                xpGiven.TryGetValue(thief.id, out var xp);
+                result.xpGains.Add(new ThiefXpGain { thiefId = thief.id, xp = xp, levelAfter = thief.level, leveledUp = leveledUp.Contains(thief.id) });
+
                 if (arrested.Contains(thief))
                 {
                     Services.Crew.Jail(thief, CurrentHeist.jailSeconds);
@@ -444,9 +460,7 @@ namespace AFirma.Heist
             var record = S.activeHeist;
             var heist = Services.Db.GetHeist(record.heistId);
 
-            Services.Economy.Add(record.bag, "golpe interrompido");
-            S.cycleLoot += record.bag;
-            S.lifetimeLoot += record.bag;
+            double money = Pay(record.bag, 1f, "golpe interrompido"); // conta como meter o pé antes da sirene
             foreach (var id in record.crewIds)
             {
                 var thief = S.FindThief(id);
@@ -459,14 +473,25 @@ namespace AFirma.Heist
                 outcome = HeistOutcome.Interrupted,
                 totalRooms = heist != null ? heist.rooms.Count : 0,
                 bag = record.bag,
-                moneyGained = record.bag
+                moneyGained = money
             };
             S.hasActiveHeist = false;
             S.activeHeist = new ActiveHeistRecord();
             LastResult = result;
             Services.SaveNow();
-            GameEvents.RaiseNotice("O jogo fechou no meio do golpe. A crew meteu o pé e trouxe " + Formulas.Money(record.bag) + ".");
+            GameEvents.RaiseNotice("O jogo fechou no meio do golpe. A crew meteu o pé e trouxe " + Formulas.Money(money) + ".");
             return result;
+        }
+
+        /// <summary>Único lugar onde o dinheiro do golpe entra no caixa.</summary>
+        double Pay(double amount, float keep, string reason)
+        {
+            double money = HeistRules.Payment(amount, keep, Services.Economy.GetUpgradeTotal(UpgradeEffect.LaundryPercent),
+                                              Services.Progression.GetFamePerkTotal(FamePerkEffect.LootPercent));
+            Services.Economy.Add(money, reason);
+            S.cycleLoot += money;
+            S.lifetimeLoot += money;
+            return money;
         }
     }
 }

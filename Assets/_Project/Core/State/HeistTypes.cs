@@ -75,6 +75,17 @@ namespace AFirma.Core
         public double moneyGained;  // o que entrou no caixa (depois de perdas e bônus)
         public List<string> arrestedThiefIds = new List<string>();
         public List<string> leveledUpThiefIds = new List<string>();
-        public int xpPerThief;
+        public int xpPerThief;      // XP base (salas × xpPerRoom), sem manha. O de cada um está em xpGains.
+        public List<ThiefXpGain> xpGains = new List<ThiefXpGain>();
+    }
+
+    /// <summary>XP que um ladrão ganhou no golpe, pro jornal mostrar.</summary>
+    [Serializable]
+    public class ThiefXpGain
+    {
+        public string thiefId;
+        public int xp;
+        public int levelAfter;
+        public bool leveledUp;
     }
 }
