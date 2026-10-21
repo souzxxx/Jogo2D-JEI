@@ -38,7 +38,7 @@ O `.gitattributes` já manda o git usar o `unityyamlmerge` em cenas, prefabs e a
 **macOS**
 ```bash
 git config --global merge.unityyamlmerge.name "Unity SmartMerge"
-git config --global merge.unityyamlmerge.driver "'/Applications/Unity/Hub/Editor/6000.6.4f1/Unity.app/Contents/Tools/UnityYAMLMerge' merge -p %O %B %A %A"
+git config --global merge.unityyamlmerge.driver "'/Applications/Unity/Hub/Editor/6000.6.4f1/Unity.app/Contents/Helpers/UnityYAMLMerge' merge -p %O %B %A %A"
 git config --global merge.unityyamlmerge.recursive binary
 ```
 
@@ -48,6 +48,8 @@ git config --global merge.unityyamlmerge.name "Unity SmartMerge"
 git config --global merge.unityyamlmerge.driver "'C:/Program Files/Unity/Hub/Editor/6000.6.4f1/Editor/Data/Tools/UnityYAMLMerge.exe' merge -p %O %B %A %A"
 git config --global merge.unityyamlmerge.recursive binary
 ```
+
+Não achou o arquivo? Ele muda de pasta entre versões do Unity. Procure por `UnityYAMLMerge` dentro da pasta da versão no Unity Hub e use esse caminho.
 
 ## Definition of Done (o que é "pronto")
 
