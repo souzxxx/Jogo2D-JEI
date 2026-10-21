@@ -105,6 +105,14 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void FirstHeist_IsNeverLocked()
+        {
+            var first = db.heists.Find(h => h != null && h.tier == 1);
+            Assert.IsNotNull(first, "Falta o golpe de tier 1.");
+            Assert.IsTrue(first.unlockedByDefault, first.displayName + " nunca pode ficar bloqueado (anti dead-end).");
+        }
+
+        [Test]
         public void Traits_AreEight_AndTheDescriptionShowsEveryEffect()
         {
             Assert.AreEqual(8, db.traits.Count);

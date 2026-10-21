@@ -45,6 +45,11 @@ namespace AFirma.Core
         public float recruitRefreshDiscountPerContacts = 0.1f;
         public double bailCostPerJailSecond = 2;
 
+        [Header("Dona Cida (anti dead-end)")]
+        public string mentorName = "Dona Cida";
+        [TextArea(1, 3), Tooltip("Bip quando a crew está toda presa e sem Cr$ pra recrutar. {nome} vira o nome do novato.")]
+        public string freeRookieBip = "Tá todo mundo em cana e o caixa tá zerado? Mandei o {nome} pra dar uma força. Não me faz passar vergonha.";
+
         [Header("Economia")]
         public double scavengeIncomePerSecond = 1; // Catar latinha
         public float offlineCapHours = 4f;

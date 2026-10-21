@@ -9,7 +9,7 @@ namespace AFirma.Crew
     ///
     /// Regras próprias: atributos efetivos (manha + Ferramentas/Tênis), XP e nível até o máximo, estados, novato grátis,
     /// recrutamento (Contatos, Fama Lenda e Reputação), demissão e vagas.
-    /// Prisão e fiança ainda seguem o comportamento do mock e ganham as regras completas na task de prisão.
+    /// Prisão e fiança em tempo real, e os estados e erros do save (ESCOPO 10).
     /// </summary>
     public class CrewService : ICrewService, ITickable
     {
@@ -23,7 +23,53 @@ namespace AFirma.Crew
         public CrewService(Random rng = null)
         {
             this.rng = rng ?? new Random();
-            GameEvents.GameLoaded += ReleaseDue; // quem cumpriu a pena com o jogo fechado sai já no load
+            GameEvents.GameLoaded += OnGameLoaded;
+        }
+
+        // ---------------- Estados e erros (ESCOPO 10) ----------------
+
+        /// <summary>Arruma o que o save trouxe fora do lugar: pena cumprida com o jogo fechado, golpe ou bico que não existe mais.</summary>
+        void OnGameLoaded()
+        {
+            if (S == null) return;
+            ReleaseDue();
+            foreach (var thief in S.crew)
+            {
+                bool inInterruptedHeist = S.hasActiveHeist && S.activeHeist.crewIds.Contains(thief.id); // o RecoverInterruptedHeist cuida desses
+                if (thief.status == ThiefStatus.OnHeist && !inInterruptedHeist && !Services.Heist.IsRunning)
+                    SetStatus(thief, ThiefStatus.Available);
+                else if (thief.status == ThiefStatus.OnSideJob && !IsValidSideJob(thief.sideJobId))
+                    SetStatus(thief, ThiefStatus.Available);
+            }
+        }
+
+        static bool IsValidSideJob(string id)
+        {
+            var job = Db.GetSideJob(id);
+            return job != null && job.requiresThief;
+        }
+
+        /// <summary>
+        /// Anti dead-end: ninguém fora da cadeia e sem como recrutar (sem Cr$ ou sem vaga) → Dona Cida manda um novato.
+        /// Roda no Tick, não no load, pra a tela já estar ouvindo o bip.
+        /// </summary>
+        void EnsureSomeoneCanWork()
+        {
+            if (S.crew.Exists(t => t.status != ThiefStatus.Jailed)) return;
+            if (Services.Heist != null && Services.Heist.IsRunning) return;
+            if (CanRecruitSomeone()) return;
+
+            var type = Cfg.startingCrew.Count > 0 ? Cfg.startingCrew[0] : ThiefType.ConArtist;
+            var rookie = GrantFreeRookie(type);
+            GameEvents.RaiseBip(Cfg.mentorName, Cfg.freeRookieBip.Replace("{nome}", rookie.DisplayName));
+        }
+
+        bool CanRecruitSomeone()
+        {
+            if (S.crew.Count >= MaxCrewSize) return false;
+            foreach (var candidate in Candidates)
+                if (Services.Economy.CanAfford(candidate.cost)) return true;
+            return false;
         }
 
         public IReadOnlyList<ThiefState> Crew => S.crew;
@@ -234,7 +280,6 @@ namespace AFirma.Crew
         /// <summary>Solta quem já cumpriu a pena, inclusive o tempo que passou com o jogo fechado.</summary>
         void ReleaseDue()
         {
-            if (S == null) return;
             foreach (var thief in S.crew.ToArray())
                 if (thief.status == ThiefStatus.Jailed && GameClock.NowUnix >= thief.jailReleaseUnix)
                     Release(thief);
@@ -247,6 +292,7 @@ namespace AFirma.Crew
             releaseCheckTimer = 0f;
             if (CandidatesExpired) GenerateCandidates();
             ReleaseDue();
+            EnsureSomeoneCanWork();
         }
     }
 }
