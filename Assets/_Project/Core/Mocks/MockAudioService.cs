@@ -11,7 +11,7 @@ namespace AFirma.Core
 
         public void PlaySfx(AudioClip clip, float volume = 1f)
         {
-            if (clip == null) return;
+            if (clip == null || !Application.isPlaying) return; // PlayClipAtPoint cria e destrói um objeto: fora do Play dá erro (testes EditMode)
             var position = Camera.main != null ? Camera.main.transform.position : Vector3.zero;
             AudioSource.PlayClipAtPoint(clip, position, volume * GetVolume("sfx") * GetVolume("master"));
         }
