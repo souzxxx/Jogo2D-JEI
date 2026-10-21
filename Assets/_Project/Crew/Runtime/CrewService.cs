@@ -23,6 +23,7 @@ namespace AFirma.Crew
         public CrewService(Random rng = null)
         {
             this.rng = rng ?? new Random();
+            GameEvents.GameLoaded += ReleaseDue; // quem cumpriu a pena com o jogo fechado sai já no load
         }
 
         public IReadOnlyList<ThiefState> Crew => S.crew;
@@ -183,15 +184,18 @@ namespace AFirma.Crew
             GameEvents.RaiseCandidatesChanged();
         }
 
-        // ---------------- Prisão e fiança (igual ao mock por enquanto) ----------------
+        // ---------------- Prisão e fiança ----------------
 
-        float LawyerFactor => 1f - Services.Economy.GetUpgradeTotal(UpgradeEffect.LawyerPercent) / 100f;
+        static float LawyerPercent => Services.Economy.GetUpgradeTotal(UpgradeEffect.LawyerPercent);
 
+        /// <summary>Prende pelo tempo real (corre com o jogo fechado). Já preso, fica com a pena mais longa.</summary>
         public void Jail(ThiefState thief, float seconds)
         {
+            long release = GameClock.NowUnix + CrewRules.JailSeconds(seconds, LawyerPercent);
+            if (thief.status == ThiefStatus.Jailed) release = Math.Max(release, thief.jailReleaseUnix);
             thief.status = ThiefStatus.Jailed;
             thief.sideJobId = null;
-            thief.jailReleaseUnix = GameClock.NowUnix + (long)Math.Ceiling(seconds * Math.Max(0.1f, LawyerFactor));
+            thief.jailReleaseUnix = release;
             GameEvents.RaiseThiefJailed(thief);
             GameEvents.RaiseCrewChanged();
         }
@@ -200,7 +204,7 @@ namespace AFirma.Crew
             thief.status == ThiefStatus.Jailed ? Math.Max(0, thief.jailReleaseUnix - GameClock.NowUnix) : 0;
 
         public double GetBailCost(ThiefState thief) =>
-            Math.Ceiling(SecondsLeftInJail(thief) * Cfg.bailCostPerJailSecond * (Mods(thief)?.bailMult ?? 1f) * Math.Max(0.1f, LawyerFactor));
+            CrewRules.BailCost(SecondsLeftInJail(thief), Mods(thief)?.bailMult ?? 1f, LawyerPercent, Cfg);
 
         public bool CanPayBail(ThiefState thief, out string reason)
         {
@@ -227,15 +231,22 @@ namespace AFirma.Crew
             GameEvents.RaiseCrewChanged();
         }
 
+        /// <summary>Solta quem já cumpriu a pena, inclusive o tempo que passou com o jogo fechado.</summary>
+        void ReleaseDue()
+        {
+            if (S == null) return;
+            foreach (var thief in S.crew.ToArray())
+                if (thief.status == ThiefStatus.Jailed && GameClock.NowUnix >= thief.jailReleaseUnix)
+                    Release(thief);
+        }
+
         public void Tick(float deltaSeconds)
         {
             releaseCheckTimer += deltaSeconds;
             if (releaseCheckTimer < 1f) return;
             releaseCheckTimer = 0f;
             if (CandidatesExpired) GenerateCandidates();
-            foreach (var thief in S.crew.ToArray())
-                if (thief.status == ThiefStatus.Jailed && GameClock.NowUnix >= thief.jailReleaseUnix)
-                    Release(thief);
+            ReleaseDue();
         }
     }
 }

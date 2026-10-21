@@ -44,6 +44,8 @@ Regras de bolso:
 | XP por sala limpa | `xpPerRoom × manha` (Cria da rua ×1,3; a fração vai somando sala a sala) | `HeistRules.XpPerRoom` |
 | Recruta | nível sorteado de 1 a 1 + Contatos (+ Fama Lenda de graça); custo `50 × 1,8^(nível sorteado − 1) × (1 − Fama Reputação%)` | `CrewRules.RecruitCost` |
 | Trocar candidatos na hora | `Cr$ 25 × (1 − 10% × nível de Contatos)` | `CrewRules.PaidRefreshCost` |
+| Tempo de prisão | `jailSeconds do golpe × (1 − Advogado%)`, arredondado pra cima | `CrewRules.JailSeconds` |
+| Fiança | `segundos restantes × Cr$ 2 × manha (Pão-duro ×0,6) × (1 − Advogado%)`, arredondada pra cima | `CrewRules.BailCost` |
 | Custo de upgrade | `custoBase × crescimento^nível` | `Formulas.UpgradeCost` |
 | XP pro próximo nível | `5 × nível` | `Formulas.XpToNextLevel` |
 | Fama no prestígio | `floor(√(loot do ciclo / 10.000))` | `Formulas.FameForLoot` |
