@@ -105,6 +105,24 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void Traits_AreEight_AndTheDescriptionShowsEveryEffect()
+        {
+            Assert.AreEqual(8, db.traits.Count);
+            foreach (var trait in db.traits)
+            {
+                Assert.IsNotEmpty(trait.description, trait.displayName);
+                var m = trait.modifiers;
+                foreach (var mult in new[] { m.skillMult, m.stealthMult, m.nervesMult, m.lootMult, m.personRoomLootMult, m.alertMult, m.xpMult, m.bailMult, m.badEventChanceMult })
+                {
+                    if (Mathf.Approximately(mult, 1f)) continue;
+                    int percent = Mathf.RoundToInt((mult - 1f) * 100f);
+                    string shown = (percent > 0 ? "+" : "-") + Mathf.Abs(percent) + "%";
+                    StringAssert.Contains(shown, trait.description, trait.displayName + ": a ficha tem que mostrar o número real.");
+                }
+            }
+        }
+
+        [Test]
         public void Ids_AreUniqueAndFilled()
         {
             AssertUnique(db.traits);

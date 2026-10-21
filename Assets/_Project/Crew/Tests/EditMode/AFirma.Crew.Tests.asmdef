@@ -6,7 +6,8 @@
         "UnityEditor.TestRunner",
         "AFirma.Core",
         "AFirma.Core.Tests",
-        "AFirma.Crew"
+        "AFirma.Crew",
+        "AFirma.Heist"
     ],
     "includePlatforms": [
         "Editor"

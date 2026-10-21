@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: AFirma.Core::AFirma.Core.TraitDef
   id: pe-frio
   displayName: "P\xE9-frio"
-  description: "Atrai confus\xE3o: eventos ruins acontecem mais."
+  description: "Atrai confus\xE3o: +50% de chance de evento no golpe."
   icon: {fileID: 0}
   modifiers:
     skillMult: 1
