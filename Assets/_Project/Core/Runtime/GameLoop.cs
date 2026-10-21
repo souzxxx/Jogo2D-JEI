@@ -29,9 +29,7 @@ namespace AFirma.Core
             var go = new GameObject("[GameLoop]");
             instance = go.AddComponent<GameLoop>();
             DontDestroyOnLoad(go);
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
-            go.AddComponent<DebugOverlay>();
-#endif
+            if (Debug.isDebugBuild) go.AddComponent<DebugOverlay>(); // editor e build de desenvolvimento
         }
 
         void Start()
