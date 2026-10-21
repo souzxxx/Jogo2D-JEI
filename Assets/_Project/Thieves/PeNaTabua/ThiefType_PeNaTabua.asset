@@ -33,7 +33,7 @@ MonoBehaviour:
   portrait: {fileID: 0}
   animator: {fileID: 0}
   color: {r: 0.95, g: 0.65, b: 0.2, a: 1}
-  actionSfx: {fileID: 0}
+  actionSfx: {fileID: 8300000, guid: 1178872da42344c66bbe97d831315392, type: 3}
   barks:
   - Segura que eu dirijo!
   - "A van t\xE1 ligada, chefia."

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: lotacao-pirata
   displayName: "Lota\xE7\xE3o pirata"
   description: "Van velha fazendo linha pirata pela Zona Norte. Rende o dobro com um P\xE9-na-T\xE1bua."
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 3a83549529fd14a17b4aae2787d3675a, type: 3}
   requiresThief: 1
   hasPreferredType: 1
   preferredType: 0

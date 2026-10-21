@@ -58,6 +58,13 @@ O zip tem os arquivos `.meta`. **Não importe os packs por conta própria**: cad
 | Free Currency Loot Vector Icons | 482753 | `UI/CurrencyLootIcons` | ícones de dinheiro/loot na UI | Leonardo | baixado |
 
 Status: proposto → baixado → aprovado (direção de arte) → em uso.
+
+## Outros assets (licença livre, ficam no repositório)
+
+| Asset | Fonte | Licença | Onde está | Quem trouxe |
+|---|---|---|---|---|
+| Car engine start 01 | looneybits, [OpenGameArt](https://opengameart.org/node/93658) | CC0 | `Thieves/PeNaTabua/Audio/SFX_PeNaTabua_Partida.wav` | Leonardo |
+| Car Tire Skid Squealing (loop) | Mike Koenig (Soundbible), editado por qubodup, [OpenGameArt](https://opengameart.org/node/5634) | CC-BY 3.0 (crédito obrigatório) | `Thieves/PeNaTabua/Audio/SFX_CavaloDePau.wav` | Leonardo |
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.
 
 ## Animações de cada ladrão (dono do ladrão faz)

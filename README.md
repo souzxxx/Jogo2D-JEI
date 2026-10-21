@@ -88,6 +88,8 @@ Os arquivos dos packs não estão no repositório (licença do craftpix não per
 | Free Pixel Art Street 2D Backgrounds | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
 | Night City Street Game Background Tiles | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
 | Free Currency Loot Vector Icons | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
+| Car engine start 01 (som de ação do Pé-na-Tábua) | looneybits, [OpenGameArt](https://opengameart.org/node/93658) | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Car Tire Skid Squealing (som do Cavalo de pau) | Mike Koenig ([Soundbible](http://soundbible.com/1178-Tires-Squealing.html)), editado por qubodup, [OpenGameArt](https://opengameart.org/node/5634) | [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
 
 ### Ferramentas de IA
 | Ferramenta | Pra quê |

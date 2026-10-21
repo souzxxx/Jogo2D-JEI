@@ -15,8 +15,9 @@ MonoBehaviour:
   id: cavalo-de-pau
   displayName: Cavalo de pau
   description: "Fuga perfeita a qualquer hora, at\xE9 com a pol\xEDcia na porta: leva 100% da sacola e ningu\xE9m \xE9 preso."
-  icon: {fileID: 0}
-  sfx: {fileID: 0}
+  icon: {fileID: 21300000, guid: e4c209769a71c4219874e6f3eeedd1b2, type: 3}
+  sfx: {fileID: 8300000, guid: 1064d25120153415e81ca739ffc48742, type: 3}
+  vfxPrefab: {fileID: 0}
   alertDelta: 0
   freezeAlertSeconds: 0
   completeCurrentRoom: 0
