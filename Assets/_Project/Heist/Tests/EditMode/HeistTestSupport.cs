@@ -77,6 +77,29 @@ namespace AFirma.Tests
 
         public static List<ThiefState> Crew(params ThiefState[] thieves) => new List<ThiefState>(thieves);
 
+        /// <summary>Evento de teste que cabe em qualquer sala do tier 1.</summary>
+        public static HeistEventDef MakeEvent(string id, params EventChoice[] choices)
+        {
+            var e = Track(ScriptableObject.CreateInstance<HeistEventDef>());
+            e.id = id;
+            e.displayName = id;
+            e.body = "Evento de teste.";
+            e.choices.AddRange(choices);
+            return e;
+        }
+
+        /// <summary>Escolha que sempre dá certo, sem requisito.</summary>
+        public static EventChoice SafeChoice(EventEffect success = null) =>
+            new EventChoice { label = "Seguro", success = success ?? new EventEffect { resultText = "Deu certo." } };
+
+        /// <summary>Só esses eventos entram no sorteio, e toda sala tem evento (chance 100%).</summary>
+        public static void OnlyTheseEvents(params HeistEventDef[] events)
+        {
+            Services.Db.events.Clear();
+            Services.Db.events.AddRange(events);
+            Services.Config.eventChancePerRoom = 1f;
+        }
+
         public static void Tick(float seconds) => ((ITickable)Services.Heist).Tick(seconds);
 
         /// <summary>Tica até a condição valer. Retorna quantos segundos de jogo passaram.</summary>

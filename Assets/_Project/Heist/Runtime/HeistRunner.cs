@@ -9,8 +9,8 @@ namespace AFirma.Heist
     /// (ARQUITETURA › Ciclo de vida de um golpe).
     ///
     /// Regras reais (HeistRules): especialista, poder, tempo, loot com manhas, decisão de porta,
-    /// alerta, sirene, contagem da polícia, as 4 saídas, prisão, pagamento e XP.
-    /// Eventos e habilidades ainda seguem o comportamento do mock
+    /// alerta, sirene, contagem da polícia, as 4 saídas, prisão, pagamento e XP. Eventos: EventRules.
+    /// Habilidades ainda seguem o comportamento do mock
     /// e ganham as regras completas nas próximas tasks do board.
     /// </summary>
     public class HeistRunner : IHeistService, ITickable
@@ -134,9 +134,12 @@ namespace AFirma.Heist
             }
 
             var evt = PickEvent();
-            if (evt != null) TriggerEvent(evt);
+            if (evt == null) return;
+            var instance = EventRules.BuildInstance(evt, crew, Services.Crew, Services.Db);
+            if (EventRules.HasAvailableChoice(instance)) TriggerEvent(instance);
         }
 
+        /// <summary>Tutorial na 1ª sala da 1ª Lotérica; senão sorteia pela chance da sala, filtros e peso.</summary>
         HeistEventDef PickEvent()
         {
             var events = Services.Db.events;
@@ -146,21 +149,9 @@ namespace AFirma.Heist
                 if (tutorial != null) return tutorial;
             }
 
-            if (rng.NextDouble() >= Cfg.eventChancePerRoom) return null;
-
-            var pool = events.FindAll(e => e != null && !e.tutorialOnly && e.minTier <= CurrentHeist.tier &&
-                                           (e.anyRoom || e.roomObstacle == CurrentRoom.obstacle));
-            if (pool.Count == 0) return null;
-
-            float total = 0f;
-            foreach (var e in pool) total += Math.Max(0.01f, e.weight);
-            var roll = rng.NextDouble() * total;
-            foreach (var e in pool)
-            {
-                roll -= Math.Max(0.01f, e.weight);
-                if (roll <= 0) return e;
-            }
-            return pool[pool.Count - 1];
+            if (rng.NextDouble() >= EventRules.EventChance(crew, Services.Db)) return null;
+            var pool = events.FindAll(e => EventRules.CanAppear(e, CurrentHeist, CurrentRoom));
+            return pool.Count == 0 ? null : EventRules.PickWeighted(pool, rng.NextDouble());
         }
 
         // ---------------- Loop ----------------
@@ -260,38 +251,11 @@ namespace AFirma.Heist
             else Flee();
         }
 
-        void TriggerEvent(HeistEventDef def)
+        void TriggerEvent(HeistEventInstance instance)
         {
-            var instance = new HeistEventInstance { def = def };
-            foreach (var choice in def.choices)
-            {
-                var view = new EventChoiceView { choice = choice, available = true };
-                if (choice.requiresType && !crew.Exists(t => t.type == choice.requiredType))
-                {
-                    view.available = false;
-                    var typeDef = Services.Db.GetThiefType(choice.requiredType);
-                    view.unavailableReason = "Precisa de um " + (typeDef != null ? typeDef.displayName : choice.requiredType.ToString()) + ".";
-                }
-                view.successChance = Math.Min(1f, Math.Max(0f, choice.baseChance + choice.chancePerStatPoint * BestStat(choice.check)));
-                instance.choices.Add(view);
-            }
-
             PendingEvent = instance;
             phase = HeistPhase.AwaitingEvent;
             GameEvents.RaiseHeistEventTriggered(instance);
-        }
-
-        float BestStat(CheckStat stat)
-        {
-            float best = 0f;
-            foreach (var thief in crew)
-            {
-                float value = stat == CheckStat.Skill ? Services.Crew.GetSkill(thief)
-                    : stat == CheckStat.Stealth ? Services.Crew.GetStealth(thief)
-                    : stat == CheckStat.Nerves ? Services.Crew.GetNerves(thief) : 0f;
-                best = Math.Max(best, value);
-            }
-            return best;
         }
 
         public void ChooseEventOption(int choiceIndex)

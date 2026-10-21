@@ -75,6 +75,23 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void Events_HaveAtMostThreeChoices_EachWithLabelAndResultText()
+        {
+            foreach (var e in db.events)
+            {
+                Assert.LessOrEqual(e.choices.Count, 3, e.displayName + ": o cartão cabe 2 ou 3 escolhas.");
+                foreach (var c in e.choices)
+                {
+                    Assert.IsNotEmpty(c.label, e.displayName + ": escolha sem texto.");
+                    Assert.IsNotEmpty(c.success.resultText, e.displayName + " / " + c.label + ": falta o texto do sucesso.");
+                    // Com atributo baixo a chance fica no baseChance: abaixo de 100% pode dar errado.
+                    if (c.baseChance < 1f)
+                        Assert.IsNotEmpty(c.failure.resultText, e.displayName + " / " + c.label + ": pode dar errado, falta o texto da falha.");
+                }
+            }
+        }
+
+        [Test]
         public void Headlines_FillPlaceholders()
         {
             var result = new HeistResult { outcome = HeistOutcome.CleanEscape, moneyGained = 1500 };
