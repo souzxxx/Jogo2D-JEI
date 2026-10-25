@@ -41,12 +41,12 @@
 
 **Conceito central.** Um idle em que o "automático" tem tensão: a crew trabalha sozinha, mas cada sala nova é uma aposta. A graça não é clicar rápido, é decidir na hora certa.
 
-**Mundo: Nova Guanabara.** Cidade fictícia que mistura São Paulo e Rio nos anos 90: orelhão, bip, fita K7, lotação, gatonet, jogo do bicho, inflação. Moeda: Cruzeiro (Cr$). Ninguém é vilão de verdade, todo mundo é meio malandro.
+**Mundo: Nova Guanabara.** Cidade fictícia que mistura São Paulo e Rio no começo dos anos 90 (por volta de 1992): orelhão, bip, fita K7, lotação, gatonet, jogo do bicho, inflação. Moeda: Cruzeiro (Cr$). Ninguém é vilão de verdade, todo mundo é meio malandro. A firma mora na **Zona Norte** (oficina da Dona Cida, lotérica, cassino debaixo da pastelaria); o **Centro** tem joalheria e câmbio; na **Avenida do Porto** ficam o Banco Central e a polícia.
 
 **Personagens.**
-- **O Chefe (jogador):** nunca aparece; é "o cérebro".
-- **Dona Cida:** lenda aposentada do crime, dona do esconderijo (uma oficina de fachada). Passa a firma pro jogador, conduz o tutorial e manda recados por bip. Fala mansa, conselho afiado.
-- **Delegado Bastos:** antagonista. Aparece nas manchetes, promete pegar a firma, é promovido a cada prestígio.
+- **O Chefe (jogador):** nunca aparece; é "o cérebro". Todo mundo chama de "chefia", sem gênero definido.
+- **Dona Cida:** uns 70 anos, lenda aposentada do crime ("nunca deixou pista, só saudade"), dona do esconderijo (a "Auto Elétrica da Cida", oficina de fachada). Passa a firma pro jogador, conduz o tutorial e manda recados por bip. Fala mansa, conselho afiado, deboche com carinho.
+- **Delegado Bastos:** antagonista de bigode que adora uma câmera. Promete muito e pega pouco: é piada, não ameaça. Aparece nas manchetes e é promovido a cada prestígio.
 - **A crew:** ladrões gerados com nome + apelido de classe ("Juninho Disquete", "Tião Pé-na-Tábua"), uma manha de personalidade e bordões.
 
 **Os 4 tipos de ladrão.**
@@ -61,7 +61,7 @@
 
 **Arco.** Dona Cida passa a firma → golpes crescem (Lotérica → Joalheria → Câmbio → Cassino) → **Banco Central via túnel**, o golpe do século → **sumir do mapa** (prestígio): a firma desaparece, Bastos jura vingança, a cidade recomeça mais vigiada.
 
-**Tom.** Malandro charmoso: leve, bem-humorado, sem violência explícita.
+**Tom.** Malandro charmoso: leve, bem-humorado, sem violência explícita. A saída é sempre a lábia ou o improviso, nunca machucar alguém; nada de ofensa, coisa real ou anacronismo. Guia completo, com gírias, tamanhos de texto e exemplos bons e ruins: `Assets/_Project/Narrative/LEIA-ME.md`.
 
 ### 1.2 Mechanics — regras e sistemas
 
@@ -225,3 +225,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 21/10/2026 | Mechanics | Fama Lenda dá níveis de graça no recruta (o preço é o do nível sorteado); trocar candidatos fica mais barato com Contatos | Bônus de Fama que não se anula; Contatos com o efeito "troca mais barata" do ESCOPO |
 | 21/10/2026 | Mechanics | Lábia não pode ser usada com o alerta zerado; evento sem nenhuma escolha possível não abre | Habilidade não é gasta à toa; golpe nunca trava |
 | 21/10/2026 | Blueprint | Personalidade do Pé-na-Tábua | Dono do ladrão escreveu |
+| 25/10/2026 | Blueprint | Bíblia do mundo (época, lugares, Dona Cida, Bastos, jeito de falar de cada tipo) e guia de tom | Todo mundo escreve texto: o guia deixa tudo coeso |
