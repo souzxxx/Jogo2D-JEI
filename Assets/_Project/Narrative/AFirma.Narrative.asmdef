@@ -1,0 +1,16 @@
+{
+    "name": "AFirma.Narrative",
+    "rootNamespace": "AFirma.Narrative",
+    "references": [
+        "AFirma.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

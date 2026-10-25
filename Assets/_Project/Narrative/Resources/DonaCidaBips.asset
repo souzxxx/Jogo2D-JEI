@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ced44cbd3be8ef44befb4bbce4070ce, type: 3}
+  m_Name: DonaCidaBips
+  m_EditorClassIdentifier: AFirma.Narrative::AFirma.Narrative.BipSetDef
+  newGame: "A firma agora \xE9 sua, chefia. Come\xE7a pelo Seu Z\xE9, na lot\xE9rica da esquina: pouca gente e nenhuma c\xE2mera."
+  firstHeistCompleted: "Fez bonito no Seu Z\xE9. Agora n\xE3o vai sair contando pra vizinhan\xE7a."
+  firstHeistFled: "Meteu o p\xE9 antes do cofre? \xC0s vezes \xE9 o certo. Cofre bom \xE9 o que voc\xEA volta pra buscar."
+  firstSiren: "Sirene n\xE3o \xE9 fim de mundo. Ou limpa a sala antes da pol\xEDcia chegar, ou mete o p\xE9 com o que tem."
+  firstArrest: "Pegaram o {nome}? Calma. Cadeia passa, e fian\xE7a existe pra isso."
+  heistUnlocked:
+  - heist: {fileID: 11400000, guid: 3540c87700a5d479aad0bb378967e3da, type: 2}
+    text: 'Tem uma joalheria no Centro com alarme novinho. Procura um Disquete nos Contatos: vai precisar de quem entende de computador.'
+  - heist: {fileID: 11400000, guid: e7fe8f60b2cd9444e93638b1468af13f, type: 2}
+    text: "A Casa de C\xE2mbio guarda tudo em dinheiro vivo. A rua l\xE1 vive engarrafada: um bom motorista faz falta."
+  - heist: {fileID: 11400000, guid: ee5e41db40494413795657b7615b49a5, type: 2}
+    text: "O cassino debaixo da pastelaria t\xE1 liberado. Muito seguran\xE7a: guarda as habilidades pra hora certa."
+  - heist: {fileID: 11400000, guid: d565e6b102b3740f9a7b4e04215dd7e7, type: 2}
+    text: "Chegou a hora, chefia. Trinta anos eu planejei esse t\xFAnel. N\xE3o me faz passar vergonha no Banco Central."
+  prestigeUnlocked: "O golpe do s\xE9culo, chefia. Agora some do mapa um tempo: a cidade esquece, o Bastos n\xE3o."

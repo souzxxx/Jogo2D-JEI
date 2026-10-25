@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "O golpe do s\xE9culo. Dona Cida passou trinta anos planejando: um t\xFAnel saindo de uma loja de material de constru\xE7\xE3o at\xE9 o cofre do Banco Central."
   icon: {fileID: 0}
   tier: 5
-  briefing: "O golpe do s\xE9culo. Dona Cida passou trinta anos planejando: um t\xFAnel saindo de uma loja de material de constru\xE7\xE3o at\xE9 o cofre do Banco Central."
+  briefing: "O golpe do s\xE9culo. Dona Cida passou trinta anos planejando um t\xFAnel da loja de material de constru\xE7\xE3o at\xE9 o cofre. No t\xFAnel \xE9 sossegado; l\xE1 em cima, nem tanto."
   unlockedByDefault: 0
   unlockedBy: {fileID: 11400000, guid: ee5e41db40494413795657b7615b49a5, type: 2}
   rooms:

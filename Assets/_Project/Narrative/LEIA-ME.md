@@ -2,6 +2,20 @@
 
 Narrativa (Nicolas): bips da Dona Cida, briefings, manchetes.
 
+## O que tem aqui
+
+| Asset | O que é |
+|---|---|
+| `Resources/DonaCidaBips` (`BipSetDef`) | Textos dos bips da Dona Cida: jogo novo, 1º golpe (cofre limpo ou meteu o pé), 1ª sirene, 1º preso (`{nome}`), um por golpe liberado e prestígio liberado |
+| `Runtime/DonaCidaBips` | Escuta os `GameEvents` e manda `GameEvents.Bip` nos marcos, **uma vez por save** (fica em `GameState.seenTips` com o prefixo `bip:`). Golpe liberado no meio do golpe espera o resultado; na pausa os bips esperam |
+| `Runtime/NarrativeInstaller` | Sobe tudo no Play. Enquanto a UI do bip (Enzo) não existe, todo bip sai no Console como `[Bip] Dona Cida: ...` |
+
+O bip do novato grátis fica no `GameConfig.freeRookieBip` (quem manda é o `CrewService`). Os briefings ficam em cada `HeistDef` (`Data/Heists`).
+
+Pra ver de novo os bips de primeira vez: F1 → **Novo jogo (apaga save)**.
+
+---
+
 Esta página é a bíblia do mundo e o guia de tom. **Todo texto do jogo passa por aqui**: evento, bordão, briefing, bip, manchete, descrição de upgrade. Na dúvida, leia os exemplos do fim.
 
 ---
