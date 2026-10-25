@@ -94,7 +94,7 @@ Os arquivos dos packs não estão no repositório (licença do craftpix não per
 ### Ferramentas de IA
 | Ferramenta | Pra quê |
 |---|---|
-| _preencher_ | |
+| Claude (Anthropic) | Escreveu o script Python que desenha pixel a pixel o sprite, as animações e o retrato do 171 (`Thieves/171/Art/Source~/gerar_171.py`) |
 
 ### Código de terceiros
 | Trecho | Fonte | Onde está no projeto |

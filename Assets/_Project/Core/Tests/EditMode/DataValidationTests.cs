@@ -36,6 +36,46 @@ namespace AFirma.Tests
             }
         }
 
+        static readonly string[] ThiefAnimations = { "idle", "andar", "trabalhar", "comemorar" };
+
+        /// <summary>Quem já tem arte segue o padrão do ASSETS.md. Ladrão sem arte ainda usa o placeholder da cena.</summary>
+        [Test]
+        public void ThiefArt_WhenFilled_HasPortrait64AndTheFourAnimations()
+        {
+            foreach (var t in db.thiefTypes)
+            {
+                if (t.portrait != null)
+                {
+                    Assert.AreEqual(64f, t.portrait.rect.width, t.displayName + ": retrato é 64x64.");
+                    Assert.AreEqual(64f, t.portrait.rect.height, t.displayName + ": retrato é 64x64.");
+                }
+                if (t.animator == null) continue;
+                var controller = t.animator as UnityEditor.Animations.AnimatorController;
+                Assert.IsNotNull(controller, t.displayName + ": o animator tem que ser um Animator Controller.");
+                var states = controller.layers[0].stateMachine.states;
+                foreach (var anim in ThiefAnimations)
+                {
+                    var state = System.Array.Find(states, s => s.state.name == anim);
+                    Assert.IsNotNull(state.state, t.displayName + ": falta o estado '" + anim + "'.");
+                    var clip = state.state.motion as AnimationClip;
+                    Assert.IsNotNull(clip, t.displayName + "/" + anim + " sem clipe.");
+                    var curves = UnityEditor.AnimationUtility.GetObjectReferenceCurveBindings(clip);
+                    Assert.AreEqual(1, curves.Length, t.displayName + "/" + anim + ": o clipe troca o sprite do SpriteRenderer.");
+                    foreach (var key in UnityEditor.AnimationUtility.GetObjectReferenceCurve(clip, curves[0]))
+                        Assert.IsNotNull(key.value as Sprite, t.displayName + "/" + anim + ": frame sem sprite.");
+                }
+                Assert.AreEqual("idle", controller.layers[0].stateMachine.defaultState.name, t.displayName);
+            }
+        }
+
+        [Test]
+        public void ConArtist_HasArt()
+        {
+            var conArtist = db.thiefTypes.Find(t => t.type == ThiefType.ConArtist);
+            Assert.IsNotNull(conArtist.portrait, "171 sem retrato.");
+            Assert.IsNotNull(conArtist.animator, "171 sem animator.");
+        }
+
         [Test]
         public void Heists_HaveRoomsAndEndInVault()
         {
