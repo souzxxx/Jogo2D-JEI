@@ -24,25 +24,25 @@ MonoBehaviour:
   - name: Vitrine
     kind: 0
     obstacle: 2
-    difficulty: 450
+    difficulty: 720
     loot: 300
     alertPerSecond: 2
   - name: "Sala de C\xE2meras"
     kind: 3
     obstacle: 1
-    difficulty: 550
+    difficulty: 880
     loot: 400
     alertPerSecond: 3
   - name: "Escrit\xF3rio"
     kind: 4
     obstacle: 0
-    difficulty: 600
+    difficulty: 960
     loot: 800
     alertPerSecond: 3
   - name: Cofre
     kind: 5
     obstacle: 1
-    difficulty: 700
+    difficulty: 1120
     loot: 1500
     alertPerSecond: 4
   jailSeconds: 120

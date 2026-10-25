@@ -1,7 +1,8 @@
 # Balanceamento
 
 > Dono: **Nicolas**. Rubrica Balanceamento (peso 2).
-> Planilha: _colar o link do Google Sheets aqui (Sprint 1)_
+> Planilha: [`balanceamento/Balanceamento_v1.xlsx`](balanceamento/Balanceamento_v1.xlsx) · [Google Sheets](https://docs.google.com/spreadsheets/d/1pYudXkkM3sUWgJ2zF4S0KOWfcyLhDklo2aWt3NAhmdg/edit?usp=sharing)
+> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído)
 
 ## Metas
 
@@ -52,21 +53,39 @@ Regras de bolso:
 | Procurado | dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível | Progressão |
 | Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%)` | Economia |
 
-## Tabela inicial dos golpes (ponto de partida)
+## Tabela dos golpes (v1)
 
 | Golpe | Salas | Loot total | Dificuldade por sala | Alerta/s |
 |---|---|---|---|---|
 | Lotérica do Seu Zé | 3 | Cr$ 500 | 250–350 | 1,5–2,5 |
-| Joalheria Brilho Eterno | 4 | Cr$ 3.000 | 450–700 | 2–4 |
-| Casa de Câmbio Dólar Fácil | 5 | Cr$ 18.000 | 800–1.200 | 3–5 |
-| Cassino Clandestino | 6 | Cr$ 100.000 | 1.400–2.100 | 4–6 |
-| Banco Central | 7 | Cr$ 600.000 | 2.300–3.800 | 1–8 |
+| Joalheria Brilho Eterno | 4 | Cr$ 3.000 | 720–1.120 | 2–4 |
+| Casa de Câmbio Dólar Fácil | 5 | Cr$ 18.000 | 1.120–1.680 | 3–5 |
+| Cassino Clandestino | 6 | Cr$ 100.000 | 1.260–1.890 | 3,2–4,8 |
+| Banco Central | 7 | Cr$ 600.000 | 1.380–2.280 | 0,7–5,6 |
+
+## Curva simulada (v1)
+
+Jogador perfeito do simulador: é o piso. Jogador de verdade demora mais, e o playtest (#43) dá o número real.
+
+| Marco | Meta | v0 | v1 | v1 sem habilidades |
+|---|---|---|---|---|
+| Lotérica concluída | ~3 min com tutorial | 0,8 | 0,8 | 1,0 |
+| Joalheria concluída (Câmbio liberado) | ~10 | 2,2 | 3,8 | 11,4 |
+| Câmbio concluído (Cassino liberado) | ~20 | 5,6 | 12,1 | 36,5 |
+| Cassino concluído | — | 55,6 | 26,1 | 74,4 |
+| Banco Central concluído | **40–60** | nunca | **48,8** | 88,4 |
+
+Pra ficar de olho no playtest:
+- O começo ainda está rápido no papel (Câmbio liberado em ~4 min). Se o playtest confirmar, sobe a dificuldade da Joalheria.
+- No fim do ciclo todos os upgrades chegam no máximo e sobra muito Cr$: custos do topo baratos demais pro loot do Cassino e do Banco. Ver na #44.
+- Sem as habilidades o Banco Central leva ~90 min: no topo elas são obrigatórias, como o ESCOPO pede.
 
 ## Registro de ajustes
 
 | Data | O que mudou | Por quê (dado do playtest) |
 |---|---|---|
 | 20/10 | Valores iniciais | Setup da fundação |
+| 25/10 | Dificuldade: Joalheria ×1,6, Câmbio ×1,4, Cassino ×0,9, Banco ×0,6. Alerta/s: Cassino ×0,8, Banco ×0,7 | Simulador: o Cassino virava parede (nem com tudo no máximo fechava) e o Banco Central nunca era concluído, com salas de 22–36 s (regra: 5–20 s). Câmbio liberava em 2 min |
 
 ## Playtest cronometrado (modelo)
 

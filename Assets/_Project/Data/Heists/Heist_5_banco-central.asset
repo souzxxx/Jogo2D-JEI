@@ -24,45 +24,45 @@ MonoBehaviour:
   - name: "T\xFAnel"
     kind: 6
     obstacle: 0
-    difficulty: 2300
+    difficulty: 1380
     loot: 10000
-    alertPerSecond: 1
+    alertPerSecond: 0.7
   - name: "T\xFAnel Fundo"
     kind: 6
     obstacle: 1
-    difficulty: 2500
+    difficulty: 1500
     loot: 20000
-    alertPerSecond: 1.5
+    alertPerSecond: 1.05
   - name: Subsolo
     kind: 7
     obstacle: 2
-    difficulty: 2700
+    difficulty: 1620
     loot: 40000
-    alertPerSecond: 5
+    alertPerSecond: 3.5
   - name: "Corredor de Seguran\xE7a"
     kind: 1
     obstacle: 1
-    difficulty: 2900
+    difficulty: 1740
     loot: 60000
-    alertPerSecond: 6
+    alertPerSecond: 4.2
   - name: "Sala de C\xE2meras"
     kind: 3
     obstacle: 1
-    difficulty: 3100
+    difficulty: 1860
     loot: 90000
-    alertPerSecond: 6
+    alertPerSecond: 4.2
   - name: "Antec\xE2mara"
     kind: 4
     obstacle: 0
-    difficulty: 3300
+    difficulty: 1980
     loot: 130000
-    alertPerSecond: 7
+    alertPerSecond: 4.9
   - name: Cofre Central
     kind: 5
     obstacle: 0
-    difficulty: 3800
+    difficulty: 2280
     loot: 250000
-    alertPerSecond: 8
+    alertPerSecond: 5.6
   jailSeconds: 300
   mapPosition: {x: 6, y: 0}
   buildingPrefab: {fileID: 0}

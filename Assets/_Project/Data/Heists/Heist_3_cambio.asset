@@ -24,31 +24,31 @@ MonoBehaviour:
   - name: Fachada
     kind: 0
     obstacle: 0
-    difficulty: 800
+    difficulty: 1120
     loot: 1500
     alertPerSecond: 3
   - name: "Balc\xE3o"
     kind: 2
     obstacle: 2
-    difficulty: 900
+    difficulty: 1260
     loot: 2500
     alertPerSecond: 3.5
   - name: Corredor
     kind: 1
     obstacle: 1
-    difficulty: 950
+    difficulty: 1330
     loot: 3000
     alertPerSecond: 4
   - name: "Escrit\xF3rio do Gerente"
     kind: 4
     obstacle: 2
-    difficulty: 1050
+    difficulty: 1470
     loot: 4000
     alertPerSecond: 4
   - name: Cofre
     kind: 5
     obstacle: 0
-    difficulty: 1200
+    difficulty: 1680
     loot: 7000
     alertPerSecond: 5
   jailSeconds: 180

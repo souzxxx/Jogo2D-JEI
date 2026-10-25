@@ -24,39 +24,39 @@ MonoBehaviour:
   - name: Pastelaria
     kind: 0
     obstacle: 2
-    difficulty: 1400
+    difficulty: 1260
     loot: 5000
-    alertPerSecond: 4
+    alertPerSecond: 3.2
   - name: Corredor
     kind: 1
     obstacle: 0
-    difficulty: 1500
+    difficulty: 1350
     loot: 8000
-    alertPerSecond: 4.5
+    alertPerSecond: 3.6
   - name: "Sal\xE3o de Jogos"
     kind: 2
     obstacle: 2
-    difficulty: 1700
+    difficulty: 1530
     loot: 15000
-    alertPerSecond: 5
+    alertPerSecond: 4
   - name: "Sala de C\xE2meras"
     kind: 3
     obstacle: 1
-    difficulty: 1800
+    difficulty: 1620
     loot: 17000
-    alertPerSecond: 5.5
+    alertPerSecond: 4.4
   - name: "Escrit\xF3rio do Bicheiro"
     kind: 4
     obstacle: 2
-    difficulty: 1900
+    difficulty: 1710
     loot: 25000
-    alertPerSecond: 5.5
+    alertPerSecond: 4.4
   - name: Cofre
     kind: 5
     obstacle: 0
-    difficulty: 2100
+    difficulty: 1890
     loot: 30000
-    alertPerSecond: 6
+    alertPerSecond: 4.8
   jailSeconds: 240
   mapPosition: {x: 3, y: 1.5}
   buildingPrefab: {fileID: 0}
