@@ -230,3 +230,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 25/10/2026 | Blueprint | Bíblia do mundo (época, lugares, Dona Cida, Bastos, jeito de falar de cada tipo) e guia de tom | Todo mundo escreve texto: o guia deixa tudo coeso |
 | 25/10/2026 | Mechanics | Economia e progressão reais no jogo; balanceamento v1 (Joalheria e Câmbio mais difíceis, Cassino e Banco Central mais fáceis) | Simulador: o Cassino era parede e o Banco Central nunca era concluído |
 | 25/10/2026 | Blueprint | Bips da Dona Cida nos marcos e briefings revisados com a dica de cada golpe | História em pílulas (ESCOPO §5) |
+| 25/10/2026 | Todas | GDD montado no Milanote em colunas DDE, com o mesmo conteúdo deste arquivo | O GDD oficial é o do Milanote (rubrica obrigatória) |
