@@ -109,13 +109,15 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 - **Prisão:** tempo do golpe × (1 − Advogado%), em tempo real (corre com o jogo fechado). Fiança = segundos restantes × Cr$ 2 × manha (Pão-duro) × (1 − Advogado%). Preso não vai pra golpe nem pra bico; preso de novo fica com a pena mais longa.
 
 **Economia.**
-- **Cr$** vem dos golpes e dos bicos.
+- **Cr$** vem dos golpes e dos bicos. O dinheiro nunca fica negativo e toda compra impossível explica o motivo ("Falta Cr$ 70.", "Nível máximo.").
 - **Bicos:** ladrões ociosos geram renda passiva, em dobro no bico do próprio tipo. Catar latinha rende sempre, sem ladrão.
 - **Ganho offline:** até 4 h, a 50%.
-- **Upgrades:** 9 upgrades do esconderijo com níveis.
+- **Upgrades:** 9 upgrades do esconderijo com níveis, custo = custo base × crescimento^nível: Van (+1 vaga no golpe), Quartos (+1 vaga na crew), Ferramentas (+5% Perícia), Tênis de molinha (+5% Discrição), Advogado (−10% prisão e fiança), Contatos (recrutas melhores), Lavanderia (+5% loot), Rádio da polícia (+2 s na contagem), Ponto de bico (+10% renda dos bicos), por nível.
 
 **Progressão.**
-- **Golpes:** escada de 5. Concluir o cofre de um libera o próximo.
+- **Golpes:** escada de 5. Concluir o cofre de um libera o próximo; a Lotérica nunca fica bloqueada e todo golpe pode ser repetido. Cada golpe ensina algo: Lotérica (tutorial) → Joalheria (Sistema, pede um Disquete) → Câmbio (mistura e fuga, pede um Pé-na-Tábua) → Cassino (muito alerta, pede as habilidades) → Banco Central (túnel calmo, cofre mais protegido).
+- **Contexto do golpe:** modificador sorteado × Nível de Procurado (dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível). A Fama entra direto no motor do golpe.
+- **Balanceamento v1:** Banco Central concluído em ~49 min no simulador (meta 40–60). Curva e números em [BALANCEAMENTO.md](BALANCEAMENTO.md).
 - **Modificadores:** sorteados a cada visita ao mapa (feriado, dia de pagamento…).
 - **Prestígio:** depois do Banco Central, "sumir do mapa" reseta o ciclo, dá Fama e +1 Nível de Procurado (tudo mais difícil e mais rico). A Fama compra 6 bônus permanentes.
 
@@ -226,3 +228,5 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 21/10/2026 | Mechanics | Lábia não pode ser usada com o alerta zerado; evento sem nenhuma escolha possível não abre | Habilidade não é gasta à toa; golpe nunca trava |
 | 21/10/2026 | Blueprint | Personalidade do Pé-na-Tábua | Dono do ladrão escreveu |
 | 25/10/2026 | Blueprint | Bíblia do mundo (época, lugares, Dona Cida, Bastos, jeito de falar de cada tipo) e guia de tom | Todo mundo escreve texto: o guia deixa tudo coeso |
+| 25/10/2026 | Mechanics | Economia e progressão reais no jogo; balanceamento v1 (Joalheria e Câmbio mais difíceis, Cassino e Banco Central mais fáceis) | Simulador: o Cassino era parede e o Banco Central nunca era concluído |
+| 25/10/2026 | Blueprint | Bips da Dona Cida nos marcos e briefings revisados com a dica de cada golpe | História em pílulas (ESCOPO §5) |
