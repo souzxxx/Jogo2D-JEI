@@ -9,7 +9,7 @@ Idle de assalto 2D feito em Unity para o Projeto 2D de Jogos Digitais e Interaç
 | 🎮 Jogar | _link do itch.io (em breve)_ — jam: <https://itch.io/jam/projeto-jogo-2d-insper-20262> |
 | 📋 Board de tarefas | <https://github.com/users/souzxxx/projects/2> |
 | 📄 Escopo | [docs/ESCOPO.md](docs/ESCOPO.md) |
-| 📘 GDD | [docs/GDD.md](docs/GDD.md) · Milanote: _link (em breve)_ |
+| 📘 GDD | [docs/GDD.md](docs/GDD.md) · [Milanote](https://app.milanote.com/1Xl1js1SfE3bar/a-firma-gdd) |
 
 ## Equipe
 
