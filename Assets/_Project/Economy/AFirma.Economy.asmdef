@@ -1,0 +1,16 @@
+{
+    "name": "AFirma.Economy",
+    "rootNamespace": "AFirma.Economy",
+    "references": [
+        "AFirma.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
