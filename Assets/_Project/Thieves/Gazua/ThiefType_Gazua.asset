@@ -30,16 +30,16 @@ MonoBehaviour:
   arrestChanceReduction: 0
   ability: {fileID: 11400000, guid: 4701f8bc51b2c4e36bdd6b46977e99fb, type: 2}
   signatureSideJob: {fileID: 11400000, guid: aa585039910da4d2683b7682dda175f6, type: 2}
-  portrait: {fileID: 0}
-  animator: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 56bee89072e6c454da040f9b4f9dd310, type: 3}
+  animator: {fileID: 9100000, guid: 41ce1b396fd7940f1bfe19ecac611641, type: 2}
   color: {r: 0.75, g: 0.75, b: 0.8, a: 1}
-  actionSfx: {fileID: 0}
+  actionSfx: {fileID: 8300000, guid: 4ea39cfcaeab047808668d8d8f0d1bcc, type: 3}
   barks:
-  - "Essa fechadura é de brinquedo."
-  - "Dá licença que eu abro."
-  - "Cadeado vagabundo, moleza."
-  - "Essa aqui é das teimosas."
-  - "Calma, minha filha, já vou."
-  - "Shhh... ela tá falando comigo."
-  - "Fechadura boa é fechadura aberta."
-  - "Cadê o óleo? Ela tá rangendo."
+  - "Essa fechadura \xE9 de brinquedo."
+  - "D\xE1 licen\xE7a que eu abro."
+  - Cadeado vagabundo, moleza.
+  - "Essa aqui \xE9 das teimosas."
+  - "Calma, minha filha, j\xE1 vou."
+  - "Shhh... ela t\xE1 falando comigo."
+  - "Fechadura boa \xE9 fechadura aberta."
+  - "Cad\xEA o \xF3leo? Ela t\xE1 rangendo."
