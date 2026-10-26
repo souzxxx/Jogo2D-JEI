@@ -20,8 +20,21 @@
 | Retrato da UI | 64×64 (foto 3x4 do "dossiê") |
 | Import de sprite | Filter Mode **Point**, Compression **None**, PPU 32 |
 | Câmera | Pixel Perfect Camera (URP), referência 640×360, upscale pra 1280×720 |
-| Paleta | _a definir pelo Miguel na Sprint 0_ (colar a imagem da paleta aqui) |
+| Paleta | 32 cores, abaixo (`HeistScene/Art/Paleta.png`). Os nomes estão em `HeistScene/Art/Source~/paleta.py` |
 | Fonte da UI | _a definir pelo Enzo na Sprint 0_ (pixel, legível, com acentos) |
+
+## Paleta
+
+![Paleta de A Firma](img/paleta.png)
+
+Linha a linha: a noite azulada de Nova Guanabara (ink → cream), a luz quente de interior e o kraft do dossiê (umber → paper), o verde do dinheiro, o vermelho do alarme, o ouro das lâmpadas e do cofre, o azul da viatura e da tela, o neon do cassino e dois tons de pele.
+
+## Direção de arte da Cena do Golpe (Miguel)
+
+- **Prédio em corte lateral**, salas de 192×96 px lado a lado, paredes de 8 px com porta, fachada por fora nos andares de cima e a rua com van, poste e orelhão. Um prédio por golpe, cada um com tema próprio (Lotérica verde-menta, Joalheria vinho e dourado, Câmbio de fórmica e vidro azul, Cassino roxo debaixo da pastelaria, Banco Central de mármore no subsolo com o túnel de terra).
+- **Toda a arte da cena é desenhada pixel a pixel por script, já na paleta** (`HeistScene/Art/Source~/gerar_cena.py`): salas, adereços dos obstáculos (fechado/aberto), NPCs 32×32 no mesmo padrão do 171, fachadas, letreiros, fundo da cidade, ícones e uma fonte pixel com acento. Mudou o golpe, roda o script e o Unity refaz tudo (ver `HeistScene/LEIA-ME.md`).
+- **Os packs de cenário do craftpix** (`StreetBackgrounds`, `NightCityTiles`) foram desenhados pra 1920×1080, três vezes a nossa escala (640×360 com PPU 32). Reduzidos, viram borrão; usados no tamanho original, ficam gigantes ao lado dos ladrões de 32 px. Eles ficaram como referência de clima (a noite azul-acinzentada inspirou a paleta) e a cena não depende do zip: quem clona o repositório já vê o jogo inteiro.
+- **Luz conta a história**: Light2D quente em cada sala, lanterna dos guardas, cone das câmeras, giroflex vermelho no alerta alto e vermelho/azul da viatura na sirene. A luz ambiente muda por prédio.
 
 ## Packs do craftpix: NÃO vão pro GitHub
 
@@ -53,8 +66,8 @@ O zip tem os arquivos `.meta`. **Não importe os packs por conta própria**: cad
 | Free Soldier Sprite Sheets | 507107 | `Personagens/Soldiers` | seguranças do Banco Central | Leonardo | baixado |
 | Urban Animals Sprite Sheet Pixel Art Pack | 222276 | `Personagens/UrbanAnimals` | ambiente (gato, cachorro, rato) | Leonardo | baixado |
 | Free SWAT Dialog Portraits | 163543 | `Retratos/SWATPortraits` | retratos de diálogo / jornal | Leonardo | baixado |
-| Free Pixel Art Street 2D Backgrounds | 891123 | `Cenario/StreetBackgrounds` | fundo parallax da cidade | Leonardo | baixado |
-| Night City Street Game Background Tiles | 891154 | `Cenario/NightCityTiles` | paredes, janelas, decoração dos prédios e rua | Leonardo | baixado |
+| Free Pixel Art Street 2D Backgrounds | 891123 | `Cenario/StreetBackgrounds` | fundo parallax da cidade | Leonardo | referência (escala 3×: o fundo da cena é próprio, ver acima) |
+| Night City Street Game Background Tiles | 891154 | `Cenario/NightCityTiles` | paredes, janelas, decoração dos prédios e rua | Leonardo | referência (escala 3×: os prédios da cena são próprios, ver acima) |
 | Free Currency Loot Vector Icons | 482753 | `UI/CurrencyLootIcons` | ícones de dinheiro/loot na UI | Leonardo | baixado |
 
 Status: proposto → baixado → aprovado (direção de arte) → em uso.
@@ -65,6 +78,15 @@ Status: proposto → baixado → aprovado (direção de arte) → em uso.
 |---|---|---|---|---|
 | Car engine start 01 | looneybits, [OpenGameArt](https://opengameart.org/node/93658) | CC0 | `Thieves/PeNaTabua/Audio/SFX_PeNaTabua_Partida.wav` | Leonardo |
 | Car Tire Skid Squealing (loop) | Mike Koenig (Soundbible), editado por qubodup, [OpenGameArt](https://opengameart.org/node/5634) | CC-BY 3.0 (crédito obrigatório) | `Thieves/PeNaTabua/Audio/SFX_CavaloDePau.wav` | Leonardo |
+
+Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
+
+| O quê | Como foi feito | Onde está | Quem fez |
+|---|---|---|---|
+| Arte da Cena do Golpe (salas, prédios, NPCs, ícones, fundo, fonte pixel) | Script Python que desenha pixel a pixel na paleta | `HeistScene/Art` (script em `Art/Source~`) | Miguel |
+| Gazua (sheet, retrato, ícones, "CREC!") | Script Python, mesmo padrão do 171 | `Thieves/Gazua/Art`, `Icons`, `VFX` | Miguel |
+| Sons da cena (grana na sacola, porta) e do Gazua (gazua na fechadura, pé-de-cabra) | Sintetizados por script, sem sample | `HeistScene/Audio`, `Thieves/Gazua/Audio` (script em `HeistScene/Audio/Source~`) | Miguel |
+
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.
 
 ## Animações de cada ladrão (dono do ladrão faz)

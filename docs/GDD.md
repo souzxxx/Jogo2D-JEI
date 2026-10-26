@@ -53,7 +53,7 @@
 | Tipo | Papel | Personalidade |
 |---|---|---|
 | Pé-na-Tábua | motorista, cuida da fuga | Ex-motorista de lotação pirata, conhece a cidade pelos buracos da rua. Fala como quem tá dirigindo ("segura", "retrovisor limpo"), nunca desliga o motor e ninguém mexe no rádio dele. Medo: lombada eletrônica. |
-| Gazua | arrombador, fechaduras e cofres | _dono escreve_ |
+| Gazua | arrombador, fechaduras e cofres | Ex-chaveiro de plantão da Zona Norte. Fala pouco e fala com as fechaduras como se fossem gente ("calma, minha filha", "essa é das teimosas"). Gorro de lã, lupa de relojoeiro no olho e um molho de duzentas chaves que jura saber de cor. Lubrifica tudo com óleo de máquina de costura. Medo: fechadura eletrônica de teclado ("não tem nem buraco pra conversar"). |
 | Disquete | hacker, câmeras e alarmes | _dono escreve_ |
 | 171 | vigarista, pessoas e lábia | _dono escreve_ |
 
@@ -78,7 +78,7 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 - **Loot:** loot da sala × modificador × manhas (Fominha +20%, Mão-boba +30% em sala de Pessoa) entra na sacola, e todo mundo ganha XP.
 - **Alerta por segundo:** taxa da sala × (1 − 0,5 × Discrição média/100) × 2 sem especialista × modificador × manhas (Boca-aberta +20%) × (1 − Fama Sangue-frio%). Não sobe com a crew parada na porta nem durante um evento.
 - **Porta:** entre salas o golpe pausa e mostra a próxima (obstáculo, loot estimado, se tem especialista): **próxima sala** ou **meter o pé**.
-- **Eventos:** 30% por sala (Pé-frio +50%), filtrados por golpe e tipo de sala e sorteados por peso. Cada um tem 2 ou 3 escolhas: algumas pedem um tipo de ladrão (indisponível mostra o motivo), outras testam um atributo (chance = base + por ponto × melhor atributo da crew). Efeitos: alerta, % da sacola, atraso ou prender alguém (vai em cana no fim do golpe). Todo evento tem pelo menos uma escolha sem requisito; se mesmo assim a crew não tiver nenhuma escolha possível, o evento não abre. O primeiro golpe tem o evento roteirizado do Seu Zé. Hoje são 13 eventos, 3 deles do Pé-na-Tábua.
+- **Eventos:** 30% por sala (Pé-frio +50%), filtrados por golpe e tipo de sala e sorteados por peso. Cada um tem 2 ou 3 escolhas: algumas pedem um tipo de ladrão (indisponível mostra o motivo), outras testam um atributo (chance = base + por ponto × melhor atributo da crew). Efeitos: alerta, % da sacola, atraso ou prender alguém (vai em cana no fim do golpe). Todo evento tem pelo menos uma escolha sem requisito; se mesmo assim a crew não tiver nenhuma escolha possível, o evento não abre. O primeiro golpe tem o evento roteirizado do Seu Zé. Hoje são 16 eventos, 3 deles do Pé-na-Tábua e 3 do Gazua (Tranca tetra, Cofrinho atrás do quadro, Porta corta-fogo).
 - **Habilidades (uma vez por golpe; o botão diz o motivo quando não dá):**
 
 | Ladrão | Habilidade | Efeito |
@@ -140,17 +140,33 @@ _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.
 - HUD do golpe, popup de porta, cartão de evento, contagem da polícia
 - Jornal, popup offline, bip e tutorial
 
-**Feedback no mundo** (a cena conta o que está acontecendo):
-- **Salas:** ícone do obstáculo sobre a sala, ladrão animado trabalhando e anel de progresso.
-- **Loot e falas:** notas voando pra sacola e balões de bordão.
-- **Vigilância:** guardas com lanterna que viram "!" e câmeras com cone que muda de cor.
-- **Alerta:** luz de alarme a partir de 70%, viatura na janela na sirene e vinheta que fecha conforme o alerta.
+**Feedback no mundo** (a cena conta o que está acontecendo, sem depender da HUD):
+- **Prédio em corte:** cada golpe é um prédio com tema próprio; as salas ainda não visitadas ficam no escuro e a sala atual acende quando a crew entra.
+- **Obstáculo e progresso:** o ícone do obstáculo (cadeado, monitor, pessoa) flutua na sala com um anel que enche conforme a crew trabalha. O adereço reage: grade com cadeado, cofre, painel de alarme, CFTV ou a pessoa de posto (Seu Zé, crupiê, bicheiro...).
+- **Quem trabalha:** o especialista do obstáculo vai na frente e faz a animação de trabalho (o Gazua ajoelha na fechadura e solta faísca). Sem especialista, o melhor da crew vai com um aviso vermelho na cabeça (mais lento e mais barulho).
+- **Sala limpa:** a grade abre, o cofre abre, o painel fica verde, a pessoa fica distraída ("zZ"); notas e moedas voam até a sacola nas costas da crew (que cresce), "+Cr$" sobe da sala, toca o plim e a crew comemora.
+- **Decisão de porta:** a crew vai até a porta, a porta pisca e a próxima sala aparece na penumbra com o ícone piscando (e o aviso de "sem especialista").
+- **Eventos:** "!?" em cima da crew; depois check ou X e o resultado num balão de fala. Atraso mostra um relógio; perder sacola derruba notas no chão.
+- **Vigilância:** guardas com lanterna (luz 2D) patrulhando: calmos, "?" com lanterna amarela a partir de 35 de alerta, "!" com lanterna vermelha a partir de 70, correndo na sirene. Câmeras varrendo a sala com um cone verde → amarelo → vermelho; o Loop na câmera do Disquete apaga as câmeras pelo tempo da habilidade.
+- **Alerta:** giroflex vermelho girando no teto a partir de 70%, vinheta que fecha conforme o alerta e luz do prédio que esfria.
+- **Sirene:** a viatura chega com o giroflex, luz vermelha/azul entra pela janela, a tela treme e alguém da crew grita.
+- **Habilidades:** cada uma tem efeito na sala (o Pé-de-cabra solta faísca, lasca de madeira e um "CREC!" de gibi, e a tela treme).
+- **Fuga:** a crew corre de volta pra van e a van arranca (no Cavalo de pau ela rodopia antes); quem foi preso fica algemado pra trás.
+- **Balões de bordão** com a fonte pixel do jogo.
 
 **Regras de UX:** botão indisponível sempre explica o motivo; ação irreversível pede confirmação; dinheiro animado.
 
 **Áudio como interface:** a música do golpe ganha camadas com o alerta; cada ação importante tem som.
 
 _Mockups das telas: colar aqui e no Milanote._
+
+Cena do Golpe (prints do jogo):
+
+| | |
+|---|---|
+| ![Lotérica, tutorial do Seu Zé](img/cena_loterica_tutorial.png) | ![Câmbio, decisão de porta com as notas voando pra sacola](img/cena_cambio_porta.png) |
+| ![Cassino, sala limpa com o pasteleiro distraído](img/cena_cassino_sala_limpa.png) | ![Joalheria com a sirene tocando](img/cena_joalheria_sirene.png) |
+| ![Banco Central, o Gazua no túnel](img/cena_banco_tunel.png) | ![Golpe na Lotérica](img/gif_golpe_loterica.gif) |
 
 ---
 
@@ -187,10 +203,12 @@ _Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
 
 ## 4. Arte e Som
 
-- **Arte:** pixel art 32×32 (PPU 32). Cenário e UI com packs do craftpix.net (acesso da faculdade) recoloridos numa paleta única. Os 4 ladrões feitos pelo time. Prédios em corte lateral com salas modulares. _Paleta e referências visuais: colar aqui._
-- **VFX:** luzes 2D (lanternas, alarme, viatura), partículas (faísca, notas, fumaça, poeira), vinheta por alerta, screen shake leve.
+- **Arte:** pixel art 32×32 (PPU 32), câmera Pixel Perfect em 640×360. **Paleta de 32 cores** (`docs/img/paleta.png`): a noite azulada de Nova Guanabara, a luz quente de interior, o kraft do dossiê, o verde do dinheiro, o vermelho do alarme, o azul da viatura e o neon do cassino. Os 4 ladrões feitos pelo time. Prédios em corte lateral com salas modulares (uma por tipo de sala), desenhados pixel a pixel por script na paleta, cada golpe com tema próprio: Lotérica verde-menta com cartaz de loteria, Joalheria vinho e dourado, Câmbio de vidro azul com a cotação do dólar, Cassino roxo escondido debaixo de uma pastelaria, Banco Central de mármore com o túnel de terra. Fundo da cidade em parallax (morro com luzinhas, prédios com neon) e rua com orelhão, banca de jornal e a Kombi da firma.
+
+![Paleta](img/paleta.png)
+- **VFX:** luzes 2D (lâmpada de cada sala, lanterna dos guardas, cone das câmeras, giroflex, viatura), partículas (faísca e lascas do pé-de-cabra, poeira do túnel, fumaça do escapamento), notas voando, vinheta e bloom leve por pós-processamento, screen shake na sirene.
 - **Música:** esconderijo (samba-jazz/bossa lo-fi), golpe com camadas de tensão, sirene, menu.
-- **SFX:** UI, ações dos ladrões, loot, alarme, sirene, bip, máquina de escrever do jornal.
+- **SFX:** UI, ações dos ladrões, loot, alarme, sirene, bip, máquina de escrever do jornal. A cena toca o som de ação do ladrão quando ele começa a trabalhar, o plim da grana na sacola e a porta abrindo (sons da cena e do Gazua sintetizados por script).
 
 Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 
@@ -231,3 +249,7 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 25/10/2026 | Mechanics | Economia e progressão reais no jogo; balanceamento v1 (Joalheria e Câmbio mais difíceis, Cassino e Banco Central mais fáceis) | Simulador: o Cassino era parede e o Banco Central nunca era concluído |
 | 25/10/2026 | Blueprint | Bips da Dona Cida nos marcos e briefings revisados com a dica de cada golpe | História em pílulas (ESCOPO §5) |
 | 25/10/2026 | Todas | GDD montado no Milanote em colunas DDE, com o mesmo conteúdo deste arquivo | O GDD oficial é o do Milanote (rubrica obrigatória) |
+| 26/10/2026 | Blueprint | Personalidade do Gazua e 3 eventos dele (Tranca tetra, Cofrinho atrás do quadro, Porta corta-fogo) | Dono do ladrão escreveu; cada ladrão tem momentos em que só ele resolve |
+| 26/10/2026 | Interface | Feedback no mundo implementado: prédio em corte, ícone e anel de progresso, adereço que abre, notas voando pra sacola, guardas e câmeras por faixa de alerta, giroflex, vinheta, viatura, balões e fuga na van | Rubrica Feedback: dá pra entender o golpe olhando a cena, sem a HUD |
+| 26/10/2026 | Arte e Som | Paleta de 32 cores e direção de arte da cena; os packs de cenário do craftpix ficaram só como referência (escala 3× a do jogo) | Arte coesa numa paleta única, sem colagem de packs |
+| 26/10/2026 | Mechanics | Pé-de-cabra explica o motivo quando não dá ("Só serve em sala de Fechadura.", "Espera a crew entrar na sala.") | Botão indisponível sempre diz o motivo |

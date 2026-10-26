@@ -95,6 +95,7 @@ Os arquivos dos packs não estão no repositório (licença do craftpix não per
 | Ferramenta | Pra quê |
 |---|---|
 | Claude (Anthropic) | Escreveu o script Python que desenha pixel a pixel o sprite, as animações e o retrato do 171 (`Thieves/171/Art/Source~/gerar_171.py`) |
+| Claude (Anthropic) | Escreveu os scripts Python que desenham pixel a pixel a arte da Cena do Golpe (salas, prédios, NPCs, ícones, fundo da cidade e fonte pixel: `HeistScene/Art/Source~`) e do Gazua (`Thieves/Gazua/Art/Source~`), e o que sintetiza os sons da cena e do Gazua (`HeistScene/Audio/Source~`) |
 
 ### Código de terceiros
 | Trecho | Fonte | Onde está no projeto |
