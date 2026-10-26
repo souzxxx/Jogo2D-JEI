@@ -9,17 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab1e9b7684972490481cf6fb2a0a48c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 820713c3551f43678599b77482b1f479, type: 3}
   m_Name: Ability_Gazua
-  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.SimpleAbilityDef
+  m_EditorClassIdentifier: AFirma.Thieves.Gazua::AFirma.Thieves.Gazua.PeDeCabraAbility
   id: pe-de-cabra
   displayName: "P\xE9-de-cabra"
-  description: 'Limpa na hora uma sala de Fechadura, mas faz barulho: +15 de alerta.'
-  icon: {fileID: 0}
-  sfx: {fileID: 0}
-  alertDelta: 15
-  freezeAlertSeconds: 0
-  completeCurrentRoom: 1
-  requireRoomObstacle: 1
-  roomObstacle: 0
-  perfectEscape: 0
+  description: "Abre na marra a sala de Fechadura em que a crew est\xE1: limpa na hora, mas faz barulho (+15 de alerta)."
+  icon: {fileID: 21300000, guid: e70c66fb106b1411b8dc915f5cb95b22, type: 3}
+  sfx: {fileID: 8300000, guid: baa773690dd8b40748d863c9caf084c6, type: 3}
+  vfxPrefab: {fileID: 4566826194429277495, guid: cbea0030e4ec04347b62c9af2808b679, type: 3}
+  noise: 15
