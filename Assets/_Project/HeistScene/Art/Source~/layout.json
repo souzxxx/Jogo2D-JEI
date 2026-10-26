@@ -1,0 +1,2548 @@
+{
+ "ppu": 32,
+ "roomW": 192,
+ "roomH": 96,
+ "wall": 8,
+ "cellW": 200,
+ "feet": 3,
+ "buildings": [
+  {
+   "heistId": "loterica",
+   "name": "Lotérica do Seu Zé",
+   "tier": 1,
+   "ambient": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.62,
+   "underground": false,
+   "shell": "Predios/Predio_loterica.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 608,
+   "streetY": 0,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 3
+    },
+    {
+     "x": 4,
+     "y": 3
+    },
+    {
+     "x": 22,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 0
+   },
+   "police": {
+    "x": -262,
+    "y": 0
+   },
+   "props": [
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 638,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 668,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": -250,
+     "y": 0
+    }
+   ],
+   "cameraY": 124,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Entrada",
+     "kind": 0,
+     "obstacle": 2,
+     "x": 8,
+     "background": "Salas/Sala_loterica_0.png",
+     "prop": "npc:freguesa",
+     "propX": 158,
+     "propY": 3,
+     "backWall": false,
+     "workX": 132,
+     "entryX": 22,
+     "exitX": 194,
+     "iconX": 158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Balcão",
+     "kind": 2,
+     "obstacle": 2,
+     "x": 208,
+     "background": "Salas/Sala_loterica_1.png",
+     "prop": "npc:seu_ze",
+     "propX": 358,
+     "propY": 3,
+     "backWall": false,
+     "workX": 332,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 358,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Cofrinho",
+     "kind": 5,
+     "obstacle": 0,
+     "x": 408,
+     "background": "Salas/Sala_loterica_2.png",
+     "prop": "Cofrinho",
+     "propX": 564,
+     "propY": 4,
+     "backWall": false,
+     "workX": 544,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 564,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  },
+  {
+   "heistId": "joalheria",
+   "name": "Joalheria Brilho Eterno",
+   "tier": 2,
+   "ambient": {
+    "r": 0.9254901960784314,
+    "g": 0.8235294117647058,
+    "b": 0.6274509803921569,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.55,
+   "underground": false,
+   "shell": "Predios/Predio_joalheria.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 808,
+   "streetY": 0,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 3
+    },
+    {
+     "x": 4,
+     "y": 3
+    },
+    {
+     "x": 22,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 0
+   },
+   "police": {
+    "x": -262,
+    "y": 0
+   },
+   "props": [
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 838,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 868,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": 958,
+     "y": 0
+    }
+   ],
+   "cameraY": 124,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Vitrine",
+     "kind": 0,
+     "obstacle": 2,
+     "x": 8,
+     "background": "Salas/Sala_joalheria_0.png",
+     "prop": "npc:vendedora",
+     "propX": 158,
+     "propY": 3,
+     "backWall": false,
+     "workX": 132,
+     "entryX": 22,
+     "exitX": 194,
+     "iconX": 158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [
+      {
+       "x": 28,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Sala de Câmeras",
+     "kind": 3,
+     "obstacle": 1,
+     "x": 208,
+     "background": "Salas/Sala_joalheria_1.png",
+     "prop": "Cftv",
+     "propX": 348,
+     "propY": 30,
+     "backWall": true,
+     "workX": 336,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 348,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [
+      {
+       "x": 228,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Escritório",
+     "kind": 4,
+     "obstacle": 0,
+     "x": 408,
+     "background": "Salas/Sala_joalheria_2.png",
+     "prop": "Arquivo",
+     "propX": 562,
+     "propY": 4,
+     "backWall": false,
+     "workX": 542,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 562,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 432,
+       "maxX": 512
+      }
+     ],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 3,
+     "name": "Cofre",
+     "kind": 5,
+     "obstacle": 1,
+     "x": 608,
+     "background": "Salas/Sala_joalheria_3.png",
+     "prop": "CofreEletronico",
+     "propX": 758,
+     "propY": 22,
+     "backWall": true,
+     "workX": 736,
+     "entryX": 622,
+     "exitX": 794,
+     "iconX": 758,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 632,
+       "maxX": 712
+      }
+     ],
+     "cameras": [
+      {
+       "x": 628,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 704,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 668,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  },
+  {
+   "heistId": "cambio",
+   "name": "Casa de Câmbio Dólar Fácil",
+   "tier": 3,
+   "ambient": {
+    "r": 0.803921568627451,
+    "g": 0.8352941176470589,
+    "b": 0.8901960784313725,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.58,
+   "underground": false,
+   "shell": "Predios/Predio_cambio.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 1008,
+   "streetY": 0,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 3
+    },
+    {
+     "x": 4,
+     "y": 3
+    },
+    {
+     "x": 22,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 0
+   },
+   "police": {
+    "x": -262,
+    "y": 0
+   },
+   "props": [
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 1038,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 1068,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": 1158,
+     "y": 0
+    }
+   ],
+   "cameraY": 124,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Fachada",
+     "kind": 0,
+     "obstacle": 0,
+     "x": 8,
+     "background": "Salas/Sala_cambio_0.png",
+     "prop": "Grade",
+     "propX": 164,
+     "propY": 4,
+     "backWall": false,
+     "workX": 140,
+     "entryX": 22,
+     "exitX": 194,
+     "iconX": 164,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "vidro",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Balcão",
+     "kind": 2,
+     "obstacle": 2,
+     "x": 208,
+     "background": "Salas/Sala_cambio_1.png",
+     "prop": "npc:caixa",
+     "propX": 358,
+     "propY": 3,
+     "backWall": false,
+     "workX": 332,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 358,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 232,
+       "maxX": 312
+      }
+     ],
+     "cameras": [
+      {
+       "x": 228,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "vidro",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Corredor",
+     "kind": 1,
+     "obstacle": 1,
+     "x": 408,
+     "background": "Salas/Sala_cambio_2.png",
+     "prop": "Painel",
+     "propX": 558,
+     "propY": 40,
+     "backWall": true,
+     "workX": 546,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 558,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 432,
+       "maxX": 512
+      }
+     ],
+     "cameras": [
+      {
+       "x": 428,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "vidro",
+     "dust": false
+    },
+    {
+     "index": 3,
+     "name": "Escritório do Gerente",
+     "kind": 4,
+     "obstacle": 2,
+     "x": 608,
+     "background": "Salas/Sala_cambio_3.png",
+     "prop": "npc:gerente",
+     "propX": 758,
+     "propY": 3,
+     "backWall": false,
+     "workX": 732,
+     "entryX": 622,
+     "exitX": 794,
+     "iconX": 758,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 704,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 668,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 4,
+     "name": "Cofre",
+     "kind": 5,
+     "obstacle": 0,
+     "x": 808,
+     "background": "Salas/Sala_cambio_4.png",
+     "prop": "Cofre",
+     "propX": 958,
+     "propY": 22,
+     "backWall": true,
+     "workX": 936,
+     "entryX": 822,
+     "exitX": 994,
+     "iconX": 958,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 832,
+       "maxX": 912
+      }
+     ],
+     "cameras": [
+      {
+       "x": 828,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 904,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 868,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  },
+  {
+   "heistId": "cassino",
+   "name": "Cassino Clandestino",
+   "tier": 4,
+   "ambient": {
+    "r": 0.7725490196078432,
+    "g": 0.27450980392156865,
+    "b": 0.5607843137254902,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.5,
+   "underground": true,
+   "shell": "Predios/Predio_cassino.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 1208,
+   "streetY": 136,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 139
+    },
+    {
+     "x": 12,
+     "y": 139
+    },
+    {
+     "x": 54,
+     "y": 5
+    },
+    {
+     "x": 64,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 136
+   },
+   "police": {
+    "x": -262,
+    "y": 136
+   },
+   "props": [
+    {
+     "sprite": "Predios/Escada_cassino.png",
+     "x": 8,
+     "y": 0,
+     "order": -4
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 136,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 136
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 1268,
+     "y": 136,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 1234,
+     "y": 136
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": 1358,
+     "y": 136
+    }
+   ],
+   "cameraY": 126,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Pastelaria",
+     "kind": 0,
+     "obstacle": 2,
+     "x": 8,
+     "background": "Salas/Sala_cassino_0.png",
+     "prop": "npc:pasteleiro",
+     "propX": 158,
+     "propY": 3,
+     "backWall": false,
+     "workX": 132,
+     "entryX": 48,
+     "exitX": 194,
+     "iconX": 158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Corredor",
+     "kind": 1,
+     "obstacle": 0,
+     "x": 208,
+     "background": "Salas/Sala_cassino_1.png",
+     "prop": "Grade",
+     "propX": 364,
+     "propY": 4,
+     "backWall": false,
+     "workX": 340,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 364,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "leao",
+       "minX": 232,
+       "maxX": 312
+      }
+     ],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        197,
+        70,
+        143
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Salão de Jogos",
+     "kind": 2,
+     "obstacle": 2,
+     "x": 408,
+     "background": "Salas/Sala_cassino_2.png",
+     "prop": "npc:crupie",
+     "propX": 558,
+     "propY": 3,
+     "backWall": false,
+     "workX": 532,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 558,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [
+      {
+       "x": 428,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        197,
+        70,
+        143
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 3,
+     "name": "Sala de Câmeras",
+     "kind": 3,
+     "obstacle": 1,
+     "x": 608,
+     "background": "Salas/Sala_cassino_3.png",
+     "prop": "Cftv",
+     "propX": 748,
+     "propY": 30,
+     "backWall": true,
+     "workX": 736,
+     "entryX": 622,
+     "exitX": 794,
+     "iconX": 748,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "leao",
+       "minX": 632,
+       "maxX": 712
+      }
+     ],
+     "cameras": [
+      {
+       "x": 628,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 704,
+       "y": 80,
+       "color": [
+        197,
+        70,
+        143
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 668,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 4,
+     "name": "Escritório do Bicheiro",
+     "kind": 4,
+     "obstacle": 2,
+     "x": 808,
+     "background": "Salas/Sala_cassino_4.png",
+     "prop": "npc:bicheiro",
+     "propX": 958,
+     "propY": 3,
+     "backWall": false,
+     "workX": 932,
+     "entryX": 822,
+     "exitX": 994,
+     "iconX": 958,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 904,
+       "y": 80,
+       "color": [
+        197,
+        70,
+        143
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 868,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 5,
+     "name": "Cofre",
+     "kind": 5,
+     "obstacle": 0,
+     "x": 1008,
+     "background": "Salas/Sala_cassino_5.png",
+     "prop": "Cofre",
+     "propX": 1158,
+     "propY": 22,
+     "backWall": true,
+     "workX": 1136,
+     "entryX": 1022,
+     "exitX": 1194,
+     "iconX": 1158,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "leao",
+       "minX": 1032,
+       "maxX": 1112
+      }
+     ],
+     "cameras": [
+      {
+       "x": 1028,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 1104,
+       "y": 80,
+       "color": [
+        197,
+        70,
+        143
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 1068,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  },
+  {
+   "heistId": "banco-central",
+   "name": "Banco Central de Nova Guanabara",
+   "tier": 5,
+   "ambient": {
+    "r": 0.803921568627451,
+    "g": 0.8352941176470589,
+    "b": 0.8901960784313725,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.6,
+   "underground": true,
+   "shell": "Predios/Predio_banco-central.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 1408,
+   "streetY": 136,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 139
+    },
+    {
+     "x": 22,
+     "y": 139
+    },
+    {
+     "x": 22,
+     "y": 3
+    },
+    {
+     "x": 42,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 136
+   },
+   "police": {
+    "x": -262,
+    "y": 136
+   },
+   "props": [
+    {
+     "sprite": "Predios/Escada_banco.png",
+     "x": 16,
+     "y": 0,
+     "order": -4
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 136,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 136
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 1468,
+     "y": 136,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 1434,
+     "y": 136
+    },
+    {
+     "sprite": "Rua/Bueiro.png",
+     "x": 290,
+     "y": 134
+    }
+   ],
+   "cameraY": 126,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Túnel",
+     "kind": 6,
+     "obstacle": 0,
+     "x": 8,
+     "background": "Salas/Sala_banco-central_0.png",
+     "prop": "GradeEnferrujada",
+     "propX": 164,
+     "propY": 4,
+     "backWall": false,
+     "workX": 140,
+     "entryX": 48,
+     "exitX": 194,
+     "iconX": 164,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 32,
+       "y": 78,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 2.6,
+       "intensity": 0.9
+      },
+      {
+       "x": 128,
+       "y": 78,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 2.6,
+       "intensity": 0.9
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "tabuas",
+     "dust": true
+    },
+    {
+     "index": 1,
+     "name": "Túnel Fundo",
+     "kind": 6,
+     "obstacle": 1,
+     "x": 208,
+     "background": "Salas/Sala_banco-central_1.png",
+     "prop": "Sensor",
+     "propX": 358,
+     "propY": 40,
+     "backWall": true,
+     "workX": 346,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 358,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 232,
+       "y": 78,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 2.6,
+       "intensity": 0.9
+      },
+      {
+       "x": 328,
+       "y": 78,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 2.6,
+       "intensity": 0.9
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "buraco",
+     "dust": true
+    },
+    {
+     "index": 2,
+     "name": "Subsolo",
+     "kind": 7,
+     "obstacle": 2,
+     "x": 408,
+     "background": "Salas/Sala_banco-central_2.png",
+     "prop": "npc:vigia",
+     "propX": 558,
+     "propY": 3,
+     "backWall": false,
+     "workX": 532,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 558,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        205,
+        213,
+        227
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 3,
+     "name": "Corredor de Segurança",
+     "kind": 1,
+     "obstacle": 1,
+     "x": 608,
+     "background": "Salas/Sala_banco-central_3.png",
+     "prop": "Painel",
+     "propX": 758,
+     "propY": 40,
+     "backWall": true,
+     "workX": 746,
+     "entryX": 622,
+     "exitX": 794,
+     "iconX": 758,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "vigia",
+       "minX": 632,
+       "maxX": 712
+      }
+     ],
+     "cameras": [
+      {
+       "x": 628,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 704,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 668,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 4,
+     "name": "Sala de Câmeras",
+     "kind": 3,
+     "obstacle": 1,
+     "x": 808,
+     "background": "Salas/Sala_banco-central_4.png",
+     "prop": "Cftv",
+     "propX": 948,
+     "propY": 30,
+     "backWall": true,
+     "workX": 936,
+     "entryX": 822,
+     "exitX": 994,
+     "iconX": 948,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "vigia",
+       "minX": 832,
+       "maxX": 912
+      }
+     ],
+     "cameras": [
+      {
+       "x": 828,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 904,
+       "y": 80,
+       "color": [
+        116,
+        214,
+        234
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 868,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 5,
+     "name": "Antecâmara",
+     "kind": 4,
+     "obstacle": 0,
+     "x": 1008,
+     "background": "Salas/Sala_banco-central_5.png",
+     "prop": "GradeDourada",
+     "propX": 1164,
+     "propY": 4,
+     "backWall": false,
+     "workX": 1140,
+     "entryX": 1022,
+     "exitX": 1194,
+     "iconX": 1164,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "vigia",
+       "minX": 1032,
+       "maxX": 1112
+      }
+     ],
+     "cameras": [
+      {
+       "x": 1028,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 1104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 1068,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 6,
+     "name": "Cofre Central",
+     "kind": 5,
+     "obstacle": 0,
+     "x": 1208,
+     "background": "Salas/Sala_banco-central_6.png",
+     "prop": "CofreCentral",
+     "propX": 1348,
+     "propY": 12,
+     "backWall": true,
+     "workX": 1320,
+     "entryX": 1222,
+     "exitX": 1394,
+     "iconX": 1348,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "vigia",
+       "minX": 1232,
+       "maxX": 1312
+      }
+     ],
+     "cameras": [
+      {
+       "x": 1228,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 1304,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 1268,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  }
+ ],
+ "defaults": [
+  {
+   "kind": 0,
+   "background": "Salas/Sala_Padrao_Entrance.png",
+   "door": "madeira",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 1,
+   "background": "Salas/Sala_Padrao_Corridor.png",
+   "door": "madeira",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 2,
+   "background": "Salas/Sala_Padrao_Counter.png",
+   "door": "madeira",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 3,
+   "background": "Salas/Sala_Padrao_CameraRoom.png",
+   "door": "madeira",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 4,
+   "background": "Salas/Sala_Padrao_Office.png",
+   "door": "madeira",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 5,
+   "background": "Salas/Sala_Padrao_Vault.png",
+   "door": "madeira",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 6,
+   "background": "Salas/Sala_Padrao_Tunnel.png",
+   "door": "tabuas",
+   "lightColor": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   }
+  },
+  {
+   "kind": 7,
+   "background": "Salas/Sala_Padrao_Garage.png",
+   "door": "metal",
+   "lightColor": {
+    "r": 0.803921568627451,
+    "g": 0.8352941176470589,
+    "b": 0.8901960784313725,
+    "a": 1.0
+   }
+  }
+ ],
+ "npcs": [
+  {
+   "name": "seguranca",
+   "sheet": "Personagens/NPC_seguranca.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "vigia",
+   "sheet": "Personagens/NPC_vigia.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "leao",
+   "sheet": "Personagens/NPC_leao.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "seu_ze",
+   "sheet": "Personagens/NPC_seu_ze.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "freguesa",
+   "sheet": "Personagens/NPC_freguesa.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "vendedora",
+   "sheet": "Personagens/NPC_vendedora.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "caixa",
+   "sheet": "Personagens/NPC_caixa.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "gerente",
+   "sheet": "Personagens/NPC_gerente.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "pasteleiro",
+   "sheet": "Personagens/NPC_pasteleiro.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "crupie",
+   "sheet": "Personagens/NPC_crupie.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "bicheiro",
+   "sheet": "Personagens/NPC_bicheiro.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  }
+ ],
+ "props": [
+  {
+   "name": "Grade",
+   "closed": "Aderecos/Grade_fechado.png",
+   "open": "Aderecos/Grade_aberto.png"
+  },
+  {
+   "name": "GradeEnferrujada",
+   "closed": "Aderecos/GradeEnferrujada_fechado.png",
+   "open": "Aderecos/GradeEnferrujada_aberto.png"
+  },
+  {
+   "name": "GradeDourada",
+   "closed": "Aderecos/GradeDourada_fechado.png",
+   "open": "Aderecos/GradeDourada_aberto.png"
+  },
+  {
+   "name": "Cofrinho",
+   "closed": "Aderecos/Cofrinho_fechado.png",
+   "open": "Aderecos/Cofrinho_aberto.png"
+  },
+  {
+   "name": "Cofre",
+   "closed": "Aderecos/Cofre_fechado.png",
+   "open": "Aderecos/Cofre_aberto.png"
+  },
+  {
+   "name": "CofreEletronico",
+   "closed": "Aderecos/CofreEletronico_fechado.png",
+   "open": "Aderecos/CofreEletronico_aberto.png"
+  },
+  {
+   "name": "CofreCentral",
+   "closed": "Aderecos/CofreCentral_fechado.png",
+   "open": "Aderecos/CofreCentral_aberto.png"
+  },
+  {
+   "name": "Arquivo",
+   "closed": "Aderecos/Arquivo_fechado.png",
+   "open": "Aderecos/Arquivo_aberto.png"
+  },
+  {
+   "name": "Painel",
+   "closed": "Aderecos/Painel_fechado.png",
+   "open": "Aderecos/Painel_aberto.png"
+  },
+  {
+   "name": "Terminal",
+   "closed": "Aderecos/Terminal_fechado.png",
+   "open": "Aderecos/Terminal_aberto.png"
+  },
+  {
+   "name": "Cftv",
+   "closed": "Aderecos/Cftv_fechado.png",
+   "open": "Aderecos/Cftv_aberto.png"
+  },
+  {
+   "name": "Sensor",
+   "closed": "Aderecos/Sensor_fechado.png",
+   "open": "Aderecos/Sensor_aberto.png"
+  }
+ ],
+ "doors": [
+  {
+   "style": "madeira",
+   "closed": "Predios/Porta_madeira_fechada.png",
+   "open": "Predios/Porta_madeira_aberta.png"
+  },
+  {
+   "style": "metal",
+   "closed": "Predios/Porta_metal_fechada.png",
+   "open": "Predios/Porta_metal_aberta.png"
+  },
+  {
+   "style": "vidro",
+   "closed": "Predios/Porta_vidro_fechada.png",
+   "open": "Predios/Porta_vidro_aberta.png"
+  },
+  {
+   "style": "tabuas",
+   "closed": "Predios/Porta_tabuas_fechada.png",
+   "open": "Predios/Porta_tabuas_aberta.png"
+  },
+  {
+   "style": "buraco",
+   "closed": "Predios/Porta_buraco_fechada.png",
+   "open": "Predios/Porta_buraco_aberta.png"
+  }
+ ],
+ "font": [
+  {
+   "c": "A",
+   "x": 0,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "B",
+   "x": 6,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "C",
+   "x": 12,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "D",
+   "x": 18,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "E",
+   "x": 24,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "F",
+   "x": 30,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "G",
+   "x": 36,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "H",
+   "x": 42,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "I",
+   "x": 48,
+   "y": 66,
+   "w": 3
+  },
+  {
+   "c": "J",
+   "x": 54,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "K",
+   "x": 60,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "L",
+   "x": 66,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "M",
+   "x": 72,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "N",
+   "x": 78,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "O",
+   "x": 84,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "P",
+   "x": 90,
+   "y": 66,
+   "w": 5
+  },
+  {
+   "c": "Q",
+   "x": 0,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "R",
+   "x": 6,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "S",
+   "x": 12,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "T",
+   "x": 18,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "U",
+   "x": 24,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "V",
+   "x": 30,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "W",
+   "x": 36,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "X",
+   "x": 42,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "Y",
+   "x": 48,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "Z",
+   "x": 54,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "a",
+   "x": 60,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "b",
+   "x": 66,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "c",
+   "x": 72,
+   "y": 55,
+   "w": 4
+  },
+  {
+   "c": "d",
+   "x": 78,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "e",
+   "x": 84,
+   "y": 55,
+   "w": 5
+  },
+  {
+   "c": "f",
+   "x": 90,
+   "y": 55,
+   "w": 4
+  },
+  {
+   "c": "g",
+   "x": 0,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "h",
+   "x": 6,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "i",
+   "x": 12,
+   "y": 44,
+   "w": 1
+  },
+  {
+   "c": "j",
+   "x": 18,
+   "y": 44,
+   "w": 3
+  },
+  {
+   "c": "k",
+   "x": 24,
+   "y": 44,
+   "w": 4
+  },
+  {
+   "c": "l",
+   "x": 30,
+   "y": 44,
+   "w": 3
+  },
+  {
+   "c": "m",
+   "x": 36,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "n",
+   "x": 42,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "o",
+   "x": 48,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "p",
+   "x": 54,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "q",
+   "x": 60,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "r",
+   "x": 66,
+   "y": 44,
+   "w": 4
+  },
+  {
+   "c": "s",
+   "x": 72,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "t",
+   "x": 78,
+   "y": 44,
+   "w": 4
+  },
+  {
+   "c": "u",
+   "x": 84,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "v",
+   "x": 90,
+   "y": 44,
+   "w": 5
+  },
+  {
+   "c": "w",
+   "x": 0,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "x",
+   "x": 6,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "y",
+   "x": 12,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "z",
+   "x": 18,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "0",
+   "x": 24,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "1",
+   "x": 30,
+   "y": 33,
+   "w": 3
+  },
+  {
+   "c": "2",
+   "x": 36,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "3",
+   "x": 42,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "4",
+   "x": 48,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "5",
+   "x": 54,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "6",
+   "x": 60,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "7",
+   "x": 66,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "8",
+   "x": 72,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "9",
+   "x": 78,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": "$",
+   "x": 84,
+   "y": 33,
+   "w": 5
+  },
+  {
+   "c": ".",
+   "x": 90,
+   "y": 33,
+   "w": 1
+  },
+  {
+   "c": ",",
+   "x": 0,
+   "y": 22,
+   "w": 2
+  },
+  {
+   "c": ":",
+   "x": 6,
+   "y": 22,
+   "w": 1
+  },
+  {
+   "c": ";",
+   "x": 12,
+   "y": 22,
+   "w": 2
+  },
+  {
+   "c": "!",
+   "x": 18,
+   "y": 22,
+   "w": 1
+  },
+  {
+   "c": "?",
+   "x": 24,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "-",
+   "x": 30,
+   "y": 22,
+   "w": 3
+  },
+  {
+   "c": "+",
+   "x": 36,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "'",
+   "x": 42,
+   "y": 22,
+   "w": 1
+  },
+  {
+   "c": "\"",
+   "x": 48,
+   "y": 22,
+   "w": 3
+  },
+  {
+   "c": "/",
+   "x": 54,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "(",
+   "x": 60,
+   "y": 22,
+   "w": 2
+  },
+  {
+   "c": ")",
+   "x": 66,
+   "y": 22,
+   "w": 2
+  },
+  {
+   "c": "%",
+   "x": 72,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "*",
+   "x": 78,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "Á",
+   "x": 84,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "À",
+   "x": 90,
+   "y": 22,
+   "w": 5
+  },
+  {
+   "c": "Â",
+   "x": 0,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Ã",
+   "x": 6,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "É",
+   "x": 12,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Ê",
+   "x": 18,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Í",
+   "x": 24,
+   "y": 11,
+   "w": 3
+  },
+  {
+   "c": "Ó",
+   "x": 30,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Ô",
+   "x": 36,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Õ",
+   "x": 42,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Ú",
+   "x": 48,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "Ç",
+   "x": 54,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "á",
+   "x": 60,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "à",
+   "x": 66,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "â",
+   "x": 72,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "ã",
+   "x": 78,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "é",
+   "x": 84,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "ê",
+   "x": 90,
+   "y": 11,
+   "w": 5
+  },
+  {
+   "c": "í",
+   "x": 0,
+   "y": 0,
+   "w": 3
+  },
+  {
+   "c": "ó",
+   "x": 6,
+   "y": 0,
+   "w": 5
+  },
+  {
+   "c": "ô",
+   "x": 12,
+   "y": 0,
+   "w": 5
+  },
+  {
+   "c": "õ",
+   "x": 18,
+   "y": 0,
+   "w": 5
+  },
+  {
+   "c": "ú",
+   "x": 24,
+   "y": 0,
+   "w": 5
+  },
+  {
+   "c": "ç",
+   "x": 30,
+   "y": 0,
+   "w": 4
+  },
+  {
+   "c": " ",
+   "x": 36,
+   "y": 0,
+   "w": 3
+  }
+ ],
+ "genericThief": {
+  "base": "Personagens/Ladrao_generico_base.png",
+  "cloth": "Personagens/Ladrao_generico_roupa.png",
+  "anims": [
+   {
+    "name": "idle",
+    "frames": 4
+   },
+   {
+    "name": "andar",
+    "frames": 6
+   },
+   {
+    "name": "trabalhar",
+    "frames": 6
+   },
+   {
+    "name": "comemorar",
+    "frames": 4
+   }
+  ]
+ },
+ "backdrop": [
+  {
+   "sprite": "Fundo/Morro.png",
+   "parallax": 0.08,
+   "y": 10,
+   "order": -90
+  },
+  {
+   "sprite": "Fundo/Predios_longe.png",
+   "parallax": 0.18,
+   "y": 0,
+   "order": -85
+  },
+  {
+   "sprite": "Fundo/Predios_perto.png",
+   "parallax": 0.35,
+   "y": -4,
+   "order": -80
+  }
+ ],
+ "fontCellH": 11
+}
