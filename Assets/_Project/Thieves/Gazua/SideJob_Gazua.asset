@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: AFirma.Core::AFirma.Core.SideJobDef
   id: chaveiro-24h
   displayName: Chaveiro 24h
-  description: Rende o dobro com um Gazua.
+  description: "Plaquinha de chaveiro 24h na Zona Norte: quem perdeu a chave liga do orelhão. Rende o dobro com um Gazua."
   icon: {fileID: 0}
   requiresThief: 1
   hasPreferredType: 1

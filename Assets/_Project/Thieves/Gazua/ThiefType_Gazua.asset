@@ -35,6 +35,11 @@ MonoBehaviour:
   color: {r: 0.75, g: 0.75, b: 0.8, a: 1}
   actionSfx: {fileID: 0}
   barks:
-  - "Essa fechadura \xE9 de brinquedo."
-  - "D\xE1 licen\xE7a que eu abro."
-  - Cadeado vagabundo, moleza.
+  - "Essa fechadura é de brinquedo."
+  - "Dá licença que eu abro."
+  - "Cadeado vagabundo, moleza."
+  - "Essa aqui é das teimosas."
+  - "Calma, minha filha, já vou."
+  - "Shhh... ela tá falando comigo."
+  - "Fechadura boa é fechadura aberta."
+  - "Cadê o óleo? Ela tá rangendo."
