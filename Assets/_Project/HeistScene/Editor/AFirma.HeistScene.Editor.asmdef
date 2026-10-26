@@ -1,0 +1,23 @@
+{
+    "name": "AFirma.HeistScene.Editor",
+    "rootNamespace": "AFirma.HeistScene.EditorTools",
+    "references": [
+        "AFirma.Core",
+        "AFirma.HeistScene",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Universal.2D.Runtime",
+        "Unity.2D.Sprite.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acdd02a2b6da47b18e9ac33b2f1466c, type: 3}
+  m_Name: HeistSceneArt
+  m_EditorClassIdentifier: AFirma.HeistScene::AFirma.HeistScene.HeistSceneArt
+  roomPrefabs:
+  - {fileID: 8148144953509124725, guid: f0cb0fbd685c14890b0bf10be676af88, type: 3}
+  - {fileID: 4086673640581140793, guid: b47e1d5e797d84a84aeae72175b73c7b, type: 3}
+  - {fileID: 5171698796491885131, guid: 8f63da2bbac514465a69979f4881653f, type: 3}
+  - {fileID: 3488599537964996347, guid: 4431b42c62dca4ec9b01fb36f550128b, type: 3}
+  - {fileID: 5489610491258227255, guid: ae9f40b510c3a49c8acf8556275ce68d, type: 3}
+  - {fileID: 4712055874677831114, guid: c3abbaeaf596c436790d0c603863a4bc, type: 3}
+  - {fileID: 8467729649591762768, guid: d130e39da29ee45fcaba5fc1b5ed51b7, type: 3}
+  - {fileID: 920434414151227280, guid: 68657603a166c4a58bcc9d47fbe962d8, type: 3}
+  thiefPrefab: {fileID: 6775412981985704656, guid: d469758241a854671a5bfa0f14ec4810, type: 3}
+  genericThief:
+  - name: idle
+    fps: 4
+    loop: 1
+    frames:
+    - {fileID: -1513306317, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 2023371458, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -1972504184, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -705210793, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    overlay:
+    - {fileID: -1978560683, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -1158460325, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: 620830964, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -496232701, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+  - name: andar
+    fps: 10
+    loop: 1
+    frames:
+    - {fileID: -1726282370, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 489169702, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -1256234915, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 1294943078, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -1610285234, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -2054620728, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    overlay:
+    - {fileID: 1363631545, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -1002564278, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -1690929224, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: 623924330, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -1693800160, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -1390978031, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+  - name: trabalhar
+    fps: 8
+    loop: 1
+    frames:
+    - {fileID: -1627139276, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -1155468605, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 1497886969, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 675690212, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 470971348, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 1865166930, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    overlay:
+    - {fileID: -2084783526, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -734949125, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -1811389375, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -2052299296, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: 1564978456, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -887818689, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+  - name: comemorar
+    fps: 8
+    loop: 0
+    frames:
+    - {fileID: -588263676, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 425296455, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: -666527749, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    - {fileID: 1708568418, guid: a9239da3621994f5d984bd268cf0fe29, type: 3}
+    overlay:
+    - {fileID: 2082194837, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -436853781, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: -2142471378, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+    - {fileID: 472740795, guid: c718982d6ef9342139bfddfb6af301c9, type: 3}
+  lockIcon: {fileID: 21300000, guid: 0a7af71af101d4151bdb33ebffac9682, type: 3}
+  systemIcon: {fileID: 21300000, guid: 77d9a56e552a44e9b82b6719271f1018, type: 3}
+  personIcon: {fileID: 21300000, guid: f044e42d3d03b48c1bc8e7cc6349f10e, type: 3}
+  checkIcon: {fileID: 21300000, guid: 01496fa45756b466da6f7bbcf0a834d2, type: 3}
+  failIcon: {fileID: 21300000, guid: 895b936848cce4501a26ed12f091c8cf, type: 3}
+  alertIcon: {fileID: 21300000, guid: 7ed404b30e4de4912bc9f501fcf0faaf, type: 3}
+  doubtIcon: {fileID: 21300000, guid: 35c932a30dd334735b9703f026ea612a, type: 3}
+  sleepIcon: {fileID: 21300000, guid: 297b4b36197584578b64ac69fbea16bb, type: 3}
+  handcuffsIcon: {fileID: 21300000, guid: dc4a43211eb65438797f0ad298d48549, type: 3}
+  noSpecialistIcon: {fileID: 21300000, guid: 328b45554a2d64a34828e1697bd3f40e, type: 3}
+  eventIcon: {fileID: 21300000, guid: ba76d008dcffb4128933f12cd031693d, type: 3}
+  delayIcon: {fileID: 21300000, guid: b9de3e73d3d1043c2961497e1f0da3b8, type: 3}
+  ringFrames:
+  - {fileID: -1517577108, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -815767702, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -1152727515, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 258647529, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -1899587946, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 1544430697, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 1020546124, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -1200276148, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 1077325436, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 2146473111, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -388192494, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 341741143, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 1310094778, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -1274186336, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 569904827, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: 1804631539, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  - {fileID: -1392244773, guid: 97273f48557da442e81f55cb81bf9899, type: 3}
+  bagSprites:
+  - {fileID: 21300000, guid: fa040063020d64092b52eb6b217755a5, type: 3}
+  - {fileID: 21300000, guid: e14b851d4df854de097c4450058deddc, type: 3}
+  - {fileID: 21300000, guid: 84197c333e6314b269944d150f980b3e, type: 3}
+  note: {fileID: 21300000, guid: ea673607d675d43a6af2d2ac2e2b5355, type: 3}
+  coin: {fileID: 21300000, guid: 45a290560239747bfb3a31f0e88164c1, type: 3}
+  spark: {fileID: 21300000, guid: 33867c070342d4aac8aa1ed3d907e5f5, type: 3}
+  dust: {fileID: 21300000, guid: 755b082f259634a64b57c80f74a997d3, type: 3}
+  smoke: {fileID: 21300000, guid: e790c15726e464db6b198532b1e47d0e, type: 3}
+  splinter: {fileID: 21300000, guid: 9880cce019a0246cfb4fecfb4c6cf468, type: 3}
+  bubble: {fileID: 21300000, guid: 8205a874cf8c74f7193e3a2441e31d76, type: 3}
+  bubbleTail: {fileID: 21300000, guid: 0dd40e0c59ac44f5aa10d179bff950c6, type: 3}
+  font: {fileID: 11400000, guid: 4a329f88602b444ee801cf43a748262c, type: 2}
+  vanFrames:
+  - {fileID: 21300000, guid: d5587163073094030bec0ba06a9aba5d, type: 3}
+  - {fileID: 21300000, guid: 7f26a8d4a0f0e4644846f4069ae779d5, type: 3}
+  policeFrames:
+  - {fileID: 21300000, guid: e61df900302f74958a34cbd82352006e, type: 3}
+  - {fileID: 21300000, guid: 4cf42b4848fe4431792f03e5174c84a6, type: 3}
+  lootSfx: {fileID: 8300000, guid: 2c70ae507897a4249a6c78d71ebcf7fc, type: 3}
+  doorSfx: {fileID: 8300000, guid: 904bb3a3e217c4fb4b09a7b168ea3fef, type: 3}

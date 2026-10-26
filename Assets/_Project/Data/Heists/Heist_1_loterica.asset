@@ -41,4 +41,4 @@ MonoBehaviour:
     alertPerSecond: 2.5
   jailSeconds: 60
   mapPosition: {x: -6, y: 0}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 51265087655733214, guid: 28f5f7defa3e34a599fe69e2082b1d0c, type: 3}
