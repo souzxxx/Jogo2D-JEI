@@ -28,6 +28,7 @@ namespace AFirma.HeistScene
 
         BuildingView building;
         HeistDef heist;
+        float lotacaoTimer = 6f;
         readonly List<ThiefActor> actors = new List<ThiefActor>();
         readonly HashSet<ThiefActor> arrested = new HashSet<ThiefActor>();
         VehicleView van, police;
@@ -460,6 +461,8 @@ namespace AFirma.HeistScene
                 }
             }
 
+            UpdateLotacao();
+
             // a câmera acompanha a crew quando ela está andando
             if (actors.Count > 0 && cameraRig != null && AnyMoving())
                 cameraRig.Follow(CameraPoint(CrewCenterX()));
@@ -477,6 +480,28 @@ namespace AFirma.HeistScene
             float sum = 0f;
             foreach (var a in actors) sum += a.transform.position.x;
             return sum / Mathf.Max(1, actors.Count);
+        }
+
+        /// <summary>De vez em quando uma lotação passa na rua, atrás do prédio (detalhe anos 90 do fundo).</summary>
+        void UpdateLotacao()
+        {
+            if (vanPrefab == null || cameraRig == null) return;
+            lotacaoTimer -= SceneClock.UiDelta;
+            if (lotacaoTimer > 0f) return;
+            lotacaoTimer = Random.Range(18f, 32f);
+            var lotacao = Instantiate(vanPrefab, world);
+            lotacao.name = "Lotação";
+            lotacao.sr.sortingOrder = SortOrder.Shell - 2;
+            lotacao.sr.color = new Color(0.75f, 0.85f, 1f);
+            lotacao.exhaust = null; // fumaça ficaria na frente do prédio
+            foreach (var l in lotacao.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>()) l.enabled = false;
+            float half = cameraRig.HalfWidth + 3f;
+            float camX = cameraRig.transform.position.x;
+            float y = building.transform.position.y + building.streetY + 2f / 32f;
+            bool toRight = Random.value > 0.5f;
+            lotacao.Park(new Vector3(camX + (toRight ? -half : half), y, 0f), !toRight);
+            lotacao.DriveTo(new Vector3(camX + (toRight ? half : -half) * 1.6f, y, 0f), 5f, 1f);
+            Destroy(lotacao.gameObject, 12f);
         }
 
         void UpdateLeaving()

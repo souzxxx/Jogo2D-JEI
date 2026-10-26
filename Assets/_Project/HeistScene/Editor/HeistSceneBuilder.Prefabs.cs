@@ -26,6 +26,7 @@ namespace AFirma.HeistScene.EditorTools
             var guard = BuildGuardPrefab(l);
             var cam = BuildCameraPrefab();
             art.thiefPrefab = BuildThiefPrefab().GetComponent<ThiefActor>();
+            BuildCameraRigPrefab();
             BuildVehiclePrefab("Van", art.vanFrames, false);
             BuildVehiclePrefab("Viatura", art.policeFrames, true);
 
@@ -296,6 +297,27 @@ namespace AFirma.HeistScene.EditorTools
             view.cone = SpriteChild(view.pivot, "Cone", Sprite("Icones/Cone.png"), Px(2, 0), SortOrder.Prop + 1);
             view.coneLight = PointLight(view.pivot, "Luz", Px(2, 0), new Color(0.35f, 0.66f, 0.39f), 3f, 0.7f, 40f, 15f, -90f);
             return SavePrefab(root, PrefabDir + "/Personagens/CameraSeguranca.prefab");
+        }
+
+        /// <summary>Câmera padrão do jogo pra qualquer cena: Pixel Perfect (PPU 32, 640x360) com pós-processamento.</summary>
+        static GameObject BuildCameraRigPrefab()
+        {
+            var root = new GameObject("CameraPixelPerfect");
+            var cam = root.AddComponent<Camera>();
+            cam.orthographic = true;
+            cam.orthographicSize = 360f / 2f / Ppu;
+            cam.clearFlags = CameraClearFlags.SolidColor;
+            cam.backgroundColor = new Color(0.11f, 0.106f, 0.18f);
+            root.transform.position = new Vector3(0f, 0f, -10f);
+            var ppc = root.AddComponent<PixelPerfectCamera>();
+            ppc.assetsPPU = 32;
+            ppc.refResolutionX = 640;
+            ppc.refResolutionY = 360;
+            ppc.gridSnapping = PixelPerfectCamera.GridSnapping.PixelSnapping;
+            ppc.cropFrame = PixelPerfectCamera.CropFrame.None;
+            cam.GetUniversalAdditionalCameraData().renderPostProcessing = true;
+            root.AddComponent<AudioListener>();
+            return SavePrefab(root, PrefabDir + "/CameraPixelPerfect.prefab");
         }
 
         static GameObject BuildThiefPrefab()

@@ -21,7 +21,7 @@ A `HeistView` (cena `Scenes/Heist`) monta o prédio do golpe no `HeistStarted` e
 | `ThiefBark` | Balão de fala com a fonte pixel do jogo |
 | `HeistFinished` | Crew corre de volta pra van (preso fica algemado), a van arranca; no Cavalo de pau ela rodopia antes |
 
-Tudo respeita a pausa e a velocidade 1x/2x (`SceneClock`). Luzes de salas longe da câmera apagam (poupa o WebGL).
+De vez em quando uma lotação passa na rua, atrás do prédio. Tudo respeita a pausa e a velocidade 1x/2x (`SceneClock`). Luzes de salas longe da câmera apagam (poupa o WebGL).
 
 ## Pastas
 
@@ -32,6 +32,7 @@ Tudo respeita a pausa e a velocidade 1x/2x (`SceneClock`). Luzes de salas longe 
 | `Prefabs/Salas` | **Uma sala modular por `RoomKind`** (Entrada, Corredor, Balcão, Sala de Câmeras, Escritório, Cofre, Túnel, Garagem). Cada uma tem os 3 adereços (Fechadura, Sistema, Pessoa) e liga o da `RoomData.obstacle` |
 | `Prefabs/Predios` | Os 5 prédios, montados com as salas modulares + casca própria (fachada, letreiro, rua). Já ligados no `buildingPrefab` de cada `HeistDef` |
 | `Prefabs/Personagens`, `Veiculos` | Guarda (ronda ou posto), câmera de segurança, ladrão, van e viatura |
+| `Prefabs/CameraPixelPerfect` | Câmera padrão do jogo pra qualquer cena: Pixel Perfect (PPU 32, 640×360), fundo noturno e pós-processamento |
 | `Art/` | Toda a arte, gerada pixel a pixel na paleta (`Art/Paleta.png`). `Art/Source~` tem os scripts e o `layout.json` |
 | `Audio/` | Sons da cena (grana na sacola, porta), sintetizados por script |
 | `HeistSceneArt.asset` | Referências que não são de um prédio: salas modulares, ícones, fonte, ladrão genérico, sons |
