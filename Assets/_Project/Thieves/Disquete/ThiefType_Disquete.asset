@@ -33,8 +33,13 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 167bf506578564eba92b0d353287c8b1, type: 3}
   animator: {fileID: 9100000, guid: 24c140b0942ad4158afe98d542256f79, type: 2}
   color: {r: 0.3, g: 0.85, b: 0.5, a: 1}
-  actionSfx: {fileID: 0}
+  actionSfx: {fileID: 8300000, guid: 9a91fe9b4cee4d749afa70c8a079473c, type: 3}
   barks:
-  - Entrei no sistema.
-  - Isso aqui roda Windows 95, relaxa.
+  - "T\xF4 dentro."
+  - "Isso aqui roda at\xE9 em 286, relaxa."
   - "C\xE2mera em loop, pode passar."
+  - Deu pau? Reinicia.
+  - "Baixando, pera\xED\u2026"
+  - "Ningu\xE9m tira nada da tomada, pelo amor."
+  - Assopra que funciona.
+  - Senha do gerente? O nome do cachorro.
