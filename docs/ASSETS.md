@@ -87,6 +87,10 @@ Status: proposto → baixado → aprovado (direção de arte) → em uso.
 |---|---|---|---|---|
 | Car engine start 01 | looneybits, [OpenGameArt](https://opengameart.org/node/93658) | CC0 | `Thieves/PeNaTabua/Audio/SFX_PeNaTabua_Partida.wav` | Leonardo |
 | Car Tire Skid Squealing (loop) | Mike Koenig (Soundbible), editado por qubodup, [OpenGameArt](https://opengameart.org/node/5634) | CC-BY 3.0 (crédito obrigatório) | `Thieves/PeNaTabua/Audio/SFX_CavaloDePau.wav` | Leonardo |
+| 8bit Bossa (música do menu) | Joth, [OpenGameArt](https://opengameart.org/content/bossa-nova) | CC0 | `Audio/Resources/Musica/Menu.mp3` | Enzo |
+| Two Left Socks (música do esconderijo) | congusbongus, [OpenGameArt](https://opengameart.org/content/two-left-socks) | CC0 | `Audio/Resources/Musica/Hideout.ogg` | Enzo |
+| Heavy Heist (música do golpe) | bertsz, [OpenGameArt](https://opengameart.org/content/heavy-heist) | CC0 | `Audio/Resources/Musica/Heist.mp3` | Enzo |
+| Chase - Diamond Dust (música da sirene) | NBJDLukasAbsolute, [OpenGameArt](https://opengameart.org/node/181066) | CC0 | `Audio/Resources/Musica/Siren.wav` | Enzo |
 
 Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 
