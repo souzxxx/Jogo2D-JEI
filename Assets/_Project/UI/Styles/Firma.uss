@@ -1,0 +1,235 @@
+/*
+ * Identidade "dossiê da firma" (ESCOPO 7.2): papel kraft, ficha datilografada, carimbo, foto 3x4 com clipe.
+ * Paleta de 32 cores do docs/ASSETS.md. Tela de referência 640x360 (PanelSettings): 1 px aqui = 1 px de pixel art.
+ * Fonte: FirmaPixel (a mesma letra da Cena do Golpe). Tamanhos múltiplos de 11: 11, 22, 33, 44.
+ */
+
+:root {
+    --ink: #0E0C15;
+    --night: #1C1B2E;
+    --dusk: #2B2E4A;
+    --slate: #404869;
+    --steel: #5F6D8F;
+    --mist: #8E9DB8;
+    --pale: #CDD5E3;
+    --cream: #F7F3E8;
+    --umber: #2A1C1A;
+    --brown: #4B3128;
+    --wood: #71492F;
+    --tan: #A06D42;
+    --kraft: #CF9D63;
+    --paper: #ECD2A0;
+    --deepgreen: #1D3A2F;
+    --green: #2E6A46;
+    --money: #5AA864;
+    --mint: #B4DC8C;
+    --winedark: #3D1424;
+    --wine: #7C1E2F;
+    --red: #CC3338;
+    --coral: #F2734F;
+    --bronze: #8A5A16;
+    --gold: #DBA12B;
+    --lamp: #F7D468;
+    --police: #1B3A78;
+    --blue: #3184D6;
+    --cyan: #74D6EA;
+    --purple: #5E2B72;
+    --neon: #C5468F;
+
+    -unity-font-definition: url("../Fonte/FirmaPixel.ttf");
+    font-size: 11px;
+    color: var(--umber);
+}
+
+/* ---------------------------------------------------------------- tela e texto */
+
+.screen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+Label {
+    padding: 0;
+    margin: 0;
+    white-space: normal;
+}
+
+.h1 {
+    font-size: 33px;
+}
+
+.h2 {
+    font-size: 22px;
+}
+
+.light {
+    color: var(--cream);
+}
+
+.muted {
+    color: var(--tan);
+}
+
+.money {
+    color: var(--green);
+}
+
+.danger {
+    color: var(--red);
+}
+
+.hidden {
+    display: none;
+}
+
+.row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+/* ---------------------------------------------------------------- painéis */
+
+/* pasta kraft do dossiê */
+.panel {
+    background-color: var(--kraft);
+    border-width: 1px;
+    border-color: var(--umber);
+    border-bottom-width: 3px;
+    padding: 8px;
+}
+
+/* folha datilografada por cima da pasta */
+.paper {
+    background-color: var(--paper);
+    border-width: 1px;
+    border-color: var(--tan);
+    padding: 6px;
+}
+
+/* caixa escura da HUD, por cima da cena */
+.dark {
+    background-color: rgba(14, 12, 21, 0.86);
+    border-width: 1px;
+    border-color: var(--slate);
+    color: var(--cream);
+    padding: 4px 6px;
+}
+
+/* carimbo torto (PRESO, CONFIDENCIAL, CONCLUÍDO) */
+.stamp {
+    color: var(--red);
+    border-width: 2px;
+    border-color: var(--red);
+    padding: 1px 4px;
+    rotate: -8deg;
+    -unity-text-align: middle-center;
+    align-self: flex-start;
+}
+
+/* fundo escuro atrás de um popup */
+.scrim {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(14, 12, 21, 0.7);
+    align-items: center;
+    justify-content: center;
+}
+
+.dialog {
+    width: 240px;
+    padding: 8px 10px;
+}
+
+.dialog__body {
+    white-space: normal;
+    margin: 4px 0 8px 0;
+}
+
+.dialog__buttons {
+    justify-content: flex-end;
+}
+
+.dialog__buttons .btn {
+    margin-left: 6px;
+}
+
+/* ---------------------------------------------------------------- botões */
+
+.btn {
+    background-color: var(--cream);
+    color: var(--umber);
+    border-width: 1px;
+    border-color: var(--umber);
+    border-bottom-width: 3px;
+    border-radius: 0;
+    margin: 2px 0;
+    padding: 2px 8px 1px 8px;
+    min-height: 18px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    transition-property: translate, background-color;
+    transition-duration: 0.08s;
+}
+
+.btn:hover {
+    background-color: var(--lamp);
+    color: var(--umber);
+    border-color: var(--umber);
+    translate: 0 -1px;
+}
+
+.btn:active {
+    background-color: var(--gold);
+    border-bottom-width: 1px;
+    translate: 0 2px;
+}
+
+.btn:focus {
+    border-color: var(--umber);
+}
+
+.btn--green {
+    background-color: var(--money);
+    color: var(--ink);
+}
+
+.btn--green:hover {
+    background-color: var(--mint);
+}
+
+.btn--red {
+    background-color: var(--red);
+    color: var(--cream);
+}
+
+.btn--red:hover {
+    background-color: var(--coral);
+    color: var(--ink);
+}
+
+/* indisponível: continua clicável pra explicar o motivo */
+.btn--off,
+.btn--off:hover,
+.btn--off:active {
+    background-color: var(--pale);
+    color: var(--steel);
+    border-color: var(--steel);
+    translate: 0 0;
+}
+
+.btn:disabled {
+    background-color: var(--pale);
+    color: var(--steel);
+    border-color: var(--steel);
+    opacity: 1;
+}
