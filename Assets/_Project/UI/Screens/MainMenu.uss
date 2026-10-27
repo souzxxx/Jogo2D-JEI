@@ -1,0 +1,63 @@
+/* Menu principal: a noite de Nova Guanabara (fundo da Cena do Golpe) com a pasta da firma por cima. */
+
+.menu {
+    background-image: url("../../HeistScene/Art/Fundo/Ceu.png");
+    background-color: var(--night);
+}
+
+.menu__layer {
+    position: absolute;
+    left: 0;
+    width: 640px;
+}
+
+.menu__hill {
+    top: 150px;
+    height: 120px;
+    background-image: url("../../HeistScene/Art/Fundo/Morro.png");
+}
+
+.menu__far {
+    top: 190px;
+    height: 170px;
+    background-image: url("../../HeistScene/Art/Fundo/Predios_longe.png");
+}
+
+.menu__near {
+    top: 240px;
+    height: 120px;
+    background-image: url("../../HeistScene/Art/Fundo/Predios_perto.png");
+}
+
+.menu__title {
+    position: absolute;
+    left: 40px;
+    top: 56px;
+}
+
+.menu__logo {
+    font-size: 66px;
+    color: var(--lamp);
+    text-shadow: 3px 3px 0 #2A1C1A;
+}
+
+.menu__tagline {
+    font-size: 22px;
+    color: var(--paper);
+    margin-left: 4px;
+    text-shadow: 2px 2px 0 #0E0C15;
+}
+
+.menu__card {
+    position: absolute;
+    right: 40px;
+    top: 70px;
+    width: 150px;
+    padding: 16px 12px 10px 12px;
+}
+
+.menu__stamp {
+    position: absolute;
+    top: -8px;
+    left: 30px;
+}
