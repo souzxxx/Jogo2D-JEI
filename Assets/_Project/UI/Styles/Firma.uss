@@ -281,6 +281,21 @@
     flex-shrink: 0;
 }
 
+.icon32 {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    margin-right: 6px;
+}
+
+.wrap {
+    flex-wrap: wrap;
+}
+
+.wrap .btn {
+    margin-right: 3px;
+}
+
 /* avisos que somem sozinhos (GameEvents.Notice, motivo de botão indisponível) */
 .toasts {
     position: absolute;
