@@ -1,6 +1,6 @@
 # A Firma — Game Design Document (DDE)
 
-> **Este arquivo é o rascunho do GDD oficial, que vive no Milanote** ([link](https://app.milanote.com/1Xl1js1SfE3bar/a-firma-gdd)).
+> **Este arquivo é o rascunho do GDD oficial, que vive no Milanote** ([link](https://app.milanote.com/1Xl1js1SfE3bar/a-firma-gdd?p=VXijCZgimVd)).
 > Estrutura no framework **DDE: Design → Dynamics → Experience**. As rubricas Blueprint, Mechanics e Interface vêm daí.
 > Cada seção tem um dono. Toda quinta o dono atualiza a sua seção aqui e no Milanote, e registra a mudança no fim do documento.
 
