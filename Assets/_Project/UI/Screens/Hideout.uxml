@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Hideout.uss" />
+    <ui:VisualElement class="screen hideout">
+        <ui:VisualElement class="dark row hideout__top">
+            <ui:Label text="Caixa" class="muted" />
+            <ui:Label name="money" text="Cr$ 0" class="h2 hideout__money" />
+            <ui:Label name="income" text="+Cr$ 0/s" class="light" />
+            <ui:VisualElement class="grow" />
+            <ui:Button name="menu" text="Menu" class="btn" />
+        </ui:VisualElement>
+        <ui:VisualElement class="row hideout__body">
+            <ui:VisualElement class="hideout__tabs">
+                <ui:Button name="map" text="Mapa" class="btn tab" />
+                <ui:Button name="crew" text="Crew" class="btn tab" />
+                <ui:Button name="contacts" text="Contatos" class="btn tab" />
+                <ui:Button name="jobs" text="Bicos" class="btn tab" />
+                <ui:Button name="upgrades" text="Upgrades" class="btn tab" />
+                <ui:Button name="prestige" text="Prestígio" class="btn tab" />
+            </ui:VisualElement>
+            <ui:VisualElement name="content" class="panel hideout__content hidden" />
+        </ui:VisualElement>
+        <ui:VisualElement name="toasts" class="toasts" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>
