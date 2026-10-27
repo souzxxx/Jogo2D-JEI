@@ -14,7 +14,7 @@ namespace AFirma.HeistScene
         public ParticleSystem exhaust;
         public UnityEngine.Rendering.Universal.Light2D[] flashers = new UnityEngine.Rendering.Universal.Light2D[0];
 
-        Vector3 target;
+        Vector3 target, pos;
         bool moving;
         float speed, accel, maxSpeed = 9f;
         float frameTime;
@@ -33,10 +33,11 @@ namespace AFirma.HeistScene
         public void DriveTo(Vector3 to, float startSpeed = 0f, float acceleration = 6f)
         {
             target = to;
+            pos = transform.position;
             moving = true;
             speed = startSpeed;
             accel = acceleration;
-            sr.flipX = to.x < transform.position.x;
+            sr.flipX = to.x < pos.x;
             if (exhaust != null) exhaust.Play();
         }
 
@@ -49,9 +50,10 @@ namespace AFirma.HeistScene
             foreach (var l in flashers) if (l != null) l.enabled = on;
         }
 
-        void Update()
+        void Update() => Tick(SceneClock.Delta);
+
+        public void Tick(float dt)
         {
-            float dt = SceneClock.Delta;
             if (spin > 0f)
             {
                 spin -= dt;
@@ -61,10 +63,12 @@ namespace AFirma.HeistScene
             if (moving && spin <= 0f)
             {
                 speed = Mathf.Min(maxSpeed, speed + accel * dt);
-                var p = Vector3.MoveTowards(transform.position, target, speed * dt);
-                transform.position = new Vector3(Mathf.Round(p.x * 32f) / 32f, p.y, 0f);
-                sr.flipX = target.x < transform.position.x || (Mathf.Approximately(target.x, transform.position.x) && sr.flipX);
-                if ((transform.position - target).sqrMagnitude < 0.0004f)
+                // anda na posição de verdade e só o desenho fica no pixel: com FPS alto o passo do frame é menor
+                // que meio pixel, e arredondar a própria posição deixava a van parada
+                pos = Vector3.MoveTowards(pos, target, speed * dt);
+                transform.position = new Vector3(Mathf.Round(pos.x * 32f) / 32f, pos.y, 0f);
+                sr.flipX = target.x < pos.x || (Mathf.Approximately(target.x, pos.x) && sr.flipX);
+                if ((pos - target).sqrMagnitude < 0.0004f)
                 {
                     moving = false;
                     if (exhaust != null) exhaust.Stop();
