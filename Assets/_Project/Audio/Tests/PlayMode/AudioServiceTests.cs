@@ -34,6 +34,20 @@ namespace AFirma.Tests
             Assert.AreEqual("Hideout", Audible());
         }
 
+        [UnityTest]
+        public IEnumerator HeistLayers_ComeInWithTheAlert()
+        {
+            Services.Audio.PlayMusic(MusicTrack.Menu);
+            GameEvents.RaiseHeistStarted(null);
+            yield return new WaitForSecondsRealtime(2f);
+            GameEvents.RaiseAlertChanged(90f);
+            yield return new WaitForSecondsRealtime(2.5f);
+            var playing = GameObject.Find("[Áudio]").GetComponents<AudioSource>().Where(s => s.loop && s.clip != null && s.volume > 0.01f).ToList();
+            CollectionAssert.AreEquivalent(new[] { "Heist", "Heist_1", "Heist_2" }, playing.Select(s => s.clip.name), "Alerta alto: base e as duas camadas.");
+            Assert.That(playing.Select(s => s.clip.samples).Distinct().Count(), Is.EqualTo(1), "As camadas têm o tamanho da base, senão saem do tempo no loop.");
+            GameEvents.RaiseHeistFinished(null);
+        }
+
         [Test]
         public void Volume_IsSaved()
         {
