@@ -93,6 +93,19 @@ namespace AFirma.UI
             screen.Add(scrim);
         }
 
+        /// <summary>Janela por cima da tela de anyElement com título, conteúdo e Fechar (opções, créditos, menu).</summary>
+        public static VisualElement Modal(VisualElement anyElement, string title, Action<VisualElement> build)
+        {
+            var screen = anyElement.panel?.visualTree.Q(className: "screen") ?? anyElement;
+            VisualElement scrim = null;
+            var body = El("dialog__content");
+            scrim = El("scrim", El("panel dialog dialog--wide", Text(title, "h2"), body,
+                El("row dialog__buttons", Btn("Fechar", () => scrim.RemoveFromHierarchy()))));
+            build(body);
+            screen.Add(scrim);
+            return scrim;
+        }
+
         /// <summary>
         /// Painel que acompanha o jogo enquanto está na tela. build monta tudo e é chamado de novo quando key() muda
         /// (alguém foi preso, subiu de nível...); os updates que o build registra (relógio, botão disponível)

@@ -97,11 +97,16 @@ namespace AFirma.Tests
             Click(root, "pause");
             Assert.IsTrue(GameClock.Paused);
             yield return Print("hud_pausa");
+            Click(root, "options");
+            yield return null;
+            Assert.IsNotNull(root.Q<Slider>("volume-sfx"), "Opções abrem por cima da pausa.");
             Click(root, "resume");
             Assert.IsFalse(GameClock.Paused);
-            Click(root, "flee");
+            Click(root, "pause");
+            Click(root, "give-up");
             yield return null;
-            Assert.IsFalse(Services.Heist.IsRunning, "Meter o pé termina o golpe.");
+            Assert.IsFalse(GameClock.Paused);
+            Assert.IsFalse(Services.Heist.IsRunning, "Meter o pé pela pausa termina o golpe.");
         }
     }
 }

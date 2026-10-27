@@ -43,6 +43,8 @@ namespace AFirma.UI
                 Services.Heist.Speed = Services.Heist.Speed > 1f ? 1f : Services.Config.speedFast);
             root.OnClick("pause", () => SetPaused(true));
             root.OnClick("resume", () => SetPaused(false));
+            root.OnClick("options", () => MenuPanels.Options(root));
+            root.OnClick("give-up", () => { SetPaused(false); if (Services.Heist.IsRunning) Services.Heist.Flee(); });
             root.OnClick("flee", () => { if (Services.Heist.IsRunning) Services.Heist.Flee(); });
 
             GameEvents.HeistStarted += OnStarted;

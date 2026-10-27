@@ -32,6 +32,8 @@
                 <ui:Label text="Pausado" class="h2" />
                 <ui:Label text="O golpe e a contagem da polícia estão congelados." class="dialog__body" />
                 <ui:Button name="resume" text="Continuar" class="btn btn--green" />
+                <ui:Button name="options" text="Opções" class="btn" />
+                <ui:Button name="give-up" text="Meter o pé e voltar pro esconderijo" class="btn btn--red" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="toasts" class="toasts" picking-mode="Ignore" />
