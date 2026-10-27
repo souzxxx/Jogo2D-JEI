@@ -26,6 +26,7 @@ namespace AFirma.UI
 #else
             root.OnClick("quit", Application.Quit);
 #endif
+            Notices.Attach(root, toastsOnly: true);
             Services.Audio.PlayMusic(MusicTrack.Menu);
         }
 

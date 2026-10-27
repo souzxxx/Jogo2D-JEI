@@ -50,7 +50,7 @@ namespace AFirma.UI
             GameEvents.HeistStarted += OnStarted;
             GameEvents.HeistEventResolved += OnEventResolved;
             GameEvents.HeistFinished += OnFinished;
-            GameEvents.Notice += OnNotice;
+            Notices.Attach(root);
             if (Services.Heist.IsRunning) OnStarted(Services.Heist.CurrentHeist);
         }
 
@@ -59,12 +59,9 @@ namespace AFirma.UI
             GameEvents.HeistStarted -= OnStarted;
             GameEvents.HeistEventResolved -= OnEventResolved;
             GameEvents.HeistFinished -= OnFinished;
-            GameEvents.Notice -= OnNotice;
             HideHint();
             if (GameClock.Paused) GameClock.SetPaused(false);
         }
-
-        void OnNotice(string text) => Ui.Toast(root, text);
 
         /// <summary>Usa e avisa o que mudou (sala aberta, alerta antes → depois); sem número pra mostrar, diz o que a habilidade faz.</summary>
         void UseAbility(ThiefState thief, ThiefAbilityDef ability)

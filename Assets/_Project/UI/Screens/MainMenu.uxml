@@ -16,5 +16,6 @@
             <ui:Button name="credits" text="Créditos" class="btn" />
             <ui:Button name="quit" text="Sair" class="btn" />
         </ui:VisualElement>
+        <ui:VisualElement name="toasts" class="toasts" picking-mode="Ignore" />
     </ui:VisualElement>
 </ui:UXML>

@@ -37,13 +37,9 @@ namespace AFirma.UI
                 Ui.Btn("Créditos", () => MenuPanels.Credits(root)),
                 Ui.Btn("Menu principal", SceneFlow.GoToMainMenu)))));
 
-            GameEvents.Notice += OnNotice;
+            Notices.Attach(root);
             Services.Audio.PlayMusic(MusicTrack.Hideout);
         }
-
-        void OnDisable() => GameEvents.Notice -= OnNotice;
-
-        void OnNotice(string text) => Ui.Toast(root, text);
 
         void Tab(string name, Action<VisualElement> build) => root.OnClick(name, () => Open(name, build));
 
