@@ -44,9 +44,9 @@
 **Mundo: Nova Guanabara.** Cidade fictícia que mistura São Paulo e Rio no começo dos anos 90 (por volta de 1992): orelhão, bip, fita K7, lotação, gatonet, jogo do bicho, inflação. Moeda: Cruzeiro (Cr$). Ninguém é vilão de verdade, todo mundo é meio malandro. A firma mora na **Zona Norte** (oficina da Dona Cida, lotérica, cassino debaixo da pastelaria); o **Centro** tem joalheria e câmbio; na **Avenida do Porto** ficam o Banco Central e a polícia.
 
 **Personagens.**
-- **O Chefe (jogador):** nunca aparece; é "o cérebro". Todo mundo chama de "chefia", sem gênero definido.
-- **Dona Cida:** uns 70 anos, lenda aposentada do crime ("nunca deixou pista, só saudade"), dona do esconderijo (a "Auto Elétrica da Cida", oficina de fachada). Passa a firma pro jogador, conduz o tutorial e manda recados por bip. Fala mansa, conselho afiado, deboche com carinho.
-- **Delegado Bastos:** antagonista de bigode que adora uma câmera. Promete muito e pega pouco: é piada, não ameaça. Aparece nas manchetes e é promovido a cada prestígio.
+- **O Chefe (jogador):** nunca aparece; é "o cérebro". Todo mundo chama de "chefia", sem gênero definido. Já teve a maior firma de Nova Guanabara e perdeu tudo no Banco Central (a abertura).
+- **Dona Cida:** uns 70 anos, lenda aposentada do crime ("nunca deixou pista, só saudade"), dona do esconderijo (a "Auto Elétrica da Cida", oficina de fachada). Dá uma segunda chance pro jogador (a oficina e dois novatos), conduz o tutorial e manda recados por bip. Fala mansa, conselho afiado, deboche com carinho.
+- **Delegado Bastos:** antagonista de bigode que adora uma câmera. Promete muito e pega pouco: é piada, não ameaça. Aparece nas manchetes e é promovido a cada prestígio. A abertura é a única vez que ele pega alguém de verdade, e ele nunca mais para de falar disso.
 - **A crew:** ladrões gerados com nome + apelido de classe ("Juninho Disquete", "Tião Pé-na-Tábua"), uma manha de personalidade e bordões.
 
 **Os 4 tipos de ladrão.**
@@ -57,9 +57,13 @@
 | Disquete | hacker, câmeras e alarmes | _dono escreve_ |
 | 171 | vigarista, pessoas e lábia | _dono escreve_ |
 
-**Como a história é contada.** Em pílulas: bips da Dona Cida nos marcos, briefing de 2–3 linhas por golpe, capa do jornal *O Guanabarense* no fim de todo golpe, bordões da crew durante o assalto.
+**Como a história é contada.** Em pílulas: uma abertura curta, bips da Dona Cida nos marcos, briefing de 2–3 linhas por golpe, capa do jornal *O Guanabarense* no fim de todo golpe, bordões da crew durante o assalto.
 
-**Arco.** Dona Cida passa a firma → golpes crescem (Lotérica → Joalheria → Câmbio → Cassino) → **Banco Central via túnel**, o golpe do século → **sumir do mapa** (prestígio): a firma desaparece, Bastos jura vingança, a cidade recomeça mais vigiada.
+**Abertura: o golpe que deu errado** (~40 s, pulável, no Novo jogo). A própria Cena do Golpe toca um golpe roteirizado no Banco Central com a firma antiga do Chefe, um ladrão de cada tipo. As salas caem rápido, a sacola enche, o cofre abre. Toca a sirene, a porta oferece **METER O PÉ** ou **SÓ MAIS UMA**, a crew escolhe "só mais uma" e sai algemada. A cena congela na capa do jornal ("BASTOS PEGA A FIRMA NO BANCO CENTRAL") e o bip da Dona Cida oferece a segunda chance. Em 40 segundos o jogador vê tudo que o jogo tem e aprende a regra principal pelo erro: ganância depois da sirene derruba até a melhor firma. A abertura não mexe no save (não paga, não prende, não gasta bip de marco).
+
+**Objetivo.** Voltar pro Banco Central e fazer direito. O esconderijo mostra o objetivo o tempo todo, com a escada de golpes até lá. Concluir o Banco Central pela primeira vez é a revanche: capa especial do jornal, créditos e o prestígio liberado.
+
+**Arco.** Abertura: a firma cai no Banco Central → Dona Cida dá a segunda chance → golpes crescem (Lotérica → Joalheria → Câmbio → Cassino) → **Banco Central via túnel, a revanche** → **sumir do mapa** (prestígio): a firma desaparece, Bastos jura vingança, a cidade recomeça mais vigiada.
 
 **Tom.** Malandro charmoso: leve, bem-humorado, sem violência explícita. A saída é sempre a lábia ou o improviso, nunca machucar alguém; nada de ofensa, coisa real ou anacronismo. Guia completo, com gírias, tamanhos de texto e exemplos bons e ruins: `Assets/_Project/Narrative/LEIA-ME.md`.
 
@@ -134,8 +138,9 @@ _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.
 **Identidade:** "dossiê da firma": papel kraft, carimbo CONFIDENCIAL, fotos 3x4 dos ladrões, bip pras notificações, jornal no resultado.
 
 **Telas:**
-- Menu principal, Pausa, Opções, Créditos
-- Esconderijo (hub) com Crew, Contatos, Bicos, Upgrades e Prestígio
+- Menu principal (com "Ver abertura"), Pausa, Opções, Créditos
+- Abertura: letreiro, capa do jornal, botão Pular
+- Esconderijo (hub) com o objetivo atual, Crew, Contatos, Bicos, Upgrades e Prestígio
 - Mapa da cidade e Planejamento
 - HUD do golpe, popup de porta, cartão de evento, contagem da polícia
 - Jornal, popup offline, bip e tutorial
@@ -187,12 +192,13 @@ _Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
 
 | Momento | Sentimento alvo | O que causa |
 |---|---|---|
+| Primeiros 40 s | Impacto, "eita!", e um objetivo | A abertura: a firma no auge caindo no Banco Central |
 | Primeiros 3 min | Curiosidade, "entendi!" | Tutorial curto da Dona Cida, Lotérica fácil |
 | Cada porta | Tensão, ganância | Alerta subindo, loot estimado, música crescendo |
 | Sirene | Adrenalina | Luzes, viatura, contagem, decisão sob pressão |
 | Jornal | Orgulho ou riso | Manchete sobre o que você fez |
 | Esconderijo | Planejamento, progresso | Upgrades, recrutas, próximo golpe à vista |
-| Banco Central | Clímax | Golpe longo, túnel, cofre central |
+| Banco Central | Clímax e revanche | Golpe longo, túnel, cofre central; o lugar onde tudo deu errado na abertura |
 | Prestígio | Recomeço com poder | Fama, cidade nova mais difícil, Bastos promovido |
 
 **Público e sessão:** quem joga no navegador nos intervalos; sessão típica de 10–20 min, primeiro ciclo completo em 40–60 min.
@@ -253,3 +259,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 26/10/2026 | Interface | Feedback no mundo implementado: prédio em corte, ícone e anel de progresso, adereço que abre, notas voando pra sacola, guardas e câmeras por faixa de alerta, giroflex, vinheta, viatura, balões e fuga na van | Rubrica Feedback: dá pra entender o golpe olhando a cena, sem a HUD |
 | 26/10/2026 | Arte e Som | Paleta de 32 cores e direção de arte da cena; os packs de cenário do craftpix ficaram só como referência (escala 3× a do jogo) | Arte coesa numa paleta única, sem colagem de packs |
 | 26/10/2026 | Mechanics | Pé-de-cabra explica o motivo quando não dá ("Só serve em sala de Fechadura.", "Espera a crew entrar na sala.") | Botão indisponível sempre diz o motivo |
+| 27/10/2026 | Blueprint, Interface, Experience | Abertura: a firma do Chefe cai no Banco Central e a Dona Cida dá a segunda chance. Objetivo do jogo: voltar pro Banco Central e fazer direito (a revanche) | Objetivo claro desde o primeiro minuto (anti-objetivo: idle sem objetivo); a abertura mostra o jogo todo e ensina a regra da sirene pelo erro |

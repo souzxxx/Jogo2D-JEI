@@ -12,7 +12,9 @@ Este documento é a fonte da verdade do escopo. O GDD (Milanote) é escrito a pa
 
 **Nova Guanabara, anos 90.** Você é o cérebro de uma firma de malandros. Monta a crew, escolhe o alvo e manda o bando pro golpe. O assalto acontece sozinho na sua frente, sala por sala, num corte lateral do prédio — mas entre uma sala e outra a decisão é sua: **abrir mais uma porta ou meter o pé com o que já pegou?**
 
-O loot volta pro esconderijo, vira upgrade, recruta gente melhor e libera golpes maiores, da Lotérica do Seu Zé até o Banco Central. Fez o Banco Central? A Firma some do mapa, a cidade recomeça mais difícil e a sua fama fica.
+**O jogo abre com a firma no auge, tentando o Banco Central, e dando tudo errado:** a sirene toca, a crew insiste em "só mais uma porta" e o Delegado Bastos pega todo mundo. Você sai sem nada, a Dona Cida te empresta a oficina e dois novatos, e o objetivo fica claro desde o primeiro minuto: **voltar pro Banco Central e fazer direito.**
+
+O loot volta pro esconderijo, vira upgrade, recruta gente melhor e libera golpes maiores, da Lotérica do Seu Zé até o Banco Central. Fez o Banco Central? É a revanche: a Firma some do mapa, a cidade recomeça mais difícil e a sua fama fica.
 
 **Gênero:** idle / gerenciamento com decisões de risco (push-your-luck)
 **Plataforma:** WebGL (itch.io) · **Engine:** Unity 6000.6.4f1, template 2D (URP) · **Idioma:** PT-BR
@@ -30,6 +32,7 @@ O loot volta pro esconderijo, vira upgrade, recruta gente melhor e libera golpes
 - Loop completo e redondo: esconderijo → mapa → planejamento → golpe → resultado → esconderijo.
 - Decisão de risco real em todo golpe (portas, eventos, sirene).
 - 4 tipos de ladrão com papel claro e diferente.
+- Objetivo claro desde o primeiro minuto: a abertura mostra a firma caindo no Banco Central, e o jogo inteiro é a volta por cima.
 - Progressão infinita com prestígio, sempre com um próximo objetivo visível.
 - Mundo com identidade própria (cidade, personagens, humor brasileiro).
 
@@ -84,22 +87,45 @@ Cada rubrica tem um dono e um checklist para chegar no A em [`RUBRICA.md`](RUBRI
 Cidade fictícia que mistura São Paulo e Rio nos anos 90: orelhão, bip, fita K7, lotação, gatonet, jogo do bicho, inflação. A moeda é o **Cruzeiro (Cr$)**. O humor vem do cotidiano brasileiro: ninguém é vilão de verdade, todo mundo é meio malandro.
 
 ### Personagens fixos
-- **O Chefe (jogador):** nunca aparece. É "o cérebro", quem decide.
-- **Dona Cida:** lenda aposentada do crime, dona do esconderijo (uma oficina de fachada). Passa a firma pra você, conduz o tutorial e manda recados por **bip**. Fala mansa, conselho afiado.
-- **Delegado Bastos:** o antagonista. Aparece nas manchetes, promete pegar a firma, cresce a cada prestígio ("Bastos é promovido a Superintendente").
+- **O Chefe (jogador):** nunca aparece. É "o cérebro", quem decide. Já teve a maior firma de Nova Guanabara e perdeu tudo no Banco Central (a abertura).
+- **Dona Cida:** lenda aposentada do crime, dona do esconderijo (uma oficina de fachada). Te dá uma segunda chance: empresta a oficina e dois novatos, conduz o tutorial e manda recados por **bip**. Fala mansa, conselho afiado.
+- **Delegado Bastos:** o antagonista. Aparece nas manchetes, promete pegar a firma, cresce a cada prestígio ("Bastos é promovido a Superintendente"). A abertura é a única vez que ele pega alguém de verdade, e ele nunca mais para de falar disso.
 - **A crew:** ladrões gerados com nome + apelido de classe (ex.: "Juninho Disquete", "Tião Pé-na-Tábua"), uma manha de personalidade e bordões curtos.
 
 ### Como a história é contada
 Em pílulas, sem cutscene longa:
+- **Abertura (~40 s, pulável):** o golpe que deu errado no Banco Central. Ver abaixo.
 - **Bip da Dona Cida:** mensagens curtas em marcos (primeiro golpe, primeiro preso, golpe novo liberado, Banco Central, prestígio).
 - **Briefing do golpe:** 2–3 linhas de lore por alvo no mapa.
 - **Jornal "O Guanabarense":** a tela de resultado de todo golpe é a capa do jornal, com manchete gerada a partir do que aconteceu ("QUADRILHA LEVA CR$ 12 MIL DA LOTÉRICA DO SEU ZÉ; DELEGADO BASTOS PROMETE RESPOSTA").
 - **Bordões da crew:** balõezinhos durante o golpe ("Deixa comigo, chefia", "Isso aqui é mamão com açúcar").
 
+### Abertura — o golpe que deu errado
+Toca no **Novo jogo**, antes do esconderijo. É a própria Cena do Golpe tocando um golpe roteirizado no Banco Central, com a firma antiga do Chefe: **um ladrão de cada tipo**, os 4 do time. Mostra em 40 segundos tudo que o jogo tem (salas, sacola enchendo, habilidades, alerta, sirene) e ensina a regra principal pelo erro: ganância depois da sirene derruba até a melhor firma.
+
+| Tempo | O que acontece |
+|---|---|
+| 0–3 s | Tela preta e letreiro: "Nova Guanabara, 1992. Avenida do Porto, 3 da manhã." |
+| 3–10 s | A Kombi para no Banco Central, a crew desce pro túnel. Bordões de cada um |
+| 10–20 s | Salas caindo rápido (velocidade 3x), sacola crescendo, o Disquete apaga as câmeras, o 171 enrola o vigia. O cofre abre e chove dinheiro |
+| 20–30 s | Sirene. Aparece a porta: **METER O PÉ** ou **SÓ MAIS UMA**. A crew escolhe "só mais uma". A polícia chega e todo mundo sai algemado |
+| 30–35 s | A cena congela e vira a capa do jornal: "BASTOS PEGA A FIRMA NO BANCO CENTRAL" |
+| 35–40 s | Bip da Dona Cida (a segunda chance) e o jogo segue pro esconderijo, já no tutorial da Lotérica |
+
+**Regras:**
+- Pulável a qualquer momento (botão Pular e Esc). Toca uma vez por save; o menu tem "Ver abertura" pra rever.
+- **Não mexe no save:** não paga, não prende ninguém da sua crew e não gasta bip de marco (não conta como a primeira sirene nem como o primeiro preso). Por isso a abertura não passa pelo motor do golpe: um diretor toca a sequência de eventos direto na cena.
+- A crew da abertura é fixa (os 4 tipos, nível alto); ela não entra na sua crew.
+- **Versão mínima** se faltar tempo: só a capa do jornal + o bip da Dona Cida. O objetivo continua igual.
+
+### Objetivo
+**Voltar pro Banco Central e fazer direito.** Fica visível o tempo todo: o esconderijo mostra "Objetivo: Banco Central" com a escada de golpes até lá. Concluir o Banco Central pela primeira vez é a **revanche**: capa especial do jornal ("A FIRMA VOLTOU: BANCO CENTRAL LIMPO; BASTOS PEDE FÉRIAS"), créditos e o prestígio liberado.
+
 ### Arco
-1. Dona Cida passa a firma com 2 ladrões (um 171 e um Gazua).
+0. **Abertura:** a firma do Chefe tenta o Banco Central, insiste depois da sirene e cai. Bastos pega todo mundo.
+1. Dona Cida dá uma segunda chance: a oficina e 2 novatos (um 171 e um Gazua).
 2. Golpes vão crescendo: Lotérica → Joalheria → Casa de Câmbio → Cassino Clandestino.
-3. **Banco Central via túnel** — "o golpe do século", o objetivo de cada ciclo.
+3. **Banco Central via túnel: a revanche**, "o golpe do século" e o objetivo de cada ciclo.
 4. **Sumir do mapa (prestígio):** a firma desaparece, Bastos jura vingança, a cidade recomeça mais vigiada. Infinito.
 
 ---
@@ -109,7 +135,7 @@ Em pílulas, sem cutscene longa:
 ### 6.1 Fluxo de telas
 
 ```
-Boot → Menu Principal → Esconderijo (hub)
+Boot → Menu Principal → (Novo jogo: Abertura) → Esconderijo (hub)
                           ├─ Crew (ver, recrutar, demitir, pagar fiança)
                           ├─ Bicos (alocar ladrões ociosos)
                           ├─ Upgrades do esconderijo
@@ -274,11 +300,12 @@ O jogador entende o golpe **olhando a cena**, não só a HUD:
 **Identidade visual:** "dossiê da firma" — papel kraft, carimbo CONFIDENCIAL, fotos 3x4 dos ladrões em clipes, bip pras notificações, jornal no resultado. Fonte pixel legível.
 
 **Telas:**
-- Menu principal (Continuar, Novo jogo com confirmação, Opções, Créditos, Sair só no desktop)
+- Menu principal (Continuar, Novo jogo com confirmação, Ver abertura, Opções, Créditos, Sair só no desktop)
+- Abertura (letreiro, capa do jornal, botão Pular)
 - Pausa (Continuar, Opções, Voltar ao esconderijo/menu)
 - Opções (volume Geral/Música/SFX, tela cheia, apagar save com dupla confirmação)
 - Créditos
-- Esconderijo (hub)
+- Esconderijo (hub), sempre com o objetivo atual ("Objetivo: Banco Central")
 - Crew (ficha de cada ladrão)
 - Contatos (recrutamento)
 - Bicos
@@ -301,7 +328,7 @@ O jogador entende o golpe **olhando a cena**, não só a HUD:
 - Todo número de dinheiro animado ao mudar (contador rolando).
 
 ### 7.3 Tutorial
-O primeiro golpe (Lotérica) é guiado pela Dona Cida via bip: destaca o mapa, a escolha de crew, explica a barra de alerta, força uma decisão de porta e um evento roteirizado. Pulável. Depois disso, dicas pontuais na primeira vez que algo aparece (primeira sirene, primeiro preso, primeiro bico, prestígio liberado).
+Começa logo depois da abertura. O primeiro golpe (Lotérica) é guiado pela Dona Cida via bip: destaca o mapa, a escolha de crew, explica a barra de alerta, força uma decisão de porta e um evento roteirizado. Pulável. Depois disso, dicas pontuais na primeira vez que algo aparece (primeira sirene, primeiro preso, primeiro bico, prestígio liberado).
 
 ---
 
@@ -325,6 +352,7 @@ O primeiro golpe (Lotérica) é guiado pela Dona Cida via bip: destaca o mapa, a
 ## 10. Estados e erros (rubrica obrigatória)
 - **Save automático** a cada 10 s e em todo marco (fim de golpe, compra, recrutamento, prestígio). JSON versionado em `PlayerPrefs`.
 - **Backup:** sempre guarda o último save válido. Se o save atual estiver corrompido, carrega o backup e avisa. Se os dois falharem, começa um jogo novo e avisa.
+- **Abertura não toca no save:** nada do golpe roteirizado vira dinheiro, prisão ou bip de marco. Fechou no meio da abertura? No próximo Novo jogo ela toca de novo; pulou, segue direto pro esconderijo.
 - **Fechou no meio do golpe:** o golpe não é salvo no meio. Ao voltar, conta como "meteu o pé": a crew volta, leva o loot já na sacola, ninguém é preso. Mensagem explicando.
 - **Anti dead-end:**
   - Catar latinha sempre rende.
@@ -369,12 +397,21 @@ Detalhes em [`ARQUITETURA.md`](ARQUITETURA.md).
 
 GitHub: Leonardo `souzxxx` · Nicolas `NicolasVolf` · Enzo `canavero` · Miguel `EuMiguelll`
 
+**Abertura e objetivo (§5), quem faz o quê:**
+
+| Pessoa | Parte |
+|---|---|
+| **Leonardo** | Diretor da abertura: toca a sequência roteirizada de eventos direto na Cena do Golpe, sem passar pelo motor de verdade (nada vai pro save, nenhum bip de marco). Fluxo Novo jogo → Abertura → Esconderijo, Pular, "Ver abertura" e a marca de vista no save |
+| **Nicolas** | Roteiro e textos: letreiro, bordões da crew antiga, manchete da queda, bip da segunda chance (substitui o bip de jogo novo), texto do objetivo e a capa da revanche no Banco Central |
+| **Enzo** | Letreiro e botão Pular, capa do jornal da abertura e da revanche, "Objetivo" no esconderijo, créditos depois da revanche, música e SFX da abertura |
+| **Miguel** | Banco Central à noite com a crew de 4, a porta "SÓ MAIS UMA", o momento da prisão (todo mundo algemado, a viatura) e o congelamento antes do jornal. Bastos aparece só na foto do jornal; descer da viatura é extra |
+
 **Todo mundo:**
 - O seu ladrão: sprite, animações, retrato, habilidade ativa, 3 eventos em que ele brilha, bico, bordões, SFX de ação
 - Os créditos dos seus assets
 - A sua seção no GDD
 
-**Se faltar tempo, corta primeiro:** tasks que só servem Som ou VFX (rubricas descartadas), depois o visual próprio dos prédios 2 a 5 (podem reaproveitar as salas modulares da Lotérica), os golpes extras e o polimento de UI. **Nunca corta:** o que serve Mecânicas, Balanceamento, Estados e Erros e GDD.
+**Se faltar tempo, corta primeiro:** tasks que só servem Som ou VFX (rubricas descartadas), depois o visual próprio dos prédios 2 a 5 (podem reaproveitar as salas modulares da Lotérica), os golpes extras e o polimento de UI. A abertura cai pra versão mínima (só a capa do jornal + o bip), mas o objetivo fica. **Nunca corta:** o que serve Mecânicas, Balanceamento, Estados e Erros e GDD.
 
 ## 14. Cronograma
 
@@ -384,7 +421,7 @@ As sprints fecham na **quinta** (dia provável de aula).
 |---|---|---|---|
 | **0 · Fundação** | 20/10 → 22/10 | Projeto Unity com Core, contratos, mocks e sandboxes; todos com o ambiente rodando; GDD criado no Milanote; rubricas validadas com o professor | Cada um abre o projeto, roda a sua sandbox e faz um PR de teste |
 | **1 · Primeiro golpe** | 23/10 → 29/10 | Lotérica jogável de ponta a ponta: esconderijo → mapa → golpe → jornal → esconderijo, com save. Sistemas reais onde der, mock onde faltar | Alguém de fora joga a Lotérica sem ajuda e entende |
-| **2 · Jogo completo** | 30/10 → 05/11 | Os 5 golpes, os 4 ladrões, eventos, upgrades, bicos, offline, prestígio, todas as telas, música. **Feature freeze 05/11** | Dá pra ir do zero ao prestígio |
+| **2 · Jogo completo** | 30/10 → 05/11 | Os 5 golpes, os 4 ladrões, eventos, upgrades, bicos, offline, prestígio, todas as telas, música, a abertura e o objetivo. **Feature freeze 05/11** | Dá pra ir da abertura ao prestígio |
 | **3 · Polimento e entrega** | 06/11 → 11/11 | Balanceamento, bugs, juice, VFX, áudio final, tutorial; página do itch; GDD final; README com créditos. **Build final até 10/11**, entrega 11/11 | Checklist de entrega completo |
 
 Build WebGL de teste **toda quinta**, pra não descobrir problema de WebGL no fim.

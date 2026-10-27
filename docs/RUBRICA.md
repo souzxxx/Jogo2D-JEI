@@ -40,6 +40,8 @@ Os prédios continuam no jogo (são o palco do golpe), mas não têm mais rubric
 - [ ] Cada golpe tem briefing com uma piada ou detalhe de lore.
 - [ ] Os 4 ladrões têm personalidade: bordões, manhas, falas nos eventos.
 - [ ] Manchetes do jornal variam por resultado e citam o golpe e o valor.
+- [ ] A abertura conta de onde o Chefe veio: a firma cai no Banco Central e a Dona Cida dá a segunda chance (ESCOPO §5).
+- [ ] A revanche no Banco Central fecha a história: capa especial do jornal e créditos.
 - [ ] O prestígio tem "história" (a firma some, Bastos é promovido).
 - [ ] Tom malandro charmoso consistente em todos os textos (revisão final).
 
@@ -76,8 +78,9 @@ Os prédios continuam no jogo (são o palco do golpe), mas não têm mais rubric
 
 ## Engajamento e Imersão · Enzo
 **O A pede:** experiência muito envolvente: desafio ajustado, ritmo, feedback claro e objetivos motivadores.
+- [ ] Abertura de ~40 s, pulável, que prende nos primeiros segundos e já dá o objetivo do jogo.
 - [ ] Tutorial da Dona Cida curto e pulável.
-- [ ] Sempre tem um "próximo objetivo" visível (próximo golpe, próximo upgrade, prestígio).
+- [ ] Sempre tem um "próximo objetivo" visível ("Objetivo: Banco Central", próximo golpe, próximo upgrade, prestígio).
 - [ ] Dicas de primeira vez nos momentos certos.
 - [ ] Playtest com pelo menos 3 pessoas de fora, com anotações (Sprint 2/3).
 - [ ] Música e ambiente reforçam a tensão do golpe.

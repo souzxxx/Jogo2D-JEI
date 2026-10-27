@@ -34,17 +34,17 @@ Cidade fictícia que mistura Rio e São Paulo, **começo dos anos 90** (por volt
 | **Avenida do Porto** | Prédios de vidro, o Banco Central e a sede da polícia |
 | **Esconderijo** | "Auto Elétrica da Cida": oficina de fachada com um porão cheio de mapa na parede |
 
-**Os 5 golpes**, do menor pro maior: Lotérica do Seu Zé → Joalheria Brilho Eterno → Casa de Câmbio Dólar Fácil → Cassino Clandestino (debaixo de uma pastelaria) → Banco Central, via túnel.
+**Os 5 golpes**, do menor pro maior: Lotérica do Seu Zé → Joalheria Brilho Eterno → Casa de Câmbio Dólar Fácil → Cassino Clandestino (debaixo de uma pastelaria) → Banco Central, via túnel. O Banco Central é onde a história começa (a abertura, quando a firma antiga cai) e onde ela fecha (a revanche).
 
 ## Personagens fixos
 
-**O Chefe (jogador).** Nunca aparece nem fala. Todo mundo se dirige a ele como **"chefia"**. Não tem gênero definido: evite "o chefe é ele" ou "meu filho"; use "chefia", "você", "meu bem".
+**O Chefe (jogador).** Nunca aparece nem fala. Todo mundo se dirige a ele como **"chefia"**. Não tem gênero definido: evite "o chefe é ele" ou "meu filho"; use "chefia", "você", "meu bem". Já teve a maior firma de Nova Guanabara e perdeu tudo no Banco Central; o jogo é a volta por cima.
 
-**Dona Cida.** Uns 70 anos, lenda aposentada do crime. Diz que nunca foi presa porque "nunca deixou pista, só saudade". Passou a firma pra você e cuida do esconderijo. **Fala mansa, conselho afiado**, um pouco de deboche e muito carinho. Manda recado por **bip**: frases curtas, sem rodeio. Nunca grita, nunca xinga, nunca explica demais.
+**Dona Cida.** Uns 70 anos, lenda aposentada do crime. Diz que nunca foi presa porque "nunca deixou pista, só saudade". Depois que a sua firma caiu no Banco Central (a abertura), te deu uma segunda chance: a oficina e dois novatos. Cuida do esconderijo. **Fala mansa, conselho afiado**, um pouco de deboche e muito carinho. Manda recado por **bip**: frases curtas, sem rodeio. Nunca grita, nunca xinga, nunca explica demais.
 - "Fez bonito no Seu Zé. Agora não vai sair contando pra vizinhança."
 - "Tão te procurando na TV. Bom sinal: quer dizer que você existe."
 
-**Delegado Bastos.** O antagonista, de bigode e terno apertado. Adora uma câmera e um microfone. **Promete muito e pega pouco**: é o alvo da piada, não uma ameaça de verdade. Aparece nas manchetes e cresce a cada prestígio (delegado → superintendente → secretário de segurança). Nunca é violento nem cruel.
+**Delegado Bastos.** O antagonista, de bigode e terno apertado. Adora uma câmera e um microfone. **Promete muito e pega pouco**: é o alvo da piada, não uma ameaça de verdade. Aparece nas manchetes e cresce a cada prestígio (delegado → superintendente → secretário de segurança). Nunca é violento nem cruel. A abertura é a única vez que ele pega alguém de verdade, e desde então toda entrevista dele volta nisso.
 - "BASTOS GARANTE: 'É QUESTÃO DE DIAS'" (é sempre questão de dias)
 
 **A crew.** Nome + apelido de classe ("Juninho Disquete", "Tião Pé-na-Tábua"). Cada tipo tem um jeito de falar:
