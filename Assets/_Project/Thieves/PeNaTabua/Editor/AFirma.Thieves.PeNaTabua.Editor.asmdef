@@ -3,6 +3,8 @@
     "rootNamespace": "AFirma.Thieves.PeNaTabua.EditorTools",
     "references": [
         "AFirma.Core",
+        "AFirma.HeistScene",
+        "AFirma.HeistScene.Editor",
         "Unity.2D.Sprite.Editor"
     ],
     "includePlatforms": [

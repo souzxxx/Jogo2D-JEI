@@ -8,10 +8,10 @@ Ex-motorista de lotação pirata. Conhece Nova Guanabara pelos buracos da rua, n
 
 ## Arte
 
-Desenhada pixel a pixel por script, na paleta e no mesmo boneco do Gazua e do Disquete: boné vermelho, óculos escuros, bigode, palito no canto da boca, jaqueta laranja (a cor do tipo) por cima da camiseta branca e o chaveiro da van no cinto. Trabalha ao volante (um volante solto na mão, esterçando pra lá e pra cá) e comemora sacudindo o chaveiro.
+Desenhada pixel a pixel por script, na paleta e no mesmo boneco do Gazua e do Disquete: boné vermelho, óculos escuros, bigode, palito no canto da boca, jaqueta laranja (a cor do tipo) por cima da camiseta branca e o chaveiro da van no cinto. Trabalha ao volante (um volante solto na mão, esterçando pra lá e pra cá) e comemora sacudindo o chaveiro. O Cavalo de pau solta um "VRUUM!" de gibi com fumaça de pneu e poeira (`VFX/VFX_CavaloDePau`), e a van rodopia antes de arrancar.
 
-1. `python3 -B "Assets/_Project/Thieves/PeNaTabua/Art/Source~/gerar_penatabua.py"` (precisa de Pillow): sheet e retrato.
-2. No Unity, **A Firma › Pé-na-Tábua › Gerar**: fatia o sheet, cria os clipes e o Animator e preenche `ThiefType_PeNaTabua` (retrato, Animator).
+1. `python3 -B "Assets/_Project/Thieves/PeNaTabua/Art/Source~/gerar_penatabua.py"` (precisa de Pillow): sheet, retrato e o "VRUUM!".
+2. No Unity, **A Firma › Pé-na-Tábua › Gerar**: fatia o sheet, cria os clipes e o Animator, preenche `ThiefType_PeNaTabua` (retrato, Animator) e monta o VFX do Cavalo de pau na habilidade.
 
 ![Pé-na-Tábua](Art/Source~/previa_sheet.png)
 
@@ -26,4 +26,4 @@ Desenhada pixel a pixel por script, na paleta e no mesmo boneco do Gazua e do Di
 | `Icons/` | ícone do Cavalo de pau (volante girando) e do Lotação pirata (van), 32×32. Provisórios: recolorir quando a paleta sair |
 | `Events/` | 3 eventos em que só ele resolve: Pneu arriado (Lotérica+), Feira na rua da van (Joalheria+), Helicóptero da PM (Cassino+) |
 
-Falta: efeito visual do Cavalo de pau (`vfxPrefab`) e ajuste dos números com o Nicolas (#78).
+Falta: ajuste dos números com o Nicolas (#78).

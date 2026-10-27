@@ -1,8 +1,9 @@
-"""Gera a arte do Pé-na-Tábua pixel a pixel: sprite sheet 32x32 (idle, andar, trabalhar, comemorar) e retrato 64x64.
+"""Gera a arte do Pé-na-Tábua pixel a pixel: sprite sheet 32x32 (idle, andar, trabalhar, comemorar), retrato 64x64
+e o "VRUUM!" do efeito visual do Cavalo de pau.
 
 Uso (da raiz do repositório):  python3 -B "Assets/_Project/Thieves/PeNaTabua/Art/Source~/gerar_penatabua.py"
 Precisa de Pillow (pip install pillow). Usa a paleta e o boneco da Cena do Golpe (HeistScene/Art/Source~).
-Saída: Assets/_Project/Thieves/PeNaTabua/Art/PeNaTabua_sheet.png e PeNaTabua_retrato.png (e prévias nesta pasta).
+Saída: Assets/_Project/Thieves/PeNaTabua/Art/PeNaTabua_sheet.png, PeNaTabua_retrato.png e VFX/Vruum.png (e prévias nesta pasta).
 A pasta Source~ é ignorada pelo Unity.
 
 O Pé-na-Tábua é o motorista (ver ../../LEIA-ME.md): boné vermelho, óculos escuros, bigode, palito no canto da boca,
@@ -174,6 +175,28 @@ def retrato():
     return px
 
 
+def vruum():
+    """Onomatopeia do Cavalo de pau, estilo gibi (pro efeito visual da habilidade), com marca de pneu embaixo."""
+    from paleta import draw_text, text_width
+    from PIL import Image
+    w = text_width("VRUUM!") + 4
+    txt = Px(w, 12)
+    draw_text(txt, 1, 3, "VRUUM!", "red")
+    big = txt.img.resize((w * 2, 24), Image.NEAREST)
+    px = Px(w * 2 + 8, 30)
+    # balão de velocidade atrás, esticado pros lados
+    for i in range(px.w):
+        for j in range(px.h):
+            dx, dy = (i - px.w / 2) / (px.w / 2), (j - px.h / 2) / (px.h / 2)
+            if dx * dx + dy * dy * 1.6 < 0.95 and (abs(dy) < 0.45 or (i + j) % 5 == 0):
+                px.dot(i, j, "gold")
+    for x in range(2, px.w - 2, 6):                     # marca de pneu
+        px.rect(x, 1, x + 3, 2, "night")
+    px.img.alpha_composite(big, (4, 4))
+    px.outline()
+    return px
+
+
 def main():
     anims = {"idle": frames_idle(), "andar": frames_andar(), "trabalhar": frames_trabalhar(),
              "comemorar": frames_comemorar()}
@@ -181,6 +204,9 @@ def main():
     sh.save(OUT_DIR / "PeNaTabua_sheet.png")
     portrait = retrato()
     portrait.save(OUT_DIR / "PeNaTabua_retrato.png")
+    vfx = OUT_DIR.parent / "VFX"
+    vfx.mkdir(exist_ok=True)
+    vruum().save(vfx / "Vruum.png")
 
     from PIL import Image
     sh.img.resize((sh.w * 8, sh.h * 8), Image.NEAREST).save(HERE / "previa_sheet.png")

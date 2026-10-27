@@ -214,8 +214,8 @@ namespace AFirma.HeistScene.EditorTools
             return ps;
         }
 
-        /// <summary>Explosão única (toca ao nascer).</summary>
-        static ParticleSystem Burst(Transform parent, string name, Sprite sprite, int count, float minSpeed, float maxSpeed,
+        /// <summary>Explosão única (toca ao nascer). Pública pros VFX de habilidade dos ladrões.</summary>
+        public static ParticleSystem Burst(Transform parent, string name, Sprite sprite, int count, float minSpeed, float maxSpeed,
                                     float minLife, float maxLife, float gravity, Color start, Color end)
         {
             var ps = Particles(parent, name, sprite, start, end, SortOrder.Fx);

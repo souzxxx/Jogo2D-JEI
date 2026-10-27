@@ -175,6 +175,28 @@ namespace AFirma.Tests
             Assert.AreEqual(lockRoom.Prop.open, lockRoom.Prop.sr.sprite, "O cofre tem que ficar aberto.");
         }
 
+        [UnityTest]
+        public IEnumerator CavaloDePau_ShowsItsVfxAndEndsPerfect()
+        {
+            var crew = FullCrew();
+            yield return StartHeist("loterica", crew);
+            var driver = crew.Find(t => t.type == ThiefType.Driver);
+            float timeout = 10f;
+            while (timeout > 0f && Services.Heist.Phase != HeistPhase.Working)  // resolve o evento do tutorial
+            {
+                AutoDecide();
+                timeout -= Time.unscaledDeltaTime;
+                yield return null;
+            }
+            Assert.IsTrue(Services.Heist.CanUseAbility(driver, out var why), why);
+
+            Services.Heist.UseAbility(driver);
+            yield return null;
+
+            Assert.IsNotNull(GameObject.Find("VFX_CavaloDePau(Clone)"), "O VFX do Cavalo de pau não apareceu.");
+            Assert.AreEqual(HeistOutcome.PerfectEscape, Services.Heist.LastResult.outcome);
+        }
+
         // ---------------------------------------------------------------- fotos (só quando pedido)
 
         /// <summary>

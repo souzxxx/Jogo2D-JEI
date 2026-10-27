@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using AFirma.Core;
+using AFirma.HeistScene;
+using AFirma.HeistScene.EditorTools;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.U2D.Sprites;
@@ -9,8 +11,8 @@ using UnityEngine;
 namespace AFirma.Thieves.PeNaTabua.EditorTools
 {
     /// <summary>
-    /// Pé-na-Tábua: fatia o sheet, cria clipes e Animator e preenche o ThiefType com retrato e Animator.
-    /// A arte vem de Art/Source~/gerar_penatabua.py. Mesmo padrão do Disquete (DisqueteBuilder).
+    /// Pé-na-Tábua: fatia o sheet, cria clipes e Animator, preenche o ThiefType com retrato e Animator e monta o VFX do
+    /// Cavalo de pau. A arte vem de Art/Source~/gerar_penatabua.py. Mesmo padrão do Disquete (DisqueteBuilder) e do Gazua.
     /// Linha de comando: Unity -batchmode -quit -projectPath . -executeMethod AFirma.Thieves.PeNaTabua.EditorTools.PeNaTabuaBuilder.Build
     /// </summary>
     public static class PeNaTabuaBuilder
@@ -24,7 +26,7 @@ namespace AFirma.Thieves.PeNaTabua.EditorTools
             ("idle", 4, 4f, true), ("andar", 6, 10f, true), ("trabalhar", 6, 8f, true), ("comemorar", 4, 8f, false),
         };
 
-        [MenuItem("A Firma/Pé-na-Tábua/Gerar (Animator e retrato)")]
+        [MenuItem("A Firma/Pé-na-Tábua/Gerar (Animator, retrato e VFX)")]
         public static void Build()
         {
             SliceSheet();
@@ -51,8 +53,37 @@ namespace AFirma.Thieves.PeNaTabua.EditorTools
             type.animator = controller;
             EditorUtility.SetDirty(type);
 
+            var ability = AssetDatabase.LoadAssetAtPath<ThiefAbilityDef>(Dir + "/Ability_PeNaTabua.asset");
+            ability.vfxPrefab = BuildCavaloDePauVfx();
+            EditorUtility.SetDirty(ability);
+
             AssetDatabase.SaveAssets();
-            Debug.Log("[Pé-na-Tábua] Animator e retrato prontos.");
+            Debug.Log("[Pé-na-Tábua] Animator, retrato e VFX prontos.");
+        }
+
+        /// <summary>VFX do Cavalo de pau: um "VRUUM!" de gibi, fumaça de pneu cantando e poeira.</summary>
+        static GameObject BuildCavaloDePauVfx()
+        {
+            var root = new GameObject("VFX_CavaloDePau");
+            var vruum = new GameObject("Vruum");
+            vruum.transform.SetParent(root.transform, false);
+            vruum.transform.localPosition = HeistSceneBuilder.Px(0, 18);
+            var sr = vruum.AddComponent<SpriteRenderer>();
+            sr.sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Dir + "/VFX/Vruum.png");
+            sr.sortingOrder = SortOrder.Fx + 8;
+            var pop = vruum.AddComponent<PopIcon>();
+            pop.life = 1.1f;
+            pop.rise = 0.35f;
+
+            HeistSceneBuilder.Burst(root.transform, "Fumaça", HeistSceneBuilder.Sprite("Icones/Fumaca.png"), 14, 1f, 2.5f, 0.7f, 1.3f, -0.3f,
+                                    new Color(0.9f, 0.9f, 0.93f, 0.85f), new Color(0.6f, 0.6f, 0.65f, 0f));
+            HeistSceneBuilder.Burst(root.transform, "Poeira", HeistSceneBuilder.Sprite("Icones/Poeira.png"), 8, 0.5f, 1.5f, 0.4f, 0.8f, 1f,
+                                    new Color(0.63f, 0.43f, 0.26f), new Color(0.44f, 0.29f, 0.18f, 0f));
+
+            HeistSceneBuilder.EnsureFolder(Dir + "/VFX");
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, Dir + "/VFX/VFX_CavaloDePau.prefab");
+            Object.DestroyImmediate(root);
+            return prefab;
         }
 
         /// <summary>Uma linha por animação, 32x32, pé no chão (pivô embaixo no meio). Mantém o ID de quem já existia.</summary>
