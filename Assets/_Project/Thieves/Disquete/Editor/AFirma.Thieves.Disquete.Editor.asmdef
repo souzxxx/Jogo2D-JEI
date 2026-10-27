@@ -1,0 +1,19 @@
+{
+    "name": "AFirma.Thieves.Disquete.Editor",
+    "rootNamespace": "AFirma.Thieves.Disquete.EditorTools",
+    "references": [
+        "AFirma.Core",
+        "Unity.2D.Sprite.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
