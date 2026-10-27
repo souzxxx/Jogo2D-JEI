@@ -6,6 +6,7 @@
             <ui:Label name="money" text="Cr$ 0" class="h2 hideout__money" />
             <ui:Label name="income" text="+Cr$ 0/s" class="light" />
             <ui:VisualElement class="grow" />
+            <ui:Button name="skip-tutorial" text="Pular tutorial" class="btn" />
             <ui:Button name="menu" text="Menu" class="btn" />
         </ui:VisualElement>
         <ui:VisualElement class="row hideout__body">

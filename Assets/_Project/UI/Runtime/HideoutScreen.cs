@@ -37,6 +37,16 @@ namespace AFirma.UI
                 Ui.Btn("Créditos", () => MenuPanels.Credits(root)),
                 Ui.Btn("Menu principal", SceneFlow.GoToMainMenu)))));
 
+            var skip = root.OnClick("skip-tutorial", () =>
+            {
+                Tutorial.Skip(root);
+                root.Q<Button>("skip-tutorial").SetShown(false);
+                Ui.Toast(root, "Tutorial pulado. A Dona Cida confia em você.");
+            });
+            skip.SetShown(Tutorial.Active);
+            // depois das boas-vindas da Dona Cida, que saem no primeiro frame
+            root.schedule.Execute(() => Tutorial.Step("mapa", root.Q("map"), "Abre o Mapa aqui na pasta, chefia. É lá que a gente escolhe o serviço.")).StartingIn(300);
+
             Notices.Attach(root);
             Services.Audio.PlayMusic(MusicTrack.Hideout);
         }

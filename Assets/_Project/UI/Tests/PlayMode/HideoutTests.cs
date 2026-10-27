@@ -42,6 +42,23 @@ namespace AFirma.Tests
         }
 
         [UnityTest]
+        public IEnumerator Tutorial_GlowsTheMapUntilSkipped()
+        {
+            var root = Root<HideoutScreen>();
+            yield return new WaitForSecondsRealtime(0.6f);
+            Assert.IsTrue(Find<Button>(root, "map").ClassListContains("glow"), "Primeiro passo do tutorial: o Mapa brilha.");
+            yield return Print("tutorial");
+
+            Click(root, "jobs");
+            Assert.Contains("dica:bicos", Services.State.seenTips, "Primeira vez nos Bicos vira dica.");
+            Click(root, "skip-tutorial");
+            yield return null;
+            Assert.IsTrue(Services.State.tutorialDone);
+            Assert.IsNull(root.Q(className: "glow"), "Pulou: some o brilho.");
+            Assert.IsTrue(Find<Button>(root, "skip-tutorial").ClassListContains("hidden"));
+        }
+
+        [UnityTest]
         public IEnumerator Map_PlanningStartsTheHeist()
         {
             var root = Root<HideoutScreen>();
