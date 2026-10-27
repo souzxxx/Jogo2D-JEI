@@ -23,6 +23,7 @@ namespace AFirma.UI
         Button speed;
         readonly List<(ThiefState thief, Button button)> abilities = new List<(ThiefState, Button)>();
         object shownDecision;
+        Label hint;
 
         void OnEnable()
         {
@@ -57,10 +58,43 @@ namespace AFirma.UI
             GameEvents.HeistEventResolved -= OnEventResolved;
             GameEvents.HeistFinished -= OnFinished;
             GameEvents.Notice -= OnNotice;
+            HideHint();
             if (GameClock.Paused) GameClock.SetPaused(false);
         }
 
         void OnNotice(string text) => Ui.Toast(root, text);
+
+        /// <summary>Usa e avisa o que mudou (sala aberta, alerta antes → depois); sem número pra mostrar, diz o que a habilidade faz.</summary>
+        void UseAbility(ThiefState thief, ThiefAbilityDef ability)
+        {
+            var h = Services.Heist;
+            float alert = h.Alert;
+            int roomIndex = h.RoomIndex;
+            bool working = h.Phase == HeistPhase.Working;
+            h.UseAbility(thief);
+            if (!h.IsRunning) return; // fuga: o jornal conta o resto
+
+            var parts = new List<string>();
+            if (working && (h.RoomIndex != roomIndex || h.Phase != HeistPhase.Working)) parts.Add("sala aberta");
+            if (Mathf.RoundToInt(alert) != Mathf.RoundToInt(h.Alert)) parts.Add($"alerta {alert:0} → {h.Alert:0}");
+            Ui.Toast(root, $"{ability.displayName}: " + (parts.Count > 0 ? string.Join(", ", parts) : ability.description));
+        }
+
+        /// <summary>Descrição da habilidade enquanto o mouse está em cima do botão (tooltip não aparece em runtime).</summary>
+        void ShowHint(string text)
+        {
+            HideHint();
+            var toasts = root.Q("toasts");
+            if (toasts == null || string.IsNullOrEmpty(text)) return;
+            hint = Ui.Text(text, "dark toast");
+            toasts.Add(hint);
+        }
+
+        void HideHint()
+        {
+            hint?.RemoveFromHierarchy();
+            hint = null;
+        }
 
         void SetPaused(bool value)
         {
@@ -71,6 +105,7 @@ namespace AFirma.UI
         /// <summary>Um cartão por ladrão: rosto (recorte do retrato 3x4) e o botão da habilidade.</summary>
         void OnStarted(HeistDef heist)
         {
+            HideHint();
             crewBar.Clear();
             abilities.Clear();
             foreach (var thief in Services.Heist.CurrentCrew)
@@ -79,9 +114,15 @@ namespace AFirma.UI
                 var ability = type != null ? type.ability : null;
                 var button = Ui.Btn(ability != null ? ability.displayName : "—", () =>
                 {
-                    if (Services.Heist.CanUseAbility(thief, out var reason)) Services.Heist.UseAbility(thief);
+                    HideHint();
+                    if (Services.Heist.CanUseAbility(thief, out var reason)) UseAbility(thief, ability);
                     else Ui.Toast(root, reason);
                 });
+                if (ability != null)
+                {
+                    button.RegisterCallback<PointerEnterEvent>(_ => ShowHint(ability.description));
+                    button.RegisterCallback<PointerLeaveEvent>(_ => HideHint());
+                }
                 abilities.Add((thief, button));
                 crewBar.Add(Ui.El("dark row hud-thief",
                     Ui.Image(type != null ? type.portrait : null, "hud-thief__face"),
@@ -173,6 +214,7 @@ namespace AFirma.UI
         /// <summary>Capa do "O Guanabarense": manchete, dinheiro, salas, XP de cada um e quem foi preso.</summary>
         void OnFinished(HeistResult result)
         {
+            HideHint();
             ShowDecision(null);
             countdown.SetShown(false);
             if (GameClock.Paused) SetPaused(false);

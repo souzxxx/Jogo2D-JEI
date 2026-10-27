@@ -65,6 +65,31 @@ namespace AFirma.Tests
             yield return WaitForScene(SceneFlow.Hideout);
         }
 
+        /// <summary>Usar a habilidade pela HUD avisa o que ela fez, com o número antes e depois.</summary>
+        [UnityTest]
+        public IEnumerator Ability_ToastSaysWhatItDid()
+        {
+            var root = Root<HeistHud>();
+            var h = Services.Heist;
+            float timeout = 10f;
+            while (h.Phase != HeistPhase.Working && timeout > 0f) // evento do tutorial
+            {
+                var choice = root.Q("popup").Query<Button>().Where(b => !b.ClassListContains("btn--off")).First();
+                if (choice != null) Click(choice);
+                timeout -= Time.unscaledDeltaTime;
+                yield return null;
+            }
+            h.AddAlert(20f - h.Alert);
+            var labia = root.Q("crew").Query<Button>().Where(b => b.text == "Lábia").First();
+            Assert.IsNotNull(labia, "A crew inicial tem o 171.");
+
+            Click(labia);
+            yield return null;
+
+            var toasts = root.Q("toasts").Query<Label>().ToList().Select(l => l.text).ToList();
+            Assert.That(toasts, Has.Some.Contains("Lábia").And.Some.Contains("alerta 20 → 0"), string.Join(" | ", toasts));
+        }
+
         [UnityTest]
         public IEnumerator Pause_FreezesTheHeist()
         {
