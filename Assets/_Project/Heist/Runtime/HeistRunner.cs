@@ -101,6 +101,7 @@ namespace AFirma.Heist
             xpGiven.Clear();
             alert = 0f; freezeTimer = 0f; delayTimer = 0f; policeLeft = 0f; siren = false;
             bag = 0; roomsCleared = 0;
+            Speed = 1f; // o 2x é escolha de cada golpe, não vaza pro próximo
             PendingDoor = null; PendingEvent = null; LastResult = null;
             CurrentHeist = heist;
             Context = Services.Progression.GetContext(heist);

@@ -165,6 +165,19 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void NewHeist_StartsAt1x()
+        {
+            var gazua = AddThief(ThiefType.Locksmith, 50);
+            runner.StartHeist(MakeHeist(Room(ObstacleType.Lock, difficulty: 100)), Crew(gazua));
+            runner.Speed = 2f;
+            runner.Flee();
+
+            runner.StartHeist(MakeHeist(Room(ObstacleType.Lock, difficulty: 100)), Crew(gazua));
+
+            Assert.AreEqual(1f, runner.Speed, "O 2x de um golpe não vaza pro próximo.");
+        }
+
+        [Test]
         public void RoomProgress_GoesFromZeroToOneWhileWorking()
         {
             var progress = new List<float>();
