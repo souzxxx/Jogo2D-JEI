@@ -13,6 +13,16 @@ Interface (Enzo): menus, telas, HUD, popups, tutorial. Feita em **UI Toolkit** (
 | `Runtime/` | Um script por tela (`MainMenuScreen`) e os atalhos `Ui` (clique com som, confirmação, botão indisponível) |
 | `Editor/UiBuilder.cs` | **A Firma › Interface › Gerar tudo**: PanelSettings, sons da UI e as telas nas cenas |
 
+## Telas
+
+| Tela | Onde | Script |
+|---|---|---|
+| Menu principal | cena `MainMenu` | `MainMenuScreen` |
+| Esconderijo (hub) e abas | cena `Hideout` | `HideoutScreen`; aba Mapa e planejamento em `MapPanel` |
+| HUD do golpe, porta, evento, contagem e jornal | prefab `HeistHUD`, na cena `Heist` | `HeistHud` |
+
+O builder põe cada tela na cena dela. Na cena `Heist` ele também apaga a HUD provisória da Cena do Golpe.
+
 ## Regras do tema
 
 - Tamanho de fonte só em múltiplos de 11 px (11, 22, 33, 44, 66): a fonte é desenhada em 11 px de altura e fora disso borra.
