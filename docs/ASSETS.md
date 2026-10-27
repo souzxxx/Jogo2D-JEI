@@ -99,6 +99,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Arte da Cena do Golpe (salas, prédios, NPCs, ícones, fundo, fonte pixel) | Script Python que desenha pixel a pixel na paleta | `HeistScene/Art` (script em `Art/Source~`) | Miguel |
 | Gazua (sheet, retrato, ícones, "CREC!") | Script Python, mesmo padrão do 171 | `Thieves/Gazua/Art`, `Icons`, `VFX` | Miguel |
 | Sons da cena (grana na sacola, porta) e do Gazua (gazua na fechadura, pé-de-cabra) | Sintetizados por script, sem sample | `HeistScene/Audio`, `Thieves/Gazua/Audio` (script em `HeistScene/Audio/Source~`) | Miguel |
+| Disquete (sheet, retrato, ícones do Loop na câmera e do Gatonet) | Script Python, mesmo padrão do Gazua | `Thieves/Disquete/Art`, `Icons` (script em `Art/Source~`) | Enzo |
 | Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
 
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.

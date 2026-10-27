@@ -15,8 +15,9 @@ MonoBehaviour:
   id: loop-na-camera
   displayName: "Loop na c\xE2mera"
   description: Congela o alerta por 15 segundos.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 4bba32c7906d1479d9902b87fdc8f344, type: 3}
   sfx: {fileID: 0}
+  vfxPrefab: {fileID: 0}
   alertDelta: 0
   freezeAlertSeconds: 15
   completeCurrentRoom: 0
