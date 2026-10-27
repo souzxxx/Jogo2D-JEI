@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_micro-do-cpd
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: micro-do-cpd
+  displayName: "O micro do CPD"
+  description: "No CPD tem um micro ligado com a planilha do cofre aberta. Uma transfer\xEAncia espera o OK do gerente."
+  icon: {fileID: 0}
+  body: "No CPD tem um micro ligado com a planilha do cofre aberta. Uma transfer\xEAncia espera o OK do gerente."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 0
+  roomObstacle: 1
+  minTier: 3
+  weight: 1
+  choices:
+  - label: "Desviar a transfer\xEAncia pra conta da tia"
+    requiresType: 1
+    requiredType: 2
+    check: 1
+    baseChance: 0.5
+    chancePerStatPoint: 0.006
+    success:
+      resultText: "Baixando, pera\xED\u2026 pronto. Caiu na conta da tia."
+      alertDelta: 0
+      bagPercentDelta: 20
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "Deu pau no meio. A impressora matricial come\xE7ou a cuspir relat\xF3rio."
+      alertDelta: 15
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Levar o micro inteiro"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Pesa uma tonelada, mas micro novo vale ouro."
+      alertDelta: 0
+      bagPercentDelta: 5
+      delaySeconds: 6
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Desligar e n\xE3o mexer em nada"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Melhor assim. Amanh\xE3 ningu\xE9m nem sabe que voc\xEAs passaram."
+      alertDelta: -3
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0

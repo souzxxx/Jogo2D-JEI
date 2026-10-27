@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: AFirma.Core::AFirma.Core.SideJobDef
   id: gatonet
   displayName: Gatonet
-  description: Rende o dobro com um Disquete.
+  description: "Puxa o sinal da TV por assinatura pro pr\xE9dio inteiro, com emenda de fita isolante. Rende o dobro com um Disquete."
   icon: {fileID: 21300000, guid: 559936e3a563c42289e8b98e69d15796, type: 3}
   requiresThief: 1
   hasPreferredType: 1
