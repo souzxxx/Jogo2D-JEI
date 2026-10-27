@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -70,11 +71,12 @@ namespace AFirma.UI
         }
 
         /// <summary>
-        /// Popup de confirmação por cima da tela (screen = rootVisualElement do UIDocument).
+        /// Popup de confirmação por cima da tela de anyElement (o .screen dela).
         /// Com twice = true pergunta de novo antes de fazer.
         /// </summary>
-        public static void Confirm(VisualElement screen, string title, string body, string yes, Action onYes, bool twice = false)
+        public static void Confirm(VisualElement anyElement, string title, string body, string yes, Action onYes, bool twice = false)
         {
+            var screen = anyElement.panel?.visualTree.Q(className: "screen") ?? anyElement;
             VisualElement scrim = null;
             scrim = El("scrim",
                 El("panel dialog",
@@ -89,6 +91,33 @@ namespace AFirma.UI
                             else onYes();
                         }, "btn--red"))));
             screen.Add(scrim);
+        }
+
+        /// <summary>
+        /// Painel que acompanha o jogo enquanto está na tela. build monta tudo e é chamado de novo quando key() muda
+        /// (alguém foi preso, subiu de nível...); os updates que o build registra (relógio, botão disponível)
+        /// rodam 4 vezes por segundo sem remontar, pra não piscar nem perder o hover.
+        /// </summary>
+        public static VisualElement Live(Func<string> key, Action<VisualElement, List<Action>> build)
+        {
+            var panel = El("grow");
+            var updates = new List<Action>();
+            string last = null;
+            void Refresh()
+            {
+                var now = key();
+                if (now != last)
+                {
+                    last = now;
+                    panel.Clear();
+                    updates.Clear();
+                    build(panel, updates);
+                }
+                foreach (var update in updates) update();
+            }
+            Refresh();
+            panel.schedule.Execute(Refresh).Every(250);
+            return panel;
         }
 
         static void AddClasses(VisualElement element, string classes)
