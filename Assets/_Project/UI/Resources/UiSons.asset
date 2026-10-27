@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc3549043088495b84d30b657af31ce, type: 3}
   m_Name: UiSons
   m_EditorClassIdentifier: AFirma.UI::AFirma.UI.UiSounds
-  click: {fileID: 0}
-  hover: {fileID: 0}
-  buy: {fileID: 0}
-  error: {fileID: 0}
-  bip: {fileID: 0}
-  typewriter: {fileID: 0}
-  stamp: {fileID: 0}
-  paper: {fileID: 0}
+  click: {fileID: 8300000, guid: 8d97e012219a4ec78fcd79121eb7c8ce, type: 3}
+  hover: {fileID: 8300000, guid: 831240e97f5a468aa79410d9679eef17, type: 3}
+  buy: {fileID: 8300000, guid: 2193e3d511a74407b8585fbcf66aa159, type: 3}
+  error: {fileID: 8300000, guid: d6d01ff4a8864f8bb4bde8f0336a8d51, type: 3}
+  bip: {fileID: 8300000, guid: d1de42f638164c02aeacc87cee14fb78, type: 3}
+  typewriter: {fileID: 8300000, guid: 8efbdab55ad7445497f85104576c2ad7, type: 3}
+  stamp: {fileID: 8300000, guid: b73a6afd1cae46f6bdbfd037ae733f3b, type: 3}
+  paper: {fileID: 8300000, guid: ea91b2decb254fc6860ca7626f79a962, type: 3}

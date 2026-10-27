@@ -49,6 +49,13 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void HeistSounds_Exist()
+        {
+            foreach (var name in new[] { "Passos", "Alarme", "Sirene", "Viatura" })
+                Assert.IsNotNull(Resources.Load<AudioClip>("Sons/" + name), $"Falta Resources/Sons/{name} (Source~/gerar_sfx.py).");
+        }
+
+        [Test]
         public void Volume_IsSaved()
         {
             float before = Services.Audio.GetVolume("music");

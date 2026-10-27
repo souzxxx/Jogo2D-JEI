@@ -108,6 +108,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Pé-na-Tábua (sheet, retrato e "VRUUM!" do Cavalo de pau) | Script Python, mesmo padrão do Disquete | `Thieves/PeNaTabua/Art`, `VFX` (script em `Art/Source~`) | Leonardo |
 | Fundo do esconderijo (porão da Auto Elétrica) e mapa de Nova Guanabara | Script Python que desenha pixel a pixel na paleta | `UI/Art` (script em `UI/Art/Source~/gerar_ui.py`) | Enzo |
 | Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
+| Sons da UI (clique, hover, compra, erro, bip, máquina de escrever, carimbo, papel) e do golpe (passos, alarme, sirene, viatura) | Sintetizados por script, sem sample | `Audio/Resources/Sons` (script em `Audio/Source~/gerar_sfx.py`) | Enzo |
 
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.
 

@@ -93,6 +93,13 @@ namespace AFirma.Tests
             yield return null;
         }
 
+        [Test]
+        public void UiSounds_EveryClipIsSet()
+        {
+            foreach (var field in typeof(UiSounds).GetFields().Where(f => f.FieldType == typeof(AudioClip)))
+                Assert.IsNotNull(field.GetValue(UiSounds.Get), $"UiSons sem o som \"{field.Name}\" (Audio/Source~/gerar_sfx.py).");
+        }
+
         [UnityTest]
         public IEnumerator Credits_HaveEveryNameFromTheReadme()
         {

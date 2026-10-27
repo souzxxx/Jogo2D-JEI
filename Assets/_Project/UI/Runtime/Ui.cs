@@ -88,7 +88,7 @@ namespace AFirma.UI
                         {
                             scrim.RemoveFromHierarchy();
                             if (twice) Confirm(screen, "Certeza mesmo?", "Não tem volta.", yes, onYes);
-                            else onYes();
+                            else { UiSounds.Stamp(); onYes(); }
                         }, "btn--red"))));
             screen.Add(scrim);
         }
@@ -103,6 +103,7 @@ namespace AFirma.UI
                 El("row dialog__buttons", Btn("Fechar", () => scrim.RemoveFromHierarchy()))));
             build(body);
             screen.Add(scrim);
+            UiSounds.Paper();
             return scrim;
         }
 

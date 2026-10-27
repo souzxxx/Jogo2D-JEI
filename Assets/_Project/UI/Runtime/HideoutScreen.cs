@@ -53,6 +53,7 @@ namespace AFirma.UI
             if (open == null) return;
             root.Q<Button>(name).AddToClassList("tab--open");
             build(content);
+            UiSounds.Paper();
         }
 
         void Update()

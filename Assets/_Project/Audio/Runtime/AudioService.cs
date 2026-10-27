@@ -27,7 +27,7 @@ namespace AFirma.Audio
         readonly Dictionary<string, float> volumes = new Dictionary<string, float>();
         int active;
         MusicTrack current;
-        float intensity, smoothIntensity;
+        float intensity, smoothIntensity, lastArrest = -10f;
         AudioSource sfx;
 
         public AudioService()
@@ -36,7 +36,18 @@ namespace AFirma.Audio
             GameEvents.SirenStarted += _ => PlayMusic(MusicTrack.Siren);
             GameEvents.HeistFinished += _ => PlayMusic(MusicTrack.Hideout);
             GameEvents.AlertChanged += alert => SetHeistIntensity(alert / 100f);
+
+            // Sons do golpe (Resources/Sons). Porta e grana ficam com a Cena do Golpe.
+            GameEvents.RoomEntered += (_, _) => PlaySfx(Sound("Passos"), 0.5f);
+            GameEvents.SirenStarted += _ => { PlaySfx(Sound("Alarme"), 0.8f); PlaySfx(Sound("Sirene"), 0.7f); };
+            GameEvents.ThiefJailed += _ =>
+            {
+                if (Time.unscaledTime - lastArrest > 1f) PlaySfx(Sound("Viatura")); // uma viatura só pra crew presa junta
+                lastArrest = Time.unscaledTime;
+            };
         }
+
+        static AudioClip Sound(string name) => Resources.Load<AudioClip>("Sons/" + name);
 
         public void PlaySfx(AudioClip clip, float volume = 1f)
         {
