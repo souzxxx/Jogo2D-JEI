@@ -90,6 +90,10 @@ Os arquivos dos packs não estão no repositório (licença do craftpix não per
 | Free Currency Loot Vector Icons | [CraftPix.net](https://craftpix.net) | [CraftPix License](https://craftpix.net/file-licenses/) |
 | Car engine start 01 (som de ação do Pé-na-Tábua) | looneybits, [OpenGameArt](https://opengameart.org/node/93658) | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Car Tire Skid Squealing (som do Cavalo de pau) | Mike Koenig ([Soundbible](http://soundbible.com/1178-Tires-Squealing.html)), editado por qubodup, [OpenGameArt](https://opengameart.org/node/5634) | [CC-BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
+| 8bit Bossa (música do menu) | Joth, [OpenGameArt](https://opengameart.org/content/bossa-nova) | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Two Left Socks (música do esconderijo) | congusbongus, [OpenGameArt](https://opengameart.org/content/two-left-socks) | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Heavy Heist (música do golpe) | bertsz, [OpenGameArt](https://opengameart.org/content/heavy-heist) | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Chase - Diamond Dust (música da sirene) | NBJDLukasAbsolute, [OpenGameArt](https://opengameart.org/node/181066) | [CC0](https://creativecommons.org/publicdomain/zero/1.0/) |
 
 ### Ferramentas de IA
 | Ferramenta | Pra quê |
