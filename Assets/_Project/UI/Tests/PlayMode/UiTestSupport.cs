@@ -82,6 +82,7 @@ namespace AFirma.Tests
         {
             var dir = Environment.GetEnvironmentVariable("AFIRMA_PRINTS");
             if (string.IsNullOrEmpty(dir)) yield break;
+            yield return new WaitForSecondsRealtime(0.3f); // deixa terminar o fade de entrada (Ui.FadeIn)
 
             const int w = 1280, h = 720;
             var documents = UnityEngine.Object.FindObjectsByType<UIDocument>();

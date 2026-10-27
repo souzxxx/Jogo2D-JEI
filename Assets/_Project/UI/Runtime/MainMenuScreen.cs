@@ -11,6 +11,7 @@ namespace AFirma.UI
         void OnEnable()
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
+            root.Q(className: "screen").FadeIn();
             var continueButton = root.OnClick("continue", SceneFlow.GoToHideout);
             continueButton.SetShown(Services.Save.HasSave);
             root.OnClick("new-game", () =>

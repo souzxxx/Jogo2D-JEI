@@ -28,6 +28,7 @@ namespace AFirma.UI
         void OnEnable()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
+            root.Q(className: "screen").FadeIn();
             popup = root.Q("popup");
             paused = root.Q("paused");
             crewBar = root.Q("crew");

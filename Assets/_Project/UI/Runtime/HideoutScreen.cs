@@ -20,6 +20,7 @@ namespace AFirma.UI
         void OnEnable()
         {
             root = GetComponent<UIDocument>().rootVisualElement;
+            root.Q(className: "screen").FadeIn();
             content = root.Q("content");
             money = root.Q<Label>("money");
             income = root.Q<Label>("income");
@@ -62,7 +63,7 @@ namespace AFirma.UI
             content.SetShown(open != null);
             if (open == null) return;
             root.Q<Button>(name).AddToClassList("tab--open");
-            build(content);
+            build(content.FadeIn());
             UiSounds.Paper();
         }
 
