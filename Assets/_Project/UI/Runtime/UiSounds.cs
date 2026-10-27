@@ -23,6 +23,8 @@ namespace AFirma.UI
         public static void Hover() => Play(Get?.hover, 0.25f);
         public static void Buy() => Play(Get?.buy);
         public static void Error() => Play(Get?.error, 0.7f);
+        public static void Paper() => Play(Get?.paper, 0.5f);
+        public static void Stamp() => Play(Get?.stamp);
 
         public static void Play(AudioClip clip, float volume = 1f)
         {

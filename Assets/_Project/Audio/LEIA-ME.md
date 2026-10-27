@@ -18,4 +18,22 @@
 | Heist | [Heavy Heist](https://opengameart.org/content/heavy-heist) (cortado o silêncio do fim) | bertsz | CC0 |
 | Siren | [Chase - Diamond Dust](https://opengameart.org/node/181066) | NBJDLukasAbsolute | CC0 |
 
+## Efeitos sonoros (`Resources/Sons`)
+
+Todos sintetizados por `Source~/gerar_sfx.py` (só matemática, sem sample). Importam sem Normalize: o volume relativo vem do script.
+
+| Som | Quando toca | Quem toca |
+|---|---|---|
+| UI_Click / UI_Hover | clique e mouse em cima de botão | `Ui.OnClick` |
+| UI_Buy / UI_Error | compra feita / não deu (upgrade, bônus, fiança, contratar) | painéis da UI |
+| UI_Bip | bip da Dona Cida no pager | `Notices` |
+| UI_Typewriter | capa do jornal no fim do golpe | `HeistHud` |
+| UI_Stamp | confirmou ação irreversível (carimbo) | `Ui.Confirm` |
+| UI_Paper | abriu aba, janela, porta ou evento do golpe | `Ui.Modal`, `HideoutScreen`, `HeistHud` |
+| Passos | crew entrando numa sala (`RoomEntered`) | `AudioService` |
+| Alarme + Sirene | começou a contagem da polícia (`SirenStarted`) | `AudioService` |
+| Viatura | ladrão preso (`ThiefJailed`), uma vez pra crew presa junta | `AudioService` |
+
+Porta abrindo e grana na sacola são da Cena do Golpe (`HeistScene/Audio`); o som de cada habilidade fica com o dono do ladrão (`actionSfx`/`sfx`).
+
 **Volumes**: as faixas importam com Normalize (pico em 0 dB) e ficam entre −14,5 e −16,5 LUFS no jogo. A Siren tinha −9 LUFS e gritava por cima de tudo: o arquivo está 4,5 dB mais baixo e importa sem Normalize (fica em −14, um pouco acima das outras de propósito). As camadas também importam sem Normalize, uns 6 dB abaixo da base.

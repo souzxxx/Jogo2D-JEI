@@ -163,6 +163,7 @@ namespace AFirma.UI
             shownDecision = decision;
             popup.Clear();
             popup.SetShown(decision != null);
+            if (decision != null) UiSounds.Paper();
             if (decision is DoorDecision door) DoorPopup(door);
             else if (decision is HeistEventInstance heistEvent) EventCard(heistEvent);
         }
