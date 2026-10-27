@@ -1,9 +1,10 @@
-"""Gera a arte do Disquete pixel a pixel: sprite sheet 32x32 (idle, andar, trabalhar, comemorar), retrato 64x64
-e os ícones do Loop na câmera e do Gatonet.
+"""Gera a arte do Disquete pixel a pixel: sprite sheet 32x32 (idle, andar, trabalhar, comemorar), retrato 64x64,
+os ícones do Loop na câmera e do Gatonet e a telinha "LOOP" do efeito visual da habilidade.
 
 Uso (da raiz do repositório):  python3 -B "Assets/_Project/Thieves/Disquete/Art/Source~/gerar_disquete.py"
 Precisa de Pillow (pip install pillow). Usa a paleta e o boneco da Cena do Golpe (HeistScene/Art/Source~).
-Saída: Assets/_Project/Thieves/Disquete/Art/Disquete_sheet.png, Disquete_retrato.png e Icons/*.png (e prévias nesta pasta).
+Saída: Assets/_Project/Thieves/Disquete/Art/Disquete_sheet.png, Disquete_retrato.png, Icons/*.png e VFX/Loop.png
+(e prévias nesta pasta).
 A pasta Source~ é ignorada pelo Unity.
 
 O Disquete é o hacker (ver ../../LEIA-ME.md): cabelo cacheado, óculos fundo de garrafa, camiseta verde (a cor do
@@ -191,6 +192,30 @@ def icone_gatonet():
     return px
 
 
+def loop_vfx():
+    """Monitor de vigilância com "LOOP" na tela, a seta girando e o REC: a fita do corredor vazio rodando."""
+    from paleta import draw_text, text_width
+    from PIL import Image
+    w = text_width("LOOP") + 4
+    txt = Px(w, 12)
+    draw_text(txt, 1, 3, "LOOP", "money")
+    big = txt.img.resize((w * 2, 24), Image.NEAREST)
+    W, H = w * 2 + 24, 32
+    px = Px(W, H)
+    px.rect(0, 0, W - 1, H - 1, "slate")                # carcaça
+    px.rect(2, 2, W - 3, H - 3, "night")                # tela
+    for y in range(3, H - 3, 2):
+        px.hline(3, W - 4, y, "deepgreen")              # linhas de varredura
+    px.ring(W - 11, 13, 5, "money")                     # seta do loop
+    px.rect(W - 7, 14, W - 5, 18, "night")
+    px.rect(W - 9, 17, W - 5, 18, "money")
+    px.rect(W - 6, 15, W - 5, 18, "money")
+    px.disc(W - 8, H - 7, 2, "red")                     # REC
+    px.img.alpha_composite(big, (4, 4))
+    px.outline()
+    return px
+
+
 def main():
     anims = {"idle": frames_idle(), "andar": frames_andar(), "trabalhar": frames_trabalhar(),
              "comemorar": frames_comemorar()}
@@ -202,6 +227,9 @@ def main():
     icons.mkdir(exist_ok=True)
     icone_loop_na_camera().save(icons / "Icon_LoopNaCamera.png")
     icone_gatonet().save(icons / "Icon_Gatonet.png")
+    vfx = OUT_DIR.parent / "VFX"
+    vfx.mkdir(exist_ok=True)
+    loop_vfx().save(vfx / "Loop.png")
 
     from PIL import Image
     sh.img.resize((sh.w * 8, sh.h * 8), Image.NEAREST).save(HERE / "previa_sheet.png")
