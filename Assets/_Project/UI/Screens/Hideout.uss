@@ -31,3 +31,92 @@
 .hideout__content {
     flex-grow: 1;
 }
+
+/* ---------------------------------------------------------------- aba Mapa */
+
+.map {
+    width: 400px;
+    height: 230px;
+    flex-shrink: 0;
+    align-self: center;
+    background-image: url("../Art/Mapa.png");
+}
+
+/* pino: ponto no lugar do golpe e a etiqueta embaixo */
+.pin,
+.pin:hover,
+.pin:active,
+.pin:focus {
+    position: absolute;
+    translate: -50% -4px;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.pin__dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--red);
+    border-width: 1px;
+    border-color: var(--umber);
+}
+
+.pin__name {
+    background-color: var(--cream);
+    border-width: 1px;
+    border-color: var(--umber);
+    padding: 0 3px;
+    max-width: 112px;
+    -unity-text-align: middle-center;
+}
+
+.pin__mod {
+    background-color: var(--wine);
+    color: var(--cream);
+    padding: 0 3px;
+    white-space: nowrap;
+}
+
+.pin--locked .pin__dot {
+    background-color: var(--steel);
+}
+
+.pin--locked .pin__name {
+    background-color: var(--pale);
+    color: var(--steel);
+}
+
+.pin--done .pin__dot {
+    background-color: var(--money);
+}
+
+.pin:hover .pin__name,
+.pin--on .pin__name {
+    background-color: var(--lamp);
+    color: var(--umber);
+}
+
+.map__info {
+    margin-top: 4px;
+    align-items: flex-end;
+}
+
+/* ---------------------------------------------------------------- planejamento */
+
+.plan {
+    flex-grow: 1;
+    align-items: stretch;
+    margin: 4px 0;
+}
+
+.plan__brief {
+    width: 210px;
+    margin-right: 6px;
+}
+
+.plan__crew {
+    flex-grow: 1;
+}

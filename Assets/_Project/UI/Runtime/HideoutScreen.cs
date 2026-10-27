@@ -25,7 +25,7 @@ namespace AFirma.UI
             income = root.Q<Label>("income");
             shownMoney = Services.Economy.Money;
 
-            Tab("map", c => Soon(c, "Mapa", "Nova Guanabara e os golpes."));
+            Tab("map", MapPanel.Build);
             Tab("crew", c => Soon(c, "Crew", "A ficha de cada ladrão, demitir e pagar fiança."));
             Tab("contacts", c => Soon(c, "Contatos", "Os candidatos que a Dona Cida indica."));
             Tab("jobs", c => Soon(c, "Bicos", "Quem fica ganhando um troco enquanto não tem golpe."));
@@ -56,7 +56,7 @@ namespace AFirma.UI
             build(content);
         }
 
-        // cada painel (#48, #52, #53, #55) entra no lugar deste aviso
+        // os painéis da Sprint 2 (#52, #53, #55) entram no lugar deste aviso
         static void Soon(VisualElement content, string title, string what)
         {
             content.Add(Ui.Text(title, "h2"));

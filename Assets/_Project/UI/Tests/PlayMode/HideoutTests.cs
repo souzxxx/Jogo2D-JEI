@@ -40,5 +40,27 @@ namespace AFirma.Tests
             Click(root, "upgrades");
             Assert.IsTrue(content.ClassListContains("hidden"), "Clicar na aba aberta fecha o painel.");
         }
+
+        [UnityTest]
+        public IEnumerator Map_PlanningStartsTheHeist()
+        {
+            var root = Root<HideoutScreen>();
+            Click(root, "map");
+            yield return null;
+            Assert.AreEqual(Services.Progression.AllHeists.Count, root.Query<Button>(className: "pin").ToList().Count, "Um pino por golpe.");
+            yield return Print("mapa");
+
+            Click(root, "plan");
+            yield return null;
+            var go = Find<Button>(root, "go");
+            Assert.IsFalse(go.ClassListContains("btn--off"), go.text);
+            yield return Print("planejamento");
+
+            Click(go);
+            yield return WaitForScene(SceneFlow.Heist);
+            Assert.IsTrue(Services.Heist.IsRunning);
+            Services.Heist.Flee();
+            yield return null;
+        }
     }
 }
