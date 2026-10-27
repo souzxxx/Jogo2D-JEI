@@ -30,7 +30,7 @@ namespace AFirma.UI
             Tab("contacts", CrewPanel.BuildContacts);
             Tab("jobs", EconomyPanel.BuildJobs);
             Tab("upgrades", EconomyPanel.BuildUpgrades);
-            Tab("prestige", c => c.Add(Ui.Text("Prestígio", "h2"))); // tela na #55
+            Tab("prestige", PrestigePanel.Build);
             root.Q<Button>("prestige").SetShown(Services.Progression.Fame > 0 || Services.Progression.CanPrestige(out _));
             root.OnClick("menu", SceneFlow.GoToMainMenu);
 
