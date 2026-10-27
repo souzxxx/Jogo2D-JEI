@@ -371,3 +371,34 @@
 .card:active {
     background-color: var(--lamp);
 }
+
+/* ---------------------------------------------------------------- pager (bips) */
+
+/* canto de cima à direita, embaixo da barra: não tampa o golpe nem as abas */
+.pager {
+    position: absolute;
+    top: 30px;
+    right: 6px;
+    width: 170px;
+    margin: 0;
+    padding: 4px 6px;
+    background-color: var(--deepgreen);
+    border-width: 1px;
+    border-bottom-width: 3px;
+    border-color: var(--ink);
+    border-radius: 0;
+    align-items: stretch;
+}
+
+.pager:hover {
+    background-color: var(--green);
+}
+
+.pager__from {
+    color: var(--lamp);
+}
+
+.pager__text {
+    color: var(--mint);
+    white-space: normal;
+}
