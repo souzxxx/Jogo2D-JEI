@@ -4,6 +4,7 @@ Uso (da raiz do repositório):  python3 -B "Assets/_Project/Audio/Source~/gerar_
 Só usa a biblioteca padrão. Reaproveita as funções do gerador da Cena do Golpe (HeistScene/Audio/Source~).
 Saída em Audio/Resources/Sons: UI_* (o UiSons da UI aponta pra eles) e os do golpe, que o AudioService toca
 sozinho pelos GameEvents (Passos, Alarme, Sirene, Viatura). Porta e Grana já são da Cena do Golpe.
+E os do Disquete em Thieves/Disquete/Audio: o som de ação (teclado e drive) e o do Loop na câmera (fita rebobinando).
 """
 import math
 import sys
@@ -11,6 +12,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 OUT = HERE.parent / "Resources/Sons"
+DISQUETE = HERE.parents[1] / "Thieves/Disquete/Audio"
 sys.path.insert(0, str(HERE.parents[1] / "HeistScene/Audio/Source~"))
 
 from gerar_sons import RATE, click, mix, noise, rng, save, silence, tone  # noqa: E402
@@ -137,12 +139,39 @@ def viatura():
     return s
 
 
+# ---------------------------------------------------------------- Disquete
+
+def disquete_teclado():
+    """Digitando rápido e o drive de disquete lendo (o motorzinho de passo zumbindo)."""
+    s = silence(1.0)
+    at = 0.0
+    for _ in range(9):
+        mix(s, click(rng.uniform(2200, 3000), 0.03), at, 0.7)
+        at += rng.uniform(0.04, 0.07)
+    for k in range(5):                                                  # cabeça do drive andando
+        mix(s, square(55 + 10 * (k % 2), 0.05, decay=30.0), at + 0.08 + k * 0.06, 0.5)
+    return s
+
+
+def loop_na_camera():
+    """Videocassete: a fita rebobinando, o clunk do play e o bipe do REC."""
+    s = silence(1.1)
+    mix(s, sweep(180, 900, 0.6, lambda k: k * k), 0.0, 0.35)          # rebobinando
+    mix(s, noise(0.6, decay=2.0, lowpass=0.7, attack=0.05), 0.0, 0.25)
+    mix(s, tone([(90, 0.8), (180, 0.3)], 0.15, decay=30.0), 0.62, 0.9)  # clunk
+    mix(s, noise(0.05, decay=60.0, lowpass=0.5), 0.62, 0.5)
+    mix(s, square(1800, 0.12, harmonics=(1, 3)), 0.8, 0.35)            # bipe do REC
+    return s
+
+
 def main():
     for name, make, gain in (("UI_Click", ui_click, 0.8), ("UI_Hover", ui_hover, 0.6), ("UI_Buy", ui_buy, 0.8),
                              ("UI_Error", ui_error, 0.4), ("UI_Bip", ui_bip, 0.35), ("UI_Typewriter", ui_typewriter, 0.8),
                              ("UI_Stamp", ui_stamp, 0.9), ("UI_Paper", ui_paper, 0.6), ("Passos", passos, 0.8),
                              ("Alarme", alarme, 0.7), ("Sirene", sirene, 0.35), ("Viatura", viatura, 0.8)):
         save(make(), OUT / f"{name}.wav", gain)
+    save(disquete_teclado(), DISQUETE / "SFX_Disquete_Teclado.wav", 0.7)
+    save(loop_na_camera(), DISQUETE / "SFX_LoopNaCamera.wav", 0.8)
 
 
 if __name__ == "__main__":
