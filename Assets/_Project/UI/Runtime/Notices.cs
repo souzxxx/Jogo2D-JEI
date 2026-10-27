@@ -25,6 +25,7 @@ namespace AFirma.UI
             GameEvents.Bip += (sender, message) => bips.Enqueue((sender, message));
             GameEvents.Notice += notices.Enqueue;
             GameEvents.OfflineEarnings += (money, seconds) => offline = (money, seconds);
+            GameEvents.NewGameStarted += () => { bips.Clear(); offline = null; }; // o que estava na fila era do jogo anterior
         }
 
         /// <summary>

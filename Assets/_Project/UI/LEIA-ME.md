@@ -22,6 +22,7 @@ Interface (Enzo): menus, telas, HUD, popups, tutorial. Feita em **UI Toolkit** (
 | HUD do golpe, porta, evento, contagem, pausa e jornal | prefab `HeistHUD`, na cena `Heist` | `HeistHud` |
 | Opções e Créditos | janelas por cima do menu, do esconderijo (botão Menu) e da pausa | `MenuPanels` |
 | Bips (pager), toasts de aviso e "Enquanto você tava fora…" | canto de cima do esconderijo e da HUD; no menu só os toasts | `Notices` |
+| Tutorial do primeiro golpe e dicas de primeira vez | bip da Dona Cida + brilho no que clicar (mapa → planejar → ir → alerta → porta); "Pular tutorial" no topo do esconderijo | `Tutorial` |
 
 O builder põe cada tela na cena dela. Na cena `Heist` ele também apaga a HUD provisória da Cena do Golpe.
 

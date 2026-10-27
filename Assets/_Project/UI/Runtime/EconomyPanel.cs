@@ -13,6 +13,7 @@ namespace AFirma.UI
 
         public static void BuildJobs(VisualElement content)
         {
+            Tutorial.Tip("bicos", "Bico é dinheiro entrando parado. Quem tá de bobeira no esconderijo pode ir pro bico.");
             content.Add(Ui.Live(() => string.Join(",", Services.Crew.Crew.Select(t => $"{t.id}{t.status}{t.sideJobId}")), (panel, updates) =>
             {
                 var total = Ui.Text("", "h2");

@@ -402,3 +402,16 @@
     color: var(--mint);
     white-space: normal;
 }
+
+/* ---------------------------------------------------------------- tutorial */
+
+/* brilho piscando no que clicar no primeiro golpe (Tutorial.Step) */
+.glow {
+    border-width: 2px;
+    border-color: var(--lamp);
+}
+
+.glow--on {
+    border-color: var(--coral);
+    scale: 1.04 1.04;
+}

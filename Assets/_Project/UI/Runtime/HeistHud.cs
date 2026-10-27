@@ -104,6 +104,7 @@ namespace AFirma.UI
         /// <summary>Um cartão por ladrão: rosto (recorte do retrato 3x4) e o botão da habilidade.</summary>
         void OnStarted(HeistDef heist)
         {
+            Tutorial.Step("alerta", root.Q(className: "hud__alert"), "Tá vendo essa barra? É o alerta. Encheu, chega a polícia. Habilidade ajuda a segurar.");
             HideHint();
             crewBar.Clear();
             abilities.Clear();
@@ -170,6 +171,7 @@ namespace AFirma.UI
 
         void DoorPopup(DoorDecision door)
         {
+            Tutorial.Step("porta", popup, "Sala limpa. Agora é contigo: segue pra próxima ou mete o pé com o que já pegou.");
             var next = door.nextRoom;
             popup.Add(Ui.Text(door.sirenActive ? "A polícia tá chegando!" : "Próxima sala?", "h2"));
             popup.Add(Ui.El("row", Ui.El("icon icon--" + (int)next.obstacle),

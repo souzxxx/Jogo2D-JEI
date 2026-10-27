@@ -70,6 +70,7 @@ namespace AFirma.UI
             plan.name = "plan";
             plan.SetAvailable(unlocked);
             info.Add(plan);
+            if (unlocked) Tutorial.Step("plano", plan, "Escolhe o golpe no mapa e clica em Planejar pra ver quem vai.");
         }
 
         static string Obstacles(HeistDef heist) => string.Join(" · ", heist.rooms.GroupBy(r => r.obstacle).OrderBy(g => g.Key)
@@ -90,6 +91,7 @@ namespace AFirma.UI
                 else Ui.Toast(content, reason);
             }, "btn--green plan__go");
             go.name = "go";
+            Tutorial.Step("ir", go, "Especialista na sala certa trabalha mais rápido. Escolheu a crew? Manda ver.");
 
             void Refresh()
             {
