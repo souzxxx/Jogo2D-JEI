@@ -19,8 +19,8 @@ namespace AFirma.UI
                     Ui.Confirm(root, "Novo jogo?", "O save atual vai pro lixo: Cr$, crew e golpes.", "Começar do zero", NewGame);
                 else NewGame();
             });
-            root.Q<Button>("options").SetShown(false);
-            root.Q<Button>("credits").SetShown(false);
+            root.OnClick("options", () => MenuPanels.Options(root));
+            root.OnClick("credits", () => MenuPanels.Credits(root));
 #if UNITY_WEBGL
             root.Q<Button>("quit").SetShown(false);
 #else

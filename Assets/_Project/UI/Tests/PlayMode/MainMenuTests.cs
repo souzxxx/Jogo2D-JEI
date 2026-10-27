@@ -1,7 +1,10 @@
 using System.Collections;
+using System.IO;
+using System.Linq;
 using AFirma.Core;
 using AFirma.UI;
 using NUnit.Framework;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.UIElements;
@@ -50,7 +53,7 @@ namespace AFirma.Tests
 
             Click(dialog.Query<Button>().Last());
             yield return WaitForScene(SceneFlow.Hideout);
-            Assert.AreEqual(Services.Config.startingMoney, Services.State.money);
+            Assert.Less(Services.State.money, 999, "O save antigo foi pro lixo (os bicos já podem ter rendido uns trocados).");
         }
 
         [UnityTest]
@@ -61,6 +64,55 @@ namespace AFirma.Tests
             yield return WaitForScene(SceneFlow.MainMenu);
             Click(Root<MainMenuScreen>(), "continue");
             yield return WaitForScene(SceneFlow.Hideout);
+        }
+
+        [UnityTest]
+        public IEnumerator Options_VolumeAndWipeSaveAskTwice()
+        {
+            Services.StartNewGame();
+            Services.State.money = 99999;
+            SceneManager.LoadScene(SceneFlow.MainMenu);
+            yield return WaitForScene(SceneFlow.MainMenu);
+            var root = Root<MainMenuScreen>();
+
+            Click(root, "options");
+            yield return null;
+            float music = Services.Audio.GetVolume("music");
+            Find<Slider>(root, "volume-music").value = 0.3f;
+            Assert.AreEqual(0.3f, Services.Audio.GetVolume("music"), 0.001f, "O slider muda o volume da música.");
+            yield return Print("opcoes");
+            Services.Audio.SetVolume("music", music);
+
+            Click(root, "delete-save");
+            yield return null;
+            Click(root.Query(className: "dialog").Last().Query<Button>().Last());
+            yield return null;
+            Assert.Greater(Services.State.money, 99000, "Uma confirmação só não apaga.");
+            Click(root.Query(className: "dialog").Last().Query<Button>().Last());
+            Assert.AreEqual(Services.Config.startingMoney, Services.State.money, "Na segunda confirmação o jogo volta do zero.");
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Credits_HaveEveryNameFromTheReadme()
+        {
+            SceneManager.LoadScene(SceneFlow.MainMenu);
+            yield return WaitForScene(SceneFlow.MainMenu);
+            var root = Root<MainMenuScreen>();
+            Click(root, "credits");
+            yield return null;
+            var shown = string.Join("\n", root.Q(className: "credits").Query<Label>().ToList().Select(l => l.text));
+            yield return Print("creditos");
+
+            var lines = File.ReadAllLines(Path.Combine(Application.dataPath, "../README.md")).Select(l => l.Trim())
+                .SkipWhile(l => l != "## Créditos").ToList();
+            var team = lines[lines.IndexOf("### Equipe") + 1].Split('·').Select(n => n.Trim());
+            var assets = lines.SkipWhile(l => l != "### Assets de terceiros").TakeWhile(l => !l.StartsWith("### Ferramentas"))
+                .Where(l => l.StartsWith("| ") && !l.StartsWith("| Asset"))
+                .Select(l => l.Split('|')[1].Trim())
+                .Select(n => n.Contains(" (") ? n.Substring(0, n.IndexOf(" (")) : n);
+            foreach (var name in team.Concat(assets))
+                StringAssert.Contains(name, shown, $"\"{name}\" está no README mas falta na tela de Créditos (UI/Resources/Creditos.txt).");
         }
     }
 }

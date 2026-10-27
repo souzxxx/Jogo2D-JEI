@@ -164,6 +164,53 @@
     margin-left: 6px;
 }
 
+.dialog--wide {
+    width: 380px;
+}
+
+.credits {
+    height: 230px;
+}
+
+.credits .h2 {
+    margin-top: 6px;
+}
+
+.credits .dialog__body {
+    margin: 0;
+}
+
+/* opções: slider e caixinha na paleta */
+.dialog .unity-base-field {
+    margin: 3px 0;
+    align-items: center;
+}
+
+.dialog .unity-base-field__label {
+    min-width: 88px;
+    font-size: 11px;
+    color: var(--umber);
+}
+
+.dialog .unity-base-slider__tracker {
+    background-color: var(--paper);
+    border-color: var(--umber);
+    border-radius: 0;
+}
+
+.dialog .unity-base-slider__dragger {
+    background-color: var(--lamp);
+    border-color: var(--umber);
+    border-radius: 0;
+}
+
+.dialog .unity-toggle__checkmark {
+    background-color: var(--cream);
+    border-color: var(--umber);
+    border-radius: 0;
+    -unity-background-image-tint-color: var(--umber);
+}
+
 /* ---------------------------------------------------------------- botões */
 
 .btn {

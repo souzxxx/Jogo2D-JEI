@@ -1,0 +1,38 @@
+# Equipe
+Leonardo de Souza Lima e Silva · Motor do Golpe, Crew e Core · Pé-na-Tábua
+Nicolas Volf · Economia, Progressão e Narrativa · 171
+Enzo Canavero · Interface e Áudio · Disquete
+Miguel Damásio · Cena do Golpe · Gazua
+
+# Música
+8bit Bossa (menu) · Joth · CC0
+Two Left Socks (esconderijo) · congusbongus · CC0
+Heavy Heist (golpe) · bertsz · CC0
+Chase - Diamond Dust (sirene) · NBJDLukasAbsolute · CC0
+
+# Sons
+Car engine start 01 · looneybits · CC0
+Car Tire Skid Squealing · Mike Koenig (Soundbible), editado por qubodup · CC-BY 3.0
+Os outros sons foram sintetizados por script pela equipe.
+
+# Arte
+Packs da CraftPix.net (CraftPix License):
+Bandits Pixel Art Character Sprite Sheets Pack
+Gangster Pixel Character Sprite Sheets Pack 2
+City Man Pixel Character Sprite Pack 2
+Free Homeless Character Sprite Sheets
+Police Character Sprites Pixel Art
+SWAT 2D Pixel Art Character Sprite Pack
+Free Soldier Sprite Sheets
+Urban Animals Sprite Sheet Pixel Art Pack
+Free SWAT Dialog Portraits
+Free Pixel Art Street 2D Backgrounds
+Night City Street Game Background Tiles
+Free Currency Loot Vector Icons
+Ladrões, salas, esconderijo, mapa e fonte pixel: desenhados por script pela equipe.
+
+# Ferramentas
+Unity 6 (URP 2D, UI Toolkit)
+Claude (Anthropic): escreveu os scripts que desenham a arte pixel a pixel e sintetizam os sons, o tema e as telas da UI.
+
+# Insper · Jogos Digitais e Interação · 2026

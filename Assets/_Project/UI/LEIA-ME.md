@@ -19,9 +19,12 @@ Interface (Enzo): menus, telas, HUD, popups, tutorial. Feita em **UI Toolkit** (
 |---|---|---|
 | Menu principal | cena `MainMenu` | `MainMenuScreen` |
 | Esconderijo (hub) e abas | cena `Hideout` | `HideoutScreen`; aba Mapa e planejamento em `MapPanel` |
-| HUD do golpe, porta, evento, contagem e jornal | prefab `HeistHUD`, na cena `Heist` | `HeistHud` |
+| HUD do golpe, porta, evento, contagem, pausa e jornal | prefab `HeistHUD`, na cena `Heist` | `HeistHud` |
+| Opções e Créditos | janelas por cima do menu, do esconderijo (botão Menu) e da pausa | `MenuPanels` |
 
 O builder põe cada tela na cena dela. Na cena `Heist` ele também apaga a HUD provisória da Cena do Golpe.
+
+Os Créditos vêm de `Resources/Creditos.txt` (linha com `# ` vira título). Mudou a seção Créditos do README? Atualize o txt também: o teste `Credits_HaveEveryNameFromTheReadme` falha se faltar alguém ou algum asset.
 
 ## Regras do tema
 
