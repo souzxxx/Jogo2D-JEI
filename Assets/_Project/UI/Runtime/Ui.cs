@@ -90,7 +90,15 @@ namespace AFirma.UI
                             if (twice) Confirm(screen, "Certeza mesmo?", "Não tem volta.", yes, onYes);
                             else { UiSounds.Stamp(); onYes(); }
                         }, "btn--red"))));
-            screen.Add(scrim);
+            screen.Add(scrim.FadeIn());
+        }
+
+        /// <summary>Entra com fade (tela nova, aba, janela): nasce transparente e a transição do USS faz o resto.</summary>
+        public static T FadeIn<T>(this T element) where T : VisualElement
+        {
+            element.AddToClassList("fade");
+            element.schedule.Execute(() => element.RemoveFromClassList("fade")).StartingIn(20);
+            return element;
         }
 
         /// <summary>Janela por cima da tela de anyElement com título, conteúdo e Fechar (opções, créditos, menu).</summary>
@@ -102,7 +110,7 @@ namespace AFirma.UI
             scrim = El("scrim", El("panel dialog dialog--wide", Text(title, "h2"), body,
                 El("row dialog__buttons", Btn("Fechar", () => scrim.RemoveFromHierarchy()))));
             build(body);
-            screen.Add(scrim);
+            screen.Add(scrim.FadeIn());
             UiSounds.Paper();
             return scrim;
         }

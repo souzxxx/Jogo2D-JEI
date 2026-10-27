@@ -56,7 +56,7 @@ namespace AFirma.UI
                 pager = null;
                 if (bips.Count == 0) return;
                 var (sender, message) = bips.Dequeue();
-                pager = new Button(() => until = 0f) { name = "pager" };
+                pager = new Button { name = "pager" }.OnClick(() => until = 0f);
                 pager.AddToClassList("pager");
                 pager.Add(Ui.Text("BIP · " + sender, "pager__from"));
                 pager.Add(Ui.Text(message, "pager__text"));

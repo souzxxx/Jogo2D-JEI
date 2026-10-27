@@ -135,6 +135,18 @@
 }
 
 /* fundo escuro atrás de um popup */
+/* fade de entrada (Ui.FadeIn): telas, abas e janelas */
+.screen,
+.scrim,
+#content {
+    transition-property: opacity;
+    transition-duration: 0.25s;
+}
+
+.fade {
+    opacity: 0;
+}
+
 .scrim {
     position: absolute;
     left: 0;
@@ -414,4 +426,25 @@
 .glow--on {
     border-color: var(--coral);
     scale: 1.04 1.04;
+}
+
+/* ---------------------------------------------------------------- barra de rolagem */
+
+.unity-scroller__low-button,
+.unity-scroller__high-button {
+    display: none;
+}
+
+.unity-scroller .unity-scroller__slider .unity-base-slider__tracker {
+    background-color: var(--paper);
+    border-color: var(--tan);
+    border-radius: 0;
+}
+
+.unity-scroller .unity-scroller__slider .unity-base-slider__dragger,
+.unity-scroller .unity-scroller__slider .unity-base-slider__dragger:hover,
+.unity-scroller .unity-scroller__slider .unity-base-slider__dragger:active {
+    background-color: var(--tan);
+    border-color: var(--wood);
+    border-radius: 0;
 }
