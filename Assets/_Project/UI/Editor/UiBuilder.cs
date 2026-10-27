@@ -27,6 +27,7 @@ namespace AFirma.UI.EditorTools
             LoadOrCreate<UiSounds>(Root + "/Resources/UiSons.asset");
             SetupScene(Scenes + "/MainMenu.unity", "Menu principal", "MainMenu", typeof(MainMenuScreen), settings);
             SetupScene(Scenes + "/Hideout.unity", "Esconderijo", "Hideout", typeof(HideoutScreen), settings);
+            BuildHud(settings);
             AssetDatabase.SaveAssets();
             Debug.Log("[Interface] Tudo gerado.");
         }
@@ -57,6 +58,33 @@ namespace AFirma.UI.EditorTools
             document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>($"{Root}/Screens/{screen}.uxml");
             if (go.GetComponent(component) == null) go.AddComponent(component);
 
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+        }
+
+        /// <summary>
+        /// Prefab UI/HeistHUD (UIDocument + HeistHud) e ele na cena Heist, logo depois do separador da HUD,
+        /// no lugar da HUD provisória do Miguel (o LEIA-ME da Cena do Golpe pede pra apagar).
+        /// </summary>
+        static void BuildHud(PanelSettings settings)
+        {
+            var go = new GameObject("HUD do golpe");
+            var document = go.AddComponent<UIDocument>();
+            document.panelSettings = settings;
+            document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(Root + "/Screens/Hud.uxml");
+            go.AddComponent<HeistHud>();
+            var prefab = PrefabUtility.SaveAsPrefabAsset(go, Root + "/HeistHUD.prefab");
+            Object.DestroyImmediate(go);
+
+            var scene = EditorSceneManager.OpenScene(Scenes + "/Heist.unity", OpenSceneMode.Single);
+            var fallback = GameObject.Find("HUD provisória (apagar quando a HUD do Enzo entrar)");
+            if (fallback != null) Object.DestroyImmediate(fallback);
+            if (Object.FindAnyObjectByType<HeistHud>(FindObjectsInactive.Include) == null)
+            {
+                var hud = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+                var separator = GameObject.Find("--- HUD (prefab do Enzo) ---");
+                if (separator != null) hud.transform.SetSiblingIndex(separator.transform.GetSiblingIndex() + 1);
+            }
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
         }

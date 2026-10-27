@@ -1,0 +1,179 @@
+/* HUD do golpe: caixas escuras nas bordas pra não tampar a cena do Miguel, popups de papel no meio. */
+
+.hud {
+    padding: 6px;
+}
+
+.hud__top {
+    align-items: flex-start;
+}
+
+.hud__top > * {
+    margin-right: 4px;
+}
+
+.hud__room {
+    width: 150px;
+}
+
+.hud__alert {
+    width: 170px;
+}
+
+.hud__bag Label {
+    margin-right: 6px;
+}
+
+.hud__money {
+    color: var(--mint);
+}
+
+.hud__small {
+    width: 28px;
+    margin: 0 0 0 4px;
+}
+
+.bar {
+    height: 6px;
+    margin-top: 2px;
+    background-color: var(--night);
+    border-width: 1px;
+    border-color: var(--slate);
+}
+
+.bar__fill {
+    height: 100%;
+    width: 0;
+    background-color: var(--money);
+}
+
+.bar__fill--room {
+    background-color: var(--cyan);
+}
+
+.alert--mid {
+    background-color: var(--gold);
+}
+
+.alert--high {
+    background-color: var(--red);
+}
+
+.hud__countdown {
+    align-self: center;
+    margin-top: 8px;
+    color: var(--red);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--ink);
+}
+
+.hud__bottom {
+    align-items: flex-end;
+}
+
+/* ladrão na HUD: retrato cortado no rosto e o botão da habilidade */
+.hud-thief {
+    width: 128px;
+    margin-right: 4px;
+}
+
+.hud-thief__face {
+    width: 40px;
+    height: 40px;
+    margin-right: 4px;
+    background-size: 64px 64px;
+    background-position-x: center;
+    background-position-y: center;
+    border-width: 1px;
+    border-color: var(--slate);
+}
+
+.hud-thief .btn {
+    font-size: 11px;
+    padding: 1px 3px;
+    min-height: 14px;
+}
+
+.hud__flee {
+    padding: 4px 12px;
+}
+
+.hud__popup {
+    position: absolute;
+    left: 170px;
+    right: 170px;
+    top: 70px;
+}
+
+.event__art {
+    height: 64px;
+    margin: 4px 0;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+/* ícones de obstáculo da Cena do Golpe (Miguel) */
+.icon--0 {
+    background-image: url("../../HeistScene/Art/Icones/Icone_Fechadura.png");
+}
+
+.icon--1 {
+    background-image: url("../../HeistScene/Art/Icones/Icone_Sistema.png");
+}
+
+.icon--2 {
+    background-image: url("../../HeistScene/Art/Icones/Icone_Pessoa.png");
+}
+
+.icon--nospec {
+    background-image: url("../../HeistScene/Art/Icones/Icone_SemEspecialista.png");
+}
+
+/* ---------------------------------------------------------------- jornal */
+
+.news {
+    width: 420px;
+    background-color: var(--cream);
+    border-width: 1px;
+    border-color: var(--umber);
+    padding: 10px 12px;
+    rotate: -2deg;
+    transition-property: rotate, scale;
+    transition-duration: 0.7s;
+    transition-timing-function: ease-out-back;
+}
+
+.news--folded {
+    rotate: 700deg;
+    scale: 0.1 0.1;
+}
+
+.news__mast {
+    -unity-text-align: middle-center;
+    color: var(--ink);
+}
+
+.news__rule {
+    height: 2px;
+    background-color: var(--ink);
+    margin: 3px 0;
+}
+
+.news__headline {
+    color: var(--ink);
+    margin: 4px 0 6px 0;
+}
+
+.news__col {
+    flex-grow: 1;
+    flex-basis: 0;
+    align-items: stretch;
+}
+
+.news__thief {
+    margin-bottom: 3px;
+}
+
+/* avisos acima da crew */
+.hud .toasts {
+    bottom: 64px;
+}

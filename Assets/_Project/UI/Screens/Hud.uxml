@@ -1,0 +1,39 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="Hud.uss" />
+    <ui:VisualElement class="screen hud" picking-mode="Ignore">
+        <ui:VisualElement class="row hud__top" picking-mode="Ignore">
+            <ui:VisualElement class="dark hud__room">
+                <ui:Label name="heist-name" text="Golpe" class="light" />
+                <ui:Label name="room" text="Sala 1/3" class="muted" />
+                <ui:VisualElement class="bar"><ui:VisualElement name="room-fill" class="bar__fill bar__fill--room" /></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="dark hud__alert">
+                <ui:Label name="alert-text" text="Alerta 0" class="light" />
+                <ui:VisualElement class="bar bar--alert"><ui:VisualElement name="alert-fill" class="bar__fill" /></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="grow" picking-mode="Ignore" />
+            <ui:VisualElement class="dark row hud__bag">
+                <ui:Label text="Sacola" class="muted" />
+                <ui:Label name="bag" text="Cr$ 0" class="hud__money" />
+            </ui:VisualElement>
+            <ui:Button name="speed" text="1x" class="btn hud__small" />
+            <ui:Button name="pause" text="II" class="btn hud__small" />
+        </ui:VisualElement>
+        <ui:Label name="countdown" text="POLÍCIA EM 10s" class="h1 hud__countdown hidden" />
+        <ui:VisualElement class="grow" picking-mode="Ignore" />
+        <ui:VisualElement class="row hud__bottom" picking-mode="Ignore">
+            <ui:VisualElement name="crew" class="row" picking-mode="Ignore" />
+            <ui:VisualElement class="grow" picking-mode="Ignore" />
+            <ui:Button name="flee" text="Meter o pé" class="btn btn--red hud__flee" />
+        </ui:VisualElement>
+        <ui:VisualElement name="popup" class="panel hud__popup hidden" />
+        <ui:VisualElement name="paused" class="scrim hidden">
+            <ui:VisualElement class="panel dialog">
+                <ui:Label text="Pausado" class="h2" />
+                <ui:Label text="O golpe e a contagem da polícia estão congelados." class="dialog__body" />
+                <ui:Button name="resume" text="Continuar" class="btn btn--green" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="toasts" class="toasts" picking-mode="Ignore" />
+    </ui:VisualElement>
+</ui:UXML>
