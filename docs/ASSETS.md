@@ -39,6 +39,7 @@ Linha a linha: a noite azulada de Nova Guanabara (ink → cream), a luz quente d
 ## Direção de arte da UI (Enzo)
 
 ![Menu principal](img/ui_menu.png)
+![Esconderijo](img/ui_esconderijo.png)
 
 - **"Dossiê da firma"**: painel de papel kraft com borda marrom, papel creme pras fichas, carimbo vermelho torto (CONFIDENCIAL, PRESO, CONCLUÍDO), caixas escuras translúcidas na HUD do golpe pra não tampar a cena.
 - **Sem GUI pack**: painéis e botões são desenhados em USS com as cores da paleta (`UI/Styles/Firma.uss`). Ficam nítidos em qualquer resolução, não precisam de 9-slice e qualquer um muda a cor numa linha. Os ícones são os da cena (cadeado, monitor, pessoa).
@@ -100,6 +101,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Gazua (sheet, retrato, ícones, "CREC!") | Script Python, mesmo padrão do 171 | `Thieves/Gazua/Art`, `Icons`, `VFX` | Miguel |
 | Sons da cena (grana na sacola, porta) e do Gazua (gazua na fechadura, pé-de-cabra) | Sintetizados por script, sem sample | `HeistScene/Audio`, `Thieves/Gazua/Audio` (script em `HeistScene/Audio/Source~`) | Miguel |
 | Disquete (sheet, retrato, ícones do Loop na câmera e do Gatonet) | Script Python, mesmo padrão do Gazua | `Thieves/Disquete/Art`, `Icons` (script em `Art/Source~`) | Enzo |
+| Fundo do esconderijo (porão da Auto Elétrica) e mapa de Nova Guanabara | Script Python que desenha pixel a pixel na paleta | `UI/Art` (script em `UI/Art/Source~/gerar_ui.py`) | Enzo |
 | Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
 
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.

@@ -51,7 +51,8 @@
     bottom: 0;
 }
 
-Label {
+/* .unity-label (e não Label): precisa ganhar do tema padrão, que não quebra linha */
+.unity-label {
     padding: 0;
     margin: 0;
     white-space: normal;
@@ -232,4 +233,79 @@ Label {
     color: var(--steel);
     border-color: var(--steel);
     opacity: 1;
+}
+
+/* ---------------------------------------------------------------- abas, cartões e avisos */
+
+/* aba da pasta: presa na borda esquerda, a aberta avança */
+.tab {
+    -unity-text-align: middle-left;
+    margin: 0 0 4px 0;
+    border-left-width: 0;
+    padding-left: 10px;
+    background-color: var(--kraft);
+}
+
+.tab--open {
+    background-color: var(--paper);
+    translate: 6px 0;
+}
+
+/* cartão clicável (ladrão, golpe): borda dourada quando escolhido */
+.card {
+    background-color: var(--paper);
+    border-width: 1px;
+    border-color: var(--tan);
+    padding: 3px;
+    margin: 0 0 3px 0;
+}
+
+.card--on {
+    border-color: var(--gold);
+    border-width: 2px;
+    background-color: var(--cream);
+}
+
+.portrait {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    margin-right: 6px;
+    border-width: 1px;
+    border-color: var(--umber);
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+/* avisos que somem sozinhos (GameEvents.Notice, motivo de botão indisponível) */
+.toasts {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
+    align-items: center;
+}
+
+.toast {
+    color: var(--cream);
+    margin-top: 3px;
+    max-width: 360px;
+    transition-property: opacity;
+    transition-duration: 0.4s;
+}
+
+.card .unity-label {
+    -unity-text-align: upper-left;
+}
+
+.card:hover {
+    background-color: var(--cream);
+}
+
+.card:active {
+    background-color: var(--lamp);
 }

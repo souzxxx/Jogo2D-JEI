@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace AFirma.UI
@@ -48,6 +49,24 @@ namespace AFirma.UI
             var button = new Button { text = text };
             AddClasses(button, "btn " + classes);
             return button.OnClick(onClick);
+        }
+
+        public static VisualElement Image(Sprite sprite, string classes)
+        {
+            var image = El(classes);
+            if (sprite != null) image.style.backgroundImage = new StyleBackground(sprite);
+            return image;
+        }
+
+        /// <summary>Aviso que some sozinho, embaixo da tela (a tela precisa ter um #toasts).</summary>
+        public static void Toast(VisualElement anyElement, string text)
+        {
+            var toasts = anyElement.panel?.visualTree.Q("toasts");
+            if (toasts == null || string.IsNullOrEmpty(text)) return;
+            var toast = Text(text, "dark toast");
+            toasts.Add(toast);
+            toast.schedule.Execute(() => toast.style.opacity = 0f).StartingIn(3000);
+            toast.schedule.Execute(toast.RemoveFromHierarchy).StartingIn(3500);
         }
 
         /// <summary>

@@ -1,0 +1,33 @@
+/* Esconderijo: o porão da Auto Elétrica da Cida (Art/Esconderijo.png) com as abas da pasta à esquerda. */
+
+.hideout {
+    background-image: url("../Art/Esconderijo.png");
+}
+
+.hideout__top {
+    height: 28px;
+    padding: 0 8px;
+}
+
+.hideout__top Label {
+    margin-right: 8px;
+}
+
+.hideout__money {
+    color: var(--mint);
+}
+
+.hideout__body {
+    flex-grow: 1;
+    align-items: stretch;
+    padding: 6px 8px 8px 0;
+}
+
+.hideout__tabs {
+    width: 96px;
+    padding-top: 6px;
+}
+
+.hideout__content {
+    flex-grow: 1;
+}
