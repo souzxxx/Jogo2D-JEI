@@ -25,6 +25,7 @@ namespace AFirma.UI.EditorTools
         {
             var settings = BuildPanelSettings();
             LoadOrCreate<UiSounds>(Root + "/Resources/UiSons.asset");
+            SetupScene(Scenes + "/MainMenu.unity", "Menu principal", "MainMenu", typeof(MainMenuScreen), settings);
             AssetDatabase.SaveAssets();
             Debug.Log("[Interface] Tudo gerado.");
         }

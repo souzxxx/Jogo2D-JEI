@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="MainMenu.uss" />
+    <ui:VisualElement class="screen menu">
+        <ui:VisualElement class="menu__layer menu__hill" />
+        <ui:VisualElement class="menu__layer menu__far" />
+        <ui:VisualElement class="menu__layer menu__near" />
+        <ui:VisualElement class="menu__title">
+            <ui:Label text="A FIRMA" class="menu__logo" />
+            <ui:Label text="Nova Guanabara, 1992" class="menu__tagline" />
+        </ui:VisualElement>
+        <ui:VisualElement class="panel menu__card">
+            <ui:Label text="CONFIDENCIAL" class="stamp menu__stamp" />
+            <ui:Button name="continue" text="Continuar" class="btn btn--green" />
+            <ui:Button name="new-game" text="Novo jogo" class="btn" />
+            <ui:Button name="options" text="Opções" class="btn" />
+            <ui:Button name="credits" text="Créditos" class="btn" />
+            <ui:Button name="quit" text="Sair" class="btn" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
