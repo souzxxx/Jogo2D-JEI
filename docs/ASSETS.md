@@ -21,7 +21,7 @@
 | Import de sprite | Filter Mode **Point**, Compression **None**, PPU 32 |
 | Câmera | Pixel Perfect Camera (URP), referência 640×360, upscale pra 1280×720 |
 | Paleta | 32 cores, abaixo (`HeistScene/Art/Paleta.png`). Os nomes estão em `HeistScene/Art/Source~/paleta.py` |
-| Fonte da UI | _a definir pelo Enzo na Sprint 0_ (pixel, legível, com acentos) |
+| Fonte da UI | **FirmaPixel** (`UI/Fonte/FirmaPixel.ttf`): a letra pixel da Cena do Golpe virada TTF, com acentos. Só em 11, 22, 33, 44 ou 66 px |
 
 ## Paleta
 
@@ -35,6 +35,15 @@ Linha a linha: a noite azulada de Nova Guanabara (ink → cream), a luz quente d
 - **Toda a arte da cena é desenhada pixel a pixel por script, já na paleta** (`HeistScene/Art/Source~/gerar_cena.py`): salas, adereços dos obstáculos (fechado/aberto), NPCs 32×32 no mesmo padrão do 171, fachadas, letreiros, fundo da cidade, ícones e uma fonte pixel com acento. Mudou o golpe, roda o script e o Unity refaz tudo (ver `HeistScene/LEIA-ME.md`).
 - **Os packs de cenário do craftpix** (`StreetBackgrounds`, `NightCityTiles`) foram desenhados pra 1920×1080, três vezes a nossa escala (640×360 com PPU 32). Reduzidos, viram borrão; usados no tamanho original, ficam gigantes ao lado dos ladrões de 32 px. Eles ficaram como referência de clima (a noite azul-acinzentada inspirou a paleta) e a cena não depende do zip: quem clona o repositório já vê o jogo inteiro.
 - **Luz conta a história**: Light2D quente em cada sala, lanterna dos guardas, cone das câmeras, giroflex vermelho no alerta alto e vermelho/azul da viatura na sirene. A luz ambiente muda por prédio.
+
+## Direção de arte da UI (Enzo)
+
+![Menu principal](img/ui_menu.png)
+
+- **"Dossiê da firma"**: painel de papel kraft com borda marrom, papel creme pras fichas, carimbo vermelho torto (CONFIDENCIAL, PRESO, CONCLUÍDO), caixas escuras translúcidas na HUD do golpe pra não tampar a cena.
+- **Sem GUI pack**: painéis e botões são desenhados em USS com as cores da paleta (`UI/Styles/Firma.uss`). Ficam nítidos em qualquer resolução, não precisam de 9-slice e qualquer um muda a cor numa linha. Os ícones são os da cena (cadeado, monitor, pessoa).
+- **Uma letra só no jogo inteiro**: a mesma dos balões e letreiros do Miguel, então UI e cena combinam.
+- **Mockups**: cada tela entra com o print dela em `docs/img/ui_*.png` no PR, e é ali que o grupo aprova ou pede mudança.
 
 ## Packs do craftpix: NÃO vão pro GitHub
 
@@ -86,6 +95,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Arte da Cena do Golpe (salas, prédios, NPCs, ícones, fundo, fonte pixel) | Script Python que desenha pixel a pixel na paleta | `HeistScene/Art` (script em `Art/Source~`) | Miguel |
 | Gazua (sheet, retrato, ícones, "CREC!") | Script Python, mesmo padrão do 171 | `Thieves/Gazua/Art`, `Icons`, `VFX` | Miguel |
 | Sons da cena (grana na sacola, porta) e do Gazua (gazua na fechadura, pé-de-cabra) | Sintetizados por script, sem sample | `HeistScene/Audio`, `Thieves/Gazua/Audio` (script em `HeistScene/Audio/Source~`) | Miguel |
+| Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
 
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.
 

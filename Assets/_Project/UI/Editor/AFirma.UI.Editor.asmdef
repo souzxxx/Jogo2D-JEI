@@ -1,0 +1,19 @@
+{
+    "name": "AFirma.UI.Editor",
+    "rootNamespace": "AFirma.UI.EditorTools",
+    "references": [
+        "AFirma.Core",
+        "AFirma.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
