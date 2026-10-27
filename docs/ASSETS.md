@@ -40,6 +40,8 @@ Linha a linha: a noite azulada de Nova Guanabara (ink → cream), a luz quente d
 
 ![Menu principal](img/ui_menu.png)
 ![Esconderijo](img/ui_esconderijo.png)
+![Mapa](img/ui_mapa.png)
+![Planejamento](img/ui_planejamento.png)
 
 - **"Dossiê da firma"**: painel de papel kraft com borda marrom, papel creme pras fichas, carimbo vermelho torto (CONFIDENCIAL, PRESO, CONCLUÍDO), caixas escuras translúcidas na HUD do golpe pra não tampar a cena.
 - **Sem GUI pack**: painéis e botões são desenhados em USS com as cores da paleta (`UI/Styles/Firma.uss`). Ficam nítidos em qualquer resolução, não precisam de 9-slice e qualquer um muda a cor numa linha. Os ícones são os da cena (cadeado, monitor, pessoa).
