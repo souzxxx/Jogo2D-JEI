@@ -30,8 +30,8 @@ MonoBehaviour:
   arrestChanceReduction: 0.15
   ability: {fileID: 11400000, guid: 76c6c641fca9241acbf386a44a0b2f21, type: 2}
   signatureSideJob: {fileID: 11400000, guid: 51edbb76a1d1840b7afaaf11b961cef3, type: 2}
-  portrait: {fileID: 0}
-  animator: {fileID: 0}
+  portrait: {fileID: 21300000, guid: d8e3b073948d948b69798434753445f6, type: 3}
+  animator: {fileID: 9100000, guid: ee54e275872af439bb54d79956f7817f, type: 2}
   color: {r: 0.95, g: 0.65, b: 0.2, a: 1}
   actionSfx: {fileID: 8300000, guid: 1178872da42344c66bbe97d831315392, type: 3}
   barks:

@@ -105,6 +105,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Gazua (sheet, retrato, ícones, "CREC!") | Script Python, mesmo padrão do 171 | `Thieves/Gazua/Art`, `Icons`, `VFX` | Miguel |
 | Sons da cena (grana na sacola, porta) e do Gazua (gazua na fechadura, pé-de-cabra) | Sintetizados por script, sem sample | `HeistScene/Audio`, `Thieves/Gazua/Audio` (script em `HeistScene/Audio/Source~`) | Miguel |
 | Disquete (sheet, retrato, ícones do Loop na câmera e do Gatonet) | Script Python, mesmo padrão do Gazua | `Thieves/Disquete/Art`, `Icons` (script em `Art/Source~`) | Enzo |
+| Pé-na-Tábua (sheet e retrato) | Script Python, mesmo padrão do Disquete | `Thieves/PeNaTabua/Art` (script em `Art/Source~`) | Leonardo |
 | Fundo do esconderijo (porão da Auto Elétrica) e mapa de Nova Guanabara | Script Python que desenha pixel a pixel na paleta | `UI/Art` (script em `UI/Art/Source~/gerar_ui.py`) | Enzo |
 | Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
 
