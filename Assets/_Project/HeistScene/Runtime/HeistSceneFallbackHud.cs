@@ -39,10 +39,11 @@ namespace AFirma.HeistScene
                 }
                 else if (h.Phase == HeistPhase.AwaitingEvent && h.PendingEvent != null)
                 {
-                    GUILayout.Label(h.PendingEvent.def.displayName + ": " + h.PendingEvent.def.body, GUILayout.Width(330));
-                    for (int i = 0; i < h.PendingEvent.choices.Count; i++)
+                    var pending = h.PendingEvent; // escolher zera o PendingEvent no meio do laço
+                    GUILayout.Label(pending.def.displayName + ": " + pending.def.body, GUILayout.Width(330));
+                    for (int i = 0; i < pending.choices.Count; i++)
                     {
-                        var view = h.PendingEvent.choices[i];
+                        var view = pending.choices[i];
                         GUI.enabled = view.available;
                         var label = view.choice.label + (view.available ? $" ({view.successChance:P0})" : $" ({view.unavailableReason})");
                         if (GUILayout.Button(label, GUILayout.Height(28))) h.ChooseEventOption(i);

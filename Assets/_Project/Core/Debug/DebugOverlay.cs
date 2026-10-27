@@ -126,10 +126,11 @@ namespace AFirma.Core
 
             if (h.Phase == HeistPhase.AwaitingEvent && h.PendingEvent != null)
             {
-                GUILayout.Label("Evento: " + h.PendingEvent.def.displayName);
-                for (int i = 0; i < h.PendingEvent.choices.Count; i++)
+                var pending = h.PendingEvent; // escolher zera o PendingEvent no meio do laço
+                GUILayout.Label("Evento: " + pending.def.displayName);
+                for (int i = 0; i < pending.choices.Count; i++)
                 {
-                    var view = h.PendingEvent.choices[i];
+                    var view = pending.choices[i];
                     GUI.enabled = view.available;
                     if (GUILayout.Button($"{view.choice.label} ({view.successChance:P0})")) h.ChooseEventOption(i);
                     GUI.enabled = true;
