@@ -28,9 +28,9 @@ namespace AFirma.UI
             Tab("map", MapPanel.Build);
             Tab("crew", CrewPanel.BuildCrew);
             Tab("contacts", CrewPanel.BuildContacts);
-            Tab("jobs", c => Soon(c, "Bicos", "Quem fica ganhando um troco enquanto não tem golpe."));
-            Tab("upgrades", c => Soon(c, "Upgrades", "Van, quartos, ferramentas e o resto do esconderijo."));
-            Tab("prestige", c => Soon(c, "Prestígio", "Sumir do mapa e voltar mais famoso."));
+            Tab("jobs", EconomyPanel.BuildJobs);
+            Tab("upgrades", EconomyPanel.BuildUpgrades);
+            Tab("prestige", c => c.Add(Ui.Text("Prestígio", "h2"))); // tela na #55
             root.Q<Button>("prestige").SetShown(Services.Progression.Fame > 0 || Services.Progression.CanPrestige(out _));
             root.OnClick("menu", SceneFlow.GoToMainMenu);
 
@@ -54,13 +54,6 @@ namespace AFirma.UI
             if (open == null) return;
             root.Q<Button>(name).AddToClassList("tab--open");
             build(content);
-        }
-
-        // os painéis da Sprint 2 (#53, #55) entram no lugar deste aviso
-        static void Soon(VisualElement content, string title, string what)
-        {
-            content.Add(Ui.Text(title, "h2"));
-            content.Add(Ui.Text(what, "muted"));
         }
 
         void Update()
