@@ -120,3 +120,11 @@
 .plan__crew {
     flex-grow: 1;
 }
+
+/* ---------------------------------------------------------------- abas Crew e Contatos */
+
+.crew__actions {
+    width: 112px;
+    flex-shrink: 0;
+    justify-content: center;
+}
