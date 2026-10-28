@@ -114,12 +114,18 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 
 **Economia.**
 - **Cr$** vem dos golpes e dos bicos. O dinheiro nunca fica negativo e toda compra impossível explica o motivo ("Falta Cr$ 70.", "Nível máximo.").
-- **Bicos:** ladrões ociosos geram renda passiva, em dobro no bico do próprio tipo. Catar latinha rende sempre, sem ladrão.
-- **Ganho offline:** até 4 h, a 50%.
-- **Upgrades:** 9 upgrades do esconderijo com níveis, custo = custo base × crescimento^nível: Van (+1 vaga no golpe), Quartos (+1 vaga na crew), Ferramentas (+5% Perícia), Tênis de molinha (+5% Discrição), Advogado (−10% prisão e fiança), Contatos (recrutas melhores), Lavanderia (+5% loot), Rádio da polícia (+2 s na contagem), Ponto de bico (+10% renda dos bicos), por nível.
+- **Bicos:** ladrões ociosos geram renda passiva, em dobro no bico do próprio tipo. Catar latinha rende sempre, sem ladrão. Cada bico tem a sua cena animada (Lotação pirata, Chaveiro 24h, Gatonet, Bilhete premiado, Catar latinha): vazia fica apagada, com gente mostra o ladrão trabalhando e o "+Cr$" subindo.
+- **Ganho offline:** até 4 h, a 50% (bicos e golpes no automático com Repetir).
+- **Upgrades:** 9 upgrades do esconderijo com níveis, custo = custo base × crescimento^nível: Van (+1 vaga no golpe), Quartos (+1 vaga na crew), Ferramentas (+5% Perícia), Tênis de molinha (+5% Discrição), Advogado (−10% prisão e fiança), Contatos (recrutas melhores), Lavanderia (+5% loot), Rádio da polícia (+2 s na contagem), Ponto de bico (+10% renda dos bicos), por nível. Novo: Orelhão (+1 golpe no automático ao mesmo tempo, até 3).
+
+**Golpes no automático (segundo plano).**
+- Depois de limpar o cofre de um golpe na mão, dá pra mandar uma crew repetir esse golpe sozinha. A ordem define a porta: **Na moita** (sai antes da sirene) ou **Até o cofre** (só sai no cofre ou na sirene). Com **Repetir**, a crew emenda um golpe atrás do outro.
+- É o mesmo motor, sem cena: eventos e habilidades são resolvidos por um piloto automático. Rende ~60% do golpe na mão, não libera golpe novo e não gasta bip de marco. 1 golpe no automático no começo, até 3 com o Orelhão. Roda junto com o golpe na mão e com o jogo fechado (offline, sem prisão).
+- A faixa **Golpes rolando** no esconderijo mostra cada um: miniatura do prédio, crew, salas, alerta, sacola e giroflex na sirene.
 
 **Progressão.**
 - **Golpes:** escada de 5. Concluir o cofre de um libera o próximo; a Lotérica nunca fica bloqueada e todo golpe pode ser repetido. Cada golpe ensina algo: Lotérica (tutorial) → Joalheria (Sistema, pede um Disquete) → Câmbio (mistura e fuga, pede um Pé-na-Tábua) → Cassino (muito alerta, pede as habilidades) → Banco Central (túnel calmo, cofre mais protegido).
+- **Golpes extras** (ramo ao lado da escada, fora do caminho pro Banco Central), cada um vitrine de um ladrão: Banca do Bicho do Tonhão (Pessoa, farm barato; libera com a Lotérica), Carro-forte da Avenida do Porto (Fechadura difícil e alerta rápido; libera com o Câmbio), Museu de Nova Guanabara (quase só Sistema; libera com o Cassino).
 - **Contexto do golpe:** modificador sorteado × Nível de Procurado (dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível). A Fama entra direto no motor do golpe.
 - **Balanceamento v1:** Banco Central concluído em ~49 min no simulador (meta 40–60). Curva e números em [BALANCEAMENTO.md](BALANCEAMENTO.md).
 - **Modificadores:** sorteados a cada visita ao mapa (feriado, dia de pagamento…).
@@ -140,8 +146,8 @@ _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.
 **Telas:**
 - Menu principal (com "Ver abertura"), Pausa, Opções, Créditos
 - Abertura: letreiro, capa do jornal, botão Pular
-- Esconderijo (hub) com o objetivo atual, Crew, Contatos, Bicos, Upgrades e Prestígio
-- Mapa da cidade e Planejamento
+- Esconderijo (hub) com o objetivo atual, a faixa Golpes rolando, Crew, Contatos, Bicos (cada um com a sua cena), Upgrades e Prestígio
+- Mapa da cidade (escada + golpes extras) e Planejamento (golpe na mão ou mandar no automático)
 - HUD do golpe, popup de porta, cartão de evento, contagem da polícia
 - Jornal, popup offline, bip e tutorial
 
@@ -182,7 +188,8 @@ Cena do Golpe (prints do jogo):
 - **Recursos que conversam.** Ladrão no bico rende pouco e seguro; no golpe rende muito e arrisca prisão. A fiança tira dinheiro dos upgrades. Upgrades de Perícia e Discrição mudam até onde dá pra ir em cada golpe.
 - **Modificadores quebram a rotina.** "Dia de pagamento" convida ao risco; "Blitz" pede cautela. Repetir o mesmo golpe nunca é exatamente igual.
 - **Prestígio reescreve a curva.** Com Fama o começo fica rápido e o topo mais difícil (Procurado). Cada ciclo pede uma estratégia um pouco diferente.
-- **Estratégias emergentes esperadas:** farm seguro de golpe baixo, "uma porta a mais" no limite da sirene, crew especializada vs. generalista, guardar o Cavalo de pau pro cofre.
+- **Mão vs. automático.** Golpe novo e o cofre que libera o próximo são sempre na mão; o automático só farma o que você já domina e rende menos. A crew boa vai pro golpe difícil e a segunda linha fica rodando a Banca do Bicho ou a Joalheria no automático, ou no bico. Cada ladrão tem três lugares pra estar, e escolher é a estratégia do idle.
+- **Estratégias emergentes esperadas:** farm seguro de golpe baixo, "uma porta a mais" no limite da sirene, crew especializada vs. generalista, guardar o Cavalo de pau pro cofre, crew "Na moita" farmando enquanto o time principal arrisca na mão.
 
 _Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
 
@@ -197,7 +204,7 @@ _Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
 | Cada porta | Tensão, ganância | Alerta subindo, loot estimado, música crescendo |
 | Sirene | Adrenalina | Luzes, viatura, contagem, decisão sob pressão |
 | Jornal | Orgulho ou riso | Manchete sobre o que você fez |
-| Esconderijo | Planejamento, progresso | Upgrades, recrutas, próximo golpe à vista |
+| Esconderijo | Planejamento, progresso, "a firma tá rodando" | Upgrades, recrutas, próximo golpe à vista; bicos animados e golpes no automático rolando na tela |
 | Banco Central | Clímax e revanche | Golpe longo, túnel, cofre central; o lugar onde tudo deu errado na abertura |
 | Prestígio | Recomeço com poder | Fama, cidade nova mais difícil, Bastos promovido |
 
@@ -212,6 +219,7 @@ _Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
 - **Arte:** pixel art 32×32 (PPU 32), câmera Pixel Perfect em 640×360. **Paleta de 32 cores** (`docs/img/paleta.png`): a noite azulada de Nova Guanabara, a luz quente de interior, o kraft do dossiê, o verde do dinheiro, o vermelho do alarme, o azul da viatura e o neon do cassino. Os 4 ladrões feitos pelo time. Prédios em corte lateral com salas modulares (uma por tipo de sala), desenhados pixel a pixel por script na paleta, cada golpe com tema próprio: Lotérica verde-menta com cartaz de loteria, Joalheria vinho e dourado, Câmbio de vidro azul com a cotação do dólar, Cassino roxo escondido debaixo de uma pastelaria, Banco Central de mármore com o túnel de terra. Fundo da cidade em parallax (morro com luzinhas, prédios com neon) e rua com orelhão, banca de jornal e a Kombi da firma.
 
 ![Paleta](img/paleta.png)
+- **Idle que se vê:** cena animada de cada bico (96×64, 4–8 quadros), miniatura de cada prédio pra faixa Golpes rolando (com versão de sirene) e, se der tempo, a crew em idle no porão da Cida.
 - **VFX:** luzes 2D (lâmpada de cada sala, lanterna dos guardas, cone das câmeras, giroflex, viatura), partículas (faísca e lascas do pé-de-cabra, poeira do túnel, fumaça do escapamento), notas voando, vinheta e bloom leve por pós-processamento, screen shake na sirene.
 - **Música:** esconderijo (samba-jazz/bossa lo-fi), golpe com camadas de tensão, sirene, menu.
 - **SFX:** UI, ações dos ladrões, loot, alarme, sirene, bip, máquina de escrever do jornal. A cena toca o som de ação do ladrão quando ele começa a trabalhar, o plim da grana na sacola e a porta abrindo (sons da cena e do Gazua sintetizados por script).
@@ -260,3 +268,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 26/10/2026 | Arte e Som | Paleta de 32 cores e direção de arte da cena; os packs de cenário do craftpix ficaram só como referência (escala 3× a do jogo) | Arte coesa numa paleta única, sem colagem de packs |
 | 26/10/2026 | Mechanics | Pé-de-cabra explica o motivo quando não dá ("Só serve em sala de Fechadura.", "Espera a crew entrar na sala.") | Botão indisponível sempre diz o motivo |
 | 27/10/2026 | Blueprint, Interface, Experience | Abertura: a firma do Chefe cai no Banco Central e a Dona Cida dá a segunda chance. Objetivo do jogo: voltar pro Banco Central e fazer direito (a revanche) | Objetivo claro desde o primeiro minuto (anti-objetivo: idle sem objetivo); a abertura mostra o jogo todo e ensina a regra da sirene pelo erro |
+| 28/10/2026 | Mechanics, Interface, Dynamics, Experience, Arte | Golpes no automático em segundo plano (faixa Golpes rolando, upgrade Orelhão), cena animada em cada bico, 3 golpes extras (Banca do Bicho, Carro-forte, Museu) | Pedido do professor na avaliação: mais visual na parte idle, golpes rodando em segundo plano pra passar a sensação de idle, e mais golpes |
