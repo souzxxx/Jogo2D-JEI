@@ -136,6 +136,7 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 - Golpe interrompido vira "meteu o pé": paga a sacola salva, a crew volta e ninguém é preso.
 - No load: quem cumpriu a pena com o jogo fechado sai; ladrão "no golpe" ou "no bico" sem golpe ou bico de verdade volta pra disponível.
 - Anti dead-end: catar latinha; se ninguém está fora da cadeia e não dá pra recrutar (sem Cr$ ou sem vaga), a Dona Cida manda um novato com um bip; a prisão acaba sozinha; a Lotérica nunca fica bloqueada.
+- Golpes no automático: o save guarda cada um; ao carregar, o golpe do meio vira "meteu o pé" e o tempo fora entra no offline. Crew presa ou demitida para o automático sozinha, com aviso.
 
 _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.md)._
 
