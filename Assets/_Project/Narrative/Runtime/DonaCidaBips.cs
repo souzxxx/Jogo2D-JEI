@@ -32,6 +32,7 @@ namespace AFirma.Narrative
             GameEvents.ThiefJailed += OnThiefJailed;
             GameEvents.HeistUnlocked += OnHeistUnlocked;
             GameEvents.HeistFinished += OnHeistFinished;
+            GameEvents.Prestiged += OnPrestiged;
         }
 
         public void Dispose()
@@ -42,6 +43,7 @@ namespace AFirma.Narrative
             GameEvents.ThiefJailed -= OnThiefJailed;
             GameEvents.HeistUnlocked -= OnHeistUnlocked;
             GameEvents.HeistFinished -= OnHeistFinished;
+            GameEvents.Prestiged -= OnPrestiged;
         }
 
         public int Pending => queue.Count;
@@ -95,13 +97,21 @@ namespace AFirma.Narrative
             afterHeist.Clear();
         }
 
+        /// <summary>Topo da escada: golpe extra nunca é o último, mesmo com tier alto.</summary>
         static bool IsLastHeist(string heistId)
         {
             var heist = Services.Db.GetHeist(heistId);
-            if (heist == null) return false;
+            if (heist == null || heist.extra) return false;
             foreach (var other in Services.Db.heists)
-                if (other != null && other.tier > heist.tier) return false;
+                if (other != null && !other.extra && other.tier > heist.tier) return false;
             return true;
+        }
+
+        /// <summary>Todo prestígio tem bip (não só o primeiro): a firma recomeça do zero e a Dona Cida manda os novatos.</summary>
+        void OnPrestiged(int fameGained, int wantedLevel)
+        {
+            if (string.IsNullOrEmpty(texts.prestiged)) return;
+            queue.Add(texts.prestiged.Replace("{fama}", fameGained.ToString()).Replace("{procurado}", wantedLevel.ToString()));
         }
 
         /// <summary>Põe na fila se ainda não foi dito neste save. Texto vazio não vira bip.</summary>

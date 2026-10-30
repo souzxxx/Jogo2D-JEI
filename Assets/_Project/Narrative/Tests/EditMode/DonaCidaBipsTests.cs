@@ -28,6 +28,7 @@ namespace AFirma.Tests
             texts.firstSiren = "sirene";
             texts.firstArrest = "pegaram o {nome}";
             texts.prestigeUnlocked = "prestígio";
+            texts.prestiged = "sumiu: +{fama} de Fama, procurado {procurado}";
             texts.heistUnlocked.Add(new HeistBip { heist = Joalheria, text = "joalheria" });
             bips = new DonaCidaBips(texts);
             sent.Clear();
@@ -170,6 +171,40 @@ namespace AFirma.Tests
             Services.StartNewGame(); // estado novo, fila do save antigo não vale mais
 
             CollectionAssert.AreEqual(new[] { "novo" }, Messages());
+        }
+
+        [Test]
+        public void ExtraHeistCompleted_DoesNotUnlockPrestige_EvenWithAHighTier()
+        {
+            var museu = ScriptableObject.CreateInstance<HeistDef>();
+            museu.id = "museu-de-teste";
+            museu.tier = 99;
+            museu.extra = true;
+            Services.Db.heists.Add(museu);
+            try
+            {
+                GameEvents.RaiseHeistFinished(Result(museu, completed: true));
+                CollectionAssert.DoesNotContain(Messages(), "prestígio");
+
+                GameEvents.RaiseHeistFinished(Result(BancoCentral, completed: true));
+                CollectionAssert.Contains(Messages(), "prestígio", "O Banco Central continua sendo o topo da escada.");
+            }
+            finally
+            {
+                Services.Db.heists.Remove(museu);
+                Object.DestroyImmediate(museu);
+            }
+        }
+
+        [Test]
+        public void Prestiged_BipsEveryTime_WithFameAndWantedLevel()
+        {
+            GameEvents.RaisePrestiged(5, 1);
+            GameEvents.RaisePrestiged(8, 2);
+
+            var messages = Messages();
+            CollectionAssert.Contains(messages, "sumiu: +5 de Fama, procurado 1");
+            CollectionAssert.Contains(messages, "sumiu: +8 de Fama, procurado 2");
         }
     }
 }

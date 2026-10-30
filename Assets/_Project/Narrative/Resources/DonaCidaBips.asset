@@ -27,3 +27,4 @@ MonoBehaviour:
   - heist: {fileID: 11400000, guid: d565e6b102b3740f9a7b4e04215dd7e7, type: 2}
     text: "Chegou a hora, chefia. Trinta anos eu planejei esse t\xFAnel. N\xE3o me faz passar vergonha no Banco Central."
   prestigeUnlocked: "O golpe do s\xE9culo, chefia. Agora some do mapa um tempo: a cidade esquece, o Bastos n\xE3o."
+  prestiged: 'Sumiu bonito, chefia. A cidade fala de você e o Bastos não dorme. Te mandei dois novatos: começa pelo Seu Zé, que agora a rua tá mais vigiada.'

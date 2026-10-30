@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AFirma.Tests
 {
-    /// <summary>Progressão: escada de golpes, modificadores e contexto do golpe (ESCOPO 6.9) e Fama (ESCOPO 6.10). Dados de teste, pra não depender do conteúdo.</summary>
+    /// <summary>Progressão: escada de golpes, modificadores e contexto do golpe (ESCOPO 6.9), Fama e prestígio (ESCOPO 6.10). Dados de teste, pra não depender do conteúdo.</summary>
     public class ProgressionServiceTests
     {
         ProgressionService progression;
@@ -16,11 +16,13 @@ namespace AFirma.Tests
         readonly FixedRandom rng = new FixedRandom();
         int rolledEvents;
         readonly List<(FamePerkDef perk, int level)> perkEvents = new List<(FamePerkDef, int)>();
+        readonly List<(int fame, int wanted)> prestigeEvents = new List<(int, int)>();
+        MemorySaveService save;
 
         [SetUp]
         public void SetUp()
         {
-            TestSupport.InitServicesWithMocks();
+            save = TestSupport.InitServicesWithMocks();
             db = ScriptableObject.CreateInstance<GameDatabase>();
             db.config = ScriptableObject.CreateInstance<GameConfig>();
             Services.UseDatabase(db);
@@ -31,6 +33,8 @@ namespace AFirma.Tests
             Services.State.tutorialDone = true;
             Services.State.fame = 0;
             Services.State.famePerks.Clear();
+            Services.State.prestigeCount = 0;
+            Services.State.cycleLoot = 0;
 
             loterica = Heist("loterica", unlockedByDefault: true, tier: 1);
             joalheria = Heist("joalheria", unlockedBy: loterica, tier: 2);
@@ -43,6 +47,8 @@ namespace AFirma.Tests
             unlockEvents.Clear();
             rolledEvents = 0;
             perkEvents.Clear();
+            prestigeEvents.Clear();
+            GameEvents.Prestiged += (fame, wanted) => prestigeEvents.Add((fame, wanted));
             GameEvents.FamePerkPurchased += (perk, level) => perkEvents.Add((perk, level));
             GameEvents.HeistUnlocked += heist => unlockEvents.Add(heist);
             GameEvents.HeistModifiersRolled += () => rolledEvents++;
@@ -490,6 +496,197 @@ namespace AFirma.Tests
             Assert.AreEqual(0, progression.GetFamePerkCost(null));
             Assert.IsFalse(progression.CanBuyFamePerk(null, out _));
             Assert.IsFalse(progression.BuyFamePerk(null));
+        }
+
+        // ---------------- Prestígio ----------------
+
+        /// <summary>Ciclo pronto pra sumir do mapa: a escada toda limpa, com dinheiro, upgrade, crew e candidatos.</summary>
+        void FinishTheCycle(double cycleLoot = 250000)
+        {
+            progression.MarkCompleted(loterica);
+            progression.MarkCompleted(joalheria);
+            progression.MarkCompleted(cambio);
+            Services.State.cycleLoot = cycleLoot;
+            Services.State.lifetimeLoot = cycleLoot;
+            Services.State.money = 99999;
+            GameState.SetLevel(Services.State.upgrades, "van", 2);
+            Services.State.modifierRolls.Add(new HeistModifierRoll { heistId = "loterica", modifierId = "feriado" });
+            Services.State.crew.Clear();
+            Services.State.crew.Add(new ThiefState { id = "veterano", level = 9, status = ThiefStatus.Available });
+            Services.State.crew.Add(new ThiefState { id = "preso", level = 5, status = ThiefStatus.Jailed });
+            Services.State.candidates.Add(new RecruitCandidate());
+            Services.State.candidatesRefreshAtUnix = 123;
+        }
+
+        [Test]
+        public void CanPrestige_BeforeTheTopOfTheLadder_SaysWhatIsMissing()
+        {
+            cambio.displayName = "Câmbio";
+            progression.MarkCompleted(loterica);
+
+            Assert.IsFalse(progression.CanPrestige(out var reason));
+            Assert.AreEqual("Libera depois de limpar o cofre: Câmbio.", reason);
+        }
+
+        [Test]
+        public void CanPrestige_AfterTheTopOfTheLadder_IsTrue()
+        {
+            FinishTheCycle();
+
+            Assert.IsTrue(progression.CanPrestige(out var reason), reason);
+        }
+
+        [Test]
+        public void CanPrestige_ExtraHeistWithHighTier_IsNotTheTop()
+        {
+            var museu = Heist("museu", unlockedBy: joalheria, tier: 9);
+            museu.extra = true;
+            progression.MarkCompleted(loterica);
+            progression.MarkCompleted(joalheria);
+            progression.MarkCompleted(museu);
+
+            Assert.AreSame(cambio, ProgressionService.FinalHeist(db));
+            Assert.IsFalse(progression.CanPrestige(out _), "Golpe extra não libera o prestígio.");
+        }
+
+        [Test]
+        public void CanPrestige_DuringAHeist_IsFalse()
+        {
+            FinishTheCycle();
+            loterica.rooms.Add(new RoomData { obstacle = ObstacleType.Lock });
+            var thief = new ThiefState { id = "ze", level = 1, status = ThiefStatus.Available };
+            Services.State.crew.Add(thief);
+            Services.Heist.StartHeist(loterica, new[] { thief });
+            Assume.That(Services.Heist.IsRunning);
+
+            Assert.IsFalse(progression.CanPrestige(out var reason));
+            Assert.AreEqual("Termina o golpe antes de sumir do mapa.", reason);
+        }
+
+        [Test]
+        public void FameOnPrestige_IsSqrtOfTheCycleLoot()
+        {
+            db.config.fameDivisor = 10000;
+            Services.State.cycleLoot = 250000;
+
+            Assert.AreEqual(5, progression.FameOnPrestige()); // √25
+        }
+
+        [Test]
+        public void Prestige_ResetsTheCycle_AndKeepsFameAndPerks()
+        {
+            db.config.fameDivisor = 10000;
+            db.config.startingMoney = 0;
+            db.config.startingCrew = new List<ThiefType> { ThiefType.ConArtist, ThiefType.Locksmith };
+            var esquema = Perk("esquema", FamePerkEffect.LootPercent);
+            GameState.SetLevel(Services.State.famePerks, "esquema", 2);
+            Services.State.fame = 3;
+            Services.State.tutorialDone = true;
+            FinishTheCycle(cycleLoot: 250000);
+
+            progression.Prestige();
+
+            var s = Services.State;
+            Assert.AreEqual(8, s.fame, "3 que tinha + 5 do ciclo.");
+            Assert.AreEqual(2, progression.GetFamePerkLevel(esquema), "Bônus de Fama ficam.");
+            Assert.AreEqual(1, s.wantedLevel);
+            Assert.AreEqual(1, s.prestigeCount);
+            Assert.AreEqual(0.0, s.cycleLoot);
+            Assert.AreEqual(250000.0, s.lifetimeLoot, "O total da vida não zera.");
+            Assert.AreEqual(0.0, s.money);
+            Assert.IsEmpty(s.upgrades);
+            CollectionAssert.AreEqual(new[] { "loterica" }, s.unlockedHeists);
+            Assert.IsEmpty(s.completedHeists);
+            Assert.IsEmpty(s.modifierRolls);
+            Assert.IsEmpty(s.candidates);
+            Assert.AreEqual(0, s.candidatesRefreshAtUnix, "A Crew sorteia candidatos novos.");
+            Assert.IsTrue(s.tutorialDone, "Tutorial não volta.");
+
+            Assert.AreEqual(2, s.crew.Count, "Dona Cida manda os novatos de novo.");
+            CollectionAssert.AreEquivalent(new[] { ThiefType.ConArtist, ThiefType.Locksmith }, s.crew.ConvertAll(t => t.type));
+            Assert.IsTrue(s.crew.TrueForAll(t => t.level == 1 && t.status == ThiefStatus.Available && t.traitId == null));
+        }
+
+        [Test]
+        public void Prestige_HerancaAndLenda_GiveMoneyAndLevelsToTheNewCycle()
+        {
+            db.config.startingMoney = 50;
+            Perk("heranca", FamePerkEffect.StartingMoney, valuePerLevel: 1000f);
+            Perk("lenda", FamePerkEffect.RecruitBonusLevels, valuePerLevel: 1f);
+            GameState.SetLevel(Services.State.famePerks, "heranca", 2);
+            GameState.SetLevel(Services.State.famePerks, "lenda", 2);
+            FinishTheCycle();
+
+            progression.Prestige();
+
+            Assert.AreEqual(2050.0, Services.State.money);
+            Assert.IsTrue(Services.State.crew.TrueForAll(t => t.level == 3), "Lenda vale pros novatos da Dona Cida também.");
+        }
+
+        [Test]
+        public void Prestige_LendaNeverPassesTheMaxLevel()
+        {
+            db.config.maxLevel = 4;
+            Perk("lenda", FamePerkEffect.RecruitBonusLevels, maxLevel: 10, valuePerLevel: 1f);
+            GameState.SetLevel(Services.State.famePerks, "lenda", 10);
+            FinishTheCycle();
+
+            progression.Prestige();
+
+            Assert.IsTrue(Services.State.crew.TrueForAll(t => t.level == 4));
+        }
+
+        [Test]
+        public void Prestige_RaisesPrestigedAndSaves()
+        {
+            db.config.fameDivisor = 10000;
+            FinishTheCycle(cycleLoot: 90000);
+            int savesBefore = save.SaveCount;
+
+            progression.Prestige();
+
+            CollectionAssert.AreEqual(new[] { (3, 1) }, prestigeEvents);
+            Assert.Greater(save.SaveCount, savesBefore);
+        }
+
+        [Test]
+        public void Prestige_TwiceStacksTheWantedLevel()
+        {
+            FinishTheCycle();
+            progression.Prestige();
+            FinishTheCycle();
+            progression.Prestige();
+
+            Assert.AreEqual(2, Services.State.wantedLevel);
+            Assert.AreEqual(2, Services.State.prestigeCount);
+        }
+
+        [Test]
+        public void Prestige_WhenNotAllowed_ChangesNothing()
+        {
+            Services.State.money = 500;
+            Services.State.cycleLoot = 250000;
+
+            progression.Prestige();
+
+            Assert.AreEqual(500.0, Services.State.money);
+            Assert.AreEqual(0, Services.State.wantedLevel);
+            Assert.IsEmpty(prestigeEvents);
+        }
+
+        [Test]
+        public void Prestige_NewCycle_RollsTheMapAgain()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 1f;
+            progression.RollModifiers();
+            FinishTheCycle();
+
+            progression.Prestige();
+            progression.RollModifiers();
+
+            Assert.AreEqual(1, Services.State.modifierRolls.Count, "Só a Lotérica está liberada no ciclo novo.");
+            Assert.AreEqual(2, rolledEvents);
         }
     }
 }

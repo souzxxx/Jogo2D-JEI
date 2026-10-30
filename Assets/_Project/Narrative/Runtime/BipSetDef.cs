@@ -19,6 +19,7 @@ namespace AFirma.Narrative
         [Tooltip("Um bip por golpe liberado. O do último golpe da escada é o do Banco Central.")]
         public List<HeistBip> heistUnlocked = new List<HeistBip>();
         [TextArea(2, 4), Tooltip("Último golpe da escada concluído: o prestígio fica disponível.")] public string prestigeUnlocked;
+        [TextArea(2, 4), Tooltip("Depois de cada prestígio. {fama} vira a Fama ganha e {procurado} o Nível de Procurado.")] public string prestiged;
 
         public string GetHeistUnlocked(HeistDef heist)
         {

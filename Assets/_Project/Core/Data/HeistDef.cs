@@ -26,6 +26,8 @@ namespace AFirma.Core
 
         [Header("Liberação")]
         public bool unlockedByDefault;
+        [Tooltip("Golpe extra: ramo ao lado da escada. Não é caminho pro Banco Central e não conta pro prestígio.")]
+        public bool extra;
         [Tooltip("Golpe que precisa ser concluído (cofre limpo) pra liberar este.")]
         public HeistDef unlockedBy;
 

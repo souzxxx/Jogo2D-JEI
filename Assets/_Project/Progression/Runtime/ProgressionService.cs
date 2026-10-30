@@ -8,13 +8,11 @@ namespace AFirma.Progression
     /// Progressão real (Nicolas). Substitui o MockProgressionService.
     ///
     /// Regras próprias: escada de golpes (ESCOPO 6.9), o sorteio dos modificadores no mapa, o contexto de cada golpe
-    /// (modificador sorteado + Nível de Procurado) e os bônus de Fama (ESCOPO 6.10).
+    /// (modificador sorteado + Nível de Procurado), os bônus de Fama e o prestígio "Sumir do mapa" (ESCOPO 6.10).
     /// A Fama não entra no contexto: o Motor do Golpe já aplica os bônus de Fama direto.
-    /// Prestígio ainda passa pelo mock até a issue #40.
     /// </summary>
     public class ProgressionService : IProgressionService
     {
-        readonly MockProgressionService pending = new MockProgressionService(); // #40: trocar pelo prestígio real
         readonly Random rng;
         bool modifiersStale = true; // só sorteia de novo depois de um golpe ou ao abrir o jogo
 
@@ -188,10 +186,69 @@ namespace AFirma.Progression
             return total;
         }
 
-        // ---------------- Prestígio (#40) ----------------
+        // ---------------- Prestígio (ESCOPO 6.10) ----------------
 
-        public bool CanPrestige(out string reason) => pending.CanPrestige(out reason);
-        public int FameOnPrestige() => pending.FameOnPrestige();
-        public void Prestige() => pending.Prestige();
+        /// <summary>O topo da escada (Banco Central): o golpe que não é extra com o maior tier.</summary>
+        public static HeistDef FinalHeist(GameDatabase db)
+        {
+            HeistDef final = null;
+            if (db == null) return null;
+            foreach (var heist in db.heists)
+                if (heist != null && !heist.extra && (final == null || heist.tier > final.tier))
+                    final = heist;
+            return final;
+        }
+
+        public bool CanPrestige(out string reason)
+        {
+            var final = FinalHeist(Db);
+            if (final == null) { reason = "Não tem golpe no topo da escada."; return false; }
+            if (!IsCompleted(final)) { reason = "Libera depois de limpar o cofre: " + final.displayName + "."; return false; }
+            if (Services.Heist != null && Services.Heist.IsRunning) { reason = "Termina o golpe antes de sumir do mapa."; return false; }
+            reason = null;
+            return true;
+        }
+
+        public int FameOnPrestige() => Cfg != null ? Formulas.FameForLoot(S.cycleLoot, Cfg.fameDivisor) : 0;
+
+        /// <summary>
+        /// Sumir do mapa: zera Cr$, upgrades, golpes e crew (Dona Cida manda os novatos de novo, com a Lenda);
+        /// mantém a Fama e os bônus; soma a Fama do ciclo, começa com a Herança e sobe o Nível de Procurado.
+        /// </summary>
+        public void Prestige()
+        {
+            if (!CanPrestige(out _)) return;
+
+            int fameGained = FameOnPrestige();
+            double moneyBefore = S.money;
+
+            S.fame += fameGained;
+            S.wantedLevel++;
+            S.prestigeCount++;
+            S.cycleLoot = 0;
+            S.money = Math.Max(0, Cfg.startingMoney + GetFamePerkTotal(FamePerkEffect.StartingMoney));
+            S.upgrades.Clear();
+
+            S.unlockedHeists.Clear();
+            S.completedHeists.Clear();
+            foreach (var heist in Db.heists)
+                if (heist != null && heist.unlockedByDefault)
+                    S.unlockedHeists.Add(heist.id);
+            S.modifierRolls.Clear();
+            modifiersStale = true;
+
+            S.crew.Clear();
+            int rookieLevel = Math.Min(Cfg.maxLevel, 1 + (int)GetFamePerkTotal(FamePerkEffect.RecruitBonusLevels));
+            foreach (var type in Cfg.startingCrew)
+                S.crew.Add(ThiefFactory.Create(Db, type, rookieLevel, rng, allowTrait: false));
+            S.candidates.Clear();
+            S.candidatesRefreshAtUnix = 0; // a Crew sorteia candidatos novos
+
+            GameEvents.RaiseMoneyChanged(S.money, S.money - moneyBefore);
+            GameEvents.RaiseCrewChanged();
+            GameEvents.RaiseCandidatesChanged();
+            GameEvents.RaisePrestiged(fameGained, S.wantedLevel);
+            Services.SaveNow();
+        }
     }
 }
