@@ -45,6 +45,8 @@ Se um golpe não tiver `buildingPrefab`, ou se as salas do `HeistDef` mudarem e 
 2. **Sons**: `python "Assets/_Project/HeistScene/Audio/Source~/gerar_sons.py"` (só Python padrão).
 3. **Unity**: menu **A Firma > Cena do Golpe > Gerar tudo**. Refaz importação, prefabs e a cena sem quebrar referência.
 
+A cena do bico **Catar latinha** (sem ladrão, então fica com a arte do mundo) sai de `python "Assets/_Project/HeistScene/Art/Source~/gerar_latinha.py"`: 8 quadros 96×64 em `Data/Economy/SideJobs/Bico`, com o catador empurrando o carrinho de supermercado cheio de latinha. Depois, no Unity: **A Firma › Bicos › Ligar as cenas dos bicos**.
+
 Linha de comando: `Unity -batchmode -quit -projectPath . -executeMethod AFirma.HeistScene.EditorTools.HeistSceneBuilder.BuildAll`
 
 ## Pra quem for usar
