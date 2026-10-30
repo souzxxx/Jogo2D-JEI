@@ -98,7 +98,7 @@ Os arquivos dos packs não estão no repositório (licença do craftpix não per
 ### Ferramentas de IA
 | Ferramenta | Pra quê |
 |---|---|
-| Claude (Anthropic) | Escreveu o script Python que desenha pixel a pixel o sprite, as animações e o retrato do 171 (`Thieves/171/Art/Source~/gerar_171.py`) |
+| Claude (Anthropic) | Escreveu os scripts Python que desenham pixel a pixel o sprite, as animações e o retrato do 171 (`Thieves/171/Art/Source~/gerar_171.py`) e os ícones e o balão da Lábia (`gerar_icones_171.py`), e o que sintetiza os sons do 171 (`Thieves/171/Audio/Source~/gerar_sons_171.py`) |
 | Claude (Anthropic) | Escreveu os scripts Python que desenham pixel a pixel a arte da Cena do Golpe (salas, prédios, NPCs, ícones, fundo da cidade e fonte pixel: `HeistScene/Art/Source~`) e do Gazua (`Thieves/Gazua/Art/Source~`), e o que sintetiza os sons da cena e do Gazua (`HeistScene/Audio/Source~`) |
 | Claude (Anthropic) | Escreveu o script que desenha pixel a pixel o Disquete (`Thieves/Disquete/Art/Source~/gerar_disquete.py`), o que vira as letras pixel da cena na fonte da UI (`UI/Art/Source~/gerar_fonte.py`), a arte do esconderijo e do mapa (`UI/Art/Source~/gerar_ui.py`), o que sintetiza os sons da UI e do golpe (`Audio/Source~/gerar_sfx.py`), o tema em USS e as telas da UI |
 

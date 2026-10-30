@@ -69,6 +69,18 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void Abilities_HaveIconSoundAndVfx()
+        {
+            foreach (var t in db.thiefTypes)
+            {
+                Assert.IsNotNull(t.ability.icon, t.displayName + ": habilidade sem ícone.");
+                Assert.IsNotNull(t.ability.sfx, t.displayName + ": habilidade sem som.");
+                Assert.IsNotNull(t.ability.vfxPrefab, t.displayName + ": habilidade sem efeito visual.");
+                Assert.IsNotNull(t.actionSfx, t.displayName + " sem som de ação.");
+            }
+        }
+
+        [Test]
         public void ConArtist_HasArt()
         {
             var conArtist = db.thiefTypes.Find(t => t.type == ThiefType.ConArtist);

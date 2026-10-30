@@ -15,7 +15,7 @@ MonoBehaviour:
   id: bilhete-premiado
   displayName: Bilhete premiado
   description: Rende o dobro com um 171.
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 8af2ecaca56024238b5312330713d030, type: 3}
   requiresThief: 1
   hasPreferredType: 1
   preferredType: 3

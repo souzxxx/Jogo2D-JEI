@@ -1,0 +1,20 @@
+{
+    "name": "AFirma.Thieves.ConArtist.Editor",
+    "rootNamespace": "AFirma.Thieves.ConArtist.EditorTools",
+    "references": [
+        "AFirma.Core",
+        "AFirma.HeistScene",
+        "AFirma.HeistScene.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -15,8 +15,9 @@ MonoBehaviour:
   id: labia
   displayName: "L\xE1bia"
   description: 'Conversa mole na hora certa: -25 de alerta.'
-  icon: {fileID: 0}
-  sfx: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7763996f1d01146e081fb2a03719c4d9, type: 3}
+  sfx: {fileID: 8300000, guid: c6c0d66a61c1e4f27b39cf16886da800, type: 3}
+  vfxPrefab: {fileID: 5602500277762952124, guid: ed92fe965a700446385815e4dc7dde89, type: 3}
   alertDelta: -25
   freezeAlertSeconds: 0
   completeCurrentRoom: 0
