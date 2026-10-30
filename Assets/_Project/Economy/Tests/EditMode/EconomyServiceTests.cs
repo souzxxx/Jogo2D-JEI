@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AFirma.Tests
 {
-    /// <summary>Economia: Cr$, upgrades do esconderijo (ESCOPO 6.8) e bicos (ESCOPO 6.7). Dados de teste, pra não depender dos números da planilha.</summary>
+    /// <summary>Economia: Cr$, upgrades do esconderijo (ESCOPO 6.8), bicos e ganho offline (ESCOPO 6.7). Dados de teste, pra não depender dos números da planilha.</summary>
     public class EconomyServiceTests
     {
         EconomyService economy;
@@ -14,6 +14,7 @@ namespace AFirma.Tests
         readonly List<(double current, double delta)> moneyEvents = new List<(double, double)>();
         readonly List<(UpgradeDef upgrade, int level)> upgradeEvents = new List<(UpgradeDef, int)>();
         int sideJobEvents;
+        readonly List<(double money, double seconds)> offlineEvents = new List<(double, double)>();
 
         [SetUp]
         public void SetUp()
@@ -33,9 +34,11 @@ namespace AFirma.Tests
             moneyEvents.Clear();
             upgradeEvents.Clear();
             sideJobEvents = 0;
+            offlineEvents.Clear();
             GameEvents.MoneyChanged += (current, delta) => moneyEvents.Add((current, delta));
             GameEvents.UpgradePurchased += (upgrade, level) => upgradeEvents.Add((upgrade, level));
             GameEvents.SideJobsChanged += () => sideJobEvents++;
+            GameEvents.OfflineEarnings += (money, seconds) => offlineEvents.Add((money, seconds));
         }
 
         [TearDown]
@@ -437,6 +440,90 @@ namespace AFirma.Tests
             economy.Tick(-5f);
 
             Assert.AreEqual(0.0, economy.Money);
+        }
+
+        // ---------------- Offline ----------------
+
+        /// <summary>Catar latinha 1/s + um 171 no Bilhete premiado (3 × 2) = 7/s.</summary>
+        void SevenPerSecond()
+        {
+            db.config.scavengeIncomePerSecond = 1;
+            economy.AssignSideJob(Thief("ze", ThiefType.ConArtist), SideJob("bilhete", income: 3, preferred: ThiefType.ConArtist));
+        }
+
+        [Test]
+        public void ApplyOfflineEarnings_OneHour_PaysHalfOfTheSideJobs()
+        {
+            SevenPerSecond();
+
+            Assert.AreEqual(12600.0, economy.ApplyOfflineEarnings(3600)); // 3.600 s × 7 × 50%
+            Assert.AreEqual(12600.0, economy.Money);
+            Assert.AreEqual((12600.0, 3600.0), offlineEvents[0]);
+        }
+
+        [Test]
+        public void ApplyOfflineEarnings_TenHours_StopsAtFourHours()
+        {
+            SevenPerSecond();
+
+            Assert.AreEqual(50400.0, economy.ApplyOfflineEarnings(36000)); // 4 h × 7 × 50%
+            Assert.AreEqual((50400.0, 36000.0), offlineEvents[0], "O popup mostra o tempo fora de verdade.");
+        }
+
+        [Test]
+        public void ApplyOfflineEarnings_ClockBackInTimeOrInvalid_PaysNothing()
+        {
+            SevenPerSecond();
+
+            Assert.AreEqual(0.0, economy.ApplyOfflineEarnings(-3600));
+            Assert.AreEqual(0.0, economy.ApplyOfflineEarnings(double.NaN));
+            Assert.AreEqual(0.0, economy.Money);
+            Assert.IsEmpty(offlineEvents);
+        }
+
+        [Test]
+        public void ApplyOfflineEarnings_LessThanTheMinimum_PaysNothing()
+        {
+            SevenPerSecond();
+            db.config.offlineMinSeconds = 60;
+
+            Assert.AreEqual(0.0, economy.ApplyOfflineEarnings(59));
+            Assert.IsEmpty(offlineEvents, "Recarregar a página não abre o popup.");
+            Assert.AreEqual(210.0, economy.ApplyOfflineEarnings(60)); // 60 × 7 × 50%
+        }
+
+        [Test]
+        public void ApplyOfflineEarnings_PaysWholeCruzeiros()
+        {
+            db.config.scavengeIncomePerSecond = 1.5;
+
+            Assert.AreEqual(67.0, economy.ApplyOfflineEarnings(90)); // 90 × 1,5 × 50% = 67,5
+        }
+
+        [Test]
+        public void GameLoaded_PaysTheTimeSinceTheLastSave()
+        {
+            db.config.scavengeIncomePerSecond = 1;
+            Services.State.lastSaveUnix = 1000;
+            GameClock.UnixNowProvider = () => 1000 + 3600;
+
+            GameEvents.RaiseGameLoaded();
+
+            Assert.AreEqual(1800.0, economy.Money); // 3.600 s × 1 × 50%
+            Assert.AreEqual((1800.0, 3600.0), offlineEvents[0]);
+        }
+
+        [Test]
+        public void GameLoaded_WithTheClockBeforeTheLastSave_PaysNothing()
+        {
+            db.config.scavengeIncomePerSecond = 1;
+            Services.State.lastSaveUnix = 5000;
+            GameClock.UnixNowProvider = () => 1000;
+
+            GameEvents.RaiseGameLoaded();
+
+            Assert.AreEqual(0.0, economy.Money);
+            Assert.IsEmpty(offlineEvents);
         }
     }
 }

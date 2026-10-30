@@ -56,6 +56,8 @@ namespace AFirma.Core
         public float sideJobLevelBonus = 0.1f;
         public float offlineCapHours = 4f;
         [Range(0f, 1f)] public float offlineRate = 0.5f;
+        [Tooltip("Menos tempo fora que isso não conta como offline (recarregar a página não abre o popup).")]
+        public float offlineMinSeconds = 60f;
 
         [Header("Prestígio")]
         public double fameDivisor = 10000;

@@ -6,9 +6,8 @@ namespace AFirma.Economy
     /// <summary>
     /// Economia real (Nicolas). Substitui o MockEconomyService.
     ///
-    /// Regras próprias: Cr$ (nunca negativo, valor inválido é ignorado), upgrades do esconderijo (ESCOPO 6.8)
-    /// e bicos com o Catar latinha sempre rendendo (ESCOPO 6.7).
-    /// Ganho offline ainda passa pelo mock até a issue #38.
+    /// Regras próprias: Cr$ (nunca negativo, valor inválido é ignorado), upgrades do esconderijo (ESCOPO 6.8),
+    /// bicos com o Catar latinha sempre rendendo e o ganho offline ao abrir o jogo (ESCOPO 6.7).
     /// </summary>
     public class EconomyService : IEconomyService, ITickable
     {
@@ -17,6 +16,11 @@ namespace AFirma.Economy
         static GameState S => Services.State;
         static GameDatabase Db => Services.Db;
         static GameConfig Cfg => Services.Config;
+
+        public EconomyService()
+        {
+            GameEvents.GameLoaded += OnGameLoaded;
+        }
 
         // ---------------- Cr$ ----------------
 
@@ -154,8 +158,28 @@ namespace AFirma.Economy
         static float FamePerkTotal(FamePerkEffect effect) =>
             Services.Progression != null ? Services.Progression.GetFamePerkTotal(effect) : 0f;
 
-        // ---------------- Offline (#38) ----------------
+        // ---------------- Offline (ESCOPO 6.7) ----------------
 
-        public double ApplyOfflineEarnings(double secondsAway) => 0; // #38
+        /// <summary>Ao abrir o jogo: paga os bicos do tempo desde o último save.</summary>
+        void OnGameLoaded()
+        {
+            if (S == null) return;
+            ApplyOfflineEarnings(GameClock.NowUnix - S.lastSaveUnix);
+        }
+
+        /// <summary>
+        /// Bicos do tempo fora, até offlineCapHours e a offlineRate da renda, em Cr$ inteiros.
+        /// Pouco tempo fora (recarregar a página) ou relógio que voltou no tempo não paga nada.
+        /// </summary>
+        public double ApplyOfflineEarnings(double secondsAway)
+        {
+            if (Cfg == null || double.IsNaN(secondsAway) || secondsAway < Math.Max(0, Cfg.offlineMinSeconds)) return 0;
+            double seconds = Math.Min(secondsAway, Math.Max(0, Cfg.offlineCapHours) * 3600.0);
+            double amount = Math.Floor(IncomePerSecond * seconds * Cfg.offlineRate);
+            if (amount <= 0) return 0;
+            Add(amount, "offline");
+            GameEvents.RaiseOfflineEarnings(amount, secondsAway);
+            return amount;
+        }
     }
 }

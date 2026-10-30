@@ -52,6 +52,7 @@ Regras de bolso:
 | Fama no prestígio | `floor(√(loot do ciclo / 10.000))` | `Formulas.FameForLoot` |
 | Procurado | dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível | Progressão |
 | Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%) × (1 + Fama Rede%)`, mais o Catar latinha fixo | `EconomyService.GetSideJobIncome` |
+| Ganho offline | `renda dos bicos × min(tempo fora, 4 h) × 50%`, em Cr$ inteiros; menos de 60 s fora ou relógio voltando não paga | `EconomyService.ApplyOfflineEarnings` |
 
 ## Tabela dos golpes (v1)
 
