@@ -27,7 +27,7 @@ De vez em quando uma lotação passa na rua, atrás do prédio. Tudo respeita a 
 
 | Pasta | O que tem |
 |---|---|
-| `Runtime/` | `HeistView` (orquestra), `BuildingView`, `RoomView` e peças da sala (`ObstacleProp`, `ObstacleBadge`, `DoorView`, `AlarmLight`), `GuardView`, `SecurityCameraView`, `ThiefActor`, `VehicleView`, `HeistCameraRig`, `CityBackdrop`, `AlertAtmosphere`, fonte pixel (`PixelFont`, `PixelText`), efeitos (`PopIcon`, `FlyingLoot`, `FloatingText`, `SpeechBubble`) e a `HeistSceneFallbackHud` |
+| `Runtime/` | `HeistView` (orquestra), `BuildingView`, `RoomView` e peças da sala (`ObstacleProp`, `ObstacleBadge`, `DoorView`, `AlarmLight`), `GuardView`, `SecurityCameraView`, `ThiefActor`, `VehicleView`, `HeistCameraRig`, `CityBackdrop`, `AlertAtmosphere`, fonte pixel (`PixelFont`, `PixelText`) e efeitos (`PopIcon`, `FlyingLoot`, `FloatingText`, `SpeechBubble`) |
 | `Editor/` | `HeistSceneBuilder`: importa a arte e gera prefabs, animações do Gazua e a cena |
 | `Prefabs/Salas` | **Uma sala modular por `RoomKind`** (Entrada, Corredor, Balcão, Sala de Câmeras, Escritório, Cofre, Túnel, Garagem). Cada uma tem os 3 adereços (Fechadura, Sistema, Pessoa) e liga o da `RoomData.obstacle` |
 | `Prefabs/Predios` | Os 5 prédios, montados com as salas modulares + casca própria (fachada, letreiro, rua). Já ligados no `buildingPrefab` de cada `HeistDef` |
@@ -49,7 +49,7 @@ Linha de comando: `Unity -batchmode -quit -projectPath . -executeMethod AFirma.H
 
 ## Pra quem for usar
 
-- **Enzo (HUD):** ponha o prefab da HUD na cena `Heist` e **apague o GameObject "HUD provisória"** (é uma faixa OnGUI embaixo, só pra dar pra jogar). A cena não depende dela.
+- **Enzo (HUD):** a HUD é o prefab dele, já na cena `Heist`. O builder não mexe nela (e apaga a antiga "HUD provisória", se ela voltar de uma cena velha).
 - **Dono de ladrão:** a cena usa o `ThiefTypeDef.animator` (estados `idle`, `andar`, `trabalhar`, `comemorar`). Sem animator, aparece o ladrão genérico com a roupa na `color` do tipo. O `actionSfx` toca quando o ladrão começa a trabalhar numa sala do tipo dele; o `ability.vfxPrefab` nasce na sala quando a habilidade é usada (exemplo: `Thieves/Gazua/VFX/VFX_PeDeCabra`).
 - **Fonte pixel:** `Art/Fonte/FontePixel.asset` tem maiúscula, minúscula, número e acento. A UI pode usar (`PixelFont.Get`).
 - **Paleta:** 32 cores em `Art/Paleta.png` e no `docs/ASSETS.md`.

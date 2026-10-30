@@ -19,6 +19,7 @@ MonoBehaviour:
   tier: 1
   briefing: "O Seu Z\xE9 guarda o dinheiro das apostas num cofrinho atr\xE1s do balc\xE3o. Dona Cida diz que \xE9 o golpe perfeito pra come\xE7ar: pouca gente e nenhuma c\xE2mera."
   unlockedByDefault: 1
+  extra: 0
   unlockedBy: {fileID: 0}
   rooms:
   - name: Entrada
@@ -42,3 +43,5 @@ MonoBehaviour:
   jailSeconds: 60
   mapPosition: {x: -6, y: 0}
   buildingPrefab: {fileID: 51265087655733214, guid: 28f5f7defa3e34a599fe69e2082b1d0c, type: 3}
+  thumbnail: {fileID: 0}
+  thumbnailSiren: {fileID: 0}

@@ -19,6 +19,7 @@ MonoBehaviour:
   tier: 3
   briefing: "D\xF3lar, marco alem\xE3o e cruzeiro velho: o dono n\xE3o confia em banco, ent\xE3o t\xE1 tudo l\xE1 dentro. O problema \xE9 sair, que a rua vive engarrafada."
   unlockedByDefault: 0
+  extra: 0
   unlockedBy: {fileID: 11400000, guid: 3540c87700a5d479aad0bb378967e3da, type: 2}
   rooms:
   - name: Fachada
@@ -54,3 +55,5 @@ MonoBehaviour:
   jailSeconds: 180
   mapPosition: {x: 0, y: 0}
   buildingPrefab: {fileID: 7147334254950262168, guid: 0717113ef0d9540a7877aed24b0cf64f, type: 3}
+  thumbnail: {fileID: 0}
+  thumbnailSiren: {fileID: 0}

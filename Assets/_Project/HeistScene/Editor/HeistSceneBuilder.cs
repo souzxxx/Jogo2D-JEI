@@ -14,7 +14,7 @@ namespace AFirma.HeistScene.EditorTools
     ///   1. importa e fatia os PNG (pixel art, PPU 32, pivô de cada tipo)
     ///   2. Gazua: animações, Animator, retrato, sons, ícones e VFX da habilidade
     ///   3. prefabs: salas modulares (uma por RoomKind), personagens, veículos e os 5 prédios (ligados nos HeistDef)
-    ///   4. cena Heist: câmera Pixel Perfect, fundo da cidade, clima do alerta, HeistView e HUD provisória
+    ///   4. cena Heist: câmera Pixel Perfect, fundo da cidade, clima do alerta e HeistView (a HUD é o prefab do Enzo)
     /// Menu: A Firma > Cena do Golpe. Rodar de novo refaz tudo sem quebrar referência (GUIDs e nomes ficam).
     /// Linha de comando: Unity -batchmode -quit -projectPath . -executeMethod AFirma.HeistScene.EditorTools.HeistSceneBuilder.BuildAll
     /// </summary>

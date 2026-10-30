@@ -23,9 +23,9 @@ namespace AFirma.HeistScene.EditorTools
 
         public const string HeistScenePath = "Assets/_Project/Scenes/Heist.unity";
         const string SceneRootName = "Cena do Golpe";
-        const string FallbackHudName = "HUD provisória (apagar quando a HUD do Enzo entrar)";
+        const string OldFallbackHudName = "HUD provisória (apagar quando a HUD do Enzo entrar)";
 
-        /// <summary>Monta a cena Heist: câmera Pixel Perfect seguindo a crew, fundo, clima do alerta, HeistView e HUD provisória.</summary>
+        /// <summary>Monta a cena Heist: câmera Pixel Perfect seguindo a crew, fundo, clima do alerta e HeistView (a HUD é o prefab do Enzo).</summary>
         public static void BuildHeistScene()
         {
             var l = LoadLayout();
@@ -64,7 +64,7 @@ namespace AFirma.HeistScene.EditorTools
             var global = Object.FindObjectsByType<Light2D>(FindObjectsInactive.Include).FirstOrDefault(x => x.lightType == Light2D.LightType.Global);
 
             Step("placeholder");
-            // placeholder OnGUI do Core sai: a cena real chegou (a HUD provisória ocupa só uma faixa embaixo)
+            // placeholder OnGUI do Core sai: a cena real chegou
             foreach (var placeholder in Object.FindObjectsByType<ScenePlaceholder>(FindObjectsInactive.Include))
                 Object.DestroyImmediate(placeholder.gameObject);
 
@@ -107,14 +107,10 @@ namespace AFirma.HeistScene.EditorTools
             view.atmosphere = atmosphere;
 
             Step("HUD");
-            var hud = GameObject.Find(FallbackHudName);
-            if (hud == null)
-            {
-                hud = new GameObject(FallbackHudName);
-                var hudSeparator = GameObject.Find("--- HUD (prefab do Enzo) ---");
-                if (hudSeparator != null) hud.transform.SetSiblingIndex(hudSeparator.transform.GetSiblingIndex() + 1);
-            }
-            if (hud.GetComponent<HeistSceneFallbackHud>() == null) hud.AddComponent<HeistSceneFallbackHud>();
+            // A HUD é o prefab do Enzo, que já está na cena: o builder não mexe nela. Só apaga a HUD provisória
+            // que as versões antigas do builder criavam, pra ela não desenhar por cima da HUD de verdade.
+            var oldHud = GameObject.Find(OldFallbackHudName);
+            if (oldHud != null) Object.DestroyImmediate(oldHud);
 
             if (Object.FindObjectsByType<HeistSceneBootstrap>(FindObjectsInactive.Include).Length == 0)
                 new GameObject("HeistSceneBootstrap").AddComponent<HeistSceneBootstrap>();

@@ -19,6 +19,7 @@ MonoBehaviour:
   tier: 2
   briefing: "Vitrine cheia de ouro e um alarme novinho em folha. Sem algu\xE9m que entenda de computador, esse alarme vai dar trabalho."
   unlockedByDefault: 0
+  extra: 0
   unlockedBy: {fileID: 11400000, guid: 42e1ab2969eb241aeb1dd04713e920c4, type: 2}
   rooms:
   - name: Vitrine
@@ -48,3 +49,5 @@ MonoBehaviour:
   jailSeconds: 120
   mapPosition: {x: -3, y: 1.5}
   buildingPrefab: {fileID: 6940136578813193321, guid: a830e0ff6a512474986baa1d2151531d, type: 3}
+  thumbnail: {fileID: 0}
+  thumbnailSiren: {fileID: 0}

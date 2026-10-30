@@ -21,3 +21,6 @@ MonoBehaviour:
   preferredType: 1
   incomePerSecond: 3
   matchMultiplier: 2
+  sceneFrames: []
+  sceneFps: 8
+  sceneEmpty: {fileID: 0}
