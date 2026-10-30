@@ -2,7 +2,7 @@
 
 > Dono: **Nicolas**. Rubrica Balanceamento (peso 2).
 > Planilha: [`balanceamento/Balanceamento_v1.xlsx`](balanceamento/Balanceamento_v1.xlsx) · [Google Sheets](https://docs.google.com/spreadsheets/d/1pYudXkkM3sUWgJ2zF4S0KOWfcyLhDklo2aWt3NAhmdg/edit?usp=sharing)
-> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído; `--extras` mostra quanto cada golpe extra rende perto da escada)
+> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído; `--extras` mostra quanto cada golpe extra rende perto da escada; `--ciclos N` simula N prestígios seguidos; `--sem-contatos` é o jogador que só recruta nível 1)
 
 ## Metas
 
@@ -43,7 +43,7 @@ Regras de bolso:
 | Chance de prisão (só fuga forçada) | `(0,4 − 0,15 com Pé-na-Tábua) × (1 − 0,5 × Discrição do ladrão/100)` | `HeistRules.ArrestChance` |
 | Pagamento do golpe | `sacola × saída × (1 + Lavanderia%) × (1 + Fama Esquema%)` | `HeistRules.Payment` |
 | XP por sala limpa | `xpPerRoom × manha` (Cria da rua ×1,3; a fração vai somando sala a sala) | `HeistRules.XpPerRoom` |
-| Recruta | nível sorteado de 1 a 1 + Contatos (+ Fama Lenda de graça); custo `50 × 1,8^(nível sorteado − 1) × (1 − Fama Reputação%)` | `CrewRules.RecruitCost` |
+| Recruta | nível sorteado de 1 a 1 + Contatos (+ Fama Lenda de graça); custo `50 × 6^(nível sorteado − 1) × (1 − Fama Reputação%)` | `CrewRules.RecruitCost` |
 | Trocar candidatos na hora | `Cr$ 25 × (1 − 10% × nível de Contatos)` | `CrewRules.PaidRefreshCost` |
 | Tempo de prisão | `jailSeconds do golpe × (1 − Advogado%)`, arredondado pra cima | `CrewRules.JailSeconds` |
 | Fiança | `segundos restantes × Cr$ 2 × manha (Pão-duro ×0,6) × (1 − Advogado%)`, arredondada pra cima | `CrewRules.BailCost` |
@@ -52,7 +52,7 @@ Regras de bolso:
 | Fama no prestígio | `floor(√(loot do ciclo / 10.000))` | `Formulas.FameForLoot` |
 | Custo de bônus de Fama | `custoBase × crescimento^nível`, arredondado pra cima | `ProgressionService.GetFamePerkCost` |
 | Ciclo novo (prestígio) | Cr$ inicial + Herança; os novatos da Dona Cida nascem no nível 1 + Lenda; Procurado +1 | `ProgressionService.Prestige` |
-| Procurado | dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível | Progressão |
+| Procurado | dificuldade ×1,12, loot ×1,5, alerta ×1,05 por nível | Progressão |
 | Modificador no mapa | cada golpe liberado: 50% de chance de 1 modificador, escolhido pelo `weight`; muda só depois de um golpe (abrir e fechar o mapa não troca); a Lotérica não sorteia antes do tutorial | `ProgressionService.RollModifiers` |
 | Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%) × (1 + Fama Rede%)`, mais o Catar latinha fixo | `EconomyService.GetSideJobIncome` |
 | Ganho offline | `renda dos bicos × min(tempo fora, 4 h) × 50%`, em Cr$ inteiros; menos de 60 s fora ou relógio voltando não paga | `EconomyService.ApplyOfflineEarnings` |
@@ -94,12 +94,29 @@ Pra ficar de olho no playtest:
 - No fim do ciclo todos os upgrades chegam no máximo e sobra muito Cr$: custos do topo baratos demais pro loot do Cassino e do Banco. Ver na #44.
 - Sem as habilidades o Banco Central leva ~90 min: no topo elas são obrigatórias, como o ESCOPO pede.
 
+## Ciclos de prestígio (v2)
+
+O simulador agora faz o prestígio: soma a Fama do ciclo, compra o bônus mais barato e começa de novo com o Procurado +1. E o jogador simulado usa os Contatos: compra o upgrade e troca quem ficou pra trás por um recruta do nível mais alto que der, pagando a troca de candidatos até aparecer o tipo certo. Minutos de jogo ativo até concluir Câmbio / Cassino / Banco Central:
+
+| Ciclo | Procurado | Usa Contatos | Só recruta nível 1 |
+|---|---|---|---|
+| 1 | 0 | 11,7 / 25,6 / **42,0** | 12,1 / 26,1 / **48,8** |
+| 2 | 1 | 10,5 / 24,7 / 38,5 | 10,8 / 35,5 / 63,6 |
+| 3 | 2 | 9,3 / 17,9 / 34,4 | 9,0 / 44,7 / 80,2 |
+| 4 | 3 | 9,2 / 18,0 / 35,7 | 6,2 / 55,4 / 93,9 |
+| 5 | 4 | 8,0 / 14,3 / 34,6 | 13,1 / 55,2 / 103,7 |
+
+- Começo mais rápido a cada ciclo (Herança, Lenda e Esquema): a Joalheria cai de 3,8 pra 2,4 min já no ciclo 2.
+- O topo pesa mais pra quem não renova a crew (o Cassino vai de 26 pra 35–55 min) e fica estável pra quem usa os Contatos. Nenhum ciclo trava: o ciclo 5 ainda fecha.
+- No fim do ciclo todos os upgrades estão no máximo e sobra Cr$: no topo quem segura é o nível da crew, não o dinheiro. Por isso o recruta de nível alto é a alavanca que mais mexe na curva.
+
 ## Registro de ajustes
 
 | Data | O que mudou | Por quê (dado do playtest) |
 |---|---|---|
 | 20/10 | Valores iniciais | Setup da fundação |
 | 25/10 | Dificuldade: Joalheria ×1,6, Câmbio ×1,4, Cassino ×0,9, Banco ×0,6. Alerta/s: Cassino ×0,8, Banco ×0,7 | Simulador: o Cassino virava parede (nem com tudo no máximo fechava) e o Banco Central nunca era concluído, com salas de 22–36 s (regra: 5–20 s). Câmbio liberava em 2 min |
+| 30/10 | Recruta: crescimento do custo por nível de ×1,8 pra ×6. Procurado: dificuldade de ×1,25 pra ×1,12 e alerta de ×1,1 pra ×1,05 por nível (loot fica ×1,5) | Simulador com Contatos e prestígio: recrutando nível 6 por Cr$ 945 (o Cassino paga Cr$ 60 mil por golpe) o Banco Central saía em 26 min no ciclo 1 (meta 40–60). Com o Procurado de antes o ciclo 2 levava 100 min e o ciclo 3 travava no Banco Central; com ×1,15 de dificuldade o ciclo 5 ainda travava |
 | 30/10 | Golpes extras: Bicho Cr$ 900; Carro-forte de Cr$ 30 mil pra 20 mil e alerta 4,5–7 pra 6–10; Museu de Cr$ 150 mil pra 375 mil | Simulador (`--extras`): o Carro-forte rendia 133% do Cassino e o jogador perfeito ficava 16 min nele, atrasando o Cassino em 5 min; o Museu rendia só 32% do Banco Central e ninguém ia |
 
 ## Playtest cronometrado (modelo)

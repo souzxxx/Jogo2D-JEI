@@ -111,9 +111,21 @@ namespace AFirma.Tests
         public void RecruitCost_IsBaseTimesGrowthPerLevel_MinusReputacao()
         {
             var cfg = Services.Config;
-            Assert.AreEqual(50.0, CrewRules.RecruitCost(1, 0f, cfg));
-            Assert.AreEqual(162.0, CrewRules.RecruitCost(3, 0f, cfg));  // 50 × 1,8²
-            Assert.AreEqual(130.0, CrewRules.RecruitCost(3, 20f, cfg)); // 162 × 0,8 = 129,6
+            double baseCost = cfg.recruitBaseCost;
+            float growth = cfg.recruitCostGrowthPerLevel;
+            cfg.recruitBaseCost = 50; // números de teste: o balanceamento muda, a regra não
+            cfg.recruitCostGrowthPerLevel = 1.8f;
+            try
+            {
+                Assert.AreEqual(50.0, CrewRules.RecruitCost(1, 0f, cfg));
+                Assert.AreEqual(162.0, CrewRules.RecruitCost(3, 0f, cfg));  // 50 × 1,8²
+                Assert.AreEqual(130.0, CrewRules.RecruitCost(3, 20f, cfg)); // 162 × 0,8 = 129,6
+            }
+            finally
+            {
+                cfg.recruitBaseCost = baseCost;
+                cfg.recruitCostGrowthPerLevel = growth;
+            }
         }
 
         // ---------------- Troca paga ----------------

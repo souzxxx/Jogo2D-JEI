@@ -31,7 +31,7 @@ MonoBehaviour:
   recruitCandidates: 3
   recruitRefreshSeconds: 300
   recruitBaseCost: 50
-  recruitCostGrowthPerLevel: 1.8
+  recruitCostGrowthPerLevel: 6
   bailCostPerJailSecond: 2
   scavengeIncomePerSecond: 1
   sideJobLevelBonus: 0.1
@@ -40,7 +40,7 @@ MonoBehaviour:
   offlineMinSeconds: 60
   modifierChance: 0.5
   fameDivisor: 10000
-  wantedDifficultyMult: 1.25
+  wantedDifficultyMult: 1.12
   wantedLootMult: 1.5
-  wantedAlertMult: 1.1
+  wantedAlertMult: 1.05
   autosaveSeconds: 10

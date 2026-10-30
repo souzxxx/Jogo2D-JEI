@@ -108,7 +108,7 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 - **Atributos efetivos:** base × manha × (1 + Ferramentas% na Perícia, Tênis de molinha% na Discrição). Nenhum upgrade mexe em Nervos.
 - **XP e nível:** 1 XP por sala limpa (Cria da rua +30%, a fração vai somando sala a sala). O próximo nível custa 5 × nível atual e cada nível soma o ganho do tipo de ladrão. No nível 10 para e não guarda XP.
 - **Manhas (8):** Fominha (+20% de loot, −15% de Discrição), Pé-frio (+50% de chance de evento), Sangue-frio (+30% de Nervos), Boca-aberta (+20% de alerta), Pão-duro (−40% na fiança), Cria da rua (+30% de XP), Supersticioso (+20% de Nervos, −10% de Perícia), Mão-boba (+30% de loot em sala de Pessoa).
-- **Recrutamento:** 3 candidatos que trocam a cada 5 min de tempo real, ou na hora por Cr$ 25 (−10% por nível de Contatos). Nível sorteado de 1 a 1 + Contatos, mais os níveis da Fama Lenda de graça. Custo = Cr$ 50 × 1,8^(nível sorteado − 1) × (1 − Fama Reputação%).
+- **Recrutamento:** 3 candidatos que trocam a cada 5 min de tempo real, ou na hora por Cr$ 25 (−10% por nível de Contatos). Nível sorteado de 1 a 1 + Contatos, mais os níveis da Fama Lenda de graça. Custo = Cr$ 50 × 6^(nível sorteado − 1) × (1 − Fama Reputação%).
 - **Vagas:** a crew começa com 3 (até 8 com Quartos); o golpe começa com 2 (até 4 com Van). Demitir nunca tira o último ladrão nem quem está no golpe.
 - **Prisão:** tempo do golpe × (1 − Advogado%), em tempo real (corre com o jogo fechado). Fiança = segundos restantes × Cr$ 2 × manha (Pão-duro) × (1 − Advogado%). Preso não vai pra golpe nem pra bico; preso de novo fica com a pena mais longa.
 
@@ -126,7 +126,7 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 **Progressão.**
 - **Golpes:** escada de 5. Concluir o cofre de um libera o próximo; a Lotérica nunca fica bloqueada e todo golpe pode ser repetido. Cada golpe ensina algo: Lotérica (tutorial) → Joalheria (Sistema, pede um Disquete) → Câmbio (mistura e fuga, pede um Pé-na-Tábua) → Cassino (muito alerta, pede as habilidades) → Banco Central (túnel calmo, cofre mais protegido).
 - **Golpes extras** (ramo ao lado da escada, fora do caminho pro Banco Central), cada um vitrine de um ladrão: Banca do Bicho do Tonhão (Pessoa, farm barato; libera com a Lotérica), Carro-forte da Avenida do Porto (Fechadura difícil e alerta rápido; libera com o Câmbio), Museu de Nova Guanabara (quase só Sistema; libera com o Cassino).
-- **Contexto do golpe:** modificador sorteado × Nível de Procurado (dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível). A Fama entra direto no motor do golpe.
+- **Contexto do golpe:** modificador sorteado × Nível de Procurado (dificuldade ×1,12, loot ×1,5, alerta ×1,05 por nível). A Fama entra direto no motor do golpe.
 - **Balanceamento v1:** Banco Central concluído em ~49 min no simulador (meta 40–60). Curva e números em [BALANCEAMENTO.md](BALANCEAMENTO.md).
 - **Modificadores:** sorteados a cada visita ao mapa (feriado, dia de pagamento…).
 - **Prestígio:** depois do Banco Central, "sumir do mapa" reseta o ciclo, dá Fama e +1 Nível de Procurado (tudo mais difícil e mais rico). A Fama compra 6 bônus permanentes.

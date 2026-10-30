@@ -295,7 +295,7 @@ Todo golpe pode ser repetido (farm) com loot base fixo. A cada visita ao mapa, c
 - **Reseta:** Cr$, upgrades, golpes liberados e a crew (Dona Cida manda 2 novatos de novo).
 - **Mantém:** Fama e bônus de Fama.
 - **Ganha:** Fama = função do total de loot do ciclo (ex.: `floor(sqrt(lootTotal / 10.000))`).
-- **Nível de Procurado +1:** em todos os golpes dificuldade ×1,25, loot ×1,5 e alerta ×1,1 por nível. O Delegado Bastos é promovido.
+- **Nível de Procurado +1:** em todos os golpes dificuldade ×1,12, loot ×1,5 e alerta ×1,05 por nível (números de `BALANCEAMENTO.md`). O Delegado Bastos é promovido.
 - **Bônus de Fama** (comprados com Fama, permanentes): Reputação (recrutas mais baratos), Herança (começa o ciclo com Cr$), Lenda (recrutas nascem com mais nível), Esquema (+loot), Rede (+bicos), Sangue-frio (−alerta).
 
 ### 6.11 Golpes no automático (segundo plano)
