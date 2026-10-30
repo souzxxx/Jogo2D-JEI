@@ -12,6 +12,8 @@ Narrativa (Nicolas): bips da Dona Cida, briefings, manchetes.
 
 O bip do novato grátis fica no `GameConfig.freeRookieBip` (quem manda é o `CrewService`). Os briefings ficam em cada `HeistDef` (`Data/Heists`).
 
+As manchetes do jornal ficam em `Data/Narrative/Headlines.asset` (`HeadlineSetDef`): de 3 a 5 por resultado, as próprias de cada golpe (`byHeist`, só pra cofre limpo sem sirene) e o Bastos por Nível de Procurado (`bastos`: delegado → superintendente → secretário, com 3 falas cada). Placeholders: `{golpe}`, `{valor}`, `{bastos}` (o cargo) e `{fala}`.
+
 Pra ver de novo os bips de primeira vez: F1 → **Novo jogo (apaga save)**.
 
 ---

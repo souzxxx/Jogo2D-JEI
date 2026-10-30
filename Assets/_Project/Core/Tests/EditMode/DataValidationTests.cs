@@ -135,13 +135,46 @@ namespace AFirma.Tests
         public void Headlines_FillPlaceholders()
         {
             var result = new HeistResult { outcome = HeistOutcome.CleanEscape, moneyGained = 1500 };
-            var line = db.headlines.Pick(result, "Lotérica do Seu Zé", new System.Random(1));
-            StringAssert.DoesNotContain("{golpe}", line);
-            StringAssert.DoesNotContain("{valor}", line);
+            for (int wanted = 0; wanted <= 4; wanted++)
+                for (int seed = 0; seed < 20; seed++)
+                {
+                    var line = db.headlines.Pick(result, "Lotérica do Seu Zé", new System.Random(seed), wanted);
+                    StringAssert.DoesNotContain("{", line, "Placeholder sem preencher.");
+                }
 
             result.arrestedThiefIds.Add("x");
-            var arrested = db.headlines.Pick(result, "Lotérica", new System.Random(1));
-            CollectionAssert.Contains(db.headlines.withArrests, arrested);
+            CollectionAssert.AreEqual(db.headlines.withArrests, db.headlines.PoolFor(result), "Prisão tem prioridade.");
+        }
+
+        [Test]
+        public void Headlines_UseOnlyKnownPlaceholders_AndHaveAtLeastThreePerResult()
+        {
+            var known = new[] { "{golpe}", "{valor}", "{bastos}", "{fala}" };
+            var h = db.headlines;
+            var pools = new[] { h.clean, h.hasty, h.forced, h.perfect, h.withArrests, h.interrupted };
+            var all = new System.Collections.Generic.List<string>();
+            foreach (var pool in pools)
+            {
+                Assert.GreaterOrEqual(pool.Length, 3, "Cada resultado precisa de pelo menos 3 manchetes.");
+                all.AddRange(pool);
+            }
+            foreach (var own in h.byHeist)
+            {
+                Assert.IsNotNull(own.heist, "Manchete própria sem golpe.");
+                all.AddRange(own.completed);
+            }
+            foreach (var rank in h.bastos)
+            {
+                Assert.IsNotEmpty(rank.title, "Cargo do Bastos sem nome.");
+                Assert.IsNotEmpty(rank.quotes, rank.title + " sem fala.");
+            }
+
+            foreach (var line in all)
+            {
+                var rest = line;
+                foreach (var placeholder in known) rest = rest.Replace(placeholder, "");
+                StringAssert.DoesNotContain("{", rest, "Placeholder desconhecido em: " + line);
+            }
         }
 
         [Test]

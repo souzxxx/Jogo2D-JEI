@@ -161,7 +161,7 @@ public class LoopNaCameraAbility : ThiefAbilityDef
 A habilidade só mexe no golpe através do `IHeistControl`. O som vai em `ability.sfx` e o efeito visual em `ability.vfxPrefab`: a Cena do Golpe instancia o prefab na sala atual quando escuta `AbilityUsed`. Assim o dono do ladrão entrega o efeito dele sem mexer na cena do Miguel.
 
 ### Manchetes do jornal
-`Services.Db.headlines.Pick(resultado, nomeDoGolpe, rng)` devolve a manchete pronta (prisão tem prioridade; `{golpe}` e `{valor}` já preenchidos). O Nicolas escreve as manchetes no asset e o Enzo só chama o método.
+`Services.Db.headlines.Pick(resultado, nomeDoGolpe, rng)` devolve a manchete pronta (prisão tem prioridade; `{golpe}`, `{valor}`, `{bastos}` e `{fala}` já preenchidos). O cargo e as falas do Bastos mudam com o Nível de Procurado, e cofre limpo sem sirene soma as manchetes próprias do golpe (`byHeist`). O Nicolas escreve as manchetes no asset e o Enzo só chama o método.
 
 ## Cenas
 
