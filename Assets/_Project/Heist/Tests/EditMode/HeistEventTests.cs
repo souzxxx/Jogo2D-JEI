@@ -61,6 +61,22 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void CanAppear_EventOfAnExtraHeist_OnlyInThatHeist()
+        {
+            var museu = MakeHeist(Room(ObstacleType.System));
+            museu.id = "museu";
+            var loterica = MakeHeist(Room(ObstacleType.System));
+            loterica.id = "loterica";
+            var room = Room(ObstacleType.System);
+
+            var own = MakeEvent("do-museu", SafeChoice());
+            own.onlyInHeists.Add(museu);
+
+            Assert.IsTrue(EventRules.CanAppear(own, museu, room));
+            Assert.IsFalse(EventRules.CanAppear(own, loterica, room), "Evento do golpe extra não pode vazar pros outros.");
+        }
+
+        [Test]
         public void PickWeighted_FollowsTheWeights()
         {
             var common = MakeEvent("comum", SafeChoice());

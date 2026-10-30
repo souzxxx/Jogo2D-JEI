@@ -54,6 +54,7 @@ namespace AFirma.Heist
         {
             reason = null;
             if (heist == null || heist.rooms.Count == 0) reason = "Escolha um golpe.";
+            else if (!Services.Progression.IsUnlocked(heist)) reason = "Golpe ainda bloqueado.";
             else if (!IsAutoUnlocked(heist)) reason = "Limpa o cofre na mão primeiro.";
             else if (slots.Exists(s => s.view.heist == heist)) reason = "Esse golpe já está no automático.";
             else if (slots.Count >= MaxRunning) reason = MockAutoHeistService.FullReason(MaxRunning);

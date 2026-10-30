@@ -19,9 +19,12 @@ namespace AFirma.Heist
             return Math.Min(1f, Math.Max(0f, chance));
         }
 
-        /// <summary>Pode sair no sorteio desta sala? O tutorial nunca entra (ele é chamado direto na 1ª Lotérica).</summary>
+        /// <summary>
+        /// Pode sair no sorteio desta sala? O tutorial nunca entra (ele é chamado direto na 1ª Lotérica) e evento
+        /// de golpe extra só sai no golpe dele.
+        /// </summary>
         public static bool CanAppear(HeistEventDef e, HeistDef heist, RoomData room) =>
-            e != null && !e.tutorialOnly && e.minTier <= heist.tier && (e.anyRoom || e.roomObstacle == room.obstacle);
+            e != null && !e.tutorialOnly && e.CanHappenIn(heist) && (e.anyRoom || e.roomObstacle == room.obstacle);
 
         /// <summary>Sorteio pelo peso. roll01 vem do rng, em [0, 1).</summary>
         public static HeistEventDef PickWeighted(IReadOnlyList<HeistEventDef> pool, double roll01)

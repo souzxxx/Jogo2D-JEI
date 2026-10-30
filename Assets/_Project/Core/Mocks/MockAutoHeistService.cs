@@ -29,6 +29,7 @@ namespace AFirma.Core
         {
             reason = null;
             if (heist == null || heist.rooms.Count == 0) reason = "Escolha um golpe.";
+            else if (!Services.Progression.IsUnlocked(heist)) reason = "Golpe ainda bloqueado.";
             else if (!IsAutoUnlocked(heist)) reason = "Limpa o cofre na mão primeiro.";
             else if (running.Exists(r => r.heist == heist)) reason = "Esse golpe já está no automático.";
             else if (running.Count >= MaxRunning) reason = FullReason(MaxRunning);

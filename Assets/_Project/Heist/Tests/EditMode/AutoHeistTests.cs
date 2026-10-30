@@ -300,6 +300,34 @@ namespace AFirma.Tests
             Assert.GreaterOrEqual(runner.RoomIndex, 1, "O pé-de-cabra limpa a sala na hora.");
         }
 
+        [Test]
+        public void ExtraHeists_RunOnAutoFromStartToEnd([Values("banca-do-bicho", "carro-forte", "museu")] string id)
+        {
+            var extra = Services.Db.GetHeist(id);
+            Services.State.unlockedHeists.Add(id);
+            Services.State.completedHeists.Add(id);
+            Services.Config.eventChancePerRoom = 1f; // toda sala abre evento: os do golpe extra entram no sorteio
+            var van = Services.Db.GetUpgrade(UpgradeEffect.HeistSlots);
+            GameState.SetLevel(Services.State.upgrades, van.id, van.maxLevel);
+            var rng = new System.Random(3);
+            var crew = new List<ThiefState>();
+            foreach (ThiefType type in Enum.GetValues(typeof(ThiefType)))
+            {
+                var thief = ThiefFactory.Create(Services.Db, type, Services.Config.maxLevel, rng, false);
+                Services.State.crew.Add(thief);
+                crew.Add(thief);
+            }
+            HeistResult result = null;
+            GameEvents.AutoHeistFinished += (run, r) => result = r;
+
+            auto.Send(extra, crew, AutoHeistOrder.ToTheVault, false);
+            TickUntilStopped(600f);
+
+            Assert.IsNotNull(result, extra.displayName + " travou no automático.");
+            Assert.AreEqual(extra.rooms.Count, result.totalRooms);
+            Assert.Greater(result.moneyGained, 0.0);
+        }
+
         // ---------------- Repetir, prisão e chamar de volta ----------------
 
         [Test]

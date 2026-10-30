@@ -81,6 +81,37 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void ExtraHeists_HaveTwoEventsOfTheirOwn_PullingTheThiefThatShines()
+        {
+            var shines = new Dictionary<string, ThiefType[]>
+            {
+                ["banca-do-bicho"] = new[] { ThiefType.ConArtist },
+                ["carro-forte"] = new[] { ThiefType.Locksmith, ThiefType.Driver },
+                ["museu"] = new[] { ThiefType.Hacker },
+            };
+            foreach (var pair in shines)
+            {
+                var heist = db.GetHeist(pair.Key);
+                Assert.IsNotNull(heist, pair.Key + " não está no GameDatabase.");
+                var own = db.events.FindAll(e => e.onlyInHeists.Count > 0 && e.onlyInHeists.Exists(h => h == heist));
+                Assert.GreaterOrEqual(own.Count, 2, heist.displayName + " precisa de 2 eventos próprios.");
+                foreach (var type in pair.Value)
+                    Assert.IsTrue(own.Exists(e => e.choices.Exists(c => c.requiresType && c.requiredType == type)),
+                        $"{heist.displayName}: nenhum evento puxa o {type}.");
+                foreach (var e in own)
+                    Assert.IsTrue(e.CanHappenIn(heist), e.displayName + " não consegue sair no próprio golpe (tier mínimo?).");
+            }
+        }
+
+        [Test]
+        public void Events_OfOneHeistPointToHeistsInTheDatabase()
+        {
+            foreach (var e in db.events)
+                foreach (var heist in e.onlyInHeists)
+                    Assert.IsTrue(heist != null && db.heists.Contains(heist), e.displayName + ": golpe da lista não está no GameDatabase.");
+        }
+
+        [Test]
         public void ConArtist_HasThreeEventsWhereHeShines_AndFiveBarks()
         {
             foreach (var id in new[] { "caixa-hora-extra", "turista-perdido", "gerente-voltou" })

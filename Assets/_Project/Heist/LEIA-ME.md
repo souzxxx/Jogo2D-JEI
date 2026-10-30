@@ -12,7 +12,7 @@ Motor do Golpe (Leonardo). O `HeistRunner` implementa `IHeistService` e é regis
 | Golpes no automático: vários golpes sem cena junto com o da mão, piloto, Repetir, prisão, chamar de volta, save e offline | real (`AutoHeistService` + `AutoPilot`) |
 
 - `Runtime/HeistRules.cs`: fórmulas (funções puras). A HUD pode usar `AlertPerSecond`, `PoliceCountdown`, `LootKeep` e `ArrestChance` pra mostrar estimativas.
-- Evento novo: crie um `HeistEventDef`, coloque no `GameDatabase` e garanta uma escolha sem requisito (o `DataValidationTests` cobra). Se a crew não tiver nenhuma escolha possível, o evento não abre.
+- Evento novo: crie um `HeistEventDef`, coloque no `GameDatabase` e garanta uma escolha sem requisito (o `DataValidationTests` cobra). Se a crew não tiver nenhuma escolha possível, o evento não abre. Evento de um golpe só (os dos golpes extras, em `Data/Events/Extras`): ponha o golpe em `onlyInHeists`.
 - Preso por evento vai em cana no fim do golpe (o Cavalo de pau salva).
 - Habilidade nova: subclasse de `ThiefAbilityDef` na pasta do ladrão, mexendo no golpe só pelo `IHeistControl`. `CanUse` devolve o motivo que a HUD mostra no botão.
 - Robustez: o golpe nunca anda mais que `MaxTickSeconds` (0,5 s) por frame, então aba em segundo plano no WebGL não faz a polícia chegar de uma vez; com `GameClock.Paused` nada anda; clique repetido em porta, evento ou habilidade vale uma vez só.

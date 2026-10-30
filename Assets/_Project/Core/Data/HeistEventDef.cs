@@ -49,6 +49,11 @@ namespace AFirma.Core
         [Tooltip("Golpe mínimo (tier) em que pode aparecer.")]
         public int minTier = 1;
         public float weight = 1f;
+        [Tooltip("Só aparece nesses golpes (ex.: os eventos de um golpe extra). Vazio = qualquer golpe a partir do tier mínimo.")]
+        public List<HeistDef> onlyInHeists = new List<HeistDef>();
+
+        public bool CanHappenIn(HeistDef heist) =>
+            heist != null && minTier <= heist.tier && (onlyInHeists.Count == 0 || onlyInHeists.Exists(h => h != null && h.id == heist.id));
 
         public List<EventChoice> choices = new List<EventChoice>();
     }

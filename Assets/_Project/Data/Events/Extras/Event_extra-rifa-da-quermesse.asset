@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_extra-rifa-da-quermesse
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: extra-rifa-da-quermesse
+  displayName: "Rifa da quermesse"
+  description: "A Dona Neusa entra na banca vendendo rifa da quermesse da par\xF3quia. Ela n\xE3o sai sem vender pra todo mundo."
+  icon: {fileID: 0}
+  body: "A Dona Neusa entra na banca vendendo rifa da quermesse da par\xF3quia. Ela n\xE3o sai sem vender pra todo mundo."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 1
+  roomObstacle: 0
+  minTier: 1
+  weight: 2
+  onlyInHeists:
+  - {fileID: 11400000, guid: c51eb28280b54167840874a499537c89, type: 2}
+  choices:
+  - label: "Vender a rifa de volta pra ela"
+    requiresType: 1
+    requiredType: 3
+    check: 3
+    baseChance: 0.55
+    chancePerStatPoint: 0.005
+    success:
+      resultText: "No fim a Dona Neusa comprou tr\xEAs n\xFAmeros e ainda agradeceu. A banca inteira riu."
+      alertDelta: -10
+      bagPercentDelta: 5
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "A Dona Neusa \xE9 mais 171 que o 171. Vendeu dois n\xFAmeros e chamou a aten\xE7\xE3o de todo mundo."
+      alertDelta: 10
+      bagPercentDelta: -5
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Comprar o bloco inteiro"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "A Dona Neusa foi embora feliz e a sacola ficou mais leve."
+      alertDelta: 0
+      bagPercentDelta: -10
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Fingir que n\xE3o ouviu"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1
+    chancePerStatPoint: 0
+    success:
+      resultText: "Ela come\xE7ou a falar mais alto. A banca toda olhou."
+      alertDelta: 15
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
