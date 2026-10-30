@@ -13,6 +13,7 @@ Ex-chaveiro de plantão da Zona Norte. Abriu a primeira fechadura aos 9 anos, a 
 | `ThiefType_Gazua` | especialista em Fechadura, 8 bordões, retrato, Animator e som de ação |
 | `Ability_Gazua` (`PeDeCabraAbility`) | Pé-de-cabra: abre na marra a sala de Fechadura em que a crew está (limpa na hora), com +15 de alerta. Diz o motivo quando não dá: "Só serve em sala de Fechadura." / "Espera a crew entrar na sala." |
 | `SideJob_Gazua` | Chaveiro 24h: rende o dobro com um Gazua |
+| `Bico/` | Cena do Chaveiro 24h pra vitrine dos bicos (96×64, 8 quadros a 8 fps): de noite, a banquinha acesa com o quadro de chaves, o orelhão do lado e o Gazua no balcão copiando chave, com o disco da máquina soltando faísca. Vazia (`chaveiro-24h_vazio`): porta de aço baixada e papelão "VOLTO JÁ" |
 | `Events/` | 3 eventos em que ele brilha: Tranca tetra (sala de Fechadura, Lotérica+), Cofrinho atrás do quadro (Joalheria+), Porta corta-fogo (Câmbio+) |
 | `Scripts/` | `PeDeCabraAbility` (habilidade própria, só mexe no golpe pelo `IHeistControl`) |
 | `Tests/EditMode` | Testes da habilidade: limpa e faz barulho, motivo fora de sala de Fechadura, na porta e no evento |
@@ -39,3 +40,5 @@ Arrombador de gorro de lã, lupa de relojoeiro no olho, bigodão grisalho, jaque
 | `comemorar` | 4 | 8 | Pula erguendo o molho de chaves |
 
 **Pra mudar a arte:** edite e rode `python "Assets/_Project/Thieves/Gazua/Art/Source~/gerar_gazua.py"` na raiz do repositório (usa a paleta e o boneco de `HeistScene/Art/Source~`). Depois, no Unity: **A Firma > Cena do Golpe > Gerar tudo** refaz fatiamento, clipes e Animator sem perder referência.
+
+**Cena do bico:** `python "Assets/_Project/Thieves/Gazua/Art/Source~/gerar_chaveiro.py"` refaz `Bico/chaveiro-24h_*.png` (e a prévia em `Source~`). A do Catar latinha, que não tem ladrão, é da Cena do Golpe: `HeistScene/Art/Source~/gerar_latinha.py` (sai em `Data/Economy/SideJobs/Bico`). Depois, no Unity: **A Firma › Bicos › Ligar as cenas dos bicos**.
