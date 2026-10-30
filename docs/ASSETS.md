@@ -109,6 +109,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Sons da cena (grana na sacola, porta) e do Gazua (gazua na fechadura, pé-de-cabra) | Sintetizados por script, sem sample | `HeistScene/Audio`, `Thieves/Gazua/Audio` (script em `HeistScene/Audio/Source~`) | Miguel |
 | Disquete (sheet, retrato, ícones do Loop na câmera e do Gatonet, telinha "LOOP" do VFX) | Script Python, mesmo padrão do Gazua | `Thieves/Disquete/Art`, `Icons`, `VFX` (script em `Art/Source~`) | Enzo |
 | Pé-na-Tábua (sheet, retrato e "VRUUM!" do Cavalo de pau) | Script Python, mesmo padrão do Disquete | `Thieves/PeNaTabua/Art`, `VFX` (script em `Art/Source~`) | Leonardo |
+| Cena do bico Lotação pirata (8 quadros 96×64 e a cena vazia) | Script Python na paleta, com o boneco do Pé-na-Tábua | `Thieves/PeNaTabua/Bico` (script em `Art/Source~/gerar_lotacao.py`) | Leonardo |
 | Fundo do esconderijo (porão da Auto Elétrica) e mapa de Nova Guanabara | Script Python que desenha pixel a pixel na paleta | `UI/Art` (script em `UI/Art/Source~/gerar_ui.py`) | Enzo |
 | Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
 | Sons da UI (clique, hover, compra, erro, bip, máquina de escrever, carimbo, papel), do golpe (passos, alarme, sirene, viatura) e do Disquete (teclado, fita rebobinando) | Sintetizados por script, sem sample | `Audio/Resources/Sons`, `Thieves/Disquete/Audio` (script em `Audio/Source~/gerar_sfx.py`) | Enzo |

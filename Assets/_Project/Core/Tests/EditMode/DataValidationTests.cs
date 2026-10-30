@@ -112,6 +112,28 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void SideJobScenes_FollowTheSpec()
+        {
+            foreach (var job in db.sideJobs)
+            {
+                if (!job.HasScene) continue; // a cena chega aos poucos; sem ela a vitrine mostra o ícone
+                Assert.That(job.sceneFrames.Length, Is.InRange(SideJobDef.MinSceneFrames, SideJobDef.MaxSceneFrames), job.displayName + ": 4 a 8 quadros.");
+                Assert.That(job.sceneFps, Is.InRange(4f, 12f), job.displayName + ": ~8 fps.");
+                var sprites = new List<Sprite>(job.sceneFrames);
+                if (job.requiresThief) // Catar latinha sempre tem gente: não precisa da vazia
+                {
+                    Assert.IsNotNull(job.sceneEmpty, job.displayName + ": falta a cena vazia (\"volto já\").");
+                    sprites.Add(job.sceneEmpty);
+                }
+                foreach (var sprite in sprites)
+                {
+                    Assert.IsNotNull(sprite, job.displayName + ": quadro vazio na lista.");
+                    Assert.AreEqual(new Vector2(SideJobDef.SceneWidth, SideJobDef.SceneHeight), sprite.rect.size, job.displayName + " / " + sprite.name + ": a cena é 96×64.");
+                }
+            }
+        }
+
+        [Test]
         public void ConArtist_HasThreeEventsWhereHeShines_AndFiveBarks()
         {
             foreach (var id in new[] { "caixa-hora-extra", "turista-perdido", "gerente-voltou" })

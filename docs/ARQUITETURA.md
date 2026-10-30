@@ -180,6 +180,9 @@ public class LoopNaCameraAbility : ThiefAbilityDef
 
 A habilidade só mexe no golpe através do `IHeistControl`. O som vai em `ability.sfx` e o efeito visual em `ability.vfxPrefab`: a Cena do Golpe instancia o prefab na sala atual quando escuta `AbilityUsed`. Assim o dono do ladrão entrega o efeito dele sem mexer na cena do Miguel.
 
+### Cena do bico
+Cada `SideJobDef` tem `sceneFrames` (4 a 8 quadros de 96×64), `sceneFps` e `sceneEmpty` (parada, com "volto já"). A vitrine da UI chama `SceneFrameAt(segundos)`; sem cena (`HasScene` falso) mostra o ícone. Quem desenha põe os PNGs em `Bico/<id>_0.png…` e `Bico/<id>_vazio.png` ao lado do bico e roda **A Firma › Bicos › Ligar as cenas dos bicos**. Spec da arte em `Thieves/LEIA-ME.md`.
+
 ### Manchetes do jornal
 `Services.Db.headlines.Pick(resultado, nomeDoGolpe, rng)` devolve a manchete pronta (prisão tem prioridade; `{golpe}`, `{valor}`, `{bastos}` e `{fala}` já preenchidos). O cargo e as falas do Bastos mudam com o Nível de Procurado, e cofre limpo sem sirene soma as manchetes próprias do golpe (`byHeist`). O Nicolas escreve as manchetes no asset e o Enzo só chama o método.
 

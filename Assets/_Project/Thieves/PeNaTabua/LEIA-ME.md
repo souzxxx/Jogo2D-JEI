@@ -15,6 +15,8 @@ Desenhada pixel a pixel por script, na paleta e no mesmo boneco do Gazua e do Di
 
 ![Pé-na-Tábua](Art/Source~/previa_sheet.png)
 
+![Lotação pirata: 8 quadros e a cena vazia](Art/Source~/previa_lotacao.png)
+
 ## O que tem aqui
 
 | Asset | O que é |
@@ -22,6 +24,7 @@ Desenhada pixel a pixel por script, na paleta e no mesmo boneco do Gazua e do Di
 | `ThiefType_PeNaTabua` | atributos, passiva de fuga (+4 s de contagem, +10% da sacola nas fugas com sirene, −15 pontos na chance de prisão) e 8 bordões |
 | `Ability_PeNaTabua` | Cavalo de pau: fuga perfeita a qualquer hora, até com a polícia na porta |
 | `SideJob_PeNaTabua` | Lotação pirata: rende o dobro com um Pé-na-Tábua |
+| `Bico/` | cena do bico (spec no `Thieves/LEIA-ME.md`): a Kombi lotada no ponto, motor ligado, e o Pé-na-Tábua de cobrador gritando "CENTRO!"; vazia, a Kombi parada e apagada com "VOLTO JÁ" no vidro. `python3 -B "Assets/_Project/Thieves/PeNaTabua/Art/Source~/gerar_lotacao.py"` e depois **A Firma › Bicos › Ligar as cenas dos bicos** |
 | `Audio/` | som de ação (partida de motor, CC0) e som do Cavalo de pau (pneu cantando, CC-BY 3.0: crédito no README) |
 | `Icons/` | ícone do Cavalo de pau (volante girando) e do Lotação pirata (van), 32×32. Provisórios: recolorir quando a paleta sair |
 | `Events/` | 3 eventos em que só ele resolve: Pneu arriado (Lotérica+), Feira na rua da van (Joalheria+), Helicóptero da PM (Cassino+) |
