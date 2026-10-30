@@ -178,9 +178,30 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void ExtraHeists_BranchOffTheLadder_AndNeverReplaceTheTop()
+        {
+            var extras = db.heists.FindAll(h => h != null && h.extra);
+            Assert.AreEqual(3, extras.Count, "Os 3 golpes extras (ESCOPO 6.9).");
+
+            HeistDef top = null;
+            foreach (var h in db.heists)
+                if (h != null && !h.extra && (top == null || h.tier > top.tier)) top = h;
+            Assert.AreEqual("banco-central", top.id, "O topo da escada (prestígio) é o Banco Central.");
+
+            foreach (var h in extras)
+            {
+                Assert.IsFalse(h.unlockedByDefault, h.displayName + ": extra libera com um golpe da escada.");
+                Assert.IsNotNull(h.unlockedBy, h.displayName + " nunca é liberado.");
+                Assert.IsFalse(h.unlockedBy.extra, h.displayName + ": extra sai de um golpe da escada, não de outro extra.");
+                Assert.IsNotEmpty(h.briefing, h.displayName + " sem briefing.");
+                Assert.IsTrue(db.headlines.byHeist.Exists(x => x.heist == h), h.displayName + " sem manchete própria.");
+            }
+        }
+
+        [Test]
         public void FirstHeist_IsNeverLocked()
         {
-            var first = db.heists.Find(h => h != null && h.tier == 1);
+            var first = db.heists.Find(h => h != null && !h.extra && h.tier == 1);
             Assert.IsNotNull(first, "Falta o golpe de tier 1.");
             Assert.IsTrue(first.unlockedByDefault, first.displayName + " nunca pode ficar bloqueado (anti dead-end).");
         }

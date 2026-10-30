@@ -2,7 +2,7 @@
 
 > Dono: **Nicolas**. Rubrica Balanceamento (peso 2).
 > Planilha: [`balanceamento/Balanceamento_v1.xlsx`](balanceamento/Balanceamento_v1.xlsx) · [Google Sheets](https://docs.google.com/spreadsheets/d/1pYudXkkM3sUWgJ2zF4S0KOWfcyLhDklo2aWt3NAhmdg/edit?usp=sharing)
-> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído)
+> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído; `--extras` mostra quanto cada golpe extra rende perto da escada)
 
 ## Metas
 
@@ -67,6 +67,16 @@ Regras de bolso:
 | Cassino Clandestino | 6 | Cr$ 100.000 | 1.260–1.890 | 3,2–4,8 |
 | Banco Central | 7 | Cr$ 600.000 | 1.380–2.280 | 0,7–5,6 |
 
+**Golpes extras** (ramo ao lado da escada, `extra` no `HeistDef`; não contam pro prestígio):
+
+| Golpe | Libera com | Salas | Loot total | Dificuldade por sala | Alerta/s | Rende na faixa (÷ melhor da escada) |
+|---|---|---|---|---|---|---|
+| Banca do Bicho do Tonhão | Lotérica | 3 (Pessoa) | Cr$ 900 | 260–340 | 1–1,5 | 81% até a Joalheria |
+| Carro-forte da Avenida do Porto | Câmbio | 3 (Pessoa, 2 Fechadura) | Cr$ 20.000 | 1.300–2.200 | 6–10 | 81% até o Cassino (máx 91%) |
+| Museu de Nova Guanabara | Cassino | 6 (Pessoa, 5 Sistema) | Cr$ 375.000 | 1.300–1.900 | 3,5–5,2 | 79% até o Banco Central |
+
+Regra dos extras: render entre 75% e 90% do melhor golpe da escada na faixa deles. Vale a pena (e no automático é farm), mas nunca passa a escada, então a curva do Banco Central não muda.
+
 ## Curva simulada (v1)
 
 Jogador perfeito do simulador: é o piso. Jogador de verdade demora mais, e o playtest (#43) dá o número real.
@@ -90,6 +100,7 @@ Pra ficar de olho no playtest:
 |---|---|---|
 | 20/10 | Valores iniciais | Setup da fundação |
 | 25/10 | Dificuldade: Joalheria ×1,6, Câmbio ×1,4, Cassino ×0,9, Banco ×0,6. Alerta/s: Cassino ×0,8, Banco ×0,7 | Simulador: o Cassino virava parede (nem com tudo no máximo fechava) e o Banco Central nunca era concluído, com salas de 22–36 s (regra: 5–20 s). Câmbio liberava em 2 min |
+| 30/10 | Golpes extras: Bicho Cr$ 900; Carro-forte de Cr$ 30 mil pra 20 mil e alerta 4,5–7 pra 6–10; Museu de Cr$ 150 mil pra 375 mil | Simulador (`--extras`): o Carro-forte rendia 133% do Cassino e o jogador perfeito ficava 16 min nele, atrasando o Cassino em 5 min; o Museu rendia só 32% do Banco Central e ninguém ia |
 
 ## Playtest cronometrado (modelo)
 

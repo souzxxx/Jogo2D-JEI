@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_extra_museu
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: museu
+  displayName: "Museu de Nova Guanabara"
+  description: "O museu exp\xF5e o \"P\xF4r do Sol na Guanabara\", o quadro mais caro do pa\xEDs. Sensor, alarme e c\xE2mera em todo canto: sem um Disquete, nem pensa."
+  icon: {fileID: 0}
+  tier: 4
+  briefing: "O museu exp\xF5e o \"P\xF4r do Sol na Guanabara\", o quadro mais caro do pa\xEDs. Sensor, alarme e c\xE2mera em todo canto: sem um Disquete, nem pensa."
+  unlockedByDefault: 0
+  extra: 1
+  unlockedBy: {fileID: 11400000, guid: ee5e41db40494413795657b7615b49a5, type: 2}
+  rooms:
+  - name: "Portaria"
+    kind: 0
+    obstacle: 2
+    difficulty: 1300
+    loot: 20000
+    alertPerSecond: 3.5
+  - name: "Corredor dos sensores"
+    kind: 1
+    obstacle: 1
+    difficulty: 1450
+    loot: 30000
+    alertPerSecond: 4.2
+  - name: "Sala de c\xE2meras"
+    kind: 3
+    obstacle: 1
+    difficulty: 1550
+    loot: 37500
+    alertPerSecond: 4.6
+  - name: "Galeria"
+    kind: 1
+    obstacle: 1
+    difficulty: 1650
+    loot: 50000
+    alertPerSecond: 4.8
+  - name: "Alarme da ala nobre"
+    kind: 4
+    obstacle: 1
+    difficulty: 1750
+    loot: 62500
+    alertPerSecond: 5
+  - name: "Cofre do quadro"
+    kind: 5
+    obstacle: 1
+    difficulty: 1900
+    loot: 175000
+    alertPerSecond: 5.2
+  jailSeconds: 240
+  mapPosition: {x: 1, y: 2.6}
+  buildingPrefab: {fileID: 0}

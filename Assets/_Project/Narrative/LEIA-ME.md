@@ -38,6 +38,13 @@ Cidade fictícia que mistura Rio e São Paulo, **começo dos anos 90** (por volt
 
 **Os 5 golpes**, do menor pro maior: Lotérica do Seu Zé → Joalheria Brilho Eterno → Casa de Câmbio Dólar Fácil → Cassino Clandestino (debaixo de uma pastelaria) → Banco Central, via túnel. O Banco Central é onde a história começa (a abertura, quando a firma antiga cai) e onde ela fecha (a revanche).
 
+**Os 3 golpes extras**, num ramo ao lado da escada (não levam ao Banco Central, cada um é a vitrine de um ladrão):
+| Golpe | Onde | Quem brilha | O que é |
+|---|---|---|---|
+| **Banca do Bicho do Tonhão** | Zona Norte, na porta do bar | 171 | Só conversa: o apontador, o gerente e o segurança do caixa |
+| **Carro-forte da Avenida do Porto** | Avenida do Porto, toda sexta | Gazua + Pé-na-Tábua | Golpe de rua: o baú é duro e a polícia chega voando |
+| **Museu de Nova Guanabara** | Centro | Disquete | Sensor, alarme e câmera; no cofre, o quadro "Pôr do Sol na Guanabara" |
+
 ## Personagens fixos
 
 **O Chefe (jogador).** Nunca aparece nem fala. Todo mundo se dirige a ele como **"chefia"**. Não tem gênero definido: evite "o chefe é ele" ou "meu filho"; use "chefia", "você", "meu bem". Já teve a maior firma de Nova Guanabara e perdeu tudo no Banco Central; o jogo é a volta por cima.

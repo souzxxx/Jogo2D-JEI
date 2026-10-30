@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_extra_carro-forte
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: carro-forte
+  displayName: "Carro-forte da Avenida do Porto"
+  description: "Toda sexta o carro-forte para na Avenida do Porto pra abastecer o Banco Central. Golpe de rua e rapidinho: o ba\xFA \xE9 duro de abrir e a pol\xEDcia chega voando. Leva um Gazua bom e um motorista melhor ainda."
+  icon: {fileID: 0}
+  tier: 3
+  briefing: "Toda sexta o carro-forte para na Avenida do Porto pra abastecer o Banco Central. Golpe de rua e rapidinho: o ba\xFA \xE9 duro de abrir e a pol\xEDcia chega voando. Leva um Gazua bom e um motorista melhor ainda."
+  unlockedByDefault: 0
+  extra: 1
+  unlockedBy: {fileID: 11400000, guid: e7fe8f60b2cd9444e93638b1468af13f, type: 2}
+  rooms:
+  - name: "Cabine do motorista"
+    kind: 7
+    obstacle: 2
+    difficulty: 1300
+    loot: 2500
+    alertPerSecond: 6
+  - name: "Trava da porta"
+    kind: 7
+    obstacle: 0
+    difficulty: 1500
+    loot: 3500
+    alertPerSecond: 8
+  - name: "Ba\xFA"
+    kind: 5
+    obstacle: 0
+    difficulty: 2200
+    loot: 14000
+    alertPerSecond: 10
+  jailSeconds: 180
+  mapPosition: {x: 3, y: -0.9}
+  buildingPrefab: {fileID: 0}

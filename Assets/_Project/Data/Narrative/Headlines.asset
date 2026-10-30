@@ -63,6 +63,18 @@ MonoBehaviour:
     completed:
     - 'O GOLPE DO SÉCULO VIROU ROTINA: TÚNEL LEVA {valor} DO BANCO CENTRAL'
     - 'BANCO CENTRAL DE NOVO! {bastos}: "{fala}"'
+  - heist: {fileID: 11400000, guid: c51eb28280b54167840874a499537c89, type: 2}
+    completed:
+    - 'BANCA DO TONHÃO FECHA MAIS CEDO: "HOJE NÃO TEM BICHO, SÓ PREJUÍZO"'
+    - 'TONHÃO JURA QUE DEU AVESTRUZ, MAS QUEM DEU ZEBRA FOI O CAIXA'
+  - heist: {fileID: 11400000, guid: b35145a47e3c4ec1a7fee015c81305e4, type: 2}
+    completed:
+    - 'CARRO-FORTE PARA PRA ABASTECER E VOLTA COM O BAÚ VAZIO'
+    - '{golpe}: MOTORISTA SÓ FOI COMPRAR UM PASTEL'
+  - heist: {fileID: 11400000, guid: df48d7ce33ae49aba4ec2771b3fd97a2, type: 2}
+    completed:
+    - 'MUSEU AMANHECE COM UMA PAREDE VAZIA: SUMIU O "PÔR DO SOL NA GUANABARA"'
+    - '{bastos} NO MUSEU: "{fala}"'
   bastos:
   - title: DELEGADO BASTOS
     quotes:

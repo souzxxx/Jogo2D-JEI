@@ -7,11 +7,13 @@ guloso do zero até concluir o Banco Central. Mostra em que minuto cada golpe é
     python docs/balanceamento/simulador.py            # números atuais dos assets
     python docs/balanceamento/simulador.py --log      # golpe a golpe
     python docs/balanceamento/simulador.py --sem-habilidades
+    python docs/balanceamento/simulador.py --extras   # quanto cada golpe extra rende perto da escada
 
 O que o jogador simulado faz:
 - recruta o especialista que falta pro próximo golpe (e um Pé-na-Tábua a partir do Câmbio);
 - compra Van quando tem mais ladrão que vaga e, com o resto, o upgrade mais barato;
-- escolhe a crew e o golpe: o próximo da escada se der pra concluir, senão o que rende mais Cr$/s;
+- escolhe a crew e o golpe: o próximo da escada se der pra concluir, senão o que rende mais Cr$/s
+  (os golpes extras entram aqui, como farm; nunca são o "próximo da escada");
 - mete o pé na porta antes da sirene, ou segue com sirene se a sala acaba antes da polícia
   (cofre limpo com sirene = concluído com 80% da sacola);
 - usa as habilidades do jeito ideal (Lábia −25, Loop 15 s, Pé-de-cabra na sala de Fechadura mais cara).
@@ -27,8 +29,6 @@ SPECIALTY = {LOCKSMITH: LOCK, HACKER: SYSTEM, CON: PERSON}
 
 # Tempo de interface que o motor não conta: planejar, mapa, jornal (por golpe) e porta/eventos (por sala).
 OVERHEAD_HEIST, OVERHEAD_ROOM, DOOR_SECONDS = 20, 4, 1.5
-# Bônus de renda do bico por nível do ladrão (hoje no MockEconomyService, vira dado na #37).
-SIDE_JOB_PER_LEVEL = 0.1
 
 ROOT = pathlib.Path(__file__).resolve().parents[2] / "Assets" / "_Project"
 
@@ -42,14 +42,20 @@ def load_project(root=ROOT):
     cfg = {k: float(v) for k, v in cfg.items() if re.fullmatch(r"-?[\d.]+", v)}
 
     heists = []
-    for path in sorted((root / "Data" / "Heists").glob("Heist_*.asset")):
+    for path in (root / "Data" / "Heists").glob("Heist_*.asset"):
         text = path.read_text(encoding="utf-8")
+        head = text.split("\n  rooms:")[0]
         rooms = []
         for block in re.split(r"\n\s+- name: ", text)[1:]:
             f = _fields("\n" + block)
             rooms.append((int(f["obstacle"]), float(f["difficulty"]), float(f["loot"]), float(f["alertPerSecond"])))
-        name = _fields(text)["displayName"].strip('"').encode("latin-1").decode("unicode_escape")  # YAML: "Lot\xE9rica"
-        heists.append((name, rooms))
+        f = _fields(head)
+        name = f["displayName"].strip('"').encode("latin-1").decode("unicode_escape")  # YAML: "Lot\xE9rica"
+        guid = re.search(r"guid: (\w+)", path.with_name(path.name + ".meta").read_text(encoding="utf-8")).group(1)
+        unlocked_by = re.search(r"unlockedBy: \{fileID: \d+(?:, guid: (\w+))?", head).group(1)
+        heists.append({"name": name, "rooms": rooms, "guid": guid, "unlockedBy": unlocked_by, "tier": int(f["tier"]),
+                       "default": f.get("unlockedByDefault") == "1", "extra": f.get("extra") == "1"})
+    heists.sort(key=lambda h: (h["extra"], h["tier"]))  # a escada primeiro, em ordem; os extras depois
 
     upgrades = {}
     for path in (root / "Data").rglob("Upgrade_*.asset"):
@@ -72,6 +78,7 @@ def simulate(P, abilities=True, limit_minutes=120):
     cfg, T = P["cfg"], P["thieves"]
     crew, up = [], {k: 0 for k in P["upgrades"]}
     money, t, completed, milestones, log = cfg.get("startingMoney", 0), 0.0, set(), {}, []
+    rates = []  # (minuto, próximo da escada, {golpe: melhor Cr$/s}) a cada decisão, pro relatório dos extras
 
     def recruit(kind):
         crew.append({"type": kind, "lvl": 1, "xp": 0, "skill": T[kind]["baseSkill"], "stealth": T[kind]["baseStealth"]})
@@ -85,7 +92,7 @@ def simulate(P, abilities=True, limit_minutes=120):
     def stealth(x): return x["stealth"] * (1 + total("tenis-de-molinha") / 100)
 
     def run(h, team, push_siren):
-        rooms = P["heists"][h][1]
+        rooms = P["heists"][h]["rooms"]
         avg_stealth = sum(stealth(x) for x in team) / len(team)
         types = {x["type"] for x in team}
         countdown = cfg["policeCountdownSeconds"] + total("radio-da-policia") + max(T[x["type"]]["policeCountdownBonus"] for x in team)
@@ -127,17 +134,20 @@ def simulate(P, abilities=True, limit_minutes=120):
     def passive(dt, team):
         idle = [x for x in crew if x not in team]
         income = cfg["scavengeIncomePerSecond"] + sum(
-            P["sideJob"] * (1 + SIDE_JOB_PER_LEVEL * (x["lvl"] - 1)) * P["sideMatch"] for x in idle)
+            P["sideJob"] * (1 + cfg.get("sideJobLevelBonus", 0.1) * (x["lvl"] - 1)) * P["sideMatch"] for x in idle)
         return income * (1 + total("ponto-de-bico") / 100) * dt
 
     starting = [CON, LOCKSMITH]  # GameConfig.startingCrew
     for kind in starting: recruit(kind)
-    last = len(P["heists"]) - 1
+    H = P["heists"]
+    by_guid = {h["guid"]: i for i, h in enumerate(H)}
+    ladder = [i for i, h in enumerate(H) if not h["extra"]]
+    last = ladder[-1]
     while t < limit_minutes * 60 and last not in completed:
         slots = int(cfg["startingHeistSlots"] + total("van"))
-        unlocked = [i for i in range(len(P["heists"])) if i == 0 or (i - 1) in completed]
-        target = max(unlocked)
-        need = {room[0] for room in P["heists"][target][1]}
+        unlocked = [i for i, h in enumerate(H) if h["default"] or by_guid.get(h["unlockedBy"]) in completed]
+        target = max(i for i in unlocked if i in ladder)
+        need = {room[0] for room in H[target]["rooms"]}
         have = {SPECIALTY.get(x["type"]) for x in crew}
         wanted = [[k for k, v in SPECIALTY.items() if v == o][0] for o in sorted(need - have)]
         if target >= 2 and not any(x["type"] == DRIVER for x in crew): wanted.append(DRIVER)
@@ -157,15 +167,17 @@ def simulate(P, abilities=True, limit_minutes=120):
             if not options or money < options[0][0]: break
             money -= options[0][0]; up[options[0][1]] += 1
 
-        best = None
+        best, rate_by_heist = None, {}
         for h in unlocked:
             for n in range(1, min(slots, len(crew)) + 1):
                 for team in itertools.combinations(crew, n):
                     for push in (False, True):
                         r = run(h, list(team), push)
                         if r["done"] == 0: continue
+                        rate_by_heist[h] = max(rate_by_heist.get(h, 0), r["loot"] / r["secs"])
                         score = (h == target and r["complete"] and h not in completed, r["loot"] / r["secs"])
                         if best is None or score > best[0]: best = (score, h, list(team), r)
+        rates.append((t / 60, target, rate_by_heist))
         if best is None:
             t += 30; money += passive(30, []); continue
         _, h, team, r = best
@@ -176,22 +188,45 @@ def simulate(P, abilities=True, limit_minutes=120):
                 x["xp"] -= cfg["xpPerLevelFactor"] * x["lvl"]; x["lvl"] += 1
                 x["skill"] += T[x["type"]]["skillPerLevel"]; x["stealth"] += T[x["type"]]["stealthPerLevel"]
         if r["complete"] and h not in completed:
-            completed.add(h); milestones[P["heists"][h][0]] = round(t / 60, 1)
-        log.append(f"{t / 60:5.1f} min  {P['heists'][h][0]:<34} salas {r['done']}/{len(P['heists'][h][1])}"
+            completed.add(h); milestones[H[h]["name"]] = round(t / 60, 1)
+        log.append(f"{t / 60:5.1f} min  {H[h]['name']:<34} salas {r['done']}/{len(H[h]['rooms'])}"
                    f"{' sirene' if r['siren'] else '       '}  +Cr$ {r['loot']:>9,.0f}  caixa Cr$ {money:>11,.0f}"
                    f"  níveis {[x['lvl'] for x in crew]}")
-    return {"milestones": milestones, "minutes": round(t / 60, 1), "upgrades": up, "log": log}
+    return {"milestones": milestones, "minutes": round(t / 60, 1), "upgrades": up, "log": log, "rates": rates}
+
+
+def extras_report(P, result):
+    """
+    Pra cada golpe extra, na faixa dele (de quando libera até concluir o degrau da escada que estava na mira):
+    Cr$/s do extra ÷ Cr$/s do melhor golpe da escada liberado, decisão a decisão.
+    """
+    H = P["heists"]
+    lines = ["Golpes extras na faixa deles (Cr$/s do extra ÷ melhor da escada; abaixo de 100% não fura a escada):"]
+    for i, h in enumerate(H):
+        if not h["extra"]: continue
+        seen = [(minute, target, r) for minute, target, r in result["rates"] if i in r]
+        if not seen:
+            lines.append(f"  {h['name']:<34} não liberou")
+            continue
+        band = [r[i] / max(v for j, v in r.items() if not H[j]["extra"]) for _, target, r in seen if target == seen[0][1]]
+        values = sorted(band)
+        lines.append(f"  {h['name']:<34} libera em {seen[0][0]:5.1f} min · faixa até {H[seen[0][1]]['name'][:12]:<12} · "
+                     f"mín {values[0]:4.0%} · mediana {values[len(values) // 2]:4.0%} · máx {values[-1]:4.0%}")
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--log", action="store_true", help="mostra golpe a golpe")
     parser.add_argument("--sem-habilidades", action="store_true", help="simula sem usar as habilidades ativas")
+    parser.add_argument("--extras", action="store_true", help="mostra quanto cada golpe extra rende perto da escada")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
-    result = simulate(load_project(), abilities=not args.sem_habilidades)
+    project = load_project()
+    result = simulate(project, abilities=not args.sem_habilidades)
     if args.log: print("\n".join(result["log"]))
     print("Golpe concluído em (min de jogo ativo):")
     for name, minute in result["milestones"].items(): print(f"  {name:<34} {minute:5.1f}")
-    if len(result["milestones"]) < len(load_project()["heists"]):
+    if not any(name.startswith("Banco Central") for name in result["milestones"]):
         print(f"  (parou em {result['minutes']} min sem concluir o último golpe)")
+    if args.extras: print(extras_report(project, result))

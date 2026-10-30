@@ -26,5 +26,11 @@ MonoBehaviour:
     text: "O cassino debaixo da pastelaria t\xE1 liberado. Muito seguran\xE7a: guarda as habilidades pra hora certa."
   - heist: {fileID: 11400000, guid: d565e6b102b3740f9a7b4e04215dd7e7, type: 2}
     text: "Chegou a hora, chefia. Trinta anos eu planejei esse t\xFAnel. N\xE3o me faz passar vergonha no Banco Central."
+  - heist: {fileID: 11400000, guid: c51eb28280b54167840874a499537c89, type: 2}
+    text: "O Tonh\xE3o da banca do bicho t\xE1 de caixa cheio e seguran\xE7a cochilando. Servi\xE7o de conversa: manda o 171."
+  - heist: {fileID: 11400000, guid: b35145a47e3c4ec1a7fee015c81305e4, type: 2}
+    text: "Carro-forte para toda sexta na Avenida do Porto. R\xE1pido e barulhento: Gazua no ba\xFA e motorista bom no volante."
+  - heist: {fileID: 11400000, guid: df48d7ce33ae49aba4ec2771b3fd97a2, type: 2}
+    text: "O museu ganhou um quadro que vale mais que o cassino inteiro. L\xE1 dentro \xE9 tudo sistema: Disquete na frente."
   prestigeUnlocked: "O golpe do s\xE9culo, chefia. Agora some do mapa um tempo: a cidade esquece, o Bastos n\xE3o."
   prestiged: 'Sumiu bonito, chefia. A cidade fala de você e o Bastos não dorme. Te mandei dois novatos: começa pelo Seu Zé, que agora a rua tá mais vigiada.'

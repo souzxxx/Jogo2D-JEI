@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb7342d8923240589eb4bbc6349b0fd, type: 3}
+  m_Name: Heist_extra_bicho
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
+  id: banca-do-bicho
+  displayName: "Banca do Bicho do Tonh\xE3o"
+  description: "A banca do Tonh\xE3o fica na porta do bar e recebe aposta o dia inteiro. \xC9 tudo conversa: o apontador, o gerente e o seguran\xE7a do caixa. Servi\xE7o pra um 171 de l\xE1bia boa."
+  icon: {fileID: 0}
+  tier: 1
+  briefing: "A banca do Tonh\xE3o fica na porta do bar e recebe aposta o dia inteiro. \xC9 tudo conversa: o apontador, o gerente e o seguran\xE7a do caixa. Servi\xE7o pra um 171 de l\xE1bia boa."
+  unlockedByDefault: 0
+  extra: 1
+  unlockedBy: {fileID: 11400000, guid: 42e1ab2969eb241aeb1dd04713e920c4, type: 2}
+  rooms:
+  - name: "Apontador"
+    kind: 2
+    obstacle: 2
+    difficulty: 260
+    loot: 150
+    alertPerSecond: 1.0
+  - name: "Escrit\xF3rio do gerente"
+    kind: 4
+    obstacle: 2
+    difficulty: 300
+    loot: 250
+    alertPerSecond: 1.2
+  - name: "Caixa do Tonh\xE3o"
+    kind: 5
+    obstacle: 2
+    difficulty: 340
+    loot: 500
+    alertPerSecond: 1.5
+  jailSeconds: 60
+  mapPosition: {x: -4.5, y: 2.4}
+  buildingPrefab: {fileID: 0}

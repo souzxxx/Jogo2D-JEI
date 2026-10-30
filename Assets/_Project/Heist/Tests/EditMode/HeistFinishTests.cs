@@ -183,8 +183,8 @@ namespace AFirma.Tests
         {
             var loterica = Services.Db.GetHeist("loterica");
             var joalheria = Services.Db.GetHeist("joalheria");
-            HeistDef unlocked = null;
-            GameEvents.HeistUnlocked += h => unlocked = h;
+            var unlocked = new List<HeistDef>();
+            GameEvents.HeistUnlocked += h => unlocked.Add(h);
             Assert.IsFalse(Services.Progression.IsUnlocked(joalheria));
 
             runner.StartHeist(loterica, new List<ThiefState>(Services.Crew.GetAvailable()));
@@ -193,7 +193,7 @@ namespace AFirma.Tests
             Assert.IsTrue(runner.LastResult.completed);
             Assert.IsTrue(Services.Progression.IsCompleted(loterica));
             Assert.IsTrue(Services.Progression.IsUnlocked(joalheria));
-            Assert.AreSame(joalheria, unlocked);
+            CollectionAssert.Contains(unlocked, joalheria); // a Lotérica também libera o golpe extra da Banca do Bicho
         }
 
         [Test]
