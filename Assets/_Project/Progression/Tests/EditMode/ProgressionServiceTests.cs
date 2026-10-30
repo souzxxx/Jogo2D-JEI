@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace AFirma.Tests
 {
-    /// <summary>Progressão: escada de golpes, modificadores e contexto do golpe (ESCOPO 6.9). Golpes de teste, pra não depender do conteúdo.</summary>
+    /// <summary>Progressão: escada de golpes, modificadores e contexto do golpe (ESCOPO 6.9) e Fama (ESCOPO 6.10). Dados de teste, pra não depender do conteúdo.</summary>
     public class ProgressionServiceTests
     {
         ProgressionService progression;
@@ -15,6 +15,7 @@ namespace AFirma.Tests
         readonly List<HeistDef> unlockEvents = new List<HeistDef>();
         readonly FixedRandom rng = new FixedRandom();
         int rolledEvents;
+        readonly List<(FamePerkDef perk, int level)> perkEvents = new List<(FamePerkDef, int)>();
 
         [SetUp]
         public void SetUp()
@@ -28,6 +29,8 @@ namespace AFirma.Tests
             Services.State.modifierRolls.Clear();
             Services.State.wantedLevel = 0;
             Services.State.tutorialDone = true;
+            Services.State.fame = 0;
+            Services.State.famePerks.Clear();
 
             loterica = Heist("loterica", unlockedByDefault: true, tier: 1);
             joalheria = Heist("joalheria", unlockedBy: loterica, tier: 2);
@@ -39,6 +42,8 @@ namespace AFirma.Tests
 
             unlockEvents.Clear();
             rolledEvents = 0;
+            perkEvents.Clear();
+            GameEvents.FamePerkPurchased += (perk, level) => perkEvents.Add((perk, level));
             GameEvents.HeistUnlocked += heist => unlockEvents.Add(heist);
             GameEvents.HeistModifiersRolled += () => rolledEvents++;
         }
@@ -48,6 +53,8 @@ namespace AFirma.Tests
         {
             foreach (var heist in db.heists) Object.DestroyImmediate(heist);
             foreach (var mod in db.modifiers) Object.DestroyImmediate(mod);
+            foreach (var perk in db.famePerks)
+                if (perk != null) Object.DestroyImmediate(perk);
             Object.DestroyImmediate(db.config);
             Object.DestroyImmediate(db);
             TestSupport.Teardown();
@@ -71,6 +78,19 @@ namespace AFirma.Tests
             mod.weight = weight;
             db.modifiers.Add(mod);
             return mod;
+        }
+
+        FamePerkDef Perk(string id, FamePerkEffect effect, int baseCost = 1, float growth = 1.5f, int maxLevel = 3, float valuePerLevel = 10f)
+        {
+            var perk = ScriptableObject.CreateInstance<FamePerkDef>();
+            perk.id = id;
+            perk.effect = effect;
+            perk.baseCost = baseCost;
+            perk.costGrowth = growth;
+            perk.maxLevel = maxLevel;
+            perk.valuePerLevel = valuePerLevel;
+            db.famePerks.Add(perk);
+            return perk;
         }
 
         /// <summary>Random com os sorteios na mão. Sem valor na fila, devolve 0.</summary>
@@ -378,6 +398,98 @@ namespace AFirma.Tests
             progression.RollModifiers();
 
             Assert.IsEmpty(Services.State.modifierRolls);
+        }
+
+        // ---------------- Fama ----------------
+
+        [Test]
+        public void GetFamePerkCost_GrowsEachLevelAndRoundsUp()
+        {
+            var esquema = Perk("esquema", FamePerkEffect.LootPercent, baseCost: 1, growth: 1.5f);
+
+            Assert.AreEqual(1, progression.GetFamePerkCost(esquema));
+            GameState.SetLevel(Services.State.famePerks, "esquema", 2);
+            Assert.AreEqual(3, progression.GetFamePerkCost(esquema)); // 1 × 1,5² = 2,25
+        }
+
+        [Test]
+        public void GetFamePerkCost_ExactValues_DoNotRoundUpByFloatError()
+        {
+            var lenda = Perk("lenda", FamePerkEffect.RecruitBonusLevels, baseCost: 5, growth: 1.6f);
+            GameState.SetLevel(Services.State.famePerks, "lenda", 1);
+
+            Assert.AreEqual(8, progression.GetFamePerkCost(lenda)); // 5 × 1,6 = 8, e não 9
+        }
+
+        [Test]
+        public void BuyFamePerk_SpendsFameRaisesLevelAndRaisesEvent()
+        {
+            var esquema = Perk("esquema", FamePerkEffect.LootPercent, baseCost: 1, growth: 2f);
+            Services.State.fame = 5;
+
+            Assert.IsTrue(progression.BuyFamePerk(esquema));
+            Assert.IsTrue(progression.BuyFamePerk(esquema));
+
+            Assert.AreEqual(2, progression.GetFamePerkLevel(esquema));
+            Assert.AreEqual(2, progression.Fame); // 5 − 1 − 2
+            CollectionAssert.AreEqual(new[] { (esquema, 1), (esquema, 2) }, perkEvents);
+        }
+
+        [Test]
+        public void CanBuyFamePerk_WithoutFame_SaysHowMuchIsMissing()
+        {
+            var lenda = Perk("lenda", FamePerkEffect.RecruitBonusLevels, baseCost: 3);
+            Services.State.fame = 1;
+
+            Assert.IsFalse(progression.CanBuyFamePerk(lenda, out var reason));
+            Assert.AreEqual("Falta 2 de Fama.", reason);
+            Assert.IsFalse(progression.BuyFamePerk(lenda));
+            Assert.AreEqual(1, progression.Fame);
+            Assert.IsEmpty(perkEvents);
+        }
+
+        [Test]
+        public void CanBuyFamePerk_AtMaxLevel_SaysSo()
+        {
+            var lenda = Perk("lenda", FamePerkEffect.RecruitBonusLevels, maxLevel: 1);
+            Services.State.fame = 100;
+            progression.BuyFamePerk(lenda);
+
+            Assert.IsFalse(progression.CanBuyFamePerk(lenda, out var reason));
+            Assert.AreEqual("Nível máximo.", reason);
+        }
+
+        [Test]
+        public void GetFamePerkLevel_FromSaveAboveTheMax_IsClampedToTheMax()
+        {
+            var lenda = Perk("lenda", FamePerkEffect.RecruitBonusLevels, maxLevel: 3, valuePerLevel: 1f);
+            GameState.SetLevel(Services.State.famePerks, "lenda", 9);
+
+            Assert.AreEqual(3, progression.GetFamePerkLevel(lenda));
+            Assert.AreEqual(3f, progression.GetFamePerkTotal(FamePerkEffect.RecruitBonusLevels), 0.001f);
+        }
+
+        [Test]
+        public void GetFamePerkTotal_SumsLevelTimesValueOfThatEffectOnly()
+        {
+            Perk("esquema", FamePerkEffect.LootPercent, valuePerLevel: 10f);
+            Perk("rede", FamePerkEffect.SideJobPercent, valuePerLevel: 15f);
+            db.famePerks.Add(null);
+            GameState.SetLevel(Services.State.famePerks, "esquema", 2);
+            GameState.SetLevel(Services.State.famePerks, "rede", 1);
+
+            Assert.AreEqual(20f, progression.GetFamePerkTotal(FamePerkEffect.LootPercent), 0.001f);
+            Assert.AreEqual(15f, progression.GetFamePerkTotal(FamePerkEffect.SideJobPercent), 0.001f);
+            Assert.AreEqual(0f, progression.GetFamePerkTotal(FamePerkEffect.StartingMoney), 0.001f);
+        }
+
+        [Test]
+        public void FamePerk_Null_IsHandledWithoutErrors()
+        {
+            Assert.AreEqual(0, progression.GetFamePerkLevel(null));
+            Assert.AreEqual(0, progression.GetFamePerkCost(null));
+            Assert.IsFalse(progression.CanBuyFamePerk(null, out _));
+            Assert.IsFalse(progression.BuyFamePerk(null));
         }
     }
 }

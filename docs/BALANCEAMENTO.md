@@ -50,6 +50,7 @@ Regras de bolso:
 | Custo de upgrade | `custoBase × crescimento^nível` | `Formulas.UpgradeCost` |
 | XP pro próximo nível | `5 × nível` | `Formulas.XpToNextLevel` |
 | Fama no prestígio | `floor(√(loot do ciclo / 10.000))` | `Formulas.FameForLoot` |
+| Custo de bônus de Fama | `custoBase × crescimento^nível`, arredondado pra cima | `ProgressionService.GetFamePerkCost` |
 | Procurado | dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível | Progressão |
 | Modificador no mapa | cada golpe liberado: 50% de chance de 1 modificador, escolhido pelo `weight`; muda só depois de um golpe (abrir e fechar o mapa não troca); a Lotérica não sorteia antes do tutorial | `ProgressionService.RollModifiers` |
 | Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%) × (1 + Fama Rede%)`, mais o Catar latinha fixo | `EconomyService.GetSideJobIncome` |

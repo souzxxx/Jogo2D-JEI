@@ -7,14 +7,14 @@ namespace AFirma.Progression
     /// <summary>
     /// Progressão real (Nicolas). Substitui o MockProgressionService.
     ///
-    /// Regras próprias: escada de golpes (ESCOPO 6.9), o sorteio dos modificadores no mapa e o contexto de cada golpe
-    /// (modificador sorteado + Nível de Procurado).
+    /// Regras próprias: escada de golpes (ESCOPO 6.9), o sorteio dos modificadores no mapa, o contexto de cada golpe
+    /// (modificador sorteado + Nível de Procurado) e os bônus de Fama (ESCOPO 6.10).
     /// A Fama não entra no contexto: o Motor do Golpe já aplica os bônus de Fama direto.
-    /// Fama e prestígio ainda passam pelo mock até as issues #40 e #41.
+    /// Prestígio ainda passa pelo mock até a issue #40.
     /// </summary>
     public class ProgressionService : IProgressionService
     {
-        readonly MockProgressionService pending = new MockProgressionService(); // #40/#41: trocar pelos reais
+        readonly MockProgressionService pending = new MockProgressionService(); // #40: trocar pelo prestígio real
         readonly Random rng;
         bool modifiersStale = true; // só sorteia de novo depois de um golpe ou ao abrir o jogo
 
@@ -139,16 +139,56 @@ namespace AFirma.Progression
             return ctx;
         }
 
-        // ---------------- Fama e prestígio (#40/#41) ----------------
+        // ---------------- Fama (ESCOPO 6.10) ----------------
 
         public int WantedLevel => S.wantedLevel;
         public int Fame => S.fame;
 
-        public int GetFamePerkLevel(FamePerkDef perk) => pending.GetFamePerkLevel(perk);
-        public int GetFamePerkCost(FamePerkDef perk) => pending.GetFamePerkCost(perk);
-        public bool CanBuyFamePerk(FamePerkDef perk, out string reason) => pending.CanBuyFamePerk(perk, out reason);
-        public bool BuyFamePerk(FamePerkDef perk) => pending.BuyFamePerk(perk);
-        public float GetFamePerkTotal(FamePerkEffect effect) => pending.GetFamePerkTotal(effect);
+        /// <summary>Nível comprado, preso entre 0 e o máximo do Def (o save pode vir de quando o máximo era outro).</summary>
+        public int GetFamePerkLevel(FamePerkDef perk)
+        {
+            if (perk == null) return 0;
+            return Math.Max(0, Math.Min(perk.maxLevel, GameState.GetLevel(S.famePerks, perk.id)));
+        }
+
+        /// <summary>custoBase × crescimento^nível, arredondado pra cima (o epsilon segura o erro do float, ex.: 1,6f).</summary>
+        public int GetFamePerkCost(FamePerkDef perk) =>
+            perk == null ? 0 : (int)Math.Ceiling(perk.baseCost * Math.Pow(perk.costGrowth, GetFamePerkLevel(perk)) - 1e-6);
+
+        public bool CanBuyFamePerk(FamePerkDef perk, out string reason)
+        {
+            if (perk == null) { reason = "Bônus inexistente."; return false; }
+            if (GetFamePerkLevel(perk) >= perk.maxLevel) { reason = "Nível máximo."; return false; }
+            int cost = GetFamePerkCost(perk);
+            if (S.fame < cost) { reason = $"Falta {cost - S.fame} de Fama."; return false; }
+            reason = null;
+            return true;
+        }
+
+        public bool BuyFamePerk(FamePerkDef perk)
+        {
+            if (!CanBuyFamePerk(perk, out _)) return false;
+            S.fame -= GetFamePerkCost(perk);
+            var level = GetFamePerkLevel(perk) + 1;
+            GameState.SetLevel(S.famePerks, perk.id, level);
+            GameEvents.RaiseFamePerkPurchased(perk, level);
+            return true;
+        }
+
+        /// <summary>
+        /// Soma do efeito de todos os níveis comprados. Quem usa: Crew (Reputação, Lenda), Golpe (Esquema, Sangue-frio),
+        /// Economia (Rede) e o prestígio (Herança).
+        /// </summary>
+        public float GetFamePerkTotal(FamePerkEffect effect)
+        {
+            float total = 0f;
+            foreach (var perk in Db.famePerks)
+                if (perk != null && perk.effect == effect)
+                    total += GetFamePerkLevel(perk) * perk.valuePerLevel;
+            return total;
+        }
+
+        // ---------------- Prestígio (#40) ----------------
 
         public bool CanPrestige(out string reason) => pending.CanPrestige(out reason);
         public int FameOnPrestige() => pending.FameOnPrestige();
