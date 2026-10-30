@@ -222,7 +222,8 @@ namespace AFirma.UI
             countdown.SetShown(false);
             if (GameClock.Paused) SetPaused(false);
             var heist = Services.Db.GetHeist(result.heistId);
-            var headline = Services.Db.headlines != null
+            var headline = !string.IsNullOrEmpty(result.headline) ? result.headline // abertura
+                : Services.Db.headlines != null
                 ? Services.Db.headlines.Pick(result, heist != null ? heist.displayName : "", new System.Random())
                 : heist?.displayName;
 

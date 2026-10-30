@@ -78,6 +78,7 @@ namespace AFirma.Core
         public int xpPerThief;      // XP base (salas × xpPerRoom), sem manha. O de cada um está em xpGains.
         public List<ThiefXpGain> xpGains = new List<ThiefXpGain>();
         public bool auto;           // golpe no automático (não libera golpe nem dá bip de marco)
+        public string headline;     // manchete pronta (abertura); vazio = a UI sorteia no HeadlineSetDef
     }
 
     /// <summary>

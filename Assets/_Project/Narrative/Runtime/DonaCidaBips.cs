@@ -68,14 +68,19 @@ namespace AFirma.Narrative
                 queue.Clear(); afterHeist.Clear(); // save trocado: o que estava na fila era do outro jogo
                 currentState = S;
             }
-            if (S != null && S.completedHeists.Count == 0) Say("jogo-novo", texts.newGame, queue);
+            // Na abertura, o bip da segunda chance (IntroDirector) substitui o de jogo novo.
+            if (S != null && S.completedHeists.Count == 0 && !IntroDirector.IsPlaying) Say("jogo-novo", texts.newGame, queue);
         }
 
-        void OnSirenStarted(float seconds) => Say("primeira-sirene", texts.firstSiren, queue);
+        // A abertura não conta como primeira sirene, primeiro preso nem primeiro golpe (ESCOPO 5).
+        void OnSirenStarted(float seconds)
+        {
+            if (!IntroDirector.IsPlaying) Say("primeira-sirene", texts.firstSiren, queue);
+        }
 
         void OnThiefJailed(ThiefState thief)
         {
-            if (thief == null || string.IsNullOrEmpty(texts.firstArrest)) return;
+            if (thief == null || string.IsNullOrEmpty(texts.firstArrest) || IntroDirector.IsPlaying) return;
             Say("primeiro-preso", texts.firstArrest.Replace("{nome}", thief.DisplayName), queue);
         }
 
@@ -88,6 +93,7 @@ namespace AFirma.Narrative
 
         void OnHeistFinished(HeistResult result)
         {
+            if (IntroDirector.IsPlaying) return;
             if (result != null)
             {
                 Say("primeiro-golpe", result.completed ? texts.firstHeistCompleted : texts.firstHeistFled, queue);

@@ -18,6 +18,7 @@ namespace AFirma.Core
             GameEvents.ClearAll();
             GameClock.Reset();
             SceneFlow.Reset();
+            IntroDirector.Reset();
             instance = null;
         }
 

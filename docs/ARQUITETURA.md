@@ -148,6 +148,16 @@ Faixa Golpes rolando lê Services.AutoHeist.Running (AutoHeistRun: sala, progres
 - Habilidade nova: diga quando o piloto usa sobrescrevendo `ThiefAbilityDef.AutoUse` (o `SimpleAbilityDef` já deduz pelos campos).
 - Save: `GameState.autoHeists`. Ao carregar, o do meio vira "meteu o pé"; com Repetir, o tempo fora roda sem cena (até `offlineCapHours`, a `offlineRate`, sem prisão), sai no `OfflineEarnings` (o popup soma com os bicos) e a crew volta a rodar.
 
+## Abertura
+
+`IntroDirector` (Core, ESCOPO 5). O menu chama `IntroDirector.NewGameWithIntro()` no Novo jogo e `IntroDirector.Replay()` no "Ver abertura". O diretor põe o `IntroHeistService` no lugar do motor e abre a cena `Heist`: é um golpe roteirizado no Banco Central com a firma antiga (um de cada tipo, fora da sua crew) que dispara os **mesmos eventos** do golpe de verdade, na tabela de 40 s do ESCOPO. A Cena e a HUD tocam a abertura sem código especial.
+
+- Não mexe no save: não paga, não prende ninguém da sua crew, ignora os botões da HUD (o 2x acelera). Só grava `GameState.introSeen`.
+- Enquanto `IntroDirector.IsPlaying`, a Narrativa não dá bip de marco e o tutorial não roda. No fim (ou no Pular), o bip da segunda chance substitui o de jogo novo e o jogo segue pro esconderijo; no "Ver abertura", volta pro menu sem bip.
+- Pular: `IntroDirector.Skip()` (o Esc já pula). O letreiro sai em `IntroCaption(texto)` (null = some). Até a tela de verdade existir, o diretor desenha um letreiro e um "Pular" provisórios; a UI desliga com `IntroDirector.ShowPlaceholderOverlay = false`.
+- O jornal da abertura vem com `HeistResult.headline` preenchido (a HUD usa ela no lugar do sorteio).
+- Textos (letreiro, bordões da firma antiga, grito do "só mais uma", manchete, bip da segunda chance, objetivo e a capa da revanche) ficam no `Data/Narrative/Intro.asset` (`IntroDef`). Sem o asset, a abertura cai na versão mínima: só o bip.
+
 ## Dados (ScriptableObjects)
 
 Todos os tipos ficam em `Core/Data` e aparecem no menu **Create > A Firma**. Todo asset novo precisa entrar na lista certa do `Data/Resources/GameDatabase.asset`, senão o jogo não enxerga.
@@ -163,6 +173,7 @@ Todos os tipos ficam em `Core/Data` e aparecem no menu **Create > A Firma**. Tod
 | `UpgradeDef`, `SideJobDef` (Catar latinha) | `Data/Economy` | Nicolas |
 | `HeistModifierDef`, `FamePerkDef` | `Data/Progression` | Nicolas |
 | `HeadlineSetDef` | `Data/Narrative` | Nicolas |
+| `IntroDef` (abertura, objetivo e revanche) | `Data/Narrative/Intro.asset` | Nicolas (textos) |
 
 Os dados de exemplo foram gerados por **A Firma > Setup > Rodar setup da fundação**. Rodar de novo só cria o que estiver faltando, nunca sobrescreve.
 

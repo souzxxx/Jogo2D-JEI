@@ -45,6 +45,7 @@ namespace AFirma.Core
 
         // Tutorial e dicas
         public bool tutorialDone;
+        public bool introSeen;       // a abertura tocou até o fim ou foi pulada neste save
         public List<string> seenTips = new List<string>();
 
         public ThiefState FindThief(string thiefId) => crew.Find(t => t.id == thiefId);

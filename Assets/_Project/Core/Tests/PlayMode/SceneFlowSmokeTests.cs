@@ -35,7 +35,14 @@ namespace AFirma.Tests
         [UnityTest]
         public IEnumerator Boot_GoesToMainMenu()
         {
+            // Espera o Boot carregar antes: se o teste anterior parou no menu, o WaitForScene passaria direto.
+            bool bootLoaded = false;
+            UnityEngine.Events.UnityAction<Scene, LoadSceneMode> onLoaded = (scene, mode) => bootLoaded |= scene.name == SceneFlow.Boot;
+            SceneManager.sceneLoaded += onLoaded;
             SceneManager.LoadScene(SceneFlow.Boot);
+            for (float t = 0f; !bootLoaded && t < 10f; t += Time.unscaledDeltaTime) yield return null;
+            SceneManager.sceneLoaded -= onLoaded;
+            Assert.IsTrue(bootLoaded, "A cena Boot não carregou.");
             yield return WaitForScene(SceneFlow.MainMenu);
             Assert.AreEqual(SceneFlow.MainMenu, SceneManager.GetActiveScene().name);
         }

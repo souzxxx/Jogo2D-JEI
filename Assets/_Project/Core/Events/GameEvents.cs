@@ -59,6 +59,11 @@ namespace AFirma.Core
         public static event Action<AutoHeistRun, HeistResult> AutoHeistFinished;  // fim de cada volta (mini manchete, +Cr$)
         public static event Action<AutoHeistRun, string> AutoHeistStopped;        // saiu da faixa (motivo, ou null se acabou normal)
 
+        // ---------- Abertura (IntroDirector dispara; Enzo mostra o letreiro e o Pular) ----------
+        public static event Action<bool> IntroStarted;                    // true = "Ver abertura" do menu
+        public static event Action<string> IntroCaption;                  // letreiro na tela preta (null = some)
+        public static event Action IntroFinished;
+
         // ---------- Narrativa (Nicolas dispara; Enzo mostra) ----------
         public static event Action<string, string> Bip;                   // (remetente, mensagem)
         public static event Action<string> TipRequested;                  // id da dica de primeira vez
@@ -106,6 +111,10 @@ namespace AFirma.Core
         public static void RaiseAutoHeistFinished(AutoHeistRun run, HeistResult result) => AutoHeistFinished?.Invoke(run, result);
         public static void RaiseAutoHeistStopped(AutoHeistRun run, string reason) => AutoHeistStopped?.Invoke(run, reason);
 
+        public static void RaiseIntroStarted(bool replay) => IntroStarted?.Invoke(replay);
+        public static void RaiseIntroCaption(string text) => IntroCaption?.Invoke(text);
+        public static void RaiseIntroFinished() => IntroFinished?.Invoke();
+
         public static void RaiseBip(string sender, string message) => Bip?.Invoke(sender, message);
         public static void RaiseTipRequested(string tipId) => TipRequested?.Invoke(tipId);
 
@@ -121,6 +130,7 @@ namespace AFirma.Core
             HeistEventResolved = null; AbilityUsed = null; SirenStarted = null; PoliceCountdownTick = null;
             ThiefBark = null; HeistFinished = null; Bip = null; TipRequested = null;
             AutoHeistStarted = null; AutoHeistProgress = null; AutoHeistFinished = null; AutoHeistStopped = null;
+            IntroStarted = null; IntroCaption = null; IntroFinished = null;
         }
     }
 }

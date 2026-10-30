@@ -15,6 +15,7 @@ namespace AFirma.Core
         public GameConfig config;
         public NamePoolDef names;
         public HeadlineSetDef headlines;
+        public IntroDef intro;
 
         public List<ThiefTypeDef> thiefTypes = new List<ThiefTypeDef>();
         public List<TraitDef> traits = new List<TraitDef>();

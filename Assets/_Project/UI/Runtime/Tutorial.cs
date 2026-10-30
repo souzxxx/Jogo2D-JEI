@@ -10,7 +10,7 @@ namespace AFirma.UI
     /// </summary>
     static class Tutorial
     {
-        public static bool Active => Services.State != null && !Services.State.tutorialDone;
+        public static bool Active => Services.State != null && !Services.State.tutorialDone && !IntroDirector.IsPlaying;
 
         public static void Step(string id, VisualElement target, string text)
         {
@@ -26,7 +26,7 @@ namespace AFirma.UI
         public static bool Tip(string id, string text)
         {
             var seen = Services.State?.seenTips;
-            if (seen == null || seen.Contains("dica:" + id)) return false;
+            if (seen == null || seen.Contains("dica:" + id) || IntroDirector.IsPlaying) return false;
             seen.Add("dica:" + id);
             GameEvents.RaiseBip(Services.Config != null ? Services.Config.mentorName : "Dona Cida", text);
             return true;

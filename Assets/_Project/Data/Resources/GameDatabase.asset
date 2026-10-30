@@ -15,6 +15,7 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: 36c90c33095044c4bab1b5b8795b6311, type: 2}
   names: {fileID: 11400000, guid: 049031c0bd69541bca6683580fd845c7, type: 2}
   headlines: {fileID: 11400000, guid: c31fc21627144449c876e67dfdc5f124, type: 2}
+  intro: {fileID: 11400000, guid: da70ec298d4540c4907c6c26f79d4bdf, type: 2}
   thiefTypes:
   - {fileID: 11400000, guid: 6cea08305771645978c3ba39cf57bd63, type: 2}
   - {fileID: 11400000, guid: 02bf2a40ee7d84b3ea5ce8f36fe99143, type: 2}

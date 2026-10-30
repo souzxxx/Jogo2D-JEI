@@ -31,7 +31,7 @@ namespace AFirma.Tests
             yield return Print("menu_principal");
 
             Click(root, "new-game");
-            yield return WaitForScene(SceneFlow.Hideout);
+            yield return SkipIntroToHideout();
         }
 
         [UnityTest]
@@ -52,8 +52,17 @@ namespace AFirma.Tests
             Assert.AreEqual(999, Services.State.money, "Não pode apagar antes de confirmar.");
 
             Click(dialog.Query<Button>().Last());
-            yield return WaitForScene(SceneFlow.Hideout);
+            yield return SkipIntroToHideout();
             Assert.Less(Services.State.money, 999, "O save antigo foi pro lixo (os bicos já podem ter rendido uns trocados).");
+        }
+
+        /// <summary>Novo jogo toca a abertura na cena Heist; pula e cai no esconderijo.</summary>
+        static IEnumerator SkipIntroToHideout()
+        {
+            yield return WaitForScene(SceneFlow.Heist);
+            Assert.IsTrue(IntroDirector.IsPlaying, "Novo jogo tem que tocar a abertura.");
+            IntroDirector.Skip();
+            yield return WaitForScene(SceneFlow.Hideout);
         }
 
         [UnityTest]

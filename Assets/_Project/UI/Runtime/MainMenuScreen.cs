@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace AFirma.UI
 {
-    /// <summary>Menu principal (cena MainMenu): Continuar, Novo jogo, Opções, Créditos e Sair (só fora do navegador).</summary>
+    /// <summary>Menu principal (cena MainMenu): Continuar, Novo jogo (com a abertura), Ver abertura, Opções, Créditos e Sair (só fora do navegador).</summary>
     [RequireComponent(typeof(UIDocument))]
     public class MainMenuScreen : MonoBehaviour
     {
@@ -20,6 +20,7 @@ namespace AFirma.UI
                     Ui.Confirm(root, "Novo jogo?", "O save atual vai pro lixo: Cr$, crew e golpes.", "Começar do zero", NewGame);
                 else NewGame();
             });
+            root.OnClick("replay-intro", IntroDirector.Replay);
             root.OnClick("options", () => MenuPanels.Options(root));
             root.OnClick("credits", () => MenuPanels.Credits(root));
 #if UNITY_WEBGL
@@ -31,10 +32,6 @@ namespace AFirma.UI
             Services.Audio.PlayMusic(MusicTrack.Menu);
         }
 
-        static void NewGame()
-        {
-            Services.StartNewGame();
-            SceneFlow.GoToHideout();
-        }
+        static void NewGame() => IntroDirector.NewGameWithIntro(); // abertura e depois o esconderijo
     }
 }

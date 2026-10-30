@@ -12,6 +12,7 @@
             <ui:Label text="CONFIDENCIAL" class="stamp menu__stamp" />
             <ui:Button name="continue" text="Continuar" class="btn btn--green" />
             <ui:Button name="new-game" text="Novo jogo" class="btn" />
+            <ui:Button name="replay-intro" text="Ver abertura" class="btn" />
             <ui:Button name="options" text="Opções" class="btn" />
             <ui:Button name="credits" text="Créditos" class="btn" />
             <ui:Button name="quit" text="Sair" class="btn" />

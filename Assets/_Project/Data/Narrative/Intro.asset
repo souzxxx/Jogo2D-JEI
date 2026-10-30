@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4313ee0b5f74d8984de565e2d1ba3af, type: 3}
+  m_Name: Intro
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.IntroDef
+  heist: {fileID: 11400000, guid: d565e6b102b3740f9a7b4e04215dd7e7, type: 2}
+  crewLevel: 8
+  crewNames:
+  - "Ti\xE3o"
+  - "Ben\xE9"
+  - "Juninho"
+  - "Marc\xE3o"
+  caption: "Nova Guanabara, 1992. Avenida do Porto, 3 da manh\xE3."
+  barks:
+  - "Motor ligado, chefia. E ningu\xE9m mexe no r\xE1dio."
+  - "Cofre do Banco Central... hoje eu me aposento."
+  - "C\xE2mera t\xE1 em loop. Pode passar desfilando."
+  - "O vigia \xE9 comigo. J\xE1 sou da fam\xEDlia dele."
+  oneMoreShout: "S\xF3 mais uma porta, chefia! S\xF3 mais uma!"
+  headline: "BASTOS PEGA A FIRMA NO BANCO CENTRAL"
+  subheadline: "Quadrilha insistiu depois da sirene; delegado diz que ningu\xE9m mais vai ouvir falar dela"
+  secondChanceBip: "Pegaram todo mundo, mas voc\xEA escapou. A oficina \xE9 minha e os dois novatos tamb\xE9m. Come\xE7a pela Lot\xE9rica do Seu Z\xE9 e, dessa vez, escuta a sirene."
+  objective: "Objetivo: Banco Central"
+  revengeHeadline: "A FIRMA VOLTOU: BANCO CENTRAL LIMPO; BASTOS PEDE F\xC9RIAS"
