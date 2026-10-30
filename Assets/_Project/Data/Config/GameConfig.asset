@@ -34,6 +34,7 @@ MonoBehaviour:
   recruitCostGrowthPerLevel: 1.8
   bailCostPerJailSecond: 2
   scavengeIncomePerSecond: 1
+  sideJobLevelBonus: 0.1
   offlineCapHours: 4
   offlineRate: 0.5
   fameDivisor: 10000

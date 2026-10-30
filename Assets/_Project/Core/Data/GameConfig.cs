@@ -52,6 +52,8 @@ namespace AFirma.Core
 
         [Header("Economia")]
         public double scavengeIncomePerSecond = 1; // Catar latinha
+        [Tooltip("Renda do bico a mais por nível do ladrão acima do 1 (0.1 = +10% por nível).")]
+        public float sideJobLevelBonus = 0.1f;
         public float offlineCapHours = 4f;
         [Range(0f, 1f)] public float offlineRate = 0.5f;
 

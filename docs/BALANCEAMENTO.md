@@ -23,7 +23,7 @@ Regras de bolso:
 
 ## Onde ficam os números
 
-- `Data/Config/GameConfig.asset`: números globais (chance de evento, contagem da polícia, fugas, prisão, XP, recrutas, offline, prestígio, autosave).
+- `Data/Config/GameConfig.asset`: números globais (chance de evento, contagem da polícia, fugas, prisão, XP, recrutas, bicos, offline, prestígio, autosave).
 - `Data/Heists/*`: dificuldade, loot e alerta de cada sala.
 - `Data/Economy/Upgrades/*`: custo base, crescimento, efeito por nível.
 - `Thieves/*/ThiefType_*`: atributos base e ganho por nível de cada tipo.
@@ -51,7 +51,7 @@ Regras de bolso:
 | XP pro próximo nível | `5 × nível` | `Formulas.XpToNextLevel` |
 | Fama no prestígio | `floor(√(loot do ciclo / 10.000))` | `Formulas.FameForLoot` |
 | Procurado | dificuldade ×1,25, loot ×1,5, alerta ×1,1 por nível | Progressão |
-| Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%)` | Economia |
+| Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%) × (1 + Fama Rede%)`, mais o Catar latinha fixo | `EconomyService.GetSideJobIncome` |
 
 ## Tabela dos golpes (v1)
 

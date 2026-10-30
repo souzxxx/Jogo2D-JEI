@@ -6,15 +6,17 @@ namespace AFirma.Economy
     /// <summary>
     /// Economia real (Nicolas). Substitui o MockEconomyService.
     ///
-    /// Regras próprias: Cr$ (nunca negativo, valor inválido é ignorado) e upgrades do esconderijo (ESCOPO 6.8).
-    /// Bicos e ganho offline ainda passam pelo mock até as issues #37 e #38.
+    /// Regras próprias: Cr$ (nunca negativo, valor inválido é ignorado), upgrades do esconderijo (ESCOPO 6.8)
+    /// e bicos com o Catar latinha sempre rendendo (ESCOPO 6.7).
+    /// Ganho offline ainda passa pelo mock até a issue #38.
     /// </summary>
     public class EconomyService : IEconomyService, ITickable
     {
-        readonly MockEconomyService sideJobs = new MockEconomyService(); // #37/#38: trocar pelos bicos e offline reais
+        double pendingIncome; // fração de Cr$ dos bicos que ainda não virou dinheiro inteiro
 
         static GameState S => Services.State;
         static GameDatabase Db => Services.Db;
+        static GameConfig Cfg => Services.Config;
 
         // ---------------- Cr$ ----------------
 
@@ -81,21 +83,79 @@ namespace AFirma.Economy
             return total;
         }
 
-        // ---------------- Bicos e offline (#37/#38) ----------------
+        // ---------------- Bicos (ESCOPO 6.7) ----------------
 
-        public double IncomePerSecond => sideJobs.IncomePerSecond;
+        /// <summary>Catar latinha (sempre rolando, sem ladrão) mais todo mundo que está no bico.</summary>
+        public double IncomePerSecond
+        {
+            get
+            {
+                double total = Cfg != null ? Math.Max(0, Cfg.scavengeIncomePerSecond) : 0;
+                foreach (var thief in S.crew)
+                    if (thief.status == ThiefStatus.OnSideJob)
+                        total += GetSideJobIncome(thief, Db.GetSideJob(thief.sideJobId));
+                return total;
+            }
+        }
 
-        public double GetSideJobIncome(ThiefState thief, SideJobDef job) => sideJobs.GetSideJobIncome(thief, job);
+        /// <summary>renda × (1 + bônus por nível acima do 1) × (multiplicador se é o tipo certo) × (1 + Ponto de bico%) × (1 + Fama Rede%).</summary>
+        public double GetSideJobIncome(ThiefState thief, SideJobDef job)
+        {
+            if (thief == null || job == null || !job.requiresThief) return 0;
+            float levelBonus = Cfg != null ? Cfg.sideJobLevelBonus : 0f;
+            double income = job.incomePerSecond * (1 + levelBonus * (Math.Max(1, thief.level) - 1));
+            if (job.hasPreferredType && job.preferredType == thief.type) income *= job.matchMultiplier;
+            income *= 1 + GetUpgradeTotal(UpgradeEffect.SideJobPercent) / 100.0;
+            income *= 1 + FamePerkTotal(FamePerkEffect.SideJobPercent) / 100.0;
+            return Math.Max(0, income);
+        }
 
-        public bool CanAssignSideJob(ThiefState thief, SideJobDef job, out string reason) =>
-            sideJobs.CanAssignSideJob(thief, job, out reason);
+        public bool CanAssignSideJob(ThiefState thief, SideJobDef job, out string reason)
+        {
+            if (job == null || !job.requiresThief) { reason = "Esse bico não usa ladrão."; return false; }
+            if (thief == null || !S.crew.Contains(thief)) { reason = "Esse ladrão não é da crew."; return false; }
+            switch (thief.status)
+            {
+                case ThiefStatus.OnHeist: reason = thief.firstName + " está num golpe."; return false;
+                case ThiefStatus.Jailed: reason = thief.firstName + " está em cana."; return false;
+                case ThiefStatus.OnSideJob when thief.sideJobId == job.id: reason = thief.firstName + " já está nesse bico."; return false;
+            }
+            reason = null;
+            return true;
+        }
 
-        public void AssignSideJob(ThiefState thief, SideJobDef job) => sideJobs.AssignSideJob(thief, job);
+        /// <summary>Manda pro bico (ou troca de bico). Ir pro golpe tira do bico: o Crew limpa o sideJobId em qualquer outro status.</summary>
+        public void AssignSideJob(ThiefState thief, SideJobDef job)
+        {
+            if (!CanAssignSideJob(thief, job, out _)) return;
+            thief.sideJobId = job.id; // antes do SetStatus, pra quem ouve CrewChanged já ver o bico novo
+            Services.Crew.SetStatus(thief, ThiefStatus.OnSideJob);
+            GameEvents.RaiseSideJobsChanged();
+        }
 
-        public void RemoveFromSideJob(ThiefState thief) => sideJobs.RemoveFromSideJob(thief);
+        public void RemoveFromSideJob(ThiefState thief)
+        {
+            if (thief == null || thief.status != ThiefStatus.OnSideJob) return;
+            Services.Crew.SetStatus(thief, ThiefStatus.Available);
+            GameEvents.RaiseSideJobsChanged();
+        }
 
-        public double ApplyOfflineEarnings(double secondsAway) => sideJobs.ApplyOfflineEarnings(secondsAway);
+        /// <summary>Paga os bicos em Cr$ inteiros; a fração fica guardada pro próximo frame.</summary>
+        public void Tick(float deltaSeconds)
+        {
+            if (deltaSeconds <= 0) return;
+            pendingIncome += IncomePerSecond * deltaSeconds;
+            if (pendingIncome < 1) return;
+            var whole = Math.Floor(pendingIncome);
+            pendingIncome -= whole;
+            Add(whole, "bicos");
+        }
 
-        public void Tick(float deltaSeconds) => sideJobs.Tick(deltaSeconds);
+        static float FamePerkTotal(FamePerkEffect effect) =>
+            Services.Progression != null ? Services.Progression.GetFamePerkTotal(effect) : 0f;
+
+        // ---------------- Offline (#38) ----------------
+
+        public double ApplyOfflineEarnings(double secondsAway) => 0; // #38
     }
 }
