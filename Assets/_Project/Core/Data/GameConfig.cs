@@ -59,6 +59,10 @@ namespace AFirma.Core
         [Tooltip("Menos tempo fora que isso não conta como offline (recarregar a página não abre o popup).")]
         public float offlineMinSeconds = 60f;
 
+        [Header("Mapa")]
+        [Range(0f, 1f), Tooltip("Chance de cada golpe liberado sortear um modificador quando o mapa sorteia.")]
+        public float modifierChance = 0.5f;
+
         [Header("Prestígio")]
         public double fameDivisor = 10000;
         public float wantedDifficultyMult = 1.25f;

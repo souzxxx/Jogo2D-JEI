@@ -38,6 +38,7 @@ MonoBehaviour:
   offlineCapHours: 4
   offlineRate: 0.5
   offlineMinSeconds: 60
+  modifierChance: 0.5
   fameDivisor: 10000
   wantedDifficultyMult: 1.25
   wantedLootMult: 1.5

@@ -6,13 +6,15 @@ using UnityEngine;
 
 namespace AFirma.Tests
 {
-    /// <summary>Progressão: escada de golpes e contexto do golpe (ESCOPO 6.9). Golpes de teste, pra não depender do conteúdo.</summary>
+    /// <summary>Progressão: escada de golpes, modificadores e contexto do golpe (ESCOPO 6.9). Golpes de teste, pra não depender do conteúdo.</summary>
     public class ProgressionServiceTests
     {
         ProgressionService progression;
         GameDatabase db;
         HeistDef loterica, joalheria, cambio;
         readonly List<HeistDef> unlockEvents = new List<HeistDef>();
+        readonly FixedRandom rng = new FixedRandom();
+        int rolledEvents;
 
         [SetUp]
         public void SetUp()
@@ -25,16 +27,20 @@ namespace AFirma.Tests
             Services.State.completedHeists.Clear();
             Services.State.modifierRolls.Clear();
             Services.State.wantedLevel = 0;
+            Services.State.tutorialDone = true;
 
-            loterica = Heist("loterica", unlockedByDefault: true);
-            joalheria = Heist("joalheria", unlockedBy: loterica);
-            cambio = Heist("cambio", unlockedBy: joalheria);
+            loterica = Heist("loterica", unlockedByDefault: true, tier: 1);
+            joalheria = Heist("joalheria", unlockedBy: loterica, tier: 2);
+            cambio = Heist("cambio", unlockedBy: joalheria, tier: 3);
 
-            progression = new ProgressionService();
+            rng.Values.Clear();
+            progression = new ProgressionService(rng);
             Services.Register((IProgressionService)progression);
 
             unlockEvents.Clear();
+            rolledEvents = 0;
             GameEvents.HeistUnlocked += heist => unlockEvents.Add(heist);
+            GameEvents.HeistModifiersRolled += () => rolledEvents++;
         }
 
         [TearDown]
@@ -47,23 +53,34 @@ namespace AFirma.Tests
             TestSupport.Teardown();
         }
 
-        HeistDef Heist(string id, bool unlockedByDefault = false, HeistDef unlockedBy = null)
+        HeistDef Heist(string id, bool unlockedByDefault = false, HeistDef unlockedBy = null, int tier = 1)
         {
             var heist = ScriptableObject.CreateInstance<HeistDef>();
             heist.id = id;
+            heist.tier = tier;
             heist.unlockedByDefault = unlockedByDefault;
             heist.unlockedBy = unlockedBy;
             db.heists.Add(heist);
             return heist;
         }
 
-        HeistModifierDef Modifier(string id)
+        HeistModifierDef Modifier(string id, float weight = 1f)
         {
             var mod = ScriptableObject.CreateInstance<HeistModifierDef>();
             mod.id = id;
+            mod.weight = weight;
             db.modifiers.Add(mod);
             return mod;
         }
+
+        /// <summary>Random com os sorteios na mão. Sem valor na fila, devolve 0.</summary>
+        class FixedRandom : System.Random
+        {
+            public readonly Queue<double> Values = new Queue<double>();
+            public override double NextDouble() => Values.Count > 0 ? Values.Dequeue() : 0.0;
+        }
+
+        string RolledFor(HeistDef heist) => Services.State.modifierRolls.Find(r => r.heistId == heist.id)?.modifierId;
 
         void Roll(HeistDef heist, HeistModifierDef mod) =>
             Services.State.modifierRolls.Add(new HeistModifierRoll { heistId = heist.id, modifierId = mod.id });
@@ -231,6 +248,136 @@ namespace AFirma.Tests
 
             Assert.IsNull(progression.GetModifier(loterica));
             Assert.AreEqual(1f, progression.GetContext(loterica).lootMult);
+        }
+
+        // ---------------- Modificadores ----------------
+
+        [Test]
+        public void RollModifiers_ChanceOne_EveryUnlockedHeistGetsOne()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 1f;
+            progression.MarkCompleted(loterica);
+
+            progression.RollModifiers();
+
+            Assert.AreEqual("feriado", RolledFor(loterica));
+            Assert.AreEqual("feriado", RolledFor(joalheria));
+            Assert.IsNull(RolledFor(cambio), "Golpe bloqueado não sorteia.");
+            Assert.AreEqual(1, rolledEvents);
+        }
+
+        [Test]
+        public void RollModifiers_ChanceZero_NobodyGetsOne()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 0f;
+
+            progression.RollModifiers();
+
+            Assert.IsEmpty(Services.State.modifierRolls);
+            Assert.AreEqual(1, rolledEvents);
+        }
+
+        [Test]
+        public void RollModifiers_PicksByWeight()
+        {
+            Modifier("feriado", weight: 1f);
+            Modifier("dia-de-pagamento", weight: 3f);
+            db.config.modifierChance = 0.5f;
+
+            rng.Values.Enqueue(0.1); // passa na chance
+            rng.Values.Enqueue(0.8); // 0,8 × 4 = 3,2: cai no peso do Dia de pagamento (1 a 4)
+            progression.RollModifiers();
+            Assert.AreEqual("dia-de-pagamento", RolledFor(loterica));
+
+            GameEvents.RaiseHeistFinished(new HeistResult());
+            rng.Values.Enqueue(0.1);
+            rng.Values.Enqueue(0.2); // 0,8: cai no peso do Feriado (0 a 1)
+            progression.RollModifiers();
+            Assert.AreEqual("feriado", RolledFor(loterica));
+        }
+
+        [Test]
+        public void RollModifiers_FailedChance_LeavesTheHeistWithout()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 0.5f;
+
+            rng.Values.Enqueue(0.5); // 0,5 não é menor que a chance de 0,5
+            progression.RollModifiers();
+
+            Assert.IsNull(RolledFor(loterica));
+        }
+
+        [Test]
+        public void RollModifiers_IgnoresZeroWeightAndMissingModifiers()
+        {
+            db.modifiers.Add(null);
+            Modifier("nunca", weight: 0f);
+            Modifier("feriado", weight: 1f);
+            db.config.modifierChance = 1f;
+
+            rng.Values.Enqueue(0.0);
+            rng.Values.Enqueue(0.99);
+            progression.RollModifiers();
+
+            Assert.AreEqual("feriado", RolledFor(loterica));
+        }
+
+        [Test]
+        public void RollModifiers_WithoutAnyModifier_RollsNothing()
+        {
+            db.config.modifierChance = 1f;
+
+            Assert.DoesNotThrow(() => progression.RollModifiers());
+            Assert.IsEmpty(Services.State.modifierRolls);
+        }
+
+        [Test]
+        public void RollModifiers_LotericaBeforeTheTutorial_NeverRolls()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 1f;
+            Services.State.tutorialDone = false;
+            progression.MarkCompleted(loterica);
+
+            progression.RollModifiers();
+
+            Assert.IsNull(RolledFor(loterica));
+            Assert.AreEqual("feriado", RolledFor(joalheria));
+        }
+
+        [Test]
+        public void RollModifiers_OpeningTheMapAgain_KeepsTheRollUntilAHeistFinishes()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 1f;
+            progression.RollModifiers();
+
+            db.config.modifierChance = 0f;
+            progression.RollModifiers(); // abriu o mapa de novo sem jogar
+            Assert.AreEqual("feriado", RolledFor(loterica), "Abrir e fechar o mapa não troca o modificador.");
+            Assert.AreEqual(1, rolledEvents);
+
+            GameEvents.RaiseHeistFinished(new HeistResult());
+            progression.RollModifiers();
+            Assert.IsNull(RolledFor(loterica));
+            Assert.AreEqual(2, rolledEvents);
+        }
+
+        [Test]
+        public void RollModifiers_NewGame_RollsAgain()
+        {
+            Modifier("feriado");
+            db.config.modifierChance = 1f;
+            progression.RollModifiers();
+            db.config.modifierChance = 0f;
+
+            GameEvents.RaiseNewGameStarted();
+            progression.RollModifiers();
+
+            Assert.IsEmpty(Services.State.modifierRolls);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AFirma.Core;
 
@@ -6,17 +7,27 @@ namespace AFirma.Progression
     /// <summary>
     /// Progressão real (Nicolas). Substitui o MockProgressionService.
     ///
-    /// Regras próprias: escada de golpes (ESCOPO 6.9) e o contexto de cada golpe (modificador sorteado + Nível de Procurado).
+    /// Regras próprias: escada de golpes (ESCOPO 6.9), o sorteio dos modificadores no mapa e o contexto de cada golpe
+    /// (modificador sorteado + Nível de Procurado).
     /// A Fama não entra no contexto: o Motor do Golpe já aplica os bônus de Fama direto.
-    /// Sorteio de modificadores, Fama e prestígio ainda passam pelo mock até as issues #39, #40 e #41.
+    /// Fama e prestígio ainda passam pelo mock até as issues #40 e #41.
     /// </summary>
     public class ProgressionService : IProgressionService
     {
-        readonly MockProgressionService pending = new MockProgressionService(); // #39/#40/#41: trocar pelos reais
+        readonly MockProgressionService pending = new MockProgressionService(); // #40/#41: trocar pelos reais
+        readonly Random rng;
+        bool modifiersStale = true; // só sorteia de novo depois de um golpe ou ao abrir o jogo
 
         static GameState S => Services.State;
         static GameDatabase Db => Services.Db;
         static GameConfig Cfg => Services.Config;
+
+        public ProgressionService(Random rng = null)
+        {
+            this.rng = rng ?? new Random();
+            GameEvents.HeistFinished += _ => modifiersStale = true;
+            GameEvents.NewGameStarted += () => modifiersStale = true;
+        }
 
         // ---------------- Escada de golpes ----------------
 
@@ -58,7 +69,46 @@ namespace AFirma.Progression
             return roll != null ? Db.GetModifier(roll.modifierId) : null;
         }
 
-        public void RollModifiers() => pending.RollModifiers();
+        /// <summary>
+        /// Visita ao mapa: cada golpe liberado tem modifierChance de sortear um modificador, escolhido pelo weight.
+        /// Abrir e fechar o mapa não troca o sorteio: ele só muda depois de um golpe (ou ao abrir o jogo).
+        /// A Lotérica (tier 1) não sorteia antes do tutorial acabar.
+        /// </summary>
+        public void RollModifiers()
+        {
+            if (!modifiersStale) return;
+            modifiersStale = false;
+            S.modifierRolls.Clear();
+            float chance = Cfg != null ? Cfg.modifierChance : 0f;
+            foreach (var heist in Db.heists)
+            {
+                if (heist == null || !IsUnlocked(heist)) continue;
+                if (heist.tier == 1 && !S.tutorialDone) continue;
+                if (rng.NextDouble() >= chance) continue;
+                var mod = PickModifier();
+                if (mod != null) S.modifierRolls.Add(new HeistModifierRoll { heistId = heist.id, modifierId = mod.id });
+            }
+            GameEvents.RaiseHeistModifiersRolled();
+        }
+
+        HeistModifierDef PickModifier()
+        {
+            double total = 0;
+            foreach (var mod in Db.modifiers)
+                if (mod != null && mod.weight > 0) total += mod.weight;
+            if (total <= 0) return null;
+
+            double roll = rng.NextDouble() * total;
+            HeistModifierDef last = null;
+            foreach (var mod in Db.modifiers)
+            {
+                if (mod == null || mod.weight <= 0) continue;
+                last = mod;
+                roll -= mod.weight;
+                if (roll < 0) return mod;
+            }
+            return last; // arredondamento do double
+        }
 
         public HeistContext GetContext(HeistDef heist)
         {
