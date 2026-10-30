@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 160afcc5b3d844d068d8ed7800f0e887, type: 3}
+  m_Name: Event_turista-perdido
+  m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
+  id: turista-perdido
+  displayName: "Turista perdido"
+  description: "Um turista de bermuda, mapa na m\xE3o e m\xE1quina fotogr\xE1fica no pesco\xE7o entrou pela porta errada. Quer saber como chega no Mirante da Guanabara."
+  icon: {fileID: 0}
+  body: "Um turista de bermuda, mapa na m\xE3o e m\xE1quina fotogr\xE1fica no pesco\xE7o entrou pela porta errada. Quer saber como chega no Mirante da Guanabara."
+  art: {fileID: 0}
+  tutorialOnly: 0
+  anyRoom: 1
+  roomObstacle: 0
+  minTier: 2
+  weight: 1
+  choices:
+  - label: "Vender um passeio guiado pro mirante"
+    requiresType: 1
+    requiredType: 3
+    check: 3
+    baseChance: 0.6
+    chancePerStatPoint: 0.005
+    success:
+      resultText: "Ele pagou adiantado, agradeceu em tr\xEAs l\xEDnguas e foi esperar o guia na cal\xE7ada."
+      alertDelta: -6
+      bagPercentDelta: 5
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: "O turista falava portugu\xEAs melhor que voc\xEA. Saiu desconfiado e contou pro porteiro."
+      alertDelta: 10
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Tirar uma foto com ele"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1.0
+    chancePerStatPoint: 0.0
+    success:
+      resultText: "Foto pro \xE1lbum, sorriso pra c\xE2mera e um tchau. Perdeu tempo, mas ficou amigo."
+      alertDelta: -2
+      bagPercentDelta: 0
+      delaySeconds: 6
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+  - label: "Apontar a sa\xEDda e torcer"
+    requiresType: 0
+    requiredType: 0
+    check: 0
+    baseChance: 1.0
+    chancePerStatPoint: 0.0
+    success:
+      resultText: "Ele sai, mas comenta alto que viu uns funcion\xE1rios muito estranhos."
+      alertDelta: 7
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0
+    failure:
+      resultText: 
+      alertDelta: 0
+      bagPercentDelta: 0
+      delaySeconds: 0
+      jailRandomThief: 0

@@ -81,6 +81,19 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void ConArtist_HasThreeEventsWhereHeShines_AndFiveBarks()
+        {
+            foreach (var id in new[] { "caixa-hora-extra", "turista-perdido", "gerente-voltou" })
+            {
+                var e = db.GetEvent(id);
+                Assert.IsNotNull(e, id + " não está no GameDatabase.");
+                Assert.IsTrue(e.choices.Exists(c => c.requiresType && c.requiredType == ThiefType.ConArtist), e.displayName + " sem escolha do 171.");
+            }
+            var conArtist = db.thiefTypes.Find(t => t.type == ThiefType.ConArtist);
+            Assert.GreaterOrEqual(conArtist.barks.Length, 5, "171 precisa de pelo menos 5 bordões.");
+        }
+
+        [Test]
         public void ConArtist_HasArt()
         {
             var conArtist = db.thiefTypes.Find(t => t.type == ThiefType.ConArtist);

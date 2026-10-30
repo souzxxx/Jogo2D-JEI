@@ -35,6 +35,11 @@ MonoBehaviour:
   color: {r: 0.85, g: 0.3, b: 0.35, a: 1}
   actionSfx: {fileID: 8300000, guid: df03d7f3600ff4808b70492357be92a4, type: 3}
   barks:
-  - Deixa que eu converso.
-  - Boa noite, sou da companhia de luz.
-  - Confia, chefia.
+  - "Deixa que eu converso."
+  - "Boa noite, sou da companhia de luz."
+  - "Confia, chefia."
+  - "Eu vendo at\xE9 areia na praia."
+  - "Ningu\xE9m resiste a um bom papo."
+  - "Sorria, voc\xEA t\xE1 sendo enrolado."
+  - "Com licen\xE7a, \xE9 rapidinho."
+  - "Conversa mole \xE9 arte, meu bem."

@@ -2,6 +2,26 @@
 
 171 (Nicolas): sprites, animações, retrato, habilidade, eventos, bico.
 
+## Personalidade
+
+Cresceu vendendo bilhete de rifa na porta da Central e descobriu cedo que ninguém resiste a um elogio bem colocado. Se acha artista: chama golpe de "apresentação", vítima de "plateia" e jura que já foi figurante de novela das oito. Anda de chapéu panamá e sapato bicolor até no túnel do Banco Central, porque "a primeira impressão é a que fica". Tem um cartão de visita pra cada ocasião (fiscal da matriz, companhia de luz, segurança da noite) e troca de profissão no meio da frase sem piscar. Fala macio, chama todo mundo de "meu bem" e nunca levanta a voz. Único ponto fraco: não sabe perder uma discussão, nem quando devia ficar quieto.
+
+**Bordões** (`ThiefType_171.barks`): "Deixa que eu converso." · "Boa noite, sou da companhia de luz." · "Confia, chefia." · "Eu vendo até areia na praia." · "Ninguém resiste a um bom papo." · "Sorria, você tá sendo enrolado." · "Com licença, é rapidinho." · "Conversa mole é arte, meu bem."
+
+## Eventos em que ele brilha (`Events/`)
+
+Todo evento tem saída pra crew sem 171, mas a do 171 é a que dá bônus.
+
+| Evento | Onde | Do 171 (Nervos) | Sem 171 |
+|---|---|---|---|
+| Caixa fazendo hora extra | sala de Pessoa, Lotérica+ | "Dizer que é o fiscal da matriz": −8 de alerta e +10% na sacola | pedir informação (−5 s), esperar escondido (Discrição) |
+| Turista perdido | qualquer sala, Joalheria+ | "Vender um passeio guiado pro mirante": −6 de alerta e +5% na sacola | foto com ele (−6 s), apontar a saída (+7 de alerta) |
+| O gerente voltou | sala de Pessoa, Câmbio+ | "Se apresentar como o novo segurança da noite": −15 de alerta | trancar no almoxarifado (Perícia), correr (+12 de alerta) |
+
+## Bico: Bilhete premiado
+
+Na calçada do centro, ele abana o bilhete "premiado" que "não pode descontar" pra um otário de terno. Rende o dobro com um 171 (`SideJob_171`, ícone em `Icons/Icon_BilhetePremiado`). A cena animada do bico é a #120.
+
 ## Arte
 
 Vigarista de chapéu panamá, blazer vinho (a `color` do tipo), camisa branca, gravata dourada, bigodinho e sapato bicolor. De lado, olhando pra direita. No retrato ele pisca: é o 171.
