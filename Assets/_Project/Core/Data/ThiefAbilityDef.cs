@@ -24,5 +24,8 @@ namespace AFirma.Core
         }
 
         public abstract void Use(IHeistControl heist);
+
+        /// <summary>Quando o piloto dos golpes no automático usa esta habilidade sozinho. Never = só na mão.</summary>
+        public virtual AbilityAutoUse AutoUse => AbilityAutoUse.Never;
     }
 }

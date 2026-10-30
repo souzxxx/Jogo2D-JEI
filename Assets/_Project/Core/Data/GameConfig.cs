@@ -59,6 +59,18 @@ namespace AFirma.Core
         [Tooltip("Menos tempo fora que isso não conta como offline (recarregar a página não abre o popup).")]
         public float offlineMinSeconds = 60f;
 
+        [Header("Golpes no automático")]
+        [Tooltip("Golpes no automático ao mesmo tempo sem o Orelhão.")]
+        public int startingAutoHeistSlots = 1;
+        [Range(0f, 1f), Tooltip("Loot do golpe no automático comparado ao mesmo golpe na mão.")]
+        public float autoHeistLootMult = 0.6f;
+        [Tooltip("Na moita: a crew mete o pé quando o alerta passa disso.")]
+        public float autoQuietAlertLimit = 70f;
+        [Tooltip("A partir desse alerta o piloto usa sozinho as habilidades de baixar alerta (Lábia, Loop na câmera).")]
+        public float autoAbilityAlert = 60f;
+        [Tooltip("O piloto usa a fuga (Cavalo de pau) quando faltam esses segundos pra polícia chegar.")]
+        public float autoEscapeSecondsLeft = 2f;
+
         [Header("Mapa")]
         [Range(0f, 1f), Tooltip("Chance de cada golpe liberado sortear um modificador quando o mapa sorteia.")]
         public float modifierChance = 0.5f;

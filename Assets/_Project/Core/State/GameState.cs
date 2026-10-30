@@ -40,6 +40,9 @@ namespace AFirma.Core
         public bool hasActiveHeist;
         public ActiveHeistRecord activeHeist = new ActiveHeistRecord();
 
+        // Golpes no automático (ESCOPO 6.11). O do meio vira "meteu o pé" ao carregar.
+        public List<AutoHeistRecord> autoHeists = new List<AutoHeistRecord>();
+
         // Tutorial e dicas
         public bool tutorialDone;
         public List<string> seenTips = new List<string>();
@@ -128,5 +131,15 @@ namespace AFirma.Core
         public string heistId;
         public List<string> crewIds = new List<string>();
         public double bag;
+    }
+
+    [Serializable]
+    public class AutoHeistRecord
+    {
+        public string heistId;
+        public List<string> crewIds = new List<string>();
+        public AutoHeistOrder order;
+        public bool repeat;
+        public double bag; // sacola do golpe em andamento (já com o multiplicador do automático)
     }
 }

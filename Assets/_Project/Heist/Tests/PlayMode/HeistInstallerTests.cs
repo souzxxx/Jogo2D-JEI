@@ -14,5 +14,12 @@ namespace AFirma.Tests
             yield return null;
             Assert.IsInstanceOf<HeistRunner>(Services.Heist, "O jogo ainda está usando o MockHeistService.");
         }
+
+        [UnityTest]
+        public IEnumerator RealAutoHeist_IsTheAutoHeistServiceWhenTheGameRuns()
+        {
+            yield return null;
+            Assert.IsInstanceOf<AutoHeistService>(Services.AutoHeist, "O jogo ainda está usando o MockAutoHeistService.");
+        }
     }
 }

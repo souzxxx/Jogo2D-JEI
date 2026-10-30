@@ -11,10 +11,16 @@ namespace AFirma.Heist
     /// Regras reais (HeistRules): especialista, poder, tempo, loot com manhas, decisão de porta,
     /// alerta, sirene, contagem da polícia, as 4 saídas, prisão, pagamento e XP. Eventos: EventRules.
     /// Habilidades: cada ThiefAbilityDef mexe no golpe só pelo IHeistControl.
+    ///
+    /// Sem cena (Headless): o mesmo golpe pros golpes no automático (AutoHeistService). Não dispara GameEvents,
+    /// não grava o activeHeist nem libera golpe; o loot sai multiplicado e, no offline, ninguém vai preso.
     /// </summary>
     public class HeistRunner : IHeistService, ITickable
     {
         readonly Random rng;
+        readonly bool live = true;     // golpe na mão: dispara os GameEvents, grava o activeHeist e libera golpe
+        readonly float lootMult = 1f;  // sem cena: autoHeistLootMult (e a taxa do offline)
+        readonly bool arrests = true;  // sem cena no offline: ninguém vai preso
         readonly List<ThiefState> crew = new List<ThiefState>();
         readonly HashSet<string> usedAbilities = new HashSet<string>();
         readonly List<ThiefState> pendingArrests = new List<ThiefState>();
@@ -44,6 +50,16 @@ namespace AFirma.Heist
         {
             this.rng = rng ?? new Random();
         }
+
+        HeistRunner(Random rng, float lootMult, bool arrests) : this(rng)
+        {
+            live = false;
+            this.lootMult = lootMult;
+            this.arrests = arrests;
+        }
+
+        /// <summary>Golpe sem cena, pros golpes no automático. lootMult multiplica o loot de cada sala.</summary>
+        public static HeistRunner Headless(Random rng, float lootMult, bool arrests = true) => new HeistRunner(rng, lootMult, arrests);
 
         public HeistPhase Phase => phase;
         public float Alert => alert;
@@ -105,19 +121,23 @@ namespace AFirma.Heist
             PendingDoor = null; PendingEvent = null; LastResult = null;
             CurrentHeist = heist;
             Context = Services.Progression.GetContext(heist);
+            Context.lootMult *= lootMult;
             fameAlertReduction = Services.Progression.GetFamePerkTotal(FamePerkEffect.AlertReductionPercent);
 
             foreach (var thief in crew) Services.Crew.SetStatus(thief, ThiefStatus.OnHeist);
 
-            S.hasActiveHeist = true;
-            S.activeHeist = new ActiveHeistRecord { heistId = heist.id, bag = 0 };
-            foreach (var thief in crew) S.activeHeist.crewIds.Add(thief.id);
-            Services.SaveNow();
-
             phase = HeistPhase.Working;
-            GameEvents.RaiseHeistStarted(heist);
-            GameEvents.RaiseAlertChanged(alert);
-            GameEvents.RaiseBagChanged(bag);
+            if (live)
+            {
+                S.hasActiveHeist = true;
+                S.activeHeist = new ActiveHeistRecord { heistId = heist.id, bag = 0 };
+                foreach (var thief in crew) S.activeHeist.crewIds.Add(thief.id);
+                Services.SaveNow();
+
+                GameEvents.RaiseHeistStarted(heist);
+                GameEvents.RaiseAlertChanged(alert);
+                GameEvents.RaiseBagChanged(bag);
+            }
             EnterRoom(0);
         }
 
@@ -126,9 +146,9 @@ namespace AFirma.Heist
             roomIndex = index;
             roomProgress = 0f;
             phase = HeistPhase.Working;
-            GameEvents.RaiseRoomEntered(index, CurrentRoom);
+            if (live) GameEvents.RaiseRoomEntered(index, CurrentRoom);
 
-            if (crew.Count > 0 && rng.NextDouble() < 0.3)
+            if (live && crew.Count > 0 && rng.NextDouble() < 0.3)
             {
                 var talker = crew[rng.Next(crew.Count)];
                 var def = Services.Db.GetThiefType(talker.type);
@@ -146,7 +166,7 @@ namespace AFirma.Heist
         HeistEventDef PickEvent()
         {
             var events = Services.Db.events;
-            if (!S.tutorialDone && CurrentHeist.tier == 1 && roomIndex == 0)
+            if (live && !S.tutorialDone && CurrentHeist.tier == 1 && roomIndex == 0)
             {
                 var tutorial = events.Find(e => e != null && e.tutorialOnly);
                 if (tutorial != null) return tutorial;
@@ -168,7 +188,7 @@ namespace AFirma.Heist
             if (siren && phase != HeistPhase.AwaitingEvent)
             {
                 policeLeft -= dt;
-                GameEvents.RaisePoliceCountdownTick(Math.Max(0f, policeLeft));
+                if (live) GameEvents.RaisePoliceCountdownTick(Math.Max(0f, policeLeft));
                 if (policeLeft <= 0f)
                 {
                     Finish(HeistOutcome.ForcedEscape, false);
@@ -188,7 +208,7 @@ namespace AFirma.Heist
             float power = HeistRules.RoomPower(room.obstacle, crew, Services.Crew, Services.Db);
             float seconds = HeistRules.RoomSeconds(room, Context, power);
             roomProgress = Math.Min(1f, roomProgress + dt / seconds);
-            GameEvents.RaiseRoomProgress(roomIndex, roomProgress);
+            if (live) GameEvents.RaiseRoomProgress(roomIndex, roomProgress);
 
             if (freezeTimer > 0f) freezeTimer -= dt;
             else AddAlert(HeistRules.AlertPerSecond(room, roomIndex, Context, crew, Services.Crew, Services.Db, fameAlertReduction) * dt);
@@ -202,12 +222,15 @@ namespace AFirma.Heist
             double loot = HeistRules.RoomLoot(room, Context, crew, Services.Db);
             bag += loot;
             roomsCleared++;
-            S.activeHeist.bag = bag;
+            if (live) S.activeHeist.bag = bag;
 
             foreach (var thief in crew) GiveRoomXp(thief);
 
-            GameEvents.RaiseRoomCleared(roomIndex, room, loot);
-            GameEvents.RaiseBagChanged(bag);
+            if (live)
+            {
+                GameEvents.RaiseRoomCleared(roomIndex, room, loot);
+                GameEvents.RaiseBagChanged(bag);
+            }
 
             if (roomIndex >= CurrentHeist.rooms.Count - 1)
             {
@@ -226,7 +249,7 @@ namespace AFirma.Heist
                 currentBag = bag,
                 sirenActive = siren
             };
-            GameEvents.RaiseDoorDecisionRequested(PendingDoor);
+            if (live) GameEvents.RaiseDoorDecisionRequested(PendingDoor);
         }
 
         /// <summary>Soma o XP fracionado da sala e entrega só a parte inteira. O resto fica pra próxima sala.</summary>
@@ -248,7 +271,7 @@ namespace AFirma.Heist
         public void ChooseDoor(bool goToNextRoom)
         {
             if (phase != HeistPhase.AwaitingDoor) return;
-            GameEvents.RaiseDoorDecisionMade(goToNextRoom);
+            if (live) GameEvents.RaiseDoorDecisionMade(goToNextRoom);
             var next = PendingDoor != null ? PendingDoor.nextRoomIndex : roomIndex + 1;
             PendingDoor = null;
             if (goToNextRoom) EnterRoom(next);
@@ -259,7 +282,7 @@ namespace AFirma.Heist
         {
             PendingEvent = instance;
             phase = HeistPhase.AwaitingEvent;
-            GameEvents.RaiseHeistEventTriggered(instance);
+            if (live) GameEvents.RaiseHeistEventTriggered(instance);
         }
 
         public void ChooseEventOption(int choiceIndex)
@@ -283,7 +306,7 @@ namespace AFirma.Heist
                 if (effect.delaySeconds > 0f) AddDelay(effect.delaySeconds);
                 if (effect.jailRandomThief) JailRandomThief();
             }
-            GameEvents.RaiseHeistEventResolved(resolution);
+            if (live) GameEvents.RaiseHeistEventResolved(resolution);
             if (effect != null && effect.alertDelta != 0f) AddAlert(effect.alertDelta);
         }
 
@@ -307,8 +330,11 @@ namespace AFirma.Heist
             if (!CanUseAbility(thief, out _)) return;
             var ability = Services.Db.GetThiefType(thief.type).ability;
             usedAbilities.Add(thief.id);
-            GameEvents.RaiseAbilityUsed(thief, ability);
-            if (ability.sfx != null) Services.Audio.PlaySfx(ability.sfx);
+            if (live)
+            {
+                GameEvents.RaiseAbilityUsed(thief, ability);
+                if (ability.sfx != null) Services.Audio.PlaySfx(ability.sfx);
+            }
             ability.Use(this);
         }
 
@@ -318,7 +344,7 @@ namespace AFirma.Heist
         {
             if (!IsRunning || delta == 0f) return;
             alert = Math.Min(100f, Math.Max(0f, alert + delta));
-            GameEvents.RaiseAlertChanged(alert);
+            if (live) GameEvents.RaiseAlertChanged(alert);
             if (alert >= 100f && !siren) StartSiren();
         }
 
@@ -326,7 +352,7 @@ namespace AFirma.Heist
         {
             siren = true;
             policeLeft = HeistRules.PoliceCountdown(Context, crew, Services.Db, Services.Economy.GetUpgradeTotal(UpgradeEffect.PoliceRadioSeconds));
-            GameEvents.RaiseSirenStarted(policeLeft);
+            if (live) GameEvents.RaiseSirenStarted(policeLeft);
         }
 
         public void FreezeAlert(float seconds) => freezeTimer = Math.Max(freezeTimer, seconds);
@@ -335,7 +361,7 @@ namespace AFirma.Heist
         {
             if (phase != HeistPhase.Working) return;
             roomProgress = 1f;
-            GameEvents.RaiseRoomProgress(roomIndex, roomProgress);
+            if (live) GameEvents.RaiseRoomProgress(roomIndex, roomProgress);
             ClearRoom();
         }
 
@@ -347,6 +373,7 @@ namespace AFirma.Heist
         public void AddBagPercent(float percent)
         {
             bag = Math.Max(0, Math.Round(bag * (1 + percent / 100.0)));
+            if (!live) return;
             S.activeHeist.bag = bag;
             GameEvents.RaiseBagChanged(bag);
         }
@@ -373,7 +400,7 @@ namespace AFirma.Heist
 
             // Cavalo de pau salva todo mundo, até quem um evento ia prender. Fora isso, só a fuga forçada sorteia prisão.
             var arrested = new List<ThiefState>();
-            if (outcome != HeistOutcome.PerfectEscape)
+            if (outcome != HeistOutcome.PerfectEscape && arrests)
             {
                 arrested.AddRange(pendingArrests);
                 if (outcome == HeistOutcome.ForcedEscape)
@@ -382,7 +409,7 @@ namespace AFirma.Heist
                             arrested.Add(thief);
             }
 
-            double money = Pay(bag, keep, "golpe " + CurrentHeist.id);
+            double money = Pay(bag, keep, (live ? "golpe " : "golpe no automático ") + CurrentHeist.id);
 
             var result = new HeistResult
             {
@@ -394,7 +421,8 @@ namespace AFirma.Heist
                 sirenHappened = siren,
                 bag = bag,
                 moneyGained = money,
-                xpPerThief = roomsCleared * Cfg.xpPerRoom
+                xpPerThief = roomsCleared * Cfg.xpPerRoom,
+                auto = !live
             };
             result.leveledUpThiefIds.AddRange(leveledUp);
 
@@ -411,12 +439,13 @@ namespace AFirma.Heist
                 else Services.Crew.SetStatus(thief, ThiefStatus.Available);
             }
 
-            if (completed) Services.Progression.MarkCompleted(CurrentHeist);
-
             PendingDoor = null;
             PendingEvent = null;
             phase = HeistPhase.Finished;
             LastResult = result;
+            if (!live) return; // o AutoHeistService cuida do save e avisa a faixa; cofre no automático não libera golpe
+
+            if (completed) Services.Progression.MarkCompleted(CurrentHeist);
             S.hasActiveHeist = false;
             Services.SaveNow();
             GameEvents.RaiseHeistFinished(result);
@@ -424,7 +453,7 @@ namespace AFirma.Heist
 
         public HeistResult RecoverInterruptedHeist()
         {
-            if (!S.hasActiveHeist) return null;
+            if (!live || !S.hasActiveHeist) return null;
             var record = S.activeHeist;
             var heist = Services.Db.GetHeist(record.heistId);
 
@@ -451,8 +480,8 @@ namespace AFirma.Heist
             return result;
         }
 
-        /// <summary>Único lugar onde o dinheiro do golpe entra no caixa.</summary>
-        double Pay(double amount, float keep, string reason)
+        /// <summary>Único lugar onde o dinheiro do golpe (na mão ou no automático) entra no caixa.</summary>
+        internal static double Pay(double amount, float keep, string reason)
         {
             double money = HeistRules.Payment(amount, keep, Services.Economy.GetUpgradeTotal(UpgradeEffect.LaundryPercent),
                                               Services.Progression.GetFamePerkTotal(FamePerkEffect.LootPercent));

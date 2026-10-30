@@ -27,6 +27,7 @@ namespace AFirma.Core
         public static IProgressionService Progression { get; private set; }
         public static ICrewService Crew { get; private set; }
         public static IHeistService Heist { get; private set; }
+        public static IAutoHeistService AutoHeist { get; private set; }
         public static IAudioService Audio { get; private set; }
 
         public static bool IsInitialized { get; private set; }
@@ -38,6 +39,7 @@ namespace AFirma.Core
         public static void Register(IProgressionService service) => Progression = service;
         public static void Register(ICrewService service) => Crew = service;
         public static void Register(IHeistService service) => Heist = service;
+        public static void Register(IAutoHeistService service) => AutoHeist = service;
         public static void Register(IAudioService service) => Audio = service;
 
         static readonly System.Random Rng = new System.Random();
@@ -60,6 +62,7 @@ namespace AFirma.Core
             Progression ??= new MockProgressionService();
             Crew ??= new MockCrewService();
             Heist ??= new MockHeistService();
+            AutoHeist ??= new MockAutoHeistService();
             Audio ??= new MockAudioService();
 
             State = Save.Load(out var notice);
@@ -76,6 +79,21 @@ namespace AFirma.Core
             State = GameState.CreateNew(Db, GameClock.NowUnix, Rng);
             SaveNow();
             GameEvents.RaiseNewGameStarted();
+        }
+
+        /// <summary>
+        /// Troca só o save (testes de PlayMode com save em memória): mantém os serviços reais que cada frente registrou,
+        /// recarrega o estado pelo save novo e completa com mock o que faltar.
+        /// </summary>
+        public static void UseSave(ISaveService save)
+        {
+            var economy = Economy; var progression = Progression; var crew = Crew;
+            var heist = Heist; var autoHeist = AutoHeist; var audio = Audio;
+            ResetAll();
+            Save = save;
+            Economy = economy; Progression = progression; Crew = crew;
+            Heist = heist; AutoHeist = autoHeist; Audio = audio;
+            Initialize();
         }
 
         /// <summary>Troca o estado inteiro (usado pelo prestígio e pelos testes).</summary>
@@ -98,6 +116,7 @@ namespace AFirma.Core
             if (Progression is ITickable p) yield return p;
             if (Crew is ITickable c) yield return c;
             if (Heist is ITickable h) yield return h;
+            if (AutoHeist is ITickable ah) yield return ah;
             if (Audio is ITickable a) yield return a;
         }
 
@@ -105,7 +124,7 @@ namespace AFirma.Core
         public static void ResetAll()
         {
             Db = null; State = null;
-            Save = null; Economy = null; Progression = null; Crew = null; Heist = null; Audio = null;
+            Save = null; Economy = null; Progression = null; Crew = null; Heist = null; AutoHeist = null; Audio = null;
             IsInitialized = false;
         }
     }

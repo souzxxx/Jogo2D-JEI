@@ -34,6 +34,34 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void MockAutoHeist_RunsOnItsOwn_AndPaysTheAutoMultiplier()
+        {
+            var heist = Services.Db.GetHeist("loterica");
+            var crew = new List<ThiefState>(Services.State.crew);
+            Assert.IsFalse(Services.AutoHeist.CanSend(heist, crew, out _), "Só vai pro automático depois de limpar o cofre na mão.");
+            Services.State.completedHeists.Add(heist.id);
+            Assert.IsTrue(Services.AutoHeist.CanSend(heist, crew, out var reason), reason);
+
+            HeistResult finished = null;
+            string stopped = "não parou";
+            GameEvents.AutoHeistFinished += (run, result) => finished = result;
+            GameEvents.AutoHeistStopped += (run, why) => stopped = why;
+            double before = Services.Economy.Money;
+
+            Services.AutoHeist.Send(heist, crew, AutoHeistOrder.ToTheVault, repeat: false);
+            Assert.AreEqual(1, Services.AutoHeist.Running.Count);
+            Assert.AreEqual(ThiefStatus.OnHeist, crew[0].status);
+            var tick = (ITickable)Services.AutoHeist;
+            for (int i = 0; i < 2000 && Services.AutoHeist.Running.Count > 0; i++) tick.Tick(0.25f);
+
+            Assert.IsNotNull(finished);
+            Assert.IsTrue(finished.auto);
+            Assert.IsNull(stopped);
+            Assert.Greater(Services.Economy.Money, before);
+            Assert.AreEqual(ThiefStatus.Available, crew[0].status);
+        }
+
+        [Test]
         public void MockHeist_RunsToTheEnd_PaysAndUnlocksNext()
         {
             var heist = Services.Db.GetHeist("loterica");

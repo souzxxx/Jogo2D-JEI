@@ -78,8 +78,37 @@ namespace AFirma.Core
             GUILayout.Space(6);
             DrawHeist();
 
+            GUILayout.Space(6);
+            DrawAutoHeists();
+
             GUILayout.EndScrollView();
             GUI.DragWindow();
+        }
+
+        /// <summary>Golpes no automático: mandar (com quem estiver disponível, até o cofre e repetindo), ver e chamar de volta.</summary>
+        void DrawAutoHeists()
+        {
+            var auto = Services.AutoHeist;
+            GUILayout.Label($"<b>Automático</b> ({auto.Running.Count}/{auto.MaxRunning})", Rich());
+            foreach (var run in auto.Running)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label($"{run.heist.displayName} · sala {run.roomIndex + 1}/{run.RoomCount} · alerta {run.alert:0}" +
+                                $" · {Formulas.Money(run.bag)}{(run.siren ? " · SIRENE" : "")} · {run.runsDone} voltas");
+                if (GUILayout.Button(run.repeat ? "Repetir ON" : "Repetir off", GUILayout.Width(90))) auto.SetRepeat(run, !run.repeat);
+                if (GUILayout.Button("Chamar", GUILayout.Width(60))) auto.Recall(run);
+                GUILayout.EndHorizontal();
+            }
+
+            foreach (var heist in Services.Db.heists)
+            {
+                if (heist == null || !auto.IsAutoUnlocked(heist)) continue;
+                var team = new System.Collections.Generic.List<ThiefState>();
+                foreach (var thief in Services.Crew.GetAvailable())
+                    if (team.Count < Services.Crew.HeistSlots) team.Add(thief);
+                if (!auto.CanSend(heist, team, out var reason)) GUILayout.Label($"Automático: {heist.displayName} ({reason})");
+                else if (GUILayout.Button("Automático: " + heist.displayName)) auto.Send(heist, team, AutoHeistOrder.ToTheVault, true);
+            }
         }
 
         void DrawHeist()

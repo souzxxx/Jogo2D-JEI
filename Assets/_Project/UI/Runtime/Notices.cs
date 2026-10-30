@@ -24,7 +24,8 @@ namespace AFirma.UI
             offline = null;
             GameEvents.Bip += (sender, message) => bips.Enqueue((sender, message));
             GameEvents.Notice += notices.Enqueue;
-            GameEvents.OfflineEarnings += (money, seconds) => offline = (money, seconds);
+            // Bicos e golpes no automático avisam cada um o seu: o popup soma os dois.
+            GameEvents.OfflineEarnings += (money, seconds) => offline = (money + (offline?.money ?? 0), Math.Max(seconds, offline?.seconds ?? 0));
             GameEvents.NewGameStarted += () => { bips.Clear(); offline = null; }; // o que estava na fila era do jogo anterior
         }
 
@@ -46,7 +47,7 @@ namespace AFirma.UI
                     offline = null;
                     var time = TimeSpan.FromSeconds(away.seconds);
                     Ui.Modal(screen, "Enquanto você tava fora…", body => body.Add(Ui.Text(
-                        $"Os bicos renderam {Formulas.Money(away.money)} em " +
+                        $"A firma rendeu {Formulas.Money(away.money)} em " +
                         (time.TotalHours >= 1 ? $"{(int)time.TotalHours} h {time.Minutes} min." : $"{Math.Max(1, time.Minutes)} min."),
                         "dialog__body")));
                 }

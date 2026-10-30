@@ -36,7 +36,8 @@ namespace AFirma.Crew
             foreach (var thief in S.crew)
             {
                 bool inInterruptedHeist = S.hasActiveHeist && S.activeHeist.crewIds.Contains(thief.id); // o RecoverInterruptedHeist cuida desses
-                if (thief.status == ThiefStatus.OnHeist && !inInterruptedHeist && !Services.Heist.IsRunning)
+                bool inAutoHeist = S.autoHeists.Exists(a => a.crewIds.Contains(thief.id));                // e o AutoHeistService desses
+                if (thief.status == ThiefStatus.OnHeist && !inInterruptedHeist && !inAutoHeist && !Services.Heist.IsRunning)
                     SetStatus(thief, ThiefStatus.Available);
                 else if (thief.status == ThiefStatus.OnSideJob && !IsValidSideJob(thief.sideJobId))
                     SetStatus(thief, ThiefStatus.Available);

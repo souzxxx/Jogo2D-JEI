@@ -56,6 +56,22 @@ namespace AFirma.Core
         Interrupted    // jogo fechou no meio do golpe
     }
 
+    /// <summary>Ordem pra crew de um golpe no automático (ESCOPO 6.11).</summary>
+    public enum AutoHeistOrder
+    {
+        Quiet,      // Na moita: mete o pé antes da sirene
+        ToTheVault  // Até o cofre: só para no cofre ou na sirene
+    }
+
+    /// <summary>Quando o piloto dos golpes no automático usa a habilidade sozinho.</summary>
+    public enum AbilityAutoUse
+    {
+        Never,
+        HighAlert,      // Lábia, Loop na câmera
+        MatchingRoom,   // Pé-de-cabra: na sala do obstáculo dela
+        PoliceArriving  // Cavalo de pau: polícia chegando
+    }
+
     public enum CheckStat
     {
         None,
@@ -74,7 +90,8 @@ namespace AFirma.Core
         ContactsLevel,      // Contatos
         LaundryPercent,     // Lavanderia
         PoliceRadioSeconds, // Rádio da polícia
-        SideJobPercent      // Ponto de bico
+        SideJobPercent,     // Ponto de bico
+        AutoHeistSlots      // Orelhão
     }
 
     public enum FamePerkEffect

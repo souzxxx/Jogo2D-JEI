@@ -44,6 +44,7 @@ Acesso sempre por `Services.X`. Nunca dê `new` num serviço de outra frente.
 | Serviço | Interface | Dono | Mock que já funciona | O que o mock **não** faz |
 |---|---|---|---|---|
 | Golpe | `IHeistService` (inclui `IHeistControl`) | Leonardo | `MockHeistService` | Regra de especialista, Discrição, manhas, testes de evento completos |
+| Golpes no automático | `IAutoHeistService` | Leonardo | `MockAutoHeistService` | Especialista, eventos, habilidades, prisão, save e offline (cada sala leva 4 s) |
 | Crew | `ICrewService` | Leonardo | `MockCrewService` | Efeitos completos das manhas, bônus de Fama no recrutamento |
 | Economia | `IEconomyService` | Nicolas | `MockEconomyService` | Ganho offline, bônus de Fama |
 | Progressão | `IProgressionService` | Nicolas | `MockProgressionService` | Sorteio de modificadores, prestígio |
@@ -106,6 +107,7 @@ Quem escuta assina no `OnEnable` e cancela no `OnDisable`. Quem dispara chama `G
 | `SirenStarted(segundos)`, `PoliceCountdownTick(segundos)` | Golpe | Cena (viatura), HUD (contagem), Áudio (sirene) |
 | `ThiefBark(ladrão, fala)` | Golpe | Cena (balão) |
 | `HeistFinished(resultado)` | Golpe | HUD (jornal), Narrativa, Áudio |
+| `AutoHeistStarted(run)`, `AutoHeistProgress(run)`, `AutoHeistFinished(run, resultado)`, `AutoHeistStopped(run, motivo)` | Golpes no automático | UI (faixa Golpes rolando, mini manchete) |
 | `Bip(remetente, mensagem)`, `TipRequested(id)` | Narrativa | UI (bip, dicas) |
 
 Precisa de um evento novo? Abra uma issue com a label `frente:core` descrevendo quem dispara e quem escuta. **Não crie eventos paralelos fora do `GameEvents`.**
@@ -127,6 +129,24 @@ HeistSceneBootstrap.Start() ──▶ Services.Heist.StartHeist(golpe, crew)
 A HUD chama `ChooseDoor`, `ChooseEventOption`, `UseAbility`, `Flee` e `Speed`. A Cena do Golpe **só escuta**, nunca chama o serviço.
 
 Abriu a cena `Heist` direto no editor? O `HeistSceneBootstrap` começa um golpe de teste (o `testHeist` dele, ou a Lotérica) com a crew disponível.
+
+## Golpes no automático
+
+`Services.AutoHeist` (ESCOPO 6.11). Cada golpe no automático é um `HeistRunner` sem cena (`HeistRunner.Headless`), tickado pelo `GameLoop` e jogado pelo `AutoPilot`, junto com o golpe na mão. Ele **não dispara** os eventos do golpe na mão: a Cena e a HUD não reagem, só a faixa.
+
+```
+Planejamento (UI) ──Services.AutoHeist.CanSend / Send(golpe, crew, ordem, repetir)
+   AutoHeistStarted(run) ─▶ AutoHeistProgress(run)… (sala nova, sala limpa, sirene)
+   AutoHeistFinished(run, resultado)   (resultado.auto = true; com Repetir, uma por volta)
+   AutoHeistStopped(run, motivo)       (saiu da faixa; motivo != null também vira Notice)
+Faixa Golpes rolando lê Services.AutoHeist.Running (AutoHeistRun: sala, progresso, alerta, sacola, sirene, voltas)
+   e chama SetRepeat(run, bool) e Recall(run) ("Chamar de volta" = meter o pé agora)
+```
+
+- Só vai pro automático golpe com o cofre já limpo na mão (`IsAutoUnlocked`). O limite é `GameConfig.startingAutoHeistSlots` + upgrade com efeito `AutoHeistSlots` (Orelhão).
+- Rende `GameConfig.autoHeistLootMult` (multiplica o loot de cada sala, então a sacola da faixa já é o valor real). Cofre no automático não libera golpe nem dá bip de marco.
+- Habilidade nova: diga quando o piloto usa sobrescrevendo `ThiefAbilityDef.AutoUse` (o `SimpleAbilityDef` já deduz pelos campos).
+- Save: `GameState.autoHeists`. Ao carregar, o do meio vira "meteu o pé"; com Repetir, o tempo fora roda sem cena (até `offlineCapHours`, a `offlineRate`, sem prisão), sai no `OfflineEarnings` (o popup soma com os bicos) e a crew volta a rodar.
 
 ## Dados (ScriptableObjects)
 

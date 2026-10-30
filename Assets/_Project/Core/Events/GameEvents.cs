@@ -53,6 +53,12 @@ namespace AFirma.Core
         public static event Action<ThiefState, string> ThiefBark;         // balão de fala
         public static event Action<HeistResult> HeistFinished;
 
+        // ---------- Golpes no automático (Leonardo dispara; Enzo mostra na faixa Golpes rolando) ----------
+        public static event Action<AutoHeistRun> AutoHeistStarted;                // toda volta, inclusive as do Repetir
+        public static event Action<AutoHeistRun> AutoHeistProgress;               // sala nova, sala limpa, sirene
+        public static event Action<AutoHeistRun, HeistResult> AutoHeistFinished;  // fim de cada volta (mini manchete, +Cr$)
+        public static event Action<AutoHeistRun, string> AutoHeistStopped;        // saiu da faixa (motivo, ou null se acabou normal)
+
         // ---------- Narrativa (Nicolas dispara; Enzo mostra) ----------
         public static event Action<string, string> Bip;                   // (remetente, mensagem)
         public static event Action<string> TipRequested;                  // id da dica de primeira vez
@@ -95,6 +101,11 @@ namespace AFirma.Core
         public static void RaiseThiefBark(ThiefState thief, string line) => ThiefBark?.Invoke(thief, line);
         public static void RaiseHeistFinished(HeistResult result) => HeistFinished?.Invoke(result);
 
+        public static void RaiseAutoHeistStarted(AutoHeistRun run) => AutoHeistStarted?.Invoke(run);
+        public static void RaiseAutoHeistProgress(AutoHeistRun run) => AutoHeistProgress?.Invoke(run);
+        public static void RaiseAutoHeistFinished(AutoHeistRun run, HeistResult result) => AutoHeistFinished?.Invoke(run, result);
+        public static void RaiseAutoHeistStopped(AutoHeistRun run, string reason) => AutoHeistStopped?.Invoke(run, reason);
+
         public static void RaiseBip(string sender, string message) => Bip?.Invoke(sender, message);
         public static void RaiseTipRequested(string tipId) => TipRequested?.Invoke(tipId);
 
@@ -109,6 +120,7 @@ namespace AFirma.Core
             BagChanged = null; DoorDecisionRequested = null; DoorDecisionMade = null; HeistEventTriggered = null;
             HeistEventResolved = null; AbilityUsed = null; SirenStarted = null; PoliceCountdownTick = null;
             ThiefBark = null; HeistFinished = null; Bip = null; TipRequested = null;
+            AutoHeistStarted = null; AutoHeistProgress = null; AutoHeistFinished = null; AutoHeistStopped = null;
         }
     }
 }

@@ -34,6 +34,8 @@ namespace AFirma.Thieves.Gazua
             return true;
         }
 
+        public override AbilityAutoUse AutoUse => AbilityAutoUse.MatchingRoom;
+
         public override void Use(IHeistControl heist)
         {
             heist.AddAlert(noise);

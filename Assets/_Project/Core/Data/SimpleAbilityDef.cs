@@ -38,6 +38,13 @@ namespace AFirma.Core
             return true;
         }
 
+        /// <summary>Fuga perfeita: com a polícia chegando. Sala de um obstáculo: nela. Baixar ou congelar o alerta: com alerta alto.</summary>
+        public override AbilityAutoUse AutoUse =>
+            perfectEscape ? AbilityAutoUse.PoliceArriving
+            : completeCurrentRoom && requireRoomObstacle ? AbilityAutoUse.MatchingRoom
+            : alertDelta < 0f || freezeAlertSeconds > 0f ? AbilityAutoUse.HighAlert
+            : AbilityAutoUse.Never;
+
         public override void Use(IHeistControl heist)
         {
             if (alertDelta != 0f) heist.AddAlert(alertDelta);

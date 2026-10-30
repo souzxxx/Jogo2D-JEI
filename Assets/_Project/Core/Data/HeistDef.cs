@@ -42,6 +42,10 @@ namespace AFirma.Core
         public Vector2 mapPosition;
         [Tooltip("Prefab do prédio montado pela Cena do Golpe. Opcional: sem ele a cena monta as salas pelos RoomKind.")]
         public GameObject buildingPrefab;
+        [Tooltip("Miniatura do prédio (64×48) pro mapa e pra faixa Golpes rolando. Opcional.")]
+        public Sprite thumbnail;
+        [Tooltip("A mesma miniatura com o giroflex aceso, pra quando a sirene toca. Opcional: sem ela fica a normal.")]
+        public Sprite thumbnailSiren;
 
         public double TotalLoot
         {

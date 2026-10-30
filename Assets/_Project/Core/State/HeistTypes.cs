@@ -77,6 +77,32 @@ namespace AFirma.Core
         public List<string> leveledUpThiefIds = new List<string>();
         public int xpPerThief;      // XP base (salas × xpPerRoom), sem manha. O de cada um está em xpGains.
         public List<ThiefXpGain> xpGains = new List<ThiefXpGain>();
+        public bool auto;           // golpe no automático (não libera golpe nem dá bip de marco)
+    }
+
+    /// <summary>
+    /// Um golpe no automático rodando (ESCOPO 6.11): o que a faixa Golpes rolando mostra.
+    /// O serviço atualiza os campos todo frame; a UI só lê.
+    /// </summary>
+    public class AutoHeistRun
+    {
+        public HeistDef heist;
+        public List<ThiefState> crew = new List<ThiefState>();
+        public AutoHeistOrder order;
+        public bool repeat;
+
+        public int roomIndex;          // sala atual (as anteriores já foram feitas)
+        public float roomProgress01;
+        public float alert;            // 0..100
+        public double bag;             // já com o multiplicador do automático
+        public bool siren;
+        public float policeSecondsLeft;
+
+        public int runsDone;           // voltas completas desde que foi mandado (Repetir emenda várias)
+        public double moneyEarned;     // soma do que essas voltas trouxeram pro caixa
+        public HeistResult lastResult; // última volta, pra mini manchete
+
+        public int RoomCount => heist != null ? heist.rooms.Count : 0;
     }
 
     /// <summary>XP que um ladrão ganhou no golpe, pro jornal mostrar.</summary>
