@@ -170,6 +170,7 @@ namespace AFirma.HeistScene
 
         static void SetSprite(VisualElement e, Sprite s)
         {
+            if (e.style.backgroundImage.keyword == StyleKeyword.Undefined && e.style.backgroundImage.value.sprite == s) return; // não suja o estilo à toa
             e.style.backgroundImage = s != null ? new StyleBackground(s) : new StyleBackground(StyleKeyword.None);
         }
 

@@ -166,7 +166,10 @@ _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.
 - **Sirene:** a viatura chega com o giroflex, luz vermelha/azul entra pela janela, a tela treme e alguém da crew grita.
 - **Habilidades:** cada uma tem efeito na sala (o Pé-de-cabra solta faísca, lasca de madeira e um "CREC!" de gibi, e a tela treme).
 - **Fuga:** a crew corre de volta pra van e a van arranca (no Cavalo de pau ela rodopia antes); quem foi preso fica algemado pra trás.
-- **Balões de bordão** com a fonte pixel do jogo.
+- **Balões de bordão** com a fonte pixel do jogo, um de cada vez (a crew anda junta e os balões não se empilham).
+- **Abertura no Banco Central:** as salas caem rápido, o cofre abre com chuva de dinheiro, a porta ganha duas placas penduradas (**METER O PÉ** verde, **SÓ MAIS UMA** vermelha, que pisca quando a crew grita e fica com a escolha), a câmera sobe pra rua e mostra a viatura do Delegado Bastos chegando e ele descendo, volta pra sala com todo mundo algemado e congela em sépia com um flash de fotógrafo, que vira a foto da capa do jornal.
+
+**Idle que se vê (pedido do professor):** o esconderijo é vivo. Os bicos passam nos monitores de TV da prateleira (a cena de cada bico) e cada um solta "+Cr$" no ritmo da renda dele; bico vazio fica com a cena apagada. Cada upgrade comprado vira um objeto no porão que cresce com o nível (a Kombi turbinada, colchonetes dos Quartos, sapateira dos Tênis, painel de ferramentas, diploma do advogado, telefone e agenda dos Contatos, máquinas de lavar dinheiro girando, rádio da polícia piscando, neon do Ponto de bico, orelhão que toca com golpe no automático) e aparece com um pulo e "NOVO!" quando a aba fecha. A crew de bobeira anda pelo porão, comemora e solta bordão; quem está no bico ou no golpe some; preso vira foto 3x4 com EM CANA no mural. Passar o mouse em qualquer coisa explica o que é: o jogador aprende o que cada upgrade faz vendo e brincando, sem tutorial.
 
 **Regras de UX:** botão indisponível sempre explica o motivo; ação irreversível pede confirmação; dinheiro animado.
 
@@ -181,6 +184,10 @@ Cena do Golpe (prints do jogo):
 | ![Lotérica, tutorial do Seu Zé](img/cena_loterica_tutorial.png) | ![Câmbio, decisão de porta com as notas voando pra sacola](img/cena_cambio_porta.png) |
 | ![Cassino, sala limpa com o pasteleiro distraído](img/cena_cassino_sala_limpa.png) | ![Joalheria com a sirene tocando](img/cena_joalheria_sirene.png) |
 | ![Banco Central, o Gazua no túnel](img/cena_banco_tunel.png) | ![Golpe na Lotérica](img/gif_golpe_loterica.gif) |
+| ![Abertura: chuva de dinheiro no cofre do Banco Central](img/abertura_cofre.png) | ![Abertura: as placas METER O PÉ e SÓ MAIS UMA](img/abertura_porta.png) |
+| ![Abertura: o Bastos algema a firma](img/abertura_prisao.png) | ![Abertura: a cena congela antes do jornal](img/abertura_congela.png) |
+| ![Esconderijo vivo: bicos nos monitores, upgrades no porão e a crew](img/esconderijo_vivo.png) | ![Golpes extras: Banca do Bicho, Carro-forte e Museu](img/cena_extras.png) |
+| ![A abertura inteira (GIF)](img/gif_abertura.gif) | |
 
 ---
 
@@ -222,7 +229,9 @@ _Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
 - **Arte:** pixel art 32×32 (PPU 32), câmera Pixel Perfect em 640×360. **Paleta de 32 cores** (`docs/img/paleta.png`): a noite azulada de Nova Guanabara, a luz quente de interior, o kraft do dossiê, o verde do dinheiro, o vermelho do alarme, o azul da viatura e o neon do cassino. Os 4 ladrões feitos pelo time. Prédios em corte lateral com salas modulares (uma por tipo de sala), desenhados pixel a pixel por script na paleta, cada golpe com tema próprio: Lotérica verde-menta com cartaz de loteria, Joalheria vinho e dourado, Câmbio de vidro azul com a cotação do dólar, Cassino roxo escondido debaixo de uma pastelaria, Banco Central de mármore com o túnel de terra. Fundo da cidade em parallax (morro com luzinhas, prédios com neon) e rua com orelhão, banca de jornal e a Kombi da firma.
 
 ![Paleta](img/paleta.png)
-- **Idle que se vê:** cena animada de cada bico (96×64, 4–8 quadros), miniatura de cada prédio pra faixa Golpes rolando (com versão de sirene) e, se der tempo, a crew em idle no porão da Cida.
+- **Idle que se vê:** cena animada de cada bico (96×64, 4–8 quadros), miniatura 64×48 de cada um dos 8 prédios pra faixa Golpes rolando e pro mapa (com versão de sirene, giroflex vermelho e azul) e o esconderijo vivo: monitores com os bicos, um objeto por upgrade e a crew no porão, na escala do fundo do esconderijo.
+- **Golpes extras com prédio próprio:** Banca do Bicho (boteco com o quadro dos bichos), Carro-forte (o caminhão de valores em corte na Avenida do Porto) e Museu (fachada neoclássica, sensores e o "Pôr do Sol na Guanabara" no cofre).
+- **Abertura:** o Delegado Bastos (sprite próprio), as placas da porta e a foto P&B da capa do jornal, tudo desenhado por script na paleta.
 - **VFX:** luzes 2D (lâmpada de cada sala, lanterna dos guardas, cone das câmeras, giroflex, viatura), partículas (faísca e lascas do pé-de-cabra, poeira do túnel, fumaça do escapamento), notas voando, vinheta e bloom leve por pós-processamento, screen shake na sirene.
 - **Música:** esconderijo (samba-jazz/bossa lo-fi), golpe com camadas de tensão, sirene, menu.
 - **SFX:** UI, ações dos ladrões, loot, alarme, sirene, bip, máquina de escrever do jornal. A cena toca o som de ação do ladrão quando ele começa a trabalhar, o plim da grana na sacola e a porta abrindo (sons da cena e do Gazua sintetizados por script).
@@ -275,3 +284,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 30/10/2026 | Mechanics | Golpes no automático implementados: piloto (portas pela ordem, evento pela maior chance, habilidades na hora certa), Repetir, prisão, chamar de volta, save e offline | Pedido do professor: a firma trabalha sozinha, sem o jogo jogar sozinho (só repete o que você já fez na mão e rende menos) |
 | 30/10/2026 | Blueprint, Mechanics | 6 eventos dos golpes extras, 2 por golpe, que só saem no golpe deles | Cada golpe extra é a vitrine de um ladrão |
 | 30/10/2026 | Blueprint, Experience | Abertura implementada: Novo jogo toca o golpe roteirizado no Banco Central (letreiro, bordões, Loop e Lábia, cofre aberto, sirene, "só mais uma", prisão, jornal e bip da segunda chance) e cai no esconderijo; Pular e Esc a qualquer hora; "Ver abertura" no menu. Não paga, não prende e não gasta bip de marco | Objetivo claro desde o primeiro minuto, sem mexer no save |
+| 30/10/2026 | Interface, Arte e Som | Abertura contada pela cena (chuva de dinheiro, placas da porta, Bastos, prisão e congelamento); prédios dos 3 golpes extras; miniaturas dos 8 prédios; cenas dos bicos Chaveiro 24h e Catar latinha; esconderijo vivo (bicos nos monitores soltando "+Cr$", um objeto por upgrade, crew no porão, presos no mural) | Pedidos do professor: mais visual na parte idle e ver a firma crescer quando compra upgrade; aprender jogando passando o mouse nas coisas |
