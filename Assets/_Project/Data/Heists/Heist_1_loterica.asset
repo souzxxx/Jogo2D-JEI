@@ -43,5 +43,5 @@ MonoBehaviour:
   jailSeconds: 60
   mapPosition: {x: -6, y: 0}
   buildingPrefab: {fileID: 51265087655733214, guid: 28f5f7defa3e34a599fe69e2082b1d0c, type: 3}
-  thumbnail: {fileID: 0}
-  thumbnailSiren: {fileID: 0}
+  thumbnail: {fileID: 21300000, guid: eaa1bf97d1080429daa4899e5bd37593, type: 3}
+  thumbnailSiren: {fileID: 21300000, guid: 2c1c937f87c47457a89619141da265e0, type: 3}

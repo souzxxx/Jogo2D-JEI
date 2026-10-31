@@ -13,7 +13,7 @@ using Object = UnityEngine.Object;
 namespace AFirma.Tests
 {
     /// <summary>
-    /// Cena do Golpe com a cena Heist real e os serviços reais: os 5 prédios montam, a crew entra,
+    /// Cena do Golpe com a cena Heist real e os serviços reais: os 8 prédios (5 da escada e 3 extras) montam, a crew entra,
     /// as salas acendem e abrem, a viatura chega na sirene, o Pé-de-cabra solta o VFX e a crew volta pra van.
     /// </summary>
     public class HeistScenePlayTests
@@ -27,7 +27,7 @@ namespace AFirma.Tests
             public void DeleteSave() => json = null;
         }
 
-        static readonly string[] Heists = { "loterica", "joalheria", "cambio", "cassino", "banco-central" };
+        static readonly string[] Heists = { "loterica", "joalheria", "cambio", "cassino", "banco-central", "banca-do-bicho", "carro-forte", "museu" };
 
         [UnitySetUp]
         public IEnumerator SetUp()
@@ -109,6 +109,8 @@ namespace AFirma.Tests
                 StringAssert.StartsWith("Predio_" + id, view.Building.name, "Montou o prédio genérico em vez do prefab do golpe.");
                 var heist = Services.Heist.CurrentHeist;
                 Assert.AreEqual(heist.rooms.Count, view.Building.rooms.Count);
+                Assert.IsNotNull(heist.thumbnail, "Falta a miniatura do prédio.");
+                Assert.IsNotNull(heist.thumbnailSiren, "Falta a miniatura da sirene.");
                 Assert.AreEqual(crew.Count, view.Actors.Count, "Um ator por ladrão da crew.");
 
                 Services.Heist.Speed = 12f;

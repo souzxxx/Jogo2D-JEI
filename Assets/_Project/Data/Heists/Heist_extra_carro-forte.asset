@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heist_extra_carro-forte
   m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistDef
   id: carro-forte
-  displayName: "Carro-forte da Avenida do Porto"
+  displayName: Carro-forte da Avenida do Porto
   description: "Toda sexta o carro-forte para na Avenida do Porto pra abastecer o Banco Central. Golpe de rua e rapidinho: o ba\xFA \xE9 duro de abrir e a pol\xEDcia chega voando. Leva um Gazua bom e um motorista melhor ainda."
   icon: {fileID: 0}
   tier: 3
@@ -22,13 +22,13 @@ MonoBehaviour:
   extra: 1
   unlockedBy: {fileID: 11400000, guid: e7fe8f60b2cd9444e93638b1468af13f, type: 2}
   rooms:
-  - name: "Cabine do motorista"
+  - name: Cabine do motorista
     kind: 7
     obstacle: 2
     difficulty: 1300
     loot: 2500
     alertPerSecond: 6
-  - name: "Trava da porta"
+  - name: Trava da porta
     kind: 7
     obstacle: 0
     difficulty: 1500
@@ -42,4 +42,6 @@ MonoBehaviour:
     alertPerSecond: 10
   jailSeconds: 180
   mapPosition: {x: 3, y: -0.9}
-  buildingPrefab: {fileID: 0}
+  buildingPrefab: {fileID: 7715088965438051154, guid: 7d38d8bb3aa3f45f1bee75bf9affe005, type: 3}
+  thumbnail: {fileID: 21300000, guid: aef8b467f41cd441aa2813a05804e5fe, type: 3}
+  thumbnailSiren: {fileID: 21300000, guid: 236d825e4b565467aaa42a2ea7457ab3, type: 3}

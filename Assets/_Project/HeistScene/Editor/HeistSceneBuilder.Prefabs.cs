@@ -43,9 +43,16 @@ namespace AFirma.HeistScene.EditorTools
                     .FirstOrDefault(h => h != null && h.id == b.heistId);
                 if (heist == null) continue;
                 heist.buildingPrefab = prefab;
+                // miniatura (64x48) pro mapa e pra faixa Golpes rolando; a da sirene tem o giroflex aceso
+                var thumb = l.thumbnails?.FirstOrDefault(t => t.heistId == b.heistId);
+                if (thumb != null)
+                {
+                    heist.thumbnail = Sprite(thumb.normal);
+                    heist.thumbnailSiren = thumb.siren != null && thumb.siren.Length > 0 ? Sprite(thumb.siren[0]) : null;
+                }
                 EditorUtility.SetDirty(heist);
             }
-            Debug.Log("[Cena do Golpe] Prefabs prontos: 8 salas modulares e " + l.buildings.Length + " prédios.");
+            Debug.Log("[Cena do Golpe] Prefabs prontos: 8 salas modulares, " + l.buildings.Length + " prédios e as miniaturas.");
         }
 
         // ---------------------------------------------------------------- arte compartilhada

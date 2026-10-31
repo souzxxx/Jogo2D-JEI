@@ -99,6 +99,7 @@ namespace AFirma.HeistScene.EditorTools
         [Serializable] public class GlyphInfo { public string c; public int x, y, w; }
         [Serializable] public class GenericInfo { public string @base, cloth; public AnimInfo[] anims; }
         [Serializable] public class BackdropInfo { public string sprite; public float parallax, y; public int order; }
+        [Serializable] public class ThumbnailInfo { public string heistId, normal; public string[] siren; }
         [Serializable]
         public class Layout
         {
@@ -111,6 +112,7 @@ namespace AFirma.HeistScene.EditorTools
             public GlyphInfo[] font;
             public GenericInfo genericThief;
             public BackdropInfo[] backdrop;
+            public ThumbnailInfo[] thumbnails;
         }
 #pragma warning restore 0649
 
