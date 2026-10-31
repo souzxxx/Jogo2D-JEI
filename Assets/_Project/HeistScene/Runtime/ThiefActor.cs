@@ -160,6 +160,8 @@ namespace AFirma.HeistScene
 
         public void Say(string line) => bubble?.Show(line, transform, new Vector3(0f, 30f / 32f, 0f));
 
+        public void Hush() => bubble?.Hide();
+
         /// <summary>Ícone pequeno fixo em cima da cabeça (ex.: "sem especialista" enquanto trabalha).</summary>
         public void ShowMarker(Sprite sprite, float seconds = -1f)
         {

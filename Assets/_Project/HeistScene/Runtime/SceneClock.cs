@@ -12,14 +12,20 @@ namespace AFirma.HeistScene
         /// <summary>Teto do frame: aba do WebGL voltando de segundo plano não teleporta ninguém.</summary>
         const float MaxFrame = 0.1f;
 
-        public static bool Paused => GameClock.Paused;
+        public static bool Paused => GameClock.Paused || Frozen;
+
+        /// <summary>Abertura (IntroSceneView): a cena anda mais rápido enquanto as salas caem.</summary>
+        public static float IntroBoost = 1f;
+
+        /// <summary>Abertura: a cena congela no flash do fotógrafo, antes da capa do jornal.</summary>
+        public static bool Frozen;
 
         public static float Speed
         {
             get
             {
                 var heist = Services.IsInitialized ? Services.Heist : null;
-                return heist != null && heist.IsRunning ? Mathf.Max(0.1f, heist.Speed) : 1f;
+                return (heist != null && heist.IsRunning ? Mathf.Max(0.1f, heist.Speed) : 1f) * IntroBoost;
             }
         }
 

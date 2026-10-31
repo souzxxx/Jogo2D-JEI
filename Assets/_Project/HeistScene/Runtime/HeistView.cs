@@ -42,6 +42,10 @@ namespace AFirma.HeistScene
 
         public BuildingView Building => building;
         public IReadOnlyList<ThiefActor> Actors => actors;
+        public Transform World => world;
+        public int RoomIndex => roomIndex;
+        public HeistCameraRig CameraRig => cameraRig;
+        public float CameraY => building != null ? building.transform.position.y + building.cameraY : 3.5f;
 
         void OnEnable()
         {
@@ -320,7 +324,10 @@ namespace AFirma.HeistScene
         void OnBark(ThiefState thief, string line)
         {
             var actor = Find(thief);
-            if (actor != null) actor.Say(line);
+            if (actor == null) return;
+            // um fala de cada vez: a crew anda junta e os balões ficariam um em cima do outro
+            foreach (var other in actors) if (other != actor) other.Hush();
+            actor.Say(line);
         }
 
         Vector3 CrewTop()
@@ -514,7 +521,8 @@ namespace AFirma.HeistScene
                 if (actor.Moving) everyoneIn = false;
                 else actor.SetVisible(false);
             }
-            if (!vanGone && van != null && (everyoneIn || leaveTimer > 8f))
+            // na abertura a firma inteira vai presa e a Kombi fica parada na rua
+            if (!vanGone && van != null && !IntroDirector.IsPlaying && (everyoneIn || leaveTimer > 8f))
             {
                 vanGone = true;
                 if (perfectEscape) van.Spin(0.9f);

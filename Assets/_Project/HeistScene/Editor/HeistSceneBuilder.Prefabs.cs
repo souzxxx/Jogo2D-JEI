@@ -80,6 +80,25 @@ namespace AFirma.HeistScene.EditorTools
             art.doorSfx = AssetDatabase.LoadAssetAtPath<AudioClip>(Root + "/Audio/SFX_Porta.wav");
             art.font = BuildFont(l);
             art.genericThief = GenericThiefAnims(l);
+            FillIntroArt(art);
+        }
+
+        /// <summary>Abertura no Banco Central: o Bastos, as placas da porta e a foto da capa do jornal no Intro.asset.</summary>
+        static void FillIntroArt(HeistSceneArt art)
+        {
+            var sheet = SheetSprites("Abertura/Bastos.png");
+            float[] fps = { 2f, 7f, 4f, 5f };
+            art.bastos = BastosAnims.Select((anim, i) => new FlipbookAnim
+            {
+                name = anim, fps = fps[i], loop = true, frames = Frames(sheet, "Bastos", anim, BastosCounts[i]),
+            }).ToArray();
+            art.signBack = Sprite("Abertura/Placa_meter_o_pe.png");
+            art.signForward = Sprite("Abertura/Placa_so_mais_uma.png");
+
+            var intro = AssetDatabase.LoadAssetAtPath<IntroDef>("Assets/_Project/Data/Narrative/Intro.asset");
+            if (intro == null) return;
+            intro.headlinePhoto = Sprite("Abertura/Bastos_foto.png");
+            EditorUtility.SetDirty(intro);
         }
 
         static PixelFont BuildFont(Layout l)

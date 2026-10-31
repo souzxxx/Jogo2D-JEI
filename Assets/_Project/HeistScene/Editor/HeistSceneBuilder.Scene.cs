@@ -80,6 +80,7 @@ namespace AFirma.HeistScene.EditorTools
             view.cameraRig = rig;
             view.vanPrefab = AssetDatabase.LoadAssetAtPath<VehicleView>(PrefabDir + "/Veiculos/Van.prefab");
             view.policePrefab = AssetDatabase.LoadAssetAtPath<VehicleView>(PrefabDir + "/Veiculos/Viatura.prefab");
+            root.AddComponent<IntroSceneView>().view = view;
 
             Step("fundo");
             var backdropGo = new GameObject("Fundo da cidade");

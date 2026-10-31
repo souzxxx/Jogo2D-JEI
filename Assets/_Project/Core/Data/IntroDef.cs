@@ -33,6 +33,8 @@ namespace AFirma.Core
         public string oneMoreShout = "Só mais uma porta, chefia! Só mais uma!";
         public string headline = "BASTOS PEGA A FIRMA NO BANCO CENTRAL";
         [TextArea(1, 3)] public string subheadline = "Quadrilha insistiu depois da sirene; delegado diz que ninguém mais vai ouvir falar dela";
+        [Tooltip("Foto da capa: o Bastos com a firma algemada (a Cena do Golpe gera em HeistScene/Art/Abertura/Bastos_foto.png).")]
+        public Sprite headlinePhoto;
         [TextArea(2, 4), Tooltip("Bip da Dona Cida no fim da abertura. Substitui o bip de jogo novo.")]
         public string secondChanceBip = "Pegaram todo mundo, mas você escapou. A oficina é minha e os dois novatos também. Começa pela Lotérica do Seu Zé e, dessa vez, escuta a sirene.";
 

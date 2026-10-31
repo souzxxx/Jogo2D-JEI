@@ -17,17 +17,18 @@ MonoBehaviour:
   crewNames:
   - "Ti\xE3o"
   - "Ben\xE9"
-  - "Juninho"
+  - Juninho
   - "Marc\xE3o"
   caption: "Nova Guanabara, 1992. Avenida do Porto, 3 da manh\xE3."
   barks:
   - "Motor ligado, chefia. E ningu\xE9m mexe no r\xE1dio."
-  - "Cofre do Banco Central... hoje eu me aposento."
+  - Cofre do Banco Central... hoje eu me aposento.
   - "C\xE2mera t\xE1 em loop. Pode passar desfilando."
   - "O vigia \xE9 comigo. J\xE1 sou da fam\xEDlia dele."
   oneMoreShout: "S\xF3 mais uma porta, chefia! S\xF3 mais uma!"
-  headline: "BASTOS PEGA A FIRMA NO BANCO CENTRAL"
+  headline: BASTOS PEGA A FIRMA NO BANCO CENTRAL
   subheadline: "Quadrilha insistiu depois da sirene; delegado diz que ningu\xE9m mais vai ouvir falar dela"
+  headlinePhoto: {fileID: 21300000, guid: f5e6bcfb99e3d4e4abe118f68e07eeb9, type: 3}
   secondChanceBip: "Pegaram todo mundo, mas voc\xEA escapou. A oficina \xE9 minha e os dois novatos tamb\xE9m. Come\xE7a pela Lot\xE9rica do Seu Z\xE9 e, dessa vez, escuta a sirene."
-  objective: "Objetivo: Banco Central"
+  objective: 'Objetivo: Banco Central'
   revengeHeadline: "A FIRMA VOLTOU: BANCO CENTRAL LIMPO; BASTOS PEDE F\xC9RIAS"

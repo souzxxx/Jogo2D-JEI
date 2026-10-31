@@ -132,5 +132,38 @@ MonoBehaviour:
   policeFrames:
   - {fileID: 21300000, guid: e61df900302f74958a34cbd82352006e, type: 3}
   - {fileID: 21300000, guid: 4cf42b4848fe4431792f03e5174c84a6, type: 3}
+  bastos:
+  - name: idle
+    fps: 2
+    loop: 1
+    frames:
+    - {fileID: -1927858850, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    - {fileID: -386795327, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    overlay: []
+  - name: andar
+    fps: 7
+    loop: 1
+    frames:
+    - {fileID: 758709346, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    - {fileID: -120829836, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    - {fileID: -1152401306, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    - {fileID: -243375040, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    overlay: []
+  - name: apontar
+    fps: 4
+    loop: 1
+    frames:
+    - {fileID: 1119255573, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    - {fileID: 467807784, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    overlay: []
+  - name: algemar
+    fps: 5
+    loop: 1
+    frames:
+    - {fileID: 1798588517, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    - {fileID: -1491342133, guid: 0cf8cf04882044936a5124a9bb88881e, type: 3}
+    overlay: []
+  signBack: {fileID: 21300000, guid: 0c8f9589150a64842a20887d9feaf0cb, type: 3}
+  signForward: {fileID: 21300000, guid: 523a3703d50fa4b6cb9d790683e06805, type: 3}
   lootSfx: {fileID: 8300000, guid: 2c70ae507897a4249a6c78d71ebcf7fc, type: 3}
   doorSfx: {fileID: 8300000, guid: 904bb3a3e217c4fb4b09a7b168ea3fef, type: 3}

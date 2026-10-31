@@ -170,6 +170,8 @@ namespace AFirma.HeistScene.EditorTools
 
         static readonly string[] ThiefAnims = { "idle", "andar", "trabalhar", "comemorar" };
         static readonly string[] NpcAnimNames = { "idle", "andar", "alerta", "distraido" };
+        static readonly string[] BastosAnims = { "idle", "andar", "apontar", "algemar" };
+        static readonly int[] BastosCounts = { 2, 4, 2, 2 };
 
         static ImportRule RuleFor(string path, Layout l)
         {
@@ -188,6 +190,9 @@ namespace AFirma.HeistScene.EditorTools
             }
             if (file.StartsWith("Ladrao_generico"))
                 return new ImportRule { kind = Kind.Grid, pivot = bottomCenter, anims = l.genericThief.anims.Select(a => a.name).ToArray(), counts = l.genericThief.anims.Select(a => a.frames).ToArray() };
+            if (file == "Bastos")
+                return new ImportRule { kind = Kind.Grid, pivot = bottomCenter, anims = BastosAnims, counts = BastosCounts };
+            if (file.StartsWith("Placa_")) return new ImportRule { kind = Kind.Single, pivot = new Vector2(0.5f, 1f) };
             if (file == "Anel") return new ImportRule { kind = Kind.Ring, pivot = center };
             if (file == "Fonte_pixel") return new ImportRule { kind = Kind.Font, pivot = bottomLeft };
             if (file == "Balao") return new ImportRule { kind = Kind.Single, pivot = center, border = new Vector4(4, 4, 4, 4) };

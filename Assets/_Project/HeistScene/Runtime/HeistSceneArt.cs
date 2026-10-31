@@ -48,6 +48,11 @@ namespace AFirma.HeistScene
         public Sprite[] vanFrames;
         public Sprite[] policeFrames;
 
+        [Header("Abertura no Banco Central")]
+        public FlipbookAnim[] bastos;
+        public Sprite signBack;
+        public Sprite signForward;
+
         [Header("Sons da cena (tocam pelo Services.Audio)")]
         public AudioClip lootSfx;
         public AudioClip doorSfx;
