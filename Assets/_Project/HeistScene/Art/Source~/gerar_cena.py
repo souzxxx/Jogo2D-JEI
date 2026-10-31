@@ -67,11 +67,12 @@ def load_heists():
         text = path.read_text(encoding="utf-8")
         h = {"id": re.search(r"^  id: (.+)$", text, re.M).group(1).strip(),
              "name": unescape(re.search(r"^  displayName: (.+)$", text, re.M).group(1)),
-             "tier": int(re.search(r"^  tier: (\d+)$", text, re.M).group(1)), "rooms": []}
+             "tier": int(re.search(r"^  tier: (\d+)$", text, re.M).group(1)), "rooms": [],
+             "extra": bool(re.search(r"^  extra: 1$", text, re.M))}
         for m in re.finditer(r"  - name: (.+)\n    kind: (\d+)\n    obstacle: (\d+)", text):
             h["rooms"].append({"name": unescape(m.group(1)), "kind": int(m.group(2)), "obstacle": int(m.group(3))})
         heists.append(h)
-    heists.sort(key=lambda h: h["tier"])
+    heists.sort(key=lambda h: (h["extra"], h["tier"]))  # extras por último: o layout dos 5 da escada não mexe
     return heists
 
 
@@ -98,12 +99,22 @@ THEMES = {
                        sep="red", door="madeira", wood="wood"),
     "marmore": dict(wall="pale", pattern="marble", trim="mist", floor="pale", floor2="mist", lamp="lamp",
                     sep="steel", door="metal", wood="tan"),
+    # golpes extras
+    "bicho": dict(wall="paper", pattern="tiles", trim="green", floor="brown", floor2="umber", lamp="lamp",
+                  sep="green", door="madeira", wood="wood"),
+    "carroforte": dict(wall="steel", pattern="panels", trim="slate", floor="slate", floor2="dusk", lamp="pale",
+                       sep="police", door="metal", wood="tan"),
+    "museu": dict(wall="pale", pattern="panels", trim="bronze", floor="wood", floor2="tan", lamp="lamp",
+                  sep="mist", door="madeira", wood="wood"),
+    "museu_nobre": dict(wall="wine", pattern="damask", trim="bronze", floor="wood", floor2="tan", lamp="lamp",
+                        sep="winedark", door="madeira", wood="wood"),
 }
 
 # Luz ambiente (Light2D global) de cada prédio: cor e intensidade.
 AMBIENT = {
     "loterica": ("lamp", 0.62), "joalheria": ("paper", 0.55), "cambio": ("pale", 0.58),
     "cassino": ("neon", 0.5), "banco": ("cyan", 0.5),
+    "banca-do-bicho": ("lamp", 0.6), "carro-forte": ("pale", 0.5), "museu": ("paper", 0.5),
 }
 
 
@@ -115,6 +126,12 @@ def room_theme(heist_id, room, index):
         return "garagem" if kind == "Garage" else ("marmore" if kind in ("Office", "Vault") else "banco")
     if heist_id == "cassino" and index == 0:
         return "pastelaria"
+    if heist_id == "carro-forte":
+        return "carroforte"
+    if heist_id == "banca-do-bicho":
+        return "bicho"
+    if heist_id == "museu":
+        return "museu" if index < 3 else "museu_nobre"
     if kind == "Garage":
         return "garagem"
     return heist_id if heist_id in THEMES else "padrao"
@@ -549,6 +566,334 @@ def pastel_counter(px, x0, x1):
     px.rect(x0 + 52, 38, x0 + 60, 46, "mint")
 
 
+
+# ---------------------------------------------------------------- Peças dos golpes extras
+
+def bicho_board(px, x, y, cols=5, rows=5, cell=(11, 8), title=True):
+    """Quadro do jogo do bicho: grade com os grupos numerados (uma cor por coluna) e o título."""
+    cw, ch = cell
+    w, h = cols * cw + 3, rows * ch + (10 if title else 3)
+    outline_rect(px, x, y, x + w, y + h, "cream")
+    if title:
+        px.rect(x + 1, y + h - 9, x + w - 1, y + h - 1, "wine")
+        draw_small(px, x + (w - 19) // 2, y + h - 7, "BICHO", "lamp")
+    colors = ("green", "wine", "police", "bronze", "purple")
+    for r in range(rows):
+        for c in range(cols):
+            n = r * cols + c + 1
+            cx, cy = x + 2 + c * cw, y + 2 + (rows - 1 - r) * ch
+            px.frame(cx, cy, cx + cw - 2, cy + ch - 2, "mist")
+            draw_small(px, cx + 1, cy + 1, f"{n:02d}", colors[c % len(colors)])
+    return w, h
+
+
+def bottles(px, x, y, n, colors=("green", "bronze", "wine", "money")):
+    for i in range(n):
+        bx = x + i * 5
+        c = colors[i % len(colors)]
+        px.rect(bx, y, bx + 2, y + 6, c)
+        px.rect(bx + 1, y + 7, bx + 1, y + 9, c)
+        px.dot(bx, y + 3, "cream")
+
+
+def beer_crates(px, x, n=3):
+    for i in range(n):
+        y = 4 + i * 9
+        outline_rect(px, x, y, x + 20, y + 8, "lamp" if i % 2 else "red")
+        for k in range(x + 3, x + 18, 4):
+            px.rect(k, y + 6, k + 1, y + 9, "bronze")
+
+
+def ceiling_fan(px, x):
+    px.vline(x, ROOM_H - 10, ROOM_H - 5, "ink")
+    px.rect(x - 2, ROOM_H - 12, x + 2, ROOM_H - 10, "ink")
+    px.rect(x - 14, ROOM_H - 12, x - 3, ROOM_H - 11, "wood")
+    px.rect(x + 3, ROOM_H - 12, x + 14, ROOM_H - 11, "wood")
+
+
+def pennant(px, x, y, c1, c2):
+    """Flâmula de escola de samba pendurada na parede."""
+    for i in range(12):
+        px.hline(x + i, x + 23 - i, y - i, c1 if i % 4 < 2 else c2)
+    px.hline(x - 1, x + 24, y + 1, "ink")
+
+
+def money_table(px, x0, x1):
+    """Mesa de contar dinheiro: maços com elástico e a calculadora."""
+    px.rect(x0, 22, x1, 24, "wood")
+    px.frame(x0, 22, x1, 24, "ink")
+    px.rect(x0 + 2, 4, x0 + 4, 21, "brown")
+    px.rect(x1 - 4, 4, x1 - 2, 21, "brown")
+    for i, cx in enumerate(range(x0 + 6, x1 - 18, 9)):
+        for k in range(1 + i % 3):
+            px.rect(cx, 25 + k * 3, cx + 6, 27 + k * 3, "money")
+            px.frame(cx, 25 + k * 3, cx + 6, 27 + k * 3, "green")
+            px.vline(cx + 3, 25 + k * 3, 27 + k * 3, "coral")
+    outline_rect(px, x1 - 14, 25, x1 - 6, 31, "slate")
+    px.rect(x1 - 12, 29, x1 - 8, 30, "deepgreen")
+
+
+def truck_dashboard(px):
+    """Cabine do carro-forte por dentro: vidro do lado de lá, painel, volante e o banco."""
+    outline_rect(px, 6, 44, 86, 84, "night")                      # a Avenida do Porto de madrugada
+    px.rect(7, 45, 85, 52, "dusk")
+    for i in range(10, 80, 9):
+        px.rect(i, 53, i + 4, 56 + (i * 7) % 18, "slate")
+        px.dot(i + 2, 55 + (i * 3) % 10, "lamp")
+    px.line(10, 82, 26, 48, "pale")                             # reflexo no vidro
+    px.vline(46, 44, 84, "ink")
+    outline_rect(px, 4, 22, 70, 36, "dusk")                       # painel
+    for gx in (14, 26, 38):
+        px.ring(gx, 30, 3, "mist")
+        px.dot(gx, 31, "red")
+    px.rect(48, 26, 66, 34, "deepgreen")                        # rádio PX
+    draw_small(px, 52, 28, "PX", "mint")
+    px.ring(78, 40, 8, "ink", 2)                                 # volante
+    px.line(78, 40, 72, 26, "ink", 2)
+    outline_rect(px, 92, 4, 104, 42, "winedark")                  # banco do motorista
+    outline_rect(px, 88, 4, 116, 16, "winedark")
+    px.vline(62, 70, ROOM_H - 6, "ink")                           # cheirinho de carro pendurado
+    px.rect(60, 62, 64, 69, "money")
+
+
+def bulkhead(px, x):
+    """Porta-cofre interna do carro-forte: reforço em X e escotilha."""
+    outline_rect(px, x, 4, x + 40, 84, "slate")
+    px.line(x + 2, 6, x + 38, 82, "steel", 2)
+    px.line(x + 38, 6, x + 2, 82, "steel", 2)
+    px.disc(x + 20, 60, 8, "ink")
+    px.disc(x + 20, 60, 6, "night")
+    px.dot(x + 18, 62, "cyan")
+    for y in range(10, 82, 12):
+        px.dot(x + 3, y, "mist")
+        px.dot(x + 37, y, "mist")
+
+
+def lockers(px, x, n=3):
+    for i in range(n):
+        lx = x + i * 14
+        outline_rect(px, lx, 4, lx + 12, 70, "police")
+        for y in (60, 56, 52):
+            px.hline(lx + 3, lx + 9, y, "night")
+        px.dot(lx + 10, 36, "gold")
+
+
+def malotes(px, x, y, n):
+    """Malotes de lona do carro-forte, com lacre vermelho."""
+    for i in range(n):
+        bx = x + i * 11
+        outline_rect(px, bx, y, bx + 9, y + 9, "pale")
+        px.hline(bx + 1, bx + 8, y + 7, "mist")
+        px.rect(bx + 3, y + 10, bx + 6, y + 11, "red")
+        draw_small(px, bx + 3, y + 2, "$", "police")
+
+
+def museum_painting(px, x, y, w, h, kind, frame="gold"):
+    outline_rect(px, x - 2, y - 2, x + w + 2, y + h + 2, frame)
+    px.frame(x - 1, y - 1, x + w + 1, y + h + 1, shade(frame, -1))
+    if kind == "sunset":            # o famoso "Pôr do Sol na Guanabara"
+        sea = y + h // 3
+        px.vgradient(x, sea, x + w, y + h, "coral", "purple")
+        px.rect(x, y, x + w, sea, "police")
+        for i in range(x + 1, x + w, 3):
+            px.dot(i, sea - 2 - (i % 2), "blue")
+            px.dot(i + 1, sea - 5, "coral")
+        sun_r = max(3, h // 7)
+        px.disc(x + w * 2 // 3, sea + 2, sun_r, "lamp")
+        px.rect(x + w * 2 // 3 - sun_r, sea, x + w * 2 // 3 + sun_r, sea - 2, "gold")   # reflexo no mar
+        # Pão de Açúcar (pontudo) e o Morro da Urca (baixo), em silhueta
+        px0 = x + w // 5
+        top = h * 2 // 3
+        for i in range(top):
+            half = max(1, round((top - i) * 0.32))
+            px.hline(px0 - half, px0 + half, sea + i, "night")
+        ux = x + w // 5 + w // 5
+        for i in range(h // 4):
+            half = max(2, round((h // 4 - i) * 0.9))
+            px.hline(ux - half, ux + half, sea + i, "night")
+        px.line(px0, sea + top - 2, ux, sea + h // 4 - 1, "ink")                   # cabo do bondinho
+        px.rect(px0 + (ux - px0) // 2 - 1, sea + (top + h // 4) // 2 - 3,
+                px0 + (ux - px0) // 2 + 1, sea + (top + h // 4) // 2 - 2, "red")   # bondinho
+    elif kind == "portrait":
+        px.rect(x, y, x + w, y + h, "winedark")
+        px.disc(x + w // 2, y + h * 2 // 3, max(2, w // 5), "skin")
+        px.rect(x + w // 2 - w // 3, y, x + w // 2 + w // 3, y + h // 2, "ink")
+        px.rect(x + w // 2 - 1, y + h // 2 - 3, x + w // 2 + 1, y + h // 2, "cream")
+    elif kind == "abstract":
+        px.rect(x, y, x + w, y + h, "cream")
+        px.rect(x + 2, y + 2, x + w // 2, y + h // 2, "red")
+        px.rect(x + w // 2 + 2, y + h // 2 + 2, x + w - 2, y + h - 2, "blue")
+        px.rect(x + w // 3, y + h // 2 + 1, x + w // 3 + 3, y + h - 2, "lamp")
+        px.hline(x, x + w, y + h // 2, "ink")
+        px.vline(x + w // 2 + 1, y, y + h, "ink")
+    elif kind == "sea":
+        px.rect(x, y, x + w, y + h, "cyan")
+        px.rect(x, y, x + w, y + h // 2, "blue")
+        for i in range(x + 2, x + w - 2, 4):
+            px.dot(i, y + h // 2 - 2, "pale")
+        px.vline(x + w // 2, y + h // 2, y + h - 4, "ink")                     # veleiro
+        for i in range(6):
+            px.hline(x + w // 2 + 1, x + w // 2 + 6 - i, y + h // 2 + 2 + i, "cream")
+        px.hline(x + w // 2 - 4, x + w // 2 + 5, y + h // 2, "wood")
+    else:                           # paisagem
+        px.rect(x, y, x + w, y + h, "cyan")
+        px.rect(x, y, x + w, y + h // 2, "green")
+        px.disc(x + w - 5, y + h - 5, 2, "lamp")
+
+
+def stanchions(px, x0, x1):
+    """Pedestais dourados com a cordinha de veludo."""
+    step = (x1 - x0) // 2
+    for x in range(x0, x1 + 1, step):
+        px.rect(x, 4, x + 1, 22, "gold")
+        px.rect(x - 2, 3, x + 3, 4, "bronze")
+        px.disc(x, 23, 2, "lamp")
+    for x in range(x0 + 2, x1):
+        k = (x - x0) % step
+        sag = round(4 * (1 - abs(k - step / 2) / (step / 2)))
+        px.dot(x, 21 - sag, "red")
+
+
+def bust(px, x):
+    """Busto de mármore no pedestal."""
+    outline_rect(px, x, 4, x + 12, 30, "pale", "steel")
+    px.rect(x - 1, 30, x + 13, 32, "mist")
+    part = Px(16, 18)
+    part.rect(1, 0, 13, 5, "pale")
+    part.disc(7, 10, 5, "pale")
+    part.dot(10, 11, "mist")
+    part.dot(12, 9, "mist")
+    part.outline("steel")
+    px.paste(part, x - 1, 33)
+
+
+def lasers(px, x0, x1, y0=6, y1=60, n=3):
+    """Feixes de laser vermelhos cruzando a sala, com os emissores no rodapé."""
+    span = (x1 - x0) // max(1, n)
+    for i in range(n):
+        a = x0 + span * i + 4
+        px.line(a, y0, a + span, y1, "red")
+        px.line(a + span, y0, a, y1, "red")
+        outline_rect(px, a - 2, 4, a + 2, 7, "ink")
+        px.dot(a, 7, "coral")
+
+
+def ticket_booth(px, x):
+    outline_rect(px, x, 4, x + 46, 34, "wood")
+    outline_rect(px, x + 4, 34, x + 42, 60, "pale")
+    px.rect(x + 5, 35, x + 41, 59, "cyan")
+    px.line(x + 8, 38, x + 18, 56, "cream")
+    outline_rect(px, x - 2, 60, x + 48, 70, "winedark")
+    draw_small(px, x + 7, 63, "INGRESSO", "lamp")
+    px.rect(x + 16, 30, x + 30, 33, "ink")
+
+
+def alarm_bell(px, x, y):
+    px.disc(x, y, 6, "red")
+    px.ring(x, y, 6, "ink")
+    px.disc(x, y, 2, "gold")
+    outline_rect(px, x - 6, y - 16, x + 6, y - 9, "pale")
+    for k in range(3):
+        px.dot(x - 3 + k * 3, y - 12, "red" if k == 1 else "money")
+
+
+def extra_room(px, kind, t, heist_id, index):
+    """Fundo das salas dos golpes extras (Banca do Bicho, Carro-forte e Museu)."""
+    if heist_id == "banca-do-bicho":
+        lamp_hanging(px, 96, t)
+        ceiling_fan(px, 150)
+        if index == 0:      # o apontador na porta do bar
+            bicho_board(px, 12, 32)
+            beer_crates(px, 86, 3)
+            px.rect(66, 64, 112, 65, "ink")                          # prateleira de garrafas
+            bottles(px, 68, 66, 9)
+            small_poster(px, 118, 60, 36, 22, "lamp", "wine", ["FIADO", "AMANHA"])
+            px.rect(162, 4, 163, 21, "red")                         # mesa de plástico e o copo americano
+            px.rect(184, 4, 185, 21, "red")
+            px.rect(158, 22, 188, 24, "red")
+            px.frame(158, 22, 188, 24, "ink")
+            px.rect(170, 25, 173, 31, "lamp")
+            px.hline(170, 173, 31, "cream")
+        elif index == 1:    # escritório do gerente
+            desk(px, 20, 52, t, "phone")
+            chair(px, 50, t)
+            tv_set(px, 30, 50)
+            px.rect(33, 53, 44, 56, "green")                       # futebol na TV
+            px.dot(38, 55, "cream")
+            pennant(px, 78, 84, "green", "wine")
+            frame_picture(px, 104, 52, 22, 26, "portrait")
+            bicho_board(px, 166, 48, cols=2, rows=4, cell=(10, 8), title=False)
+        else:               # caixa do Tonhão
+            money_table(px, 14, 96)
+            frame_picture(px, 24, 56, 20, 24, "portrait")
+            small_poster(px, 58, 60, 40, 22, "cream", "wine", ["VALE O", "ESCRITO"])
+            money_bags(px, 168, 2)
+        return
+    if heist_id == "carro-forte":
+        hazard(px, 0, ROOM_W, 30)
+        tube_lamp(px, 96, t)
+        for x in range(4, ROOM_W, 12):                             # rebites do chapeamento
+            px.dot(x, 86, "mist")
+            px.dot(x, 38, "mist")
+        if index == 0:
+            truck_dashboard(px)
+        elif index == 1:
+            bulkhead(px, 20)
+            lockers(px, 70, 3)
+            small_poster(px, 116, 60, 26, 10, "lamp", "ink", ["PERIGO"])
+        else:
+            for y in (40, 60):
+                px.rect(10, y, 110, y + 1, "ink")
+            malotes(px, 12, 42, 8)
+            malotes(px, 12, 62, 7)
+            money_bags(px, 18, 4)
+            px.disc(186, 80, 2, "red")
+        return
+    if heist_id == "museu":
+        if kind == "Entrance":
+            lamp_hanging(px, 96, t)
+            ticket_booth(px, 12)
+            stanchions(px, 70, 110)
+            poster(px, 66, 52, 66, 30, "winedark", "lamp", ["PÔR DO SOL", "EXPOSIÇÃO"])
+            bust(px, 176)
+        elif kind == "CameraRoom":
+            tube_lamp(px, 96, t)
+            desk(px, 20, 70, t, "phone")
+            chair(px, 56, t)
+            for i in range(3):
+                monitors_small(px, 14 + i * 30, 50)
+            filing_cabinet(px, 100)
+            small_poster(px, 22, 70, 40, 12, "paper", "ink", ["RONDA 2H"])
+        elif kind == "Vault":
+            tube_lamp(px, 160, t)
+            museum_painting(px, 14, 32, 84, 50, "sunset", "gold")   # o quadro famoso, atrás do vidro
+            px.rect(6, 22, 106, 24, "bronze")
+            small_poster(px, 40, 10, 32, 9, "cream", "ink", ["1889"])
+            lasers(px, 4, 110, 6, 28, 4)
+        else:
+            lamp_hanging(px, 60, t)
+            lamp_hanging(px, 150, t)
+            if index == 1:       # corredor dos sensores
+                museum_painting(px, 14, 46, 26, 20, "landscape")
+                museum_painting(px, 56, 50, 18, 24, "portrait")
+                lasers(px, 8, 120, 6, 40, 4)
+            elif index == 3:     # galeria
+                museum_painting(px, 10, 44, 34, 28, "sea")
+                museum_painting(px, 54, 40, 22, 34, "portrait")
+                museum_painting(px, 86, 46, 30, 22, "abstract")
+                museum_painting(px, 172, 50, 14, 18, "landscape")
+                bench(px, 30, 50, t)
+            else:                # alarme da ala nobre
+                jewel_case(px, 12, 30)
+                jewel_case(px, 52, 30)
+                for vx in (22, 62):
+                    px.disc(vx, 28, 3, "police")
+                    px.rect(vx - 1, 31, vx + 1, 33, "police")
+                alarm_bell(px, 104, 76)
+                museum_painting(px, 172, 52, 14, 18, "portrait")
+                lasers(px, 4, 100, 36, 70, 3)
+
+
 # ---------------------------------------------------------------- Fundo das salas
 
 def room_background(kind, theme_name, heist_id, room_name, obstacle, index):
@@ -560,6 +905,9 @@ def room_background(kind, theme_name, heist_id, room_name, obstacle, index):
         wainscot(px, t)
         ceiling(px, t)
     k = kind
+    if heist_id in ("banca-do-bicho", "carro-forte", "museu"):
+        extra_room(px, kind, t, heist_id, index)
+        return px
     if k == "Tunnel":
         beam(px, 30)
         beam(px, 110)
@@ -920,6 +1268,15 @@ NPCS = {
     "crupie": spec(skin="skin2", hair="ink", shirt="cream", jacket="winedark", tie="ink", pants="ink"),
     "bicheiro": spec(skin="skin", hair="ink", hat="fedora", hat_color="cream", shirt="lamp", jacket="cream",
                      pants="cream", shoes="wine", chain=True, mustache=True),
+    # golpes extras
+    "apontador": spec(skin="skin2", hair="ink", hat="cap", hat_color="green", shirt="lamp", pants="dusk",
+                      shoes="ink", item="newspaper", mustache=True),
+    "tonhao": spec(skin="skin", hair="ink", hair_style="bald", shirt="cream", pants="dusk", shoes="umber",
+                   chain=True, mustache=True, belt="ink"),
+    "vigilante": spec(skin="skin2", hair="ink", hat="cap", hat_color="slate", shirt="steel", pants="slate",
+                      shoes="ink", badge="gold", belt="ink", item="flashlight"),
+    "bilheteira": spec(skin="skin2", hair="ink", hair_style="bun", shirt="cream", jacket="police", pants="ink",
+                       female=True, glasses=True),
 }
 
 GENERIC_THIEF_BASE = spec(skin="skin", hair="ink", hat="beanie", hat_color="ink", shirt="ink", pants="night",
@@ -958,6 +1315,10 @@ def sign_board(px, cx, y, text, bg, fg, border="ink", pad=4, icon=None, scale=2)
     elif icon == "dollar":
         px.rect(d - 3, cy - 5, d + 3, cy + 5, "lamp")
         draw_text(px, d - 2, cy - 3, "$", "ink")
+    elif icon == "paw":     # pata de bicho
+        px.disc(d, cy - 2, 3, fg)
+        for dx, dy in ((-4, 2), (-1, 5), (2, 5), (5, 2)):
+            px.disc(d + dx, cy + dy, 1, fg)
     return x0, w
 
 
@@ -1516,6 +1877,11 @@ STREET_LEVEL_STYLE = {
                       sign=("JOALHERIA BRILHO ETERNO", "ink", "gold", "diamond"), win=(20, 38, 40), ext="green"),
     "cambio": dict(wall="mist", trim="steel", texture="glass", floors=3, ac=True, balcony=False,
                    sign=("CÂMBIO DÓLAR FÁCIL", "police", "cream", "dollar"), win=(24, 30, 44), ext="steel"),
+    # golpes extras
+    "banca-do-bicho": dict(wall="cream", trim="green", texture="plaster", floors=1, ac=False, balcony=True,
+                           sign=("BAR DO TONHÃO", "green", "lamp", "paw"), win=(20, 30, 40), ext="green"),
+    "museu": dict(wall="pale", trim="mist", texture="plaster", floors=1, ac=False, balcony=False,
+                  sign=("MUSEU DE NOVA GUANABARA", "slate", "gold", None), win=(16, 44, 48), ext="mist"),
 }
 
 
@@ -1535,7 +1901,7 @@ def build_street_level(h, out, layout):
     n = len(rooms)
     st = STREET_LEVEL_STYLE[h["id"]]
     W = WALL + n * CELL_W
-    top = FLOOR_H + st["floors"] * FLOOR_H + 64
+    top = FLOOR_H + st["floors"] * FLOOR_H + (120 if h["id"] == "banca-do-bicho" else 64)
     shell = Shell(W, top)
     ground(shell, 0, -MARGIN, W + MARGIN - 1)
     shell.rect(0, -SLAB - 6, W - 1, -SLAB - 1, "slate")                # sapata de concreto
@@ -1544,10 +1910,27 @@ def build_street_level(h, out, layout):
     separators_and_slab(shell, n, lambda i: room_theme(h["id"], rooms[i + 1], i + 1), doors)
     ext_walls(shell, W, st["ext"])
     y = FLOOR_H
-    for f in range(st["floors"]):
-        facade_floor(shell, 0, W - 1, y, st, seed_for(h["id"], f))
-        y += FLOOR_H
-    roof(shell, 0, W - 1, y, st, water_tank=True, antenna=h["id"] != "cambio")
+    if h["id"] == "museu":
+        museum_facade(shell, W, y, st["floors"])
+        y += st["floors"] * FLOOR_H
+    else:
+        for f in range(st["floors"]):
+            facade_floor(shell, 0, W - 1, y, st, seed_for(h["id"], f))
+            y += FLOOR_H
+        roof(shell, 0, W - 1, y, st, water_tank=True, antenna=h["id"] not in ("cambio", "banca-do-bicho"))
+    if h["id"] == "banca-do-bicho":   # o bar: toldo na calçada, mesa de plástico e o quadro do bicho no telhado
+        awning(shell, -56, -4, 62, "green", "cream")
+        for k in (-54, -8):
+            shell.rect(k, 0, k + 1, 61, "ink")
+        plastic_table(shell, -48)
+        plastic_table(shell, W + 84)
+        bx = W // 2 - 40
+        shell.rect(bx + 14, y + 6, bx + 16, y + 20, "ink")
+        shell.rect(bx + 64, y + 6, bx + 66, y + 20, "ink")
+        board = Px(84, 60)
+        bicho_board(board, 2, 0, cols=5, rows=5, cell=(15, 9))
+        shell.paste(board, bx, y + 20)
+        clothesline(shell, 20, W - 30, FLOOR_H + 92)
     if h["id"] == "cambio":   # outdoor no telhado
         bx = W // 2 - 70
         shell.rect(bx + 20, y + 6, bx + 22, y + 26, "ink")
@@ -1571,6 +1954,163 @@ def build_street_level(h, out, layout):
                 props=[dict(sprite="Rua/Poste.png", x=-96, y=0, light=True), dict(sprite="Rua/Orelhao.png", x=-30, y=0),
                        dict(sprite="Rua/Lixeira.png", x=W + 30, y=0), dict(sprite="Rua/Poste.png", x=W + 60, y=0, light=True),
                        dict(sprite="Rua/Banca.png", x=W + 150, y=0) if h["id"] != "loterica" else dict(sprite="Rua/Banca.png", x=-250, y=0)],
+                cameraY=FLOOR_H + 20)
+
+
+def awning(shell, x0, x1, y, c1, c2):
+    """Toldo listrado com a barra recortada embaixo."""
+    for k in range(x0, x1, 10):
+        shell.rect(k, y, k + 4, y + 10, c1)
+        shell.rect(k + 5, y, min(k + 9, x1), y + 10, c2)
+        shell.rect(k + 1, y - 2, k + 3, y - 1, c1)
+        shell.rect(k + 6, y - 2, min(k + 8, x1), y - 1, c2)
+    shell.rect(x0, y + 10, x1, y + 11, "ink")
+
+
+def plastic_table(shell, x, y=0):
+    """Mesa e cadeira de plástico de boteco, na calçada."""
+    shell.rect(x, y, x + 1, y + 17, "red")
+    shell.rect(x + 20, y, x + 21, y + 17, "red")
+    shell.rect(x - 3, y + 18, x + 24, y + 20, "red")
+    shell.frame(x - 3, y + 18, x + 24, y + 20, "ink")
+    shell.rect(x + 8, y + 21, x + 10, y + 28, "gold")      # garrafa
+    shell.rect(x + 9, y + 29, x + 9, y + 31, "gold")
+    shell.rect(x + 14, y + 21, x + 16, y + 25, "lamp")      # copo americano
+    shell.rect(x + 30, y, x + 31, y + 10, "red")            # cadeira
+    shell.rect(x + 38, y, x + 39, y + 22, "red")
+    shell.rect(x + 29, y + 10, x + 39, y + 12, "red")
+    shell.rect(x + 37, y + 12, x + 39, y + 22, "red")
+
+
+def museum_facade(shell, W, y, floors):
+    """Fachada neoclássica: colunas, faixas da exposição, entablamento e o frontão."""
+    top = y + floors * FLOOR_H
+    shell.rect(0, y, W - 1, top - 1, "pale")
+    shell.dither(0, y, W - 1, top - 1, "pale", "mist", 0.08)
+    cols = list(range(24, W - 30, 72))
+    for i, cx in enumerate(cols):
+        shell.rect(cx, y + 6, cx + 16, top - 12, "cream")
+        for k in range(cx + 3, cx + 15, 4):
+            shell.rect(k, y + 6, k, top - 12, "mist")                 # caneluras
+        shell.rect(cx - 4, y + 2, cx + 20, y + 6, "mist")               # base
+        shell.rect(cx - 4, top - 12, cx + 20, top - 8, "mist")          # capitel
+        shell.rect(cx - 2, top - 14, cx + 18, top - 13, "mist")
+        shell.frame(cx - 4, y + 2, cx + 20, y + 6, "steel")
+        shell.frame(cx - 4, top - 12, cx + 20, top - 8, "steel")
+        if i < len(cols) - 1:
+            mid = cx + 44
+            if i % 2 == 0:                                             # faixa vermelha da exposição
+                shell.rect(mid - 10, y + 22, mid + 10, top - 20, "wine")
+                shell.frame(mid - 10, y + 22, mid + 10, top - 20, "winedark")
+                shell.rect(mid - 10, y + 18, mid + 10, y + 21, "gold")
+                for j, ch in enumerate("ARTE"):
+                    shell.text(mid - 2, top - 34 - j * 10, ch, "lamp")
+                shell.rect(mid - 6, y + 28, mid + 6, y + 34, "coral")    # sol da faixa
+                shell.rect(mid - 3, y + 34, mid + 3, y + 36, "lamp")
+            else:                                                      # janela alta com grade
+                shell.rect(mid - 9, y + 24, mid + 9, top - 22, "night")
+                shell.frame(mid - 10, y + 23, mid + 10, top - 21, "ink")
+                for k in range(mid - 6, mid + 9, 5):
+                    shell.rect(k, y + 24, k, top - 22, "slate")
+                shell.rect(mid - 9, top - 30, mid + 9, top - 22, "dusk")
+    # entablamento
+    shell.rect(-2, top - 8, W + 1, top + 6, "mist")
+    shell.rect(-2, top - 8, W + 1, top - 7, "steel")
+    for k in range(0, W, 8):
+        shell.rect(k, top + 1, k + 3, top + 4, "pale")                  # dentículos
+    shell.rect(-4, top + 6, W + 3, top + 9, "pale")
+    shell.frame(-4, top + 6, W + 3, top + 9, "steel")
+    # frontão triangular com o medalhão
+    mid = W // 2
+    half = min(W // 2 - 20, 260)
+    rise = 54
+    for i in range(rise):
+        w = round(half * (1 - i / rise))
+        shell.rect(mid - w, top + 10 + i, mid + w, top + 10 + i, "pale" if i > 2 else "mist")
+        shell.dot(mid - w, top + 10 + i, "steel")
+        shell.dot(mid + w, top + 10 + i, "steel")
+    for r, c in ((12, "mist"), (10, "gold"), (8, "lamp")):
+        for yy in range(-r, r + 1):
+            for xx in range(-r, r + 1):
+                if xx * xx + yy * yy <= r * r:
+                    shell.dot(mid + xx, top + 30 + yy, c)
+    shell.text(mid - 8, top + 26, "NG", "bronze")
+
+
+def build_carro_forte(h, out, layout):
+    """O carro-forte parado na Avenida do Porto, em corte: cabine, trava da porta e baú. As salas são o caminhão."""
+    rooms = h["rooms"]
+    n = len(rooms)
+    W = WALL + n * CELL_W
+    S = -24                                   # o asfalto fica abaixo do piso do baú (rodas e chassi)
+    top = ROOM_H + SLAB + 40
+    shell = Shell(W, top)
+    ground(shell, S, -MARGIN, W + MARGIN - 1)
+    doors = [door_style_for(h["id"], i, rooms) for i in range(n - 1)]
+    separators_and_slab(shell, n, lambda i: room_theme(h["id"], rooms[i + 1], i + 1), doors, "police")
+    body = "police"
+    # chassi, para-choque e rodas
+    shell.rect(-6, -SLAB - 10, W + 5, -SLAB - 1, "ink")
+    shell.rect(-6, -SLAB - 9, W + 5, -SLAB - 8, "dusk")
+    for wx in (70, 2 * CELL_W + 70, 2 * CELL_W + 140):
+        for yy in range(-15, 16):
+            for xx in range(-15, 16):
+                d = xx * xx + yy * yy
+                if d <= 225:
+                    c = "ink" if d > 120 else ("slate" if d > 36 else ("mist" if d > 9 else "ink"))
+                    shell.dot(wx + xx, S + 15 + yy, c)
+        shell.rect(wx - 18, -SLAB - 2, wx + 18, -SLAB + 1, body)          # para-lama
+    # paredes externas: frente da cabine (esquerda, com a porta) e a traseira com as portas do baú
+    ext_walls(shell, W, body)
+    # teto: faixa com o nome da transportadora, giroflex âmbar e antena
+    roof_y = ROOM_H + SLAB
+    shell.rect(-2, roof_y, W + 1, roof_y + 16, body)
+    shell.frame(-2, roof_y, W + 1, roof_y + 16, "ink")
+    shell.rect(-2, roof_y + 13, W + 1, roof_y + 14, "gold")
+    label = "GUANABARA VALORES"
+    tw = text_width(label) * 2
+    tmp = Px(tw + 40, 32)
+    sign_board(tmp, tmp.w // 2, 2, label, "police", "gold", border="police")
+    shell.paste(tmp, W // 2 - tmp.w // 2, roof_y - 1)
+    for x in range(10, W - 10, 18):
+        shell.dot(x, roof_y + 3, "steel")                              # rebites
+    shell.rect(30, roof_y + 17, 46, roof_y + 21, "ink")
+    shell.rect(32, roof_y + 18, 44, roof_y + 20, "gold")                # giroflex âmbar
+    shell.rect(W - 40, roof_y + 17, W - 39, roof_y + 34, "ink")          # antena
+    # frente da cabine (cara-chata): chapa, para-brisa inclinado, espelho, farol e para-choque
+    for yy in range(-SLAB - 10, ROOM_H + SLAB):
+        lean = max(0, (yy - 44) // 6)
+        shell.rect(-14 + lean, yy, -1, yy, body)
+        shell.dot(-14 + lean, yy, "ink")
+    for yy in range(48, ROOM_H - 2):
+        lean = max(0, (yy - 44) // 6)
+        shell.rect(-11 + lean, yy, -3, yy, "night" if (yy // 3) % 5 else "cyan")
+    shell.rect(-22, 62, -15, 64, "ink")                                   # braço do espelho
+    shell.rect(-24, 52, -20, 66, "ink")
+    shell.rect(-23, 53, -21, 65, "steel")
+    shell.rect(-18, -SLAB - 12, -1, -SLAB - 6, "slate")                   # para-choque
+    shell.frame(-18, -SLAB - 12, -1, -SLAB - 6, "ink")
+    shell.rect(-13, 2, -5, 8, "lamp")                                     # farol
+    shell.frame(-14, 1, -4, 9, "ink")
+    for k in range(-12, -3, 3):
+        shell.rect(k, 14, k, 30, "ink")                                   # grade
+    # degraus da cabine
+    shell.rect(-10, S + 1, 0, S + 3, "steel")
+    shell.rect(-6, S + 10, 0, S + 12, "steel")
+    shell.frame(-10, S + 1, 0, S + 3, "ink")
+    shell.frame(-6, S + 10, 0, S + 12, "ink")
+    # traseira: lanternas
+    shell.rect(W, -SLAB - 6, W + 4, 6, "red")
+    shell.frame(W, -SLAB - 6, W + 4, 6, "ink")
+    path = f"Predios/Predio_{h['id']}.png"
+    shell.px.save(ART / path, PREVIEW, 1)
+    return dict(shell=path, shellX=-MARGIN, shellY=-FOUND, width=W, streetY=S, doors=doors,
+                entryPath=[dict(x=-60, y=S + FEET), dict(x=-12, y=S + FEET), dict(x=-4, y=S + 12 + FEET),
+                           dict(x=4, y=FEET), dict(x=WALL + 14, y=FEET)],
+                van=dict(x=-150, y=S), police=dict(x=-262, y=S),
+                props=[dict(sprite="Rua/Poste.png", x=-96, y=S, light=True), dict(sprite="Rua/Orelhao.png", x=-36, y=S),
+                       dict(sprite="Rua/Poste.png", x=W + 60, y=S, light=True), dict(sprite="Rua/Lixeira.png", x=W + 30, y=S),
+                       dict(sprite="Rua/Banca.png", x=W + 150, y=S)],
                 cameraY=FLOOR_H + 20)
 
 
@@ -1771,7 +2311,9 @@ def obstacle_prop(heist_id, room, index):
     if obs == PERSON:
         table = {("loterica", 0): "freguesa", ("loterica", 1): "seu_ze", ("joalheria", 0): "vendedora",
                  ("cambio", 1): "caixa", ("cambio", 3): "gerente", ("cassino", 0): "pasteleiro",
-                 ("cassino", 2): "crupie", ("cassino", 4): "bicheiro", ("banco-central", 2): "vigia"}
+                 ("cassino", 2): "crupie", ("cassino", 4): "bicheiro", ("banco-central", 2): "vigia",
+                 ("banca-do-bicho", 0): "apontador", ("banca-do-bicho", 1): "bicheiro",
+                 ("banca-do-bicho", 2): "tonhao", ("carro-forte", 0): "vigilante", ("museu", 0): "bilheteira"}
         return "npc:" + table.get((heist_id, index), "seguranca")
     if obs == LOCK:
         if kind == "Vault":
@@ -1822,9 +2364,11 @@ GUARDS = {  # golpe -> {índice da sala: variante do guarda que patrulha}
     "cambio": {2: "seguranca", 4: "seguranca", 1: "seguranca"},
     "cassino": {1: "leao", 3: "leao", 5: "leao"},
     "banco-central": {3: "vigia", 4: "vigia", 5: "vigia", 6: "vigia"},
+    "museu": {1: "seguranca", 3: "seguranca", 4: "seguranca"},
 }
 CAMERAS = {  # golpe -> salas com câmera de segurança
     "joalheria": (0, 1, 3), "cambio": (1, 2, 4), "cassino": (2, 3, 5), "banco-central": (3, 4, 5, 6),
+    "museu": (1, 2, 3, 4, 5),
 }
 
 
@@ -1859,6 +2403,184 @@ def color_obj(name, a=1.0):
     c = P[name]
     return dict(r=c[0] / 255, g=c[1] / 255, b=c[2] / 255, a=a)
 
+# ---------------------------------------------------------------- Miniaturas dos prédios (mapa e faixa Golpes rolando)
+
+THUMB_W, THUMB_H = 64, 48
+
+
+def _thumb_base():
+    px = Px(THUMB_W, THUMB_H)
+    px.vgradient(0, 4, THUMB_W - 1, THUMB_H - 1, "dusk", "night")
+    r = random.Random(42)
+    for _ in range(10):
+        px.dot(r.randrange(2, THUMB_W - 2), r.randrange(30, THUMB_H - 2), r.choice(("pale", "mist")))
+    px.rect(0, 0, THUMB_W - 1, 3, "slate")          # calçada
+    px.hline(0, THUMB_W - 1, 3, "mist")
+    return px
+
+
+def _windows(px, x0, x1, y, lit=(), w=4, h=5, gap=8, c="night"):
+    for i, x in enumerate(range(x0, x1 - w + 1, gap)):
+        px.rect(x, y, x + w - 1, y + h - 1, "lamp" if i in lit else c)
+        px.frame(x - 1, y - 1, x + w, y + h, "ink")
+
+
+def _thumb(heist_id):
+    px = _thumb_base()
+    if heist_id == "loterica":
+        outline_rect(px, 10, 4, 53, 36, "paper")
+        px.rect(10, 34, 53, 36, "kraft")
+        outline_rect(px, 11, 18, 52, 26, "green")
+        px.disc(15, 22, 2, "money")
+        draw_small(px, 20, 20, "LOTERICA", "cream")
+        outline_rect(px, 14, 4, 22, 15, "night")                    # porta
+        outline_rect(px, 26, 6, 50, 15, "dusk")                     # vitrine
+        px.rect(27, 7, 49, 8, "lamp")
+        _windows(px, 16, 52, 28, lit=(1,))
+    elif heist_id == "joalheria":
+        outline_rect(px, 12, 4, 51, 42, "deepgreen")
+        for yy in range(6, 42, 3):
+            px.hline(13, 50, yy, "green" if yy % 2 else "deepgreen")
+        outline_rect(px, 13, 18, 50, 26, "ink")
+        for i in range(4):                                          # diamante
+            px.hline(17 - i, 17 + i, 25 - i, "cyan")
+            px.hline(17 - i, 17 + i, 19 + i, "cyan")
+        draw_small(px, 23, 20, "BRILHO", "gold")
+        outline_rect(px, 15, 4, 22, 15, "bronze")
+        outline_rect(px, 26, 6, 48, 15, "dusk")
+        px.dot(30, 9, "gold"); px.dot(36, 10, "cyan"); px.dot(42, 9, "gold")
+        _windows(px, 16, 50, 30, lit=(0, 3))
+        px.rect(10, 42, 53, 43, "bronze")
+    elif heist_id == "cambio":
+        outline_rect(px, 14, 4, 49, 46, "police")
+        for yy in range(18, 45, 7):
+            for xx in range(16, 47, 6):
+                px.rect(xx, yy, xx + 4, yy + 4, "blue" if (xx + yy) % 3 else "cyan")
+        outline_rect(px, 15, 9, 48, 16, "cream")
+        px.rect(17, 10, 21, 15, "lamp")
+        draw_small(px, 18, 11, "$", "ink")
+        draw_small(px, 24, 11, "CAMBIO", "police")
+        outline_rect(px, 26, 4, 37, 8, "night")
+    elif heist_id == "cassino":
+        outline_rect(px, 10, 6, 53, 34, "cream")
+        for k in range(10, 54, 4):                                  # toldo listrado
+            px.rect(k, 26, k + 1, 31, "red")
+            px.rect(k + 2, 26, k + 3, 31, "cream")
+        px.hline(10, 53, 25, "ink")
+        outline_rect(px, 18, 35, 45, 42, "red")
+        draw_small(px, 21, 37, "PASTEL", "cream")
+        outline_rect(px, 14, 6, 21, 18, "night")
+        outline_rect(px, 26, 9, 50, 20, "dusk")
+        px.rect(27, 10, 49, 11, "gold")
+        # o cassino embaixo: luz neon vazando pela grade do porão
+        px.rect(24, 0, 44, 3, "purple")
+        for k in range(25, 44, 3):
+            px.vline(k, 0, 3, "neon")
+        px.dither(22, 4, 46, 6, "cream", "neon", 0.25)
+    elif heist_id == "banco-central":
+        outline_rect(px, 8, 4, 55, 30, "pale", "steel")
+        for cx in range(11, 54, 9):
+            px.rect(cx, 6, cx + 3, 27, "cream")
+            px.vline(cx + 1, 6, 27, "mist")
+        px.rect(6, 30, 57, 33, "mist")
+        px.frame(6, 30, 57, 33, "steel")
+        for i in range(10):                                         # frontão
+            px.hline(8 + i * 2 + 2, 55 - i * 2 - 2, 34 + i, "pale")
+        px.hline(8, 55, 34, "steel")
+        draw_small(px, 28, 36, "BC", "gold")
+        outline_rect(px, 27, 4, 36, 18, "bronze")
+    elif heist_id == "banca-do-bicho":
+        outline_rect(px, 10, 4, 53, 32, "cream")
+        px.rect(11, 5, 52, 9, "green")                              # azulejo verde
+        for k in range(10, 54, 6):                                  # toldo verde e branco
+            px.rect(k, 18, k + 2, 23, "green")
+            px.rect(k + 3, 18, k + 5, 23, "cream")
+        px.hline(10, 53, 17, "ink")
+        outline_rect(px, 14, 4, 22, 16, "night")
+        px.rect(24, 4, 50, 15, "slate")                             # porta de aço meio aberta
+        for yy in range(9, 15, 2):
+            px.hline(24, 50, yy, "steel")
+        px.frame(24, 4, 50, 15, "ink")
+        outline_rect(px, 18, 25, 45, 31, "green")
+        draw_small(px, 26, 26, "BAR", "lamp")
+        # quadro do bicho no telhado
+        px.vline(24, 33, 35, "ink"); px.vline(40, 33, 35, "ink")
+        outline_rect(px, 18, 35, 46, 46, "cream")
+        for i in range(3):
+            for j in range(2):
+                px.rect(20 + i * 9, 37 + j * 4, 25 + i * 9, 39 + j * 4, ("wine", "green", "police")[(i + j) % 3])
+    elif heist_id == "carro-forte":
+        outline_rect(px, 14, 9, 58, 30, "police")                  # baú
+        px.rect(15, 24, 57, 25, "gold")
+        draw_small(px, 18, 15, "VALORES", "gold")
+        for k in range(16, 58, 6):
+            px.dot(k, 28, "steel")
+        outline_rect(px, 4, 9, 15, 26, "police")                   # cabine cara-chata
+        px.rect(5, 17, 12, 24, "night")
+        px.line(6, 23, 9, 18, "cyan")
+        px.rect(4, 9, 7, 12, "lamp")
+        px.rect(3, 8, 59, 9, "ink")
+        for wx in (11, 44, 52):
+            px.disc(wx, 7, 3, "ink")
+            px.dot(wx, 7, "mist")
+        px.rect(38, 31, 41, 32, "gold")                            # giroflex âmbar
+    elif heist_id == "museu":
+        outline_rect(px, 6, 4, 57, 28, "pale", "steel")
+        for cx in range(9, 56, 8):
+            px.rect(cx, 6, cx + 3, 25, "cream")
+            px.vline(cx + 1, 6, 25, "mist")
+        px.rect(4, 28, 59, 31, "mist")
+        px.frame(4, 28, 59, 31, "steel")
+        for i in range(12):
+            px.hline(6 + i * 2 + 2, 57 - i * 2 - 2, 32 + i, "pale")
+        px.hline(6, 57, 32, "steel")
+        px.disc(31, 37, 2, "gold")
+        px.rect(13, 10, 17, 24, "wine")                            # faixas da exposição
+        px.rect(46, 10, 50, 24, "wine")
+        px.rect(14, 18, 16, 20, "coral")
+        px.rect(47, 18, 49, 20, "coral")
+        outline_rect(px, 20, 13, 43, 19, "slate")
+        draw_small(px, 22, 14, "MUSEU", "gold")
+        outline_rect(px, 27, 4, 36, 11, "night")
+    return px
+
+
+def _siren(base, frame):
+    """Giroflex: vermelho à esquerda no quadro 0, azul à direita no 1."""
+    px = Px(THUMB_W, THUMB_H)
+    px.img = base.img.copy()
+    px.px = px.img.load()
+    lit, side = ("red", 0) if frame == 0 else ("blue", 1)
+    x0, x1 = (0, THUMB_W // 2 - 1) if side == 0 else (THUMB_W // 2, THUMB_W - 1)
+    bayer = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
+    for y in range(4, THUMB_H):
+        for x in range(x0, x1 + 1):
+            dist = abs(x - (4 if side == 0 else THUMB_W - 5)) + abs(y - (THUMB_H - 5))
+            r_, g_, b_, _ = px.get(x, y)
+            if r_ + g_ + b_ < 260 and bayer[y % 4][x % 4] < max(0, 7 - dist // 9):   # só no escuro: o letreiro fica legível
+                px.dot(x, y, lit)
+    # as duas luzes do giroflex nos cantos de cima
+    for cx, c in ((4, "red"), (THUMB_W - 5, "blue")):
+        on = c == lit
+        px.disc(cx, THUMB_H - 5, 3, c if on else ("winedark" if c == "red" else "police"))
+        px.ring(cx, THUMB_H - 5, 3, "ink")
+        if on:
+            px.dot(cx - 1, THUMB_H - 4, "cream")
+    return px
+
+
+def thumbnails():
+    out = {}
+    for hid in ("loterica", "joalheria", "cambio", "cassino", "banco-central", "banca-do-bicho", "carro-forte", "museu"):
+        normal = _thumb(hid)
+        normal.frame(0, 0, THUMB_W - 1, THUMB_H - 1, "ink")
+        sirens = [_siren(normal, f) for f in (0, 1)]
+        for px in sirens:
+            px.frame(0, 0, THUMB_W - 1, THUMB_H - 1, "ink")
+        out[hid] = (normal, sirens[0], sirens[1])
+    return out
+
+
 
 def main():
     if PREVIEW is not None:
@@ -1876,16 +2598,27 @@ def main():
                                        door=THEMES[theme]["door"], lightColor=color_obj(THEMES[theme]["lamp"])))
 
     for h in heists:
+        saved = None
+        if h["extra"]:  # golpe extra com sorteio próprio: não mexe na sequência dos 5 prédios da escada
+            saved = rng.getstate()
+            rng.seed(seed_for(h["id"], 0))
         for i, room in enumerate(h["rooms"]):
             theme = room_theme(h["id"], room, i)
             bg = room_background(KINDS[room["kind"]], theme, h["id"], room["name"], room["obstacle"], i)
             bg.save(ART / f"Salas/Sala_{h['id']}_{i}.png", PREVIEW, 2)
-        extra = build_underground(h, None, layout) if h["id"] in ("cassino", "banco-central") else build_street_level(h, None, layout)
+        if h["id"] in ("cassino", "banco-central"):
+            extra = build_underground(h, None, layout)
+        elif h["id"] == "carro-forte":
+            extra = build_carro_forte(h, None, layout)
+        else:
+            extra = build_street_level(h, None, layout)
         amb = AMBIENT.get(h["id"], ("pale", 0.6))
         b = dict(heistId=h["id"], name=h["name"], tier=h["tier"], ambient=color_obj(amb[0]), ambientIntensity=amb[1],
                  underground=h["id"] in ("cassino", "banco-central"), **{k: v for k, v in extra.items() if k != "doors"})
         b["rooms"] = [room_layout(h, i, r, extra) for i, r in enumerate(h["rooms"])]
         layout["buildings"].append(b)
+        if saved is not None:
+            rng.setstate(saved)
 
     # adereços
     props = {"Grade": prop_grade("ferro"), "GradeEnferrujada": prop_grade("enferrujada"), "GradeDourada": prop_grade("dourada"),
@@ -1970,6 +2703,16 @@ def main():
     atlas.save(ART / "Fonte/Fonte_pixel.png", PREVIEW, 4)
     layout["font"] = [dict(c=ch, x=x, y=y, w=w) for (ch, x, y, w) in table]
     layout["fontCellH"] = CELL_H
+
+    # miniaturas dos prédios (64x48), normal e com o giroflex (2 quadros)
+    layout["thumbnails"] = []
+    for hid, (normal, s0, s1) in thumbnails().items():
+        base = f"Predios/Miniatura_{hid}"
+        normal.save(ART / f"{base}.png", PREVIEW, 4)
+        s0.save(ART / f"{base}_sirene_0.png", PREVIEW, 4)
+        s1.save(ART / f"{base}_sirene_1.png", PREVIEW, 4)
+        layout["thumbnails"].append(dict(heistId=hid, normal=f"{base}.png",
+                                         siren=[f"{base}_sirene_0.png", f"{base}_sirene_1.png"]))
 
     # paleta
     palette_image(8).save(ART / "Paleta.png")
