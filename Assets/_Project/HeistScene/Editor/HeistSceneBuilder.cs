@@ -13,8 +13,9 @@ namespace AFirma.HeistScene.EditorTools
     /// Thieves/Gazua/Art/Source~/gerar_gazua.py) e do layout.json:
     ///   1. importa e fatia os PNG (pixel art, PPU 32, pivô de cada tipo)
     ///   2. Gazua: animações, Animator, retrato, sons, ícones e VFX da habilidade
-    ///   3. prefabs: salas modulares (uma por RoomKind), personagens, veículos e os 5 prédios (ligados nos HeistDef)
-    ///   4. cena Heist: câmera Pixel Perfect, fundo da cidade, clima do alerta e HeistView (a HUD é o prefab do Enzo)
+    ///   3. prefabs: salas modulares (uma por RoomKind), personagens, veículos e os 8 prédios, com as miniaturas (ligados nos HeistDef)
+    ///   4. cena Heist: câmera Pixel Perfect, fundo da cidade, clima do alerta, HeistView e a abertura (a HUD é o prefab do Enzo)
+    ///   5. Esconderijo vivo: monitores dos bicos, upgrades virando coisas no porão e a crew, na cena Hideout
     /// Menu: A Firma > Cena do Golpe. Rodar de novo refaz tudo sem quebrar referência (GUIDs e nomes ficam).
     /// Linha de comando: Unity -batchmode -quit -projectPath . -executeMethod AFirma.HeistScene.EditorTools.HeistSceneBuilder.BuildAll
     /// </summary>
@@ -27,13 +28,14 @@ namespace AFirma.HeistScene.EditorTools
         const string LayoutFile = ArtDir + "/Source~/layout.json";
         const float Ppu = 32f;
 
-        [MenuItem("A Firma/Cena do Golpe/Gerar tudo (arte, Gazua, prefabs e cena)")]
+        [MenuItem("A Firma/Cena do Golpe/Gerar tudo (arte, Gazua, prefabs, cena e esconderijo vivo)")]
         public static void BuildAll()
         {
             ImportArt();
             BuildGazua();
             BuildPrefabs();
             BuildHeistScene();
+            BuildHideoutLife();
             AssetDatabase.SaveAssets();
             Debug.Log("[Cena do Golpe] Tudo gerado.");
         }
