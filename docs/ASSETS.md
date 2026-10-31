@@ -31,9 +31,10 @@ Linha a linha: a noite azulada de Nova Guanabara (ink → cream), a luz quente d
 
 ## Direção de arte da Cena do Golpe (Miguel)
 
-- **Prédio em corte lateral**, salas de 192×96 px lado a lado, paredes de 8 px com porta, fachada por fora nos andares de cima e a rua com van, poste e orelhão. Um prédio por golpe, cada um com tema próprio (Lotérica verde-menta, Joalheria vinho e dourado, Câmbio de fórmica e vidro azul, Cassino roxo debaixo da pastelaria, Banco Central de mármore no subsolo com o túnel de terra).
+- **Prédio em corte lateral**, salas de 192×96 px lado a lado, paredes de 8 px com porta, fachada por fora nos andares de cima e a rua com van, poste e orelhão. Um prédio por golpe, cada um com tema próprio (Lotérica verde-menta, Joalheria vinho e dourado, Câmbio de fórmica e vidro azul, Cassino roxo debaixo da pastelaria, Banco Central de mármore no subsolo com o túnel de terra). Os golpes extras também têm prédio próprio: a **Banca do Bicho** é o boteco do Tonhão (azulejo verde, toldo, mesa de plástico na calçada e o quadro do bicho no telhado), o **Carro-forte** é o caminhão da Guanabara Valores em corte na Avenida do Porto (cabine, trava da porta e baú cheio de malote) e o **Museu** tem fachada neoclássica com frontão, galerias vinho com quadros, lasers vermelhos e o "Pôr do Sol na Guanabara" no cofre.
 - **Toda a arte da cena é desenhada pixel a pixel por script, já na paleta** (`HeistScene/Art/Source~/gerar_cena.py`): salas, adereços dos obstáculos (fechado/aberto), NPCs 32×32 no mesmo padrão do 171, fachadas, letreiros, fundo da cidade, ícones e uma fonte pixel com acento. Mudou o golpe, roda o script e o Unity refaz tudo (ver `HeistScene/LEIA-ME.md`).
 - **Os packs de cenário do craftpix** (`StreetBackgrounds`, `NightCityTiles`) foram desenhados pra 1920×1080, três vezes a nossa escala (640×360 com PPU 32). Reduzidos, viram borrão; usados no tamanho original, ficam gigantes ao lado dos ladrões de 32 px. Eles ficaram como referência de clima (a noite azul-acinzentada inspirou a paleta) e a cena não depende do zip: quem clona o repositório já vê o jogo inteiro.
+- **Miniatura de cada prédio** (64×48, `HeistScene/Art/Predios/Miniatura_<golpe>.png`), desenhada à mão em pixel (não é o prédio reduzido), com a placa ou o ícone de cada um, pro mapa e pra faixa Golpes rolando. A versão de sirene tem 2 quadros (`_sirene_0` vermelho, `_sirene_1` azul) com o giroflex e a luz da viatura batendo no céu.
 - **Luz conta a história**: Light2D quente em cada sala, lanterna dos guardas, cone das câmeras, giroflex vermelho no alerta alto e vermelho/azul da viatura na sirene. A luz ambiente muda por prédio.
 
 ## Direção de arte da UI (Enzo)
@@ -101,7 +102,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 
 | O quê | Como foi feito | Onde está | Quem fez |
 |---|---|---|---|
-| Arte da Cena do Golpe (salas, prédios, NPCs, ícones, fundo, fonte pixel) | Script Python que desenha pixel a pixel na paleta | `HeistScene/Art` (script em `Art/Source~`) | Miguel |
+| Arte da Cena do Golpe (salas, prédios dos 8 golpes, miniaturas, NPCs, ícones, fundo, fonte pixel) | Script Python que desenha pixel a pixel na paleta | `HeistScene/Art` (script em `Art/Source~`) | Miguel |
 | 171 (sheet e retrato) | Script Python que desenha pixel a pixel na paleta | `Thieves/171/Art` (script em `Art/Source~/gerar_171.py`) | Nicolas |
 | 171: ícones da Lábia e do Bilhete premiado, balão "BLÁ BLÁ" do VFX | Script Python, mesmo padrão do Disquete | `Thieves/171/Icons`, `VFX` (script em `Art/Source~/gerar_icones_171.py`) | Nicolas |
 | Sons do 171 (conversa mole e a Lábia) | Sintetizados por script, sem sample | `Thieves/171/Audio` (script em `Audio/Source~/gerar_sons_171.py`) | Nicolas |

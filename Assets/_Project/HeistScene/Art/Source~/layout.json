@@ -1457,6 +1457,710 @@
      "dust": false
     }
    ]
+  },
+  {
+   "heistId": "banca-do-bicho",
+   "name": "Banca do Bicho do Tonhão",
+   "tier": 1,
+   "ambient": {
+    "r": 0.9686274509803922,
+    "g": 0.8313725490196079,
+    "b": 0.40784313725490196,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.6,
+   "underground": false,
+   "shell": "Predios/Predio_banca-do-bicho.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 608,
+   "streetY": 0,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 3
+    },
+    {
+     "x": 4,
+     "y": 3
+    },
+    {
+     "x": 22,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 0
+   },
+   "police": {
+    "x": -262,
+    "y": 0
+   },
+   "props": [
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 638,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 668,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": 758,
+     "y": 0
+    }
+   ],
+   "cameraY": 124,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Apontador",
+     "kind": 2,
+     "obstacle": 2,
+     "x": 8,
+     "background": "Salas/Sala_banca-do-bicho_0.png",
+     "prop": "npc:apontador",
+     "propX": 158,
+     "propY": 3,
+     "backWall": false,
+     "workX": 132,
+     "entryX": 22,
+     "exitX": 194,
+     "iconX": 158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Escritório do gerente",
+     "kind": 4,
+     "obstacle": 2,
+     "x": 208,
+     "background": "Salas/Sala_banca-do-bicho_1.png",
+     "prop": "npc:bicheiro",
+     "propX": 358,
+     "propY": 3,
+     "backWall": false,
+     "workX": 332,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 358,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Caixa do Tonhão",
+     "kind": 5,
+     "obstacle": 2,
+     "x": 408,
+     "background": "Salas/Sala_banca-do-bicho_2.png",
+     "prop": "npc:tonhao",
+     "propX": 558,
+     "propY": 3,
+     "backWall": false,
+     "workX": 532,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 558,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  },
+  {
+   "heistId": "carro-forte",
+   "name": "Carro-forte da Avenida do Porto",
+   "tier": 3,
+   "ambient": {
+    "r": 0.803921568627451,
+    "g": 0.8352941176470589,
+    "b": 0.8901960784313725,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.5,
+   "underground": false,
+   "shell": "Predios/Predio_carro-forte.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 608,
+   "streetY": -24,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": -21
+    },
+    {
+     "x": -12,
+     "y": -21
+    },
+    {
+     "x": -4,
+     "y": -9
+    },
+    {
+     "x": 4,
+     "y": 3
+    },
+    {
+     "x": 22,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": -24
+   },
+   "police": {
+    "x": -262,
+    "y": -24
+   },
+   "props": [
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": -24,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -36,
+     "y": -24
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 668,
+     "y": -24,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 638,
+     "y": -24
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": 758,
+     "y": -24
+    }
+   ],
+   "cameraY": 124,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Cabine do motorista",
+     "kind": 7,
+     "obstacle": 2,
+     "x": 8,
+     "background": "Salas/Sala_carro-forte_0.png",
+     "prop": "npc:vigilante",
+     "propX": 158,
+     "propY": 3,
+     "backWall": false,
+     "workX": 132,
+     "entryX": 22,
+     "exitX": 194,
+     "iconX": 158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        205,
+        213,
+        227
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Trava da porta",
+     "kind": 7,
+     "obstacle": 0,
+     "x": 208,
+     "background": "Salas/Sala_carro-forte_1.png",
+     "prop": "Grade",
+     "propX": 364,
+     "propY": 4,
+     "backWall": false,
+     "workX": 340,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 364,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        205,
+        213,
+        227
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Baú",
+     "kind": 5,
+     "obstacle": 0,
+     "x": 408,
+     "background": "Salas/Sala_carro-forte_2.png",
+     "prop": "Cofre",
+     "propX": 558,
+     "propY": 22,
+     "backWall": true,
+     "workX": 536,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 558,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        205,
+        213,
+        227
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
+  },
+  {
+   "heistId": "museu",
+   "name": "Museu de Nova Guanabara",
+   "tier": 4,
+   "ambient": {
+    "r": 0.9254901960784314,
+    "g": 0.8235294117647058,
+    "b": 0.6274509803921569,
+    "a": 1.0
+   },
+   "ambientIntensity": 0.5,
+   "underground": false,
+   "shell": "Predios/Predio_museu.png",
+   "shellX": -288,
+   "shellY": -48,
+   "width": 1208,
+   "streetY": 0,
+   "entryPath": [
+    {
+     "x": -60,
+     "y": 3
+    },
+    {
+     "x": 4,
+     "y": 3
+    },
+    {
+     "x": 22,
+     "y": 3
+    }
+   ],
+   "van": {
+    "x": -150,
+    "y": 0
+   },
+   "police": {
+    "x": -262,
+    "y": 0
+   },
+   "props": [
+    {
+     "sprite": "Rua/Poste.png",
+     "x": -96,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Orelhao.png",
+     "x": -30,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Lixeira.png",
+     "x": 1238,
+     "y": 0
+    },
+    {
+     "sprite": "Rua/Poste.png",
+     "x": 1268,
+     "y": 0,
+     "light": true
+    },
+    {
+     "sprite": "Rua/Banca.png",
+     "x": 1358,
+     "y": 0
+    }
+   ],
+   "cameraY": 124,
+   "rooms": [
+    {
+     "index": 0,
+     "name": "Portaria",
+     "kind": 0,
+     "obstacle": 2,
+     "x": 8,
+     "background": "Salas/Sala_museu_0.png",
+     "prop": "npc:bilheteira",
+     "propX": 158,
+     "propY": 3,
+     "backWall": false,
+     "workX": 132,
+     "entryX": 22,
+     "exitX": 194,
+     "iconX": 158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [],
+     "lights": [
+      {
+       "x": 104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 68,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 1,
+     "name": "Corredor dos sensores",
+     "kind": 1,
+     "obstacle": 1,
+     "x": 208,
+     "background": "Salas/Sala_museu_1.png",
+     "prop": "Painel",
+     "propX": 358,
+     "propY": 40,
+     "backWall": true,
+     "workX": 346,
+     "entryX": 222,
+     "exitX": 394,
+     "iconX": 358,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 232,
+       "maxX": 312
+      }
+     ],
+     "cameras": [
+      {
+       "x": 228,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 304,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 268,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 2,
+     "name": "Sala de câmeras",
+     "kind": 3,
+     "obstacle": 1,
+     "x": 408,
+     "background": "Salas/Sala_museu_2.png",
+     "prop": "Cftv",
+     "propX": 548,
+     "propY": 30,
+     "backWall": true,
+     "workX": 536,
+     "entryX": 422,
+     "exitX": 594,
+     "iconX": 548,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [
+      {
+       "x": 428,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 504,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 468,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 3,
+     "name": "Galeria",
+     "kind": 1,
+     "obstacle": 1,
+     "x": 608,
+     "background": "Salas/Sala_museu_3.png",
+     "prop": "Painel",
+     "propX": 758,
+     "propY": 40,
+     "backWall": true,
+     "workX": 746,
+     "entryX": 622,
+     "exitX": 794,
+     "iconX": 758,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 632,
+       "maxX": 712
+      }
+     ],
+     "cameras": [
+      {
+       "x": 628,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 704,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 668,
+     "alarmY": 90,
+     "door": "madeira",
+     "dust": false
+    },
+    {
+     "index": 4,
+     "name": "Alarme da ala nobre",
+     "kind": 4,
+     "obstacle": 1,
+     "x": 808,
+     "background": "Salas/Sala_museu_4.png",
+     "prop": "Terminal",
+     "propX": 960,
+     "propY": 22,
+     "backWall": false,
+     "workX": 938,
+     "entryX": 822,
+     "exitX": 994,
+     "iconX": 960,
+     "iconY": 72,
+     "guards": [
+      {
+       "variant": "seguranca",
+       "minX": 832,
+       "maxX": 912
+      }
+     ],
+     "cameras": [
+      {
+       "x": 828,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 904,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 868,
+     "alarmY": 90,
+     "door": "metal",
+     "dust": false
+    },
+    {
+     "index": 5,
+     "name": "Cofre do quadro",
+     "kind": 5,
+     "obstacle": 1,
+     "x": 1008,
+     "background": "Salas/Sala_museu_5.png",
+     "prop": "CofreEletronico",
+     "propX": 1158,
+     "propY": 22,
+     "backWall": true,
+     "workX": 1136,
+     "entryX": 1022,
+     "exitX": 1194,
+     "iconX": 1158,
+     "iconY": 72,
+     "guards": [],
+     "cameras": [
+      {
+       "x": 1028,
+       "y": 82,
+       "facing": 1
+      }
+     ],
+     "lights": [
+      {
+       "x": 1104,
+       "y": 80,
+       "color": [
+        247,
+        212,
+        104
+       ],
+       "radius": 5.0,
+       "intensity": 0.85
+      }
+     ],
+     "alarmX": 1068,
+     "alarmY": 90,
+     "door": "",
+     "dust": false
+    }
+   ]
   }
  ],
  "defaults": [
@@ -1773,6 +2477,94 @@
   {
    "name": "bicheiro",
    "sheet": "Personagens/NPC_bicheiro.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "apontador",
+   "sheet": "Personagens/NPC_apontador.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "tonhao",
+   "sheet": "Personagens/NPC_tonhao.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "vigilante",
+   "sheet": "Personagens/NPC_vigilante.png",
+   "anims": [
+    {
+     "name": "idle",
+     "frames": 2
+    },
+    {
+     "name": "andar",
+     "frames": 4
+    },
+    {
+     "name": "alerta",
+     "frames": 2
+    },
+    {
+     "name": "distraido",
+     "frames": 2
+    }
+   ]
+  },
+  {
+   "name": "bilheteira",
+   "sheet": "Personagens/NPC_bilheteira.png",
    "anims": [
     {
      "name": "idle",
@@ -2544,5 +3336,71 @@
    "order": -80
   }
  ],
- "fontCellH": 11
+ "fontCellH": 11,
+ "thumbnails": [
+  {
+   "heistId": "loterica",
+   "normal": "Predios/Miniatura_loterica.png",
+   "siren": [
+    "Predios/Miniatura_loterica_sirene_0.png",
+    "Predios/Miniatura_loterica_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "joalheria",
+   "normal": "Predios/Miniatura_joalheria.png",
+   "siren": [
+    "Predios/Miniatura_joalheria_sirene_0.png",
+    "Predios/Miniatura_joalheria_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "cambio",
+   "normal": "Predios/Miniatura_cambio.png",
+   "siren": [
+    "Predios/Miniatura_cambio_sirene_0.png",
+    "Predios/Miniatura_cambio_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "cassino",
+   "normal": "Predios/Miniatura_cassino.png",
+   "siren": [
+    "Predios/Miniatura_cassino_sirene_0.png",
+    "Predios/Miniatura_cassino_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "banco-central",
+   "normal": "Predios/Miniatura_banco-central.png",
+   "siren": [
+    "Predios/Miniatura_banco-central_sirene_0.png",
+    "Predios/Miniatura_banco-central_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "banca-do-bicho",
+   "normal": "Predios/Miniatura_banca-do-bicho.png",
+   "siren": [
+    "Predios/Miniatura_banca-do-bicho_sirene_0.png",
+    "Predios/Miniatura_banca-do-bicho_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "carro-forte",
+   "normal": "Predios/Miniatura_carro-forte.png",
+   "siren": [
+    "Predios/Miniatura_carro-forte_sirene_0.png",
+    "Predios/Miniatura_carro-forte_sirene_1.png"
+   ]
+  },
+  {
+   "heistId": "museu",
+   "normal": "Predios/Miniatura_museu.png",
+   "siren": [
+    "Predios/Miniatura_museu_sirene_0.png",
+    "Predios/Miniatura_museu_sirene_1.png"
+   ]
+  }
+ ]
 }

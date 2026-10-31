@@ -33,7 +33,7 @@ De vez em quando uma lotação passa na rua, atrás do prédio. Tudo respeita a 
 | `Prefabs/Predios` | Os 5 prédios, montados com as salas modulares + casca própria (fachada, letreiro, rua). Já ligados no `buildingPrefab` de cada `HeistDef` |
 | `Prefabs/Personagens`, `Veiculos` | Guarda (ronda ou posto), câmera de segurança, ladrão, van e viatura |
 | `Prefabs/CameraPixelPerfect` | Câmera padrão do jogo pra qualquer cena: Pixel Perfect (PPU 32, 640×360), fundo noturno e pós-processamento |
-| `Art/` | Toda a arte, gerada pixel a pixel na paleta (`Art/Paleta.png`). `Art/Source~` tem os scripts e o `layout.json` |
+| `Art/` | Toda a arte, gerada pixel a pixel na paleta (`Art/Paleta.png`). `Art/Source~` tem os scripts e o `layout.json`. `Art/Predios/Miniatura_<golpe>.png` (64×48) e `_sirene_0/_1` são as miniaturas pro mapa e pra faixa Golpes rolando (lista `thumbnails` do `layout.json`) |
 | `Audio/` | Sons da cena (grana na sacola, porta), sintetizados por script |
 | `HeistSceneArt.asset` | Referências que não são de um prédio: salas modulares, ícones, fonte, ladrão genérico, sons |
 
