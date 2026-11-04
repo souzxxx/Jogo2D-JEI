@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using AFirma.Core;
 using AFirma.HeistScene;
 using NUnit.Framework;
@@ -100,6 +101,31 @@ namespace AFirma.Tests
             Assert.IsTrue(Services.Economy.BuyUpgrade(contacts));
             yield return null;
             Assert.Greater(layer.Q("upgrade: " + contacts.id).childCount, 0, "Comprou e o telefone não apareceu.");
+        }
+
+        [UnityTest]
+        public IEnumerator Tip_OnAJailedPhoto_GoesAwayWhenTheThiefIsReleased()
+        {
+            MidGame();
+            yield return OpenHideout();
+            var life = Object.FindAnyObjectByType<HideoutLife>();
+            var layer = life.Layer;
+            var thief = Services.State.crew[5];
+            var photo = layer.Q("foto: " + thief.DisplayName);
+            var tip = layer.Q<Label>("dica");
+
+            // mouse em cima da foto do preso: o UI Toolkit não aceita PointerEnter sintético, então marca o que o PointerEnter marca
+            const BindingFlags Private = BindingFlags.NonPublic | BindingFlags.Instance;
+            typeof(HideoutLife).GetField("hovered", Private).SetValue(life, photo);
+            typeof(HideoutLife).GetMethod("ShowTip", Private).Invoke(life, new object[] { "teste", photo.worldBound.center });
+            yield return null;
+            Assert.AreEqual(DisplayStyle.Flex, tip.style.display.value, "A dica do preso não apareceu.");
+
+            // ele sai da cadeia com o mouse parado: a foto some do mural e não recebe PointerLeave
+            Services.Crew.SetStatus(thief, ThiefStatus.Available);
+            yield return new WaitForSecondsRealtime(0.7f);
+            Assert.IsNull(photo.panel, "A foto devia ter saído do mural.");
+            Assert.AreEqual(DisplayStyle.None, tip.style.display.value, "A dica do preso ficou presa na tela depois que ele saiu.");
         }
 
         /// <summary>Foto do esconderijo vivo pro itch e pro GDD (não é teste de verdade). Saída em AFIRMA_FOTOS.</summary>

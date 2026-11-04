@@ -71,7 +71,7 @@ namespace AFirma.HeistScene
             public float t, life, rise;
         }
 
-        VisualElement hideout, layer, content;
+        VisualElement hideout, layer, content, hovered;
         Label tip, bubble;
         readonly List<Monitor> monitors = new List<Monitor>();
         readonly Dictionary<UpgradeEffect, Gadget> gadgets = new Dictionary<UpgradeEffect, Gadget>();
@@ -187,9 +187,25 @@ namespace AFirma.HeistScene
         void Hover(VisualElement e, System.Func<string> text)
         {
             e.pickingMode = PickingMode.Position;
-            e.RegisterCallback<PointerEnterEvent>(ev => ShowTip(text(), ev.position));
+            e.RegisterCallback<PointerEnterEvent>(ev => { hovered = e; ShowTip(text(), ev.position); });
             e.RegisterCallback<PointerMoveEvent>(ev => MoveTip(ev.position));
-            e.RegisterCallback<PointerLeaveEvent>(_ => tip.style.display = DisplayStyle.None);
+            e.RegisterCallback<PointerLeaveEvent>(_ => HideTip(e));
+        }
+
+        void HideTip(VisualElement owner)
+        {
+            if (hovered != owner) return;
+            hovered = null;
+            tip.style.display = DisplayStyle.None;
+        }
+
+        /// <summary>
+        /// Quem sai da hierarquia debaixo do mouse não recebe PointerLeave: sem isto, a dica de um preso que acabou de ser
+        /// solto (ou de um upgrade que acabou de crescer) ficava presa na tela. Chamar antes de limpar o contêiner.
+        /// </summary>
+        void DropTipInside(VisualElement container)
+        {
+            if (hovered != null && container.Contains(hovered)) HideTip(hovered);
         }
 
         // ---------------- Monitores dos bicos ----------------
@@ -294,6 +310,7 @@ namespace AFirma.HeistScene
                 if (level == g.level) continue;
                 bool grew = g.level >= 0 && level > g.level && !firstRefresh;
                 g.level = level;
+                DropTipInside(g.root);
                 g.root.Clear();
                 if (level > 0) Draw(g);
                 if (grew) g.revealPending = true;
@@ -425,6 +442,8 @@ namespace AFirma.HeistScene
             if (!force && s == crewSignature) return;
             crewSignature = s;
 
+            DropTipInside(crewLayer);
+            DropTipInside(photoLayer);
             crewLayer.Clear();
             mates.Clear();
             int slot = 0;
@@ -488,7 +507,7 @@ namespace AFirma.HeistScene
 
             // de vez em quando alguém comemora e solta um bordão
             chatterIn -= dt;
-            if (chatterIn <= 0f && mates.Count > 0)
+            if (chatterIn <= 0f && mates.Count > 0 && hovered == null) // com a dica do mouse aberta, ninguém fala por cima
             {
                 chatterIn = Random.Range(7f, 13f);
                 var m = mates[Random.Range(0, mates.Count)];
@@ -535,6 +554,9 @@ namespace AFirma.HeistScene
 
         void ShowTip(string text, Vector2 panelPos)
         {
+            // a dica do mouse e o balão de bordão nascem no mesmo lugar (em cima da crew): a dica ganha
+            bubble.style.display = DisplayStyle.None;
+            bubbleLeft = 0f;
             tip.text = text;
             tip.style.display = DisplayStyle.Flex;
             tip.BringToFront();
