@@ -14,7 +14,9 @@ namespace AFirma.HeistScene
     /// na porta, METER O PÉ e SÓ MAIS UMA, e a crew indo na "só mais uma" · a câmera vai até a rua ver a viatura
     /// do Delegado Bastos chegando e ele descendo · todo mundo algemado · flash de fotógrafo e a cena congela em
     /// sépia, que é quando a capa do jornal entra. Nada aqui mexe no save nem no golpe.
+    /// Roda depois do HeistView: na rua, a câmera é desta peça mesmo se a crew ainda estiver andando.
     /// </summary>
+    [DefaultExecutionOrder(100)]
     public class IntroSceneView : MonoBehaviour
     {
         public HeistView view;
@@ -38,8 +40,11 @@ namespace AFirma.HeistScene
         float signsT = -1f, chosenT = -1f;
         readonly List<FallingNote> rain = new List<FallingNote>();
         SpriteRenderer flash;
+        Sprite flashSprite;
         float flashT = -1f;
+        bool particlesPaused;
         Volume freezeVolume;
+        VolumeProfile freezeProfile;
         ColorAdjustments freezeColor;
 
         HeistSceneArt Art => view != null ? view.art : null;
@@ -265,7 +270,8 @@ namespace AFirma.HeistScene
                 go.transform.localPosition = new Vector3(0f, 0f, 1f);
                 flash = go.AddComponent<SpriteRenderer>();
                 var tex = Texture2D.whiteTexture;
-                flash.sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), tex.width);
+                flashSprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f), tex.width);
+                flash.sprite = flashSprite;
                 flash.sortingOrder = 1000;
                 float h = cam.orthographicSize * 2f + 1f;
                 go.transform.localScale = new Vector3(h * cam.aspect + 1f, h, 1f);
@@ -276,13 +282,13 @@ namespace AFirma.HeistScene
             freezeVolume.isGlobal = true;
             freezeVolume.priority = 50f;
             freezeVolume.weight = 0f;
-            var profile = ScriptableObject.CreateInstance<VolumeProfile>();
-            profile.name = "Congelado";
-            freezeColor = profile.Add<ColorAdjustments>(true);
+            freezeProfile = ScriptableObject.CreateInstance<VolumeProfile>();
+            freezeProfile.name = "Congelado";
+            freezeColor = freezeProfile.Add<ColorAdjustments>(true);
             freezeColor.saturation.Override(-100f);
             freezeColor.contrast.Override(25f);
             freezeColor.colorFilter.Override(new Color(1f, 0.92f, 0.78f));
-            freezeVolume.profile = profile;
+            freezeVolume.profile = freezeProfile;
         }
 
         void UpdateFreeze(float realDt)
@@ -293,9 +299,12 @@ namespace AFirma.HeistScene
             // congela logo depois do flash: tudo que anda pelo SceneClock para no lugar
             if (flashT > 0.08f) SceneClock.Frozen = true;
             if (freezeVolume != null) freezeVolume.weight = Mathf.Clamp01((flashT - 0.05f) / 0.5f);
-            if (flashT > 0.12f && view.World != null)
+            if (!particlesPaused && flashT > 0.12f && view.World != null)
+            {
+                particlesPaused = true; // com a cena congelada, nenhuma partícula nova nasce: pausar uma vez basta
                 foreach (var ps in view.World.GetComponentsInChildren<ParticleSystem>())
                     if (ps.isPlaying) ps.Pause();
+            }
         }
 
         // ---------------- Todo frame ----------------
@@ -334,7 +343,7 @@ namespace AFirma.HeistScene
             SceneClock.Frozen = false;
             if (!active) return;
             active = false;
-            streetDone = cuffed = frozen = false;
+            streetDone = cuffed = frozen = particlesPaused = false;
             signsT = chosenT = flashT = -1f;
             foreach (var n in rain) if (n != null) Destroy(n.gameObject);
             rain.Clear();
@@ -345,6 +354,16 @@ namespace AFirma.HeistScene
             if (signForward != null) Destroy(signForward.gameObject);
             if (flash != null) Destroy(flash.gameObject);
             if (freezeVolume != null) Destroy(freezeVolume.gameObject);
+            // Sprite e perfil criados em código não somem junto com o GameObject: sem isso, cada "Ver abertura" deixava um de cada
+            if (flashSprite != null) Destroy(flashSprite);
+            if (freezeProfile != null)
+            {
+                foreach (var component in freezeProfile.components) if (component != null) Destroy(component);
+                Destroy(freezeProfile);
+            }
+            flashSprite = null;
+            freezeProfile = null;
+            freezeColor = null;
             bastos = null;
             bastosCar = null;
         }
