@@ -608,6 +608,26 @@ namespace AFirma.Tests
         }
 
         [Test]
+        public void Prestige_WithAThiefOnASideJobAndAnotherInJail_ComesBackWithEveryoneFree()
+        {
+            db.config.startingCrew = new List<ThiefType> { ThiefType.ConArtist, ThiefType.Locksmith };
+            FinishTheCycle();
+            var crew = Services.State.crew;
+            crew.Clear();
+            crew.Add(new ThiefState { id = "bico", type = ThiefType.ConArtist, status = ThiefStatus.OnSideJob, sideJobId = "catar-latinha" });
+            crew.Add(new ThiefState { id = "cana", type = ThiefType.Locksmith, status = ThiefStatus.Jailed, jailReleaseUnix = long.MaxValue });
+
+            progression.Prestige();
+
+            Assert.AreEqual(1, prestigeEvents.Count);
+            Assert.AreEqual(2, crew.Count, "Quem estava no bico e quem estava em cana sumiu junto: só os novatos.");
+            CollectionAssert.DoesNotContain(crew.ConvertAll(t => t.id), "bico");
+            CollectionAssert.DoesNotContain(crew.ConvertAll(t => t.id), "cana");
+            Assert.IsTrue(crew.TrueForAll(t => t.status == ThiefStatus.Available && t.sideJobId == null && t.jailReleaseUnix == 0),
+                "Ninguém volta preso nem preso a um bico do ciclo anterior.");
+        }
+
+        [Test]
         public void Prestige_HerancaAndLenda_GiveMoneyAndLevelsToTheNewCycle()
         {
             db.config.startingMoney = 50;
