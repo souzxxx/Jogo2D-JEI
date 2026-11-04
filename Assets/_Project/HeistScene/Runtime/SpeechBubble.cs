@@ -29,7 +29,7 @@ namespace AFirma.HeistScene
             b.text.transform.SetParent(go.transform, false);
             b.text.font = art.font;
             b.text.color = new Color(0.055f, 0.047f, 0.082f, 1f);
-            b.text.maxWidth = 110;
+            b.text.maxWidth = WrapWidth;
             b.text.sortingOrder = SortOrder.Bubble + 2;
             go.SetActive(false);
             return b;
@@ -41,7 +41,7 @@ namespace AFirma.HeistScene
             follow = target;
             offset = headOffset;
             gameObject.SetActive(true);
-            var size = text.SetText(line);
+            var size = Wrap(line);
             float w = (size.x + 8) / 32f, h = (size.y + 6) / 32f;
             bg.size = new Vector2(w, h);
             // o balão fica com a base 6 px acima da cabeça; a ponta aponta pra baixo
@@ -50,6 +50,25 @@ namespace AFirma.HeistScene
             tail.transform.localPosition = new Vector3(-2f / 32f, 2f / 32f, 0f);
             timeLeft = seconds;
             Place();
+        }
+
+        // Balão baixo: fala curta (até OneLineMax) vai numa linha só; fala longa quebra em WrapWidth e, se passar de 2 linhas,
+        // alarga até WideWrap. Balão de 3+ linhas subia até o teto da sala e encostava no que está pendurado lá (as placas
+        // METER O PÉ / SÓ MAIS UMA da abertura) e no balão do vizinho.
+        const int WrapWidth = 110, OneLineMax = 150, WideWrap = 170;
+
+        Vector2Int Wrap(string line)
+        {
+            if (text.font == null) return text.SetText(line);
+            text.maxWidth = text.font.Measure(line) <= OneLineMax ? OneLineMax : WrapWidth;
+            var size = text.SetText(line);
+            int lineH = text.font.cellHeight - 2 + text.lineSpacing;
+            if (size.y > 2 * lineH)
+            {
+                text.maxWidth = WideWrap;
+                size = text.SetText(line);
+            }
+            return size;
         }
 
         public void Hide() => gameObject.SetActive(false);

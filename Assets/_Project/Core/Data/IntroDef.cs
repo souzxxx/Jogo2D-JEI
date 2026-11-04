@@ -30,7 +30,7 @@ namespace AFirma.Core
             "O vigia é comigo. Já sou da família dele.",
         };
         [Tooltip("O grito da crew na porta, com a sirene tocando.")]
-        public string oneMoreShout = "Só mais uma porta, chefia! Só mais uma!";
+        public string oneMoreShout = "Só mais uma porta, chefia!";
         public string headline = "BASTOS PEGA A FIRMA NO BANCO CENTRAL";
         [TextArea(1, 3)] public string subheadline = "Quadrilha insistiu depois da sirene; delegado diz que ninguém mais vai ouvir falar dela";
         [Tooltip("Foto da capa: o Bastos com a firma algemada (a Cena do Golpe gera em HeistScene/Art/Abertura/Bastos_foto.png).")]

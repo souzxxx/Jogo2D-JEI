@@ -90,6 +90,72 @@ namespace AFirma.Tests
             Assert.That(toasts, Has.Some.Contains("Lábia").And.Some.Contains("alerta 20 → 0"), string.Join(" | ", toasts));
         }
 
+        /// <summary>Porta com a sirene tocando: a janela "A polícia tá chegando!" abre embaixo do "POLÍCIA EM", sem tampar a contagem.</summary>
+        [UnityTest]
+        public IEnumerator SirenDoor_PopupDoesNotCoverTheCountdown()
+        {
+            var root = Root<HeistHud>();
+            var h = Services.Heist;
+            float timeout = 10f;
+            while (h.Phase != HeistPhase.AwaitingDoor && timeout > 0f)
+            {
+                if (h.Phase == HeistPhase.AwaitingEvent)
+                {
+                    var choice = root.Q("popup").Query<Button>().Where(b => !b.ClassListContains("btn--off")).First();
+                    if (choice != null) Click(choice);
+                }
+                else if (h.Phase == HeistPhase.Working)
+                {
+                    if (!h.SirenActive) h.AddAlert(100f);
+                    h.CompleteCurrentRoom();
+                }
+                timeout -= Time.unscaledDeltaTime;
+                yield return null;
+            }
+            Assert.AreEqual(HeistPhase.AwaitingDoor, h.Phase);
+            Assert.IsTrue(h.SirenActive);
+            yield return null;
+            yield return null; // a contagem aparece, faz layout e a janela desce no frame seguinte
+
+            var countdown = root.Q("countdown");
+            var popup = root.Q("popup");
+            Assert.IsFalse(popup.ClassListContains("hidden"));
+            Assert.GreaterOrEqual(popup.worldBound.yMin, countdown.worldBound.yMax,
+                $"A janela da porta ({popup.worldBound}) tampa a contagem da polícia ({countdown.worldBound}).");
+        }
+
+        /// <summary>
+        /// Bip da Dona Cida com o jornal aberto (a prisão da abertura, um golpe com gente presa): o pager não cai em cima da
+        /// capa; o bip espera o jornal fechar e aparece no esconderijo.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator News_HoldsTheBipUntilTheHideout()
+        {
+            var root = Root<HeistHud>();
+            Services.Heist.Flee();
+            float timeout = 5f;
+            while (root.Q("news") == null && timeout > 0f) { timeout -= Time.unscaledDeltaTime; yield return null; }
+            Assert.IsNotNull(root.Q("news"), "O jornal não abriu.");
+
+            const string text = "Bip de teste com o jornal aberto.";
+            GameEvents.RaiseBip("Dona Cida", text);
+            yield return new WaitForSecondsRealtime(1f);
+            Assert.IsNull(root.Q("pager"), "O bip apareceu em cima do jornal.");
+
+            Click(root, "back");
+            yield return WaitForScene(SceneFlow.Hideout);
+            var hideout = Root<HideoutScreen>();
+            for (int i = 0; i < 20; i++) // os bips de antes (tutorial) vão sendo clicados
+            {
+                yield return new WaitForSecondsRealtime(0.3f);
+                var pager = hideout.Q<Button>("pager");
+                if (pager == null) continue;
+                if (pager.Query<Label>().Last().text == text) yield break;
+                Click(pager);
+            }
+            Assert.Fail("O bip segurado durante o jornal não apareceu no esconderijo.");
+        }
+
         [UnityTest]
         public IEnumerator Pause_FreezesTheHeist()
         {

@@ -315,7 +315,7 @@ namespace AFirma.HeistScene
             var effect = resolution.effect;
             if (effect == null) return;
             var talker = worker != null ? worker : (actors.Count > 0 ? actors[0] : null);
-            if (talker != null && !string.IsNullOrEmpty(effect.resultText)) talker.Say(effect.resultText);
+            if (talker != null && !string.IsNullOrEmpty(effect.resultText)) SayAlone(talker, effect.resultText);
             if (effect.delaySeconds > 0f && talker != null) talker.ShowMarker(art.delayIcon, effect.delaySeconds / Mathf.Max(0.1f, SceneClock.Speed));
             if (effect.bagPercentDelta < 0f && bagCarrier != null) DropNotes(bagCarrier.BagAnchor.position, 4);
             if (effect.jailRandomThief) PopIcon.Spawn(art.handcuffsIcon, spot + new Vector3(0.4f, 0.2f, 0f), 1.6f);
@@ -324,8 +324,12 @@ namespace AFirma.HeistScene
         void OnBark(ThiefState thief, string line)
         {
             var actor = Find(thief);
-            if (actor == null) return;
-            // um fala de cada vez: a crew anda junta e os balões ficariam um em cima do outro
+            if (actor != null) SayAlone(actor, line);
+        }
+
+        /// <summary>Um fala de cada vez: a crew anda junta e os balões ficariam um em cima do outro (bordão, grito da habilidade, resultado do evento, sirene).</summary>
+        void SayAlone(ThiefActor actor, string line)
+        {
             foreach (var other in actors) if (other != actor) other.Hush();
             actor.Say(line);
         }
@@ -352,7 +356,7 @@ namespace AFirma.HeistScene
             var actor = Find(thief);
             if (actor == null || ability == null) return;
             actor.SetPose(ThiefActor.Celebrate);
-            actor.Say(ability.displayName + "!");
+            SayAlone(actor, ability.displayName + "!");
             var room = building != null && roomIndex >= 0 ? building.rooms[roomIndex] : null;
             var at = room != null && room.Prop != null ? room.Prop.transform.position + new Vector3(0f, 0.5f, 0f) : actor.HeadPosition;
             if (ability.vfxPrefab != null)
@@ -379,7 +383,7 @@ namespace AFirma.HeistScene
             police.DriveTo(stop, 6f, 4f);
             police.SetFlashing(true);
             if (actors.Count > 0)
-                actors[Random.Range(0, actors.Count)].Say(SirenLines[Random.Range(0, SirenLines.Length)]);
+                SayAlone(actors[Random.Range(0, actors.Count)], SirenLines[Random.Range(0, SirenLines.Length)]);
         }
 
         void OnFinished(HeistResult result)

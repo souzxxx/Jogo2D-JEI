@@ -25,7 +25,7 @@ MonoBehaviour:
   - Cofre do Banco Central... hoje eu me aposento.
   - "C\xE2mera t\xE1 em loop. Pode passar desfilando."
   - "O vigia \xE9 comigo. J\xE1 sou da fam\xEDlia dele."
-  oneMoreShout: "S\xF3 mais uma porta, chefia! S\xF3 mais uma!"
+  oneMoreShout: "S\xF3 mais uma porta, chefia!"
   headline: BASTOS PEGA A FIRMA NO BANCO CENTRAL
   subheadline: "Quadrilha insistiu depois da sirene; delegado diz que ningu\xE9m mais vai ouvir falar dela"
   headlinePhoto: {fileID: 21300000, guid: f5e6bcfb99e3d4e4abe118f68e07eeb9, type: 3}

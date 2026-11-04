@@ -149,6 +149,10 @@ namespace AFirma.UI
             speed.text = h.Speed > 1f ? $"{h.Speed:0}x" : "1x";
             countdown.SetShown(h.SirenActive);
             countdown.text = $"POLÍCIA EM {Mathf.CeilToInt(h.PoliceSecondsLeft)}s";
+            // com a sirene, a janela da porta/evento desce pra baixo da contagem (senão "A polícia tá chegando!" tampa o "POLÍCIA EM")
+            popup.style.top = h.SirenActive && countdown.layout.height > 0f
+                ? new StyleLength(countdown.layout.yMax + 4f)
+                : new StyleLength(StyleKeyword.Null);
             foreach (var (thief, button) in abilities)
             {
                 button.SetAvailable(h.CanUseAbility(thief, out _));
@@ -210,8 +214,9 @@ namespace AFirma.UI
 
         void OnEventResolved(EventResolution resolution)
         {
+            // o texto do resultado já sai no balão de quem resolveu (Cena do Golpe); repetir aqui empilhava duas caixas iguais
             var text = resolution.effect != null ? resolution.effect.resultText : null;
-            Ui.Toast(root, string.IsNullOrEmpty(text) ? (resolution.success ? "Deu certo." : "Deu ruim.") : text);
+            if (string.IsNullOrEmpty(text)) Ui.Toast(root, resolution.success ? "Deu certo." : "Deu ruim.");
         }
 
         /// <summary>Capa do "O Guanabarense": manchete, dinheiro, salas, XP de cada um e quem foi preso.</summary>

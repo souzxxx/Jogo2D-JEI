@@ -29,8 +29,9 @@
 }
 
 .hud__small {
-    width: 28px;
+    min-width: 28px;
     margin: 0 0 0 4px;
+    white-space: nowrap; /* "2x" quebrava em duas linhas */
 }
 
 .bar {
@@ -59,10 +60,15 @@
     background-color: var(--red);
 }
 
+/* caixa escura como as outras da HUD: por cima de letreiro da cena (a placa da rua na abertura) continua legível */
 .hud__countdown {
     align-self: center;
     margin-top: 8px;
+    padding: 0 8px;
     color: var(--red);
+    background-color: rgba(14, 12, 21, 0.86);
+    border-width: 1px;
+    border-color: var(--slate);
     -unity-text-outline-width: 1px;
     -unity-text-outline-color: var(--ink);
 }
@@ -98,10 +104,12 @@
     padding: 4px 12px;
 }
 
+/* right maior que left: o bip da Dona Cida (pager, 170 px no canto direito) não encosta na janela.
+   Com a sirene tocando, a HeistHud desce a janela pra baixo da contagem da polícia. */
 .hud__popup {
     position: absolute;
     left: 170px;
-    right: 170px;
+    right: 180px;
     top: 70px;
 }
 
@@ -173,7 +181,14 @@
     margin-bottom: 3px;
 }
 
-/* avisos acima da crew */
+/* avisos no canto de baixo, em cima dos cartões da crew: no meio da tela eles caíam em cima dos balões da cena */
 .hud .toasts {
     bottom: 64px;
+    left: 6px;
+    right: auto;
+    align-items: flex-start;
+}
+
+.hud .toast {
+    max-width: 240px;
 }

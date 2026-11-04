@@ -37,6 +37,7 @@ namespace AFirma.UI
         {
             var screen = root.Q(className: "screen");
             Button pager = null;
+            (string sender, string message) showing = default;
             float until = 0f;
             screen.schedule.Execute(() =>
             {
@@ -52,19 +53,41 @@ namespace AFirma.UI
                         "dialog__body")));
                 }
 
+                // O jornal do golpe ocupa o meio da tela e o pager do canto cairia em cima da capa (em tela estreita não
+                // cabem os dois lado a lado): o bip espera o jornal fechar e aparece no esconderijo, sem perder a vez.
+                if (root.Q("news") != null)
+                {
+                    if (pager != null)
+                    {
+                        Requeue(showing);
+                        pager.RemoveFromHierarchy();
+                        pager = null;
+                    }
+                    return;
+                }
+
                 if (pager != null && Time.unscaledTime < until) return;
                 pager?.RemoveFromHierarchy();
                 pager = null;
                 if (bips.Count == 0) return;
-                var (sender, message) = bips.Dequeue();
+                showing = bips.Dequeue();
                 pager = new Button { name = "pager" }.OnClick(() => until = 0f);
                 pager.AddToClassList("pager");
-                pager.Add(Ui.Text("BIP · " + sender, "pager__from"));
-                pager.Add(Ui.Text(message, "pager__text"));
+                pager.Add(Ui.Text("BIP · " + showing.sender, "pager__from"));
+                pager.Add(Ui.Text(showing.message, "pager__text"));
                 screen.Add(pager);
                 UiSounds.Play(UiSounds.Get?.bip);
                 until = Time.unscaledTime + 5f;
             }).Every(200);
+        }
+
+        /// <summary>Volta o bip pra frente da fila (ele ainda não foi lido).</summary>
+        static void Requeue((string sender, string message) bip)
+        {
+            var rest = bips.ToArray();
+            bips.Clear();
+            bips.Enqueue(bip);
+            foreach (var b in rest) bips.Enqueue(b);
         }
     }
 }

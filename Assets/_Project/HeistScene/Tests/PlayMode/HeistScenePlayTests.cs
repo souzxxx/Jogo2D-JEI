@@ -150,6 +150,24 @@ namespace AFirma.Tests
             Assert.IsTrue(alarms[0].beam.enabled, "O giroflex liga na sirene.");
         }
 
+        /// <summary>A crew anda junta: o grito da habilidade cala o bordão de quem estava falando, senão um balão cai em cima do outro.</summary>
+        [UnityTest]
+        public IEnumerator Bubbles_OneThiefTalksAtATime()
+        {
+            var crew = FullCrew();
+            yield return StartHeist("loterica", crew);
+            Services.Heist.AddAlert(100f); // sirene: alguém grita "Sujou!"
+            var con = crew.Find(t => t.type == ThiefType.ConArtist);
+            var other = crew.Find(t => t != con); // a van tem 4 vagas: a crew inteira está no golpe
+            GameEvents.RaiseThiefBark(other, "Bora, bora, bora!");
+            yield return null;
+            GameEvents.RaiseAbilityUsed(con, Services.Db.GetThiefType(con.type).ability); // o 171 grita "Lábia!"
+            yield return null;
+
+            var talking = Object.FindObjectsByType<SpeechBubble>(FindObjectsInactive.Exclude);
+            Assert.AreEqual(1, talking.Length, "Mais de um balão de fala aberto ao mesmo tempo.");
+        }
+
         [UnityTest]
         public IEnumerator PeDeCabra_OpensTheLockRoomWithItsVfx()
         {
