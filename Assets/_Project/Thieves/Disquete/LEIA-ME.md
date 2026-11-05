@@ -23,6 +23,7 @@ Desenhada pixel a pixel por script, na paleta e no mesmo boneco do Gazua: cabelo
 | `ThiefType_Disquete` | especialista em Sistema (câmeras, alarmes e computadores: é a passiva dele), 8 bordões, retrato, Animator e som de ação |
 | `Ability_Disquete` | Loop na câmera: bota a câmera pra rodar o corredor vazio e congela o alerta por 15 s. Som de fita rebobinando e a telinha "LOOP" subindo da sala |
 | `SideJob_Disquete` | Gatonet: puxa o sinal da TV por assinatura pro prédio, rende o dobro com um Disquete |
+| `Bico/` | cena do bico (spec no `Thieves/LEIA-ME.md`): de noite, o Disquete na escada do poste puxa cabo do ninho de fios e as TVs do prédio vão acendendo; vazia, a escada sozinha com "VOLTO JÁ" e as janelas apagadas. `python3 -B "Assets/_Project/Thieves/Disquete/Art/Source~/gerar_gatonet.py"` e depois **A Firma › Bicos › Ligar as cenas dos bicos** |
 | `Events/` | 3 eventos em que ele brilha: Câmera nova no saguão (sala de Sistema, Lotérica+), Teclado do alarme (Joalheria+), O micro do CPD (sala de Sistema, Câmbio+). Todos têm saída pra crew sem Disquete |
 | `Audio/` | `SFX_Disquete_Teclado` (digitando e o drive lendo, toca quando ele começa a trabalhar) e `SFX_LoopNaCamera` (videocassete rebobinando, clunk e o bipe do REC), sintetizados por `Audio/Source~/gerar_sfx.py` |
 | `VFX/VFX_LoopNaCamera` | Monitor de vigilância com "LOOP" e REC que sobe da sala, com chiado verde. A Cena do Golpe instancia quando a habilidade é usada |

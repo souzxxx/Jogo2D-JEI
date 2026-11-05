@@ -112,6 +112,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Pé-na-Tábua (sheet, retrato e "VRUUM!" do Cavalo de pau) | Script Python, mesmo padrão do Disquete | `Thieves/PeNaTabua/Art`, `VFX` (script em `Art/Source~`) | Leonardo |
 | Cena do bico Lotação pirata (8 quadros 96×64 e a cena vazia) | Script Python na paleta, com o boneco do Pé-na-Tábua | `Thieves/PeNaTabua/Bico` (script em `Art/Source~/gerar_lotacao.py`) | Leonardo |
 | Cena do bico Chaveiro 24h (8 quadros 96×64 e a cena vazia) | Script Python na paleta, com o boneco do Gazua | `Thieves/Gazua/Bico` (script em `Art/Source~/gerar_chaveiro.py`) | Miguel |
+| Cena do bico Gatonet (8 quadros 96×64 e a cena vazia) | Script Python na paleta, com o boneco do Disquete | `Thieves/Disquete/Bico` (script em `Art/Source~/gerar_gatonet.py`) | Enzo |
 | Arte da abertura (Delegado Bastos, placas METER O PÉ e SÓ MAIS UMA, foto P&B da capa) | Script Python na paleta | `HeistScene/Art/Abertura` (script em `Art/Source~/gerar_abertura.py`) | Miguel |
 | Esconderijo vivo (monitores, Kombi, colchonetes, sapateira, ferramentas, diploma, telefone, máquinas de lavar, rádio, neon, orelhão, carimbo EM CANA) | Script Python na paleta, na escala do fundo do esconderijo | `HeistScene/Art/Esconderijo` (script em `Art/Source~/gerar_esconderijo.py`) | Miguel |
 | Cena do bico Catar latinha (8 quadros 96×64, sem cena vazia) | Script Python na paleta, com o boneco da Cena do Golpe | `Data/Economy/SideJobs/Bico` (script em `HeistScene/Art/Source~/gerar_latinha.py`) | Miguel |
