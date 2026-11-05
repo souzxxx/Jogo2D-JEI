@@ -123,6 +123,8 @@ Pedido do professor (ESCOPO 6.11). O simulador (`--automatico`) põe no automát
 | Golpes ao mesmo tempo | 1, até 3 com o Orelhão | `GameConfig.startingAutoHeistSlots` |
 | **Orelhão** | Cr$ 10.000 → Cr$ 40.000 (custo base 10.000, crescimento ×4, 2 níveis) | `Data/Economy/Upgrades/Upgrade_orelhao` |
 
+**Decidido em 05/11:** 0,5 e Orelhão a Cr$ 10.000 e 40.000. Com eles o ciclo 1 fica perto da v1 (39,9 contra 42,0 min), o Orelhão entra no meio do Câmbio e deixar rodando nunca passa jogar na mão do Câmbio pra frente. O playtest (#43) confirma.
+
 Minutos de jogo ativo até concluir cada golpe da escada (ciclo 1, jogador perfeito):
 
 | | Lotérica | Joalheria | Câmbio | Cassino | Banco Central |
@@ -132,6 +134,7 @@ Minutos de jogo ativo até concluir cada golpe da escada (ciclo 1, jogador perfe
 
 - O automático faz ~24% do loot do ciclo. O Orelhão entra no meio do Câmbio (14 min) e o segundo perto do Cassino (19 min).
 - O que mais acelera é o **XP**, não o dinheiro: a crew que roda a Banca do Bicho no automático sobe de nível rápido. Sem o loot do automático (só a crew a mais) o Banco Central sai em 41,4 min; com o loot e sem o XP, em 39,6; com os dois, 35,0 com o 0,6 e o Orelhão a Cr$ 2.000. Por isso o 0,5 e o Orelhão mais caro: a curva volta pra perto dos 42 da v1.
+- **Prestígio com o automático** (`--ciclos 5 --automatico`), Banco Central em min: ciclo 1 39,9 · ciclo 2 29,8 · ciclo 3 27,3 · ciclo 4 29,2 · ciclo 5 31,3 (sem o automático: 42,0 · 38,5 · 34,4 · 35,7 · 34,6). Os ciclos seguintes ficam ~25% mais rápidos, como o ESCOPO pede (começo mais rápido com a Fama), o Cassino continua sendo o trecho longo e nenhum ciclo trava.
 - **Offline:** 4 h fora com o Cassino no Repetir no fim do ciclo dão ~Cr$ 8,2 milhões, o mesmo que ~23 min jogando o golpe que mais rende na mão (fora os bicos).
 
 Quem só deixa rodando (a crew toda em até 3 automáticos + bicos) dividido por quem joga na mão o golpe que mais rende e deixa o resto da crew rodando igual. Abaixo de 100%, jogar na mão rende mais (ESCOPO 11):

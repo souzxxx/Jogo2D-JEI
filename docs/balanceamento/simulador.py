@@ -10,6 +10,7 @@ guloso do zero até concluir o Banco Central. Mostra em que minuto cada golpe é
     python docs/balanceamento/simulador.py --extras   # quanto cada golpe extra rende perto da escada
     python docs/balanceamento/simulador.py --ciclos 3  # prestígio: ciclos seguidos com Procurado e bônus de Fama
     python docs/balanceamento/simulador.py --automatico  # golpes no automático: curva com e sem, Orelhão, idle × ativo
+    python docs/balanceamento/simulador.py --ciclos 5 --automatico  # prestígio com os golpes no automático
 
 O que o jogador simulado faz:
 - recruta o especialista que falta pro próximo golpe (e um Pé-na-Tábua a partir do Câmbio);
@@ -389,12 +390,12 @@ def perk_cost(P, perk_id, level):
     return math.ceil(v["base"] * v["growth"] ** level - 1e-6)
 
 
-def simulate_cycles(P, cycles, abilities=True, smart_recruits=True):
+def simulate_cycles(P, cycles, abilities=True, smart_recruits=True, auto=False):
     """Ciclos seguidos: no fim de cada um, Fama = √(loot do ciclo ÷ divisor), compra bônus e Procurado +1."""
     cfg = P["cfg"]
     fame, wanted, levels, out = 0, 0, {}, []
     for _ in range(cycles):
-        result = simulate(P, abilities, wanted=wanted, perk_levels=dict(levels), smart_recruits=smart_recruits)
+        result = simulate(P, abilities, wanted=wanted, perk_levels=dict(levels), smart_recruits=smart_recruits, auto=auto)
         gained = math.floor(math.sqrt(max(0, result["cycleLoot"]) / cfg.get("fameDivisor", 10000)))
         fame += gained
         bought = []
@@ -498,4 +499,4 @@ if __name__ == "__main__":
         with_auto = simulate(project, abilities=not args.sem_habilidades, smart_recruits=not args.sem_contatos, auto=True)
         if args.log: print("\n".join(with_auto["log"]))
         print(auto_report(project, result, with_auto))
-    if args.ciclos: print(cycles_report(project, simulate_cycles(project, args.ciclos, not args.sem_habilidades, not args.sem_contatos)))
+    if args.ciclos: print(cycles_report(project, simulate_cycles(project, args.ciclos, not args.sem_habilidades, not args.sem_contatos, auto=args.automatico)))
