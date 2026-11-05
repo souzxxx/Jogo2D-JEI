@@ -6,7 +6,7 @@ Narrativa (Nicolas): bips da Dona Cida, briefings, manchetes.
 
 | Asset | O que é |
 |---|---|
-| `Resources/DonaCidaBips` (`BipSetDef`) | Textos dos bips da Dona Cida: jogo novo, 1º golpe (cofre limpo ou meteu o pé), 1ª sirene, 1º preso (`{nome}`), um por golpe liberado e prestígio liberado |
+| `Resources/DonaCidaBips` (`BipSetDef`) | Textos dos bips da Dona Cida: jogo novo, 1º golpe (cofre limpo ou meteu o pé), automático liberado (no fim do golpe seguinte ao 1º cofre limpo; não toca se a crew já estiver no automático), 1ª sirene, 1º preso (`{nome}`), um por golpe liberado e prestígio liberado |
 | `Runtime/DonaCidaBips` | Escuta os `GameEvents` e manda `GameEvents.Bip` nos marcos, **uma vez por save** (fica em `GameState.seenTips` com o prefixo `bip:`). Golpe liberado no meio do golpe espera o resultado; na pausa os bips esperam |
 | `Runtime/NarrativeInstaller` | Sobe tudo no Play. Enquanto a UI do bip (Enzo) não existe, todo bip sai no Console como `[Bip] Dona Cida: ...` |
 

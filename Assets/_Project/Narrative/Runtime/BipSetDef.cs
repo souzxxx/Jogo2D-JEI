@@ -14,6 +14,8 @@ namespace AFirma.Narrative
         [TextArea(2, 4)] public string newGame;
         [TextArea(2, 4), Tooltip("Primeiro golpe com o cofre limpo.")] public string firstHeistCompleted;
         [TextArea(2, 4), Tooltip("Primeiro golpe em que a crew meteu o pé antes do cofre.")] public string firstHeistFled;
+        [TextArea(2, 4), Tooltip("Fim do golpe seguinte ao primeiro cofre limpo na mão: aquele golpe já pode ir pro automático (ESCOPO 6.11). Não sai se a crew já estiver no automático.")]
+        public string autoUnlocked;
         [TextArea(2, 4)] public string firstSiren;
         [TextArea(2, 4), Tooltip("{nome} vira o nome do ladrão preso.")] public string firstArrest;
         [Tooltip("Um bip por golpe liberado. O do último golpe da escada é o do Banco Central.")]

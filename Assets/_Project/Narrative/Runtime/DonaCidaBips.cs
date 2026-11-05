@@ -10,6 +10,10 @@ namespace AFirma.Narrative
     /// ouvindo quando o jogo carrega. Golpe liberado no meio do golpe espera o golpe acabar, pra o bip do
     /// resultado vir antes do "tem golpe novo no mapa".
     /// O que já foi dito fica em GameState.seenTips com o prefixo "bip:". O novato grátis é do CrewService.
+    ///
+    /// O bip do automático (ESCOPO 6.11) sai no fim do primeiro golpe que começou com um cofre já limpo na mão: no próprio
+    /// primeiro cofre ele empilharia com o bip do resultado e o do golpe liberado. Se a crew já está no automático, fica
+    /// como dito sem tocar.
     /// </summary>
     public class DonaCidaBips
     {
@@ -19,6 +23,7 @@ namespace AFirma.Narrative
         readonly List<string> queue = new List<string>();
         readonly List<string> afterHeist = new List<string>();
         GameState currentState;
+        bool autoReadyAtStart; // o golpe na mão começou com algum cofre já limpo (dá pra mandar no automático)
 
         static GameState S => Services.State;
 
@@ -31,6 +36,7 @@ namespace AFirma.Narrative
             GameEvents.SirenStarted += OnSirenStarted;
             GameEvents.ThiefJailed += OnThiefJailed;
             GameEvents.HeistUnlocked += OnHeistUnlocked;
+            GameEvents.HeistStarted += OnHeistStarted;
             GameEvents.HeistFinished += OnHeistFinished;
             GameEvents.Prestiged += OnPrestiged;
         }
@@ -42,6 +48,7 @@ namespace AFirma.Narrative
             GameEvents.SirenStarted -= OnSirenStarted;
             GameEvents.ThiefJailed -= OnThiefJailed;
             GameEvents.HeistUnlocked -= OnHeistUnlocked;
+            GameEvents.HeistStarted -= OnHeistStarted;
             GameEvents.HeistFinished -= OnHeistFinished;
             GameEvents.Prestiged -= OnPrestiged;
         }
@@ -91,6 +98,11 @@ namespace AFirma.Narrative
             Say("liberado:" + heist.id, texts.GetHeistUnlocked(heist), heistRunning ? afterHeist : queue);
         }
 
+        void OnHeistStarted(HeistDef heist)
+        {
+            autoReadyAtStart = S != null && S.completedHeists.Count > 0 && !IntroDirector.IsPlaying;
+        }
+
         void OnHeistFinished(HeistResult result)
         {
             if (IntroDirector.IsPlaying) return;
@@ -101,6 +113,13 @@ namespace AFirma.Narrative
             }
             queue.AddRange(afterHeist);
             afterHeist.Clear();
+
+            if (autoReadyAtStart)
+            {
+                if (S.autoHeists.Count > 0) MarkSeen("automatico"); // já achou o botão sozinho
+                else Say("automatico", texts.autoUnlocked, queue);
+            }
+            autoReadyAtStart = false;
         }
 
         /// <summary>Topo da escada: golpe extra nunca é o último, mesmo com tier alto.</summary>
@@ -124,10 +143,16 @@ namespace AFirma.Narrative
         static void Say(string id, string text, List<string> target)
         {
             if (S == null || string.IsNullOrEmpty(text)) return;
+            if (MarkSeen(id)) target.Add(text);
+        }
+
+        /// <summary>Marca o bip como dito neste save. Devolve false se ele já tinha sido dito.</summary>
+        static bool MarkSeen(string id)
+        {
             var key = SeenPrefix + id;
-            if (S.seenTips.Contains(key)) return;
+            if (S == null || S.seenTips.Contains(key)) return false;
             S.seenTips.Add(key);
-            target.Add(text);
+            return true;
         }
     }
 }

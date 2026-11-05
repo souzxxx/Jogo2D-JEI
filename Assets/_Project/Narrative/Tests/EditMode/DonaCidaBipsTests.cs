@@ -25,6 +25,7 @@ namespace AFirma.Tests
             texts.newGame = "novo";
             texts.firstHeistCompleted = "primeiro golpe";
             texts.firstHeistFled = "meteu o pé";
+            texts.autoUnlocked = "automático";
             texts.firstSiren = "sirene";
             texts.firstArrest = "pegaram o {nome}";
             texts.prestigeUnlocked = "prestígio";
@@ -194,6 +195,47 @@ namespace AFirma.Tests
                 Services.Db.heists.Remove(museu);
                 Object.DestroyImmediate(museu);
             }
+        }
+
+        [Test]
+        public void AutoBip_ComesAtTheEndOfTheHeistAfterTheFirstVault_Once()
+        {
+            GameEvents.RaiseHeistStarted(Loterica);
+            GameEvents.RaiseHeistFinished(Result(Loterica, completed: true));
+            CollectionAssert.AreEqual(new[] { "primeiro golpe" }, Messages(), "No primeiro cofre ainda não: empilharia com os outros bips.");
+
+            Services.State.completedHeists.Add("loterica");
+            GameEvents.RaiseHeistStarted(Loterica);
+            bips.Flush();
+            CollectionAssert.DoesNotContain(sent.ConvertAll(b => b.Value), "automático", "Só no fim do golpe.");
+
+            GameEvents.RaiseHeistFinished(Result(Loterica, completed: true));
+            GameEvents.RaiseHeistStarted(Joalheria);
+            GameEvents.RaiseHeistFinished(Result(Joalheria, completed: false));
+
+            CollectionAssert.AreEqual(new[] { "primeiro golpe", "automático" }, Messages());
+        }
+
+        [Test]
+        public void AutoBip_HeistClosedMidway_StillComesOnALaterHeist()
+        {
+            Services.State.completedHeists.Add("loterica");
+            GameEvents.RaiseHeistStarted(Loterica); // fechou a aba no meio: o HeistFinished nunca chega
+
+            CollectionAssert.DoesNotContain(Services.State.seenTips, DonaCidaBips.SeenPrefix + "automatico");
+        }
+
+        [Test]
+        public void AutoBip_Skipped_WhenTheCrewIsAlreadyOnAuto()
+        {
+            Services.State.completedHeists.Add("loterica");
+            Services.State.autoHeists.Add(new AutoHeistRecord { heistId = "loterica" });
+
+            GameEvents.RaiseHeistStarted(Joalheria);
+            GameEvents.RaiseHeistFinished(Result(Joalheria, completed: false));
+
+            CollectionAssert.DoesNotContain(Messages(), "automático");
+            CollectionAssert.Contains(Services.State.seenTips, DonaCidaBips.SeenPrefix + "automatico", "Quem já achou o botão não ouve depois.");
         }
 
         [Test]
