@@ -21,3 +21,14 @@ MonoBehaviour:
   preferredType: 3
   incomePerSecond: 3
   matchMultiplier: 2
+  sceneFrames:
+  - {fileID: 21300000, guid: 00f01234e6ea406c87864ec06a70d63e, type: 3}
+  - {fileID: 21300000, guid: d6630d318adc4177ba5dcfd293f08dad, type: 3}
+  - {fileID: 21300000, guid: 1308497decc04d6dbea0e17b923aedd0, type: 3}
+  - {fileID: 21300000, guid: 5109ae7696ff4a139cc5aea122f2e471, type: 3}
+  - {fileID: 21300000, guid: c01904770cf04f268e91cfc32a54fa6a, type: 3}
+  - {fileID: 21300000, guid: edae7497292f417a9395dbc0b99436ce, type: 3}
+  - {fileID: 21300000, guid: ce35540c4356476a8c190d832c5b0743, type: 3}
+  - {fileID: 21300000, guid: 05b24a460edc4bc68c484b7504e8e0a9, type: 3}
+  sceneFps: 8
+  sceneEmpty: {fileID: 21300000, guid: 4fe8082c00fd480e9287b7f51e276e54, type: 3}

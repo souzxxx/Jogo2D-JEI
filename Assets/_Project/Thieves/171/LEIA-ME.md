@@ -20,7 +20,9 @@ Todo evento tem saída pra crew sem 171, mas a do 171 é a que dá bônus.
 
 ## Bico: Bilhete premiado
 
-Na calçada do centro, ele abana o bilhete "premiado" que "não pode descontar" pra um otário de terno. Rende o dobro com um 171 (`SideJob_171`, ícone em `Icons/Icon_BilhetePremiado`). A cena animada do bico é a #120.
+Na calçada do centro, ele abana o bilhete "premiado" que "não pode descontar" pra um otário de terno. Rende o dobro com um 171 (`SideJob_171`, ícone em `Icons/Icon_BilhetePremiado`).
+
+Cena do bico (`Bico/`, 8 quadros 96×64 a 8 fps): de dia, na calçada de pedra portuguesa, na porta da lotérica fechada (a desculpa pra "não poder descontar"), ele abana o bilhete brilhando pro otário de terno, que desconfia, se debruça e puxa a nota; vazia, o caixote dele com o papelão "VOLTO JÁ". `python3 -B "Assets/_Project/Thieves/171/Art/Source~/gerar_bilhete.py"` e depois **A Firma › Bicos › Ligar as cenas dos bicos**.
 
 ## Arte
 
