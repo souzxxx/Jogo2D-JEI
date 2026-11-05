@@ -347,6 +347,22 @@
     margin-right: 6px;
 }
 
+/* "+Cr$" que sobe e some (Ui.Pop): bico rendendo, golpe no automático que voltou */
+.pop {
+    position: absolute;
+    right: 2px;
+    top: 24px;
+    color: var(--mint);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--ink);
+    transition: translate 1s, opacity 1s;
+}
+
+.pop--up {
+    translate: 0 -20px;
+    opacity: 0;
+}
+
 .wrap {
     flex-wrap: wrap;
 }

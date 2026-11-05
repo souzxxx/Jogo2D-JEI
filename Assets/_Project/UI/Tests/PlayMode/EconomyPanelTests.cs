@@ -42,6 +42,27 @@ namespace AFirma.Tests
         }
 
         [UnityTest]
+        public IEnumerator Jobs_ShowcaseLivesWithSomeoneThere()
+        {
+            var root = Root<HideoutScreen>();
+            var thief = Services.Crew.GetAvailable()[0];
+            Assert.IsTrue(Services.Db.GetSideJob("gatonet").HasScene, "O Gatonet tem cena.");
+            Click(root, "jobs");
+            yield return null;
+            Assert.IsTrue(Find<VisualElement>(root, "showcase-gatonet").ClassListContains("showcase--empty"), "Sem ninguém, a cena fica apagada.");
+
+            Click(root, $"job-gatonet-{thief.id}");
+            yield return new WaitForSecondsRealtime(3.5f);
+            var scene = Find<VisualElement>(root, "showcase-gatonet");
+            Assert.IsFalse(scene.ClassListContains("showcase--empty"), "Com gente, a cena anda.");
+            StringAssert.Contains(thief.nickname, scene.Q<Label>(className: "showcase__name").text);
+            Assert.IsNotNull(scene.Q(className: "pop"), "Solta o +Cr$ no ritmo da renda.");
+            var latinha = Services.Db.sideJobs.FirstOrDefault(j => j != null && !j.requiresThief && j.HasScene);
+            if (latinha != null) Assert.IsFalse(Find<VisualElement>(root, "showcase-" + latinha.id).ClassListContains("showcase--empty"), "Catar latinha sempre anda.");
+            yield return Print("bicos_vitrine");
+        }
+
+        [UnityTest]
         public IEnumerator Upgrades_BuyRaisesTheLevel()
         {
             var root = Root<HideoutScreen>();

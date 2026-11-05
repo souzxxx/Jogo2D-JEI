@@ -32,7 +32,7 @@ namespace AFirma.UI
             if (!job.requiresThief)
             {
                 info.Add(Ui.Text($"Sempre rolando, sem ladrão: +{Formulas.Money(job.incomePerSecond)}/s", "money"));
-                return Ui.El("card row", Ui.Image(job.icon, "icon32"), info);
+                return Ui.El("card row", Showcase(job), info);
             }
 
             var match = job.hasPreferredType ? Services.Db.GetThiefType(job.preferredType) : null;
@@ -59,7 +59,32 @@ namespace AFirma.UI
                 send.Add(button);
             }
             if (send.childCount > 0) info.Add(send);
-            return Ui.El("card row", Ui.Image(job.icon, "icon32"), info);
+            return Ui.El("card row", Showcase(job), info);
+        }
+
+        /// <summary>
+        /// Vitrine do bico (ESCOPO 6.7): com gente, a cena animada, o nome de quem está lá e um "+Cr$" a cada 3 s no ritmo
+        /// da renda; vazio, a cena parada e apagada com "volto já". Bico sem cena ainda mostra o ícone.
+        /// </summary>
+        static VisualElement Showcase(SideJobDef job)
+        {
+            var workers = Services.Crew.Crew.Where(t => t.sideJobId == job.id).ToList();
+            VisualElement scene;
+            if (!job.HasScene) scene = Ui.Image(job.icon, "icon32");
+            else if (job.requiresThief && workers.Count == 0)
+            {
+                scene = Ui.Image(job.sceneEmpty != null ? job.sceneEmpty : job.sceneFrames[0], "showcase showcase--empty");
+                if (job.sceneEmpty == null) scene.Add(Ui.Text("VOLTO JÁ", "showcase__sign"));
+            }
+            else
+            {
+                scene = Ui.Flipbook(job.sceneFrames, job.sceneFps, "showcase");
+                if (workers.Count > 0) scene.Add(Ui.Text(string.Join(", ", workers.Select(t => t.nickname)), "showcase__name"));
+                double income = job.requiresThief ? workers.Sum(t => Economy.GetSideJobIncome(t, job)) : job.incomePerSecond;
+                scene.schedule.Execute(() => Ui.Pop(scene, "+" + Formulas.Money(income * 3))).Every(3000);
+            }
+            scene.name = "showcase-" + job.id;
+            return scene;
         }
 
         public static void BuildUpgrades(VisualElement content)

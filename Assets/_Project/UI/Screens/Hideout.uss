@@ -121,6 +121,42 @@
     flex-grow: 1;
 }
 
+/* ---------------------------------------------------------------- aba Bicos: a vitrine (cena 96x64) */
+
+.showcase {
+    width: 96px;
+    height: 64px;
+    flex-shrink: 0;
+    margin-right: 6px;
+    border-width: 1px;
+    border-color: var(--umber);
+}
+
+.showcase--empty {
+    -unity-background-image-tint-color: rgb(120, 120, 140);
+}
+
+.showcase__name {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    max-width: 94px;
+    padding: 0 2px;
+    color: var(--cream);
+    background-color: rgba(14, 12, 21, 0.8);
+}
+
+.showcase__sign {
+    position: absolute;
+    left: 18px;
+    top: 24px;
+    padding: 0 3px;
+    color: var(--umber);
+    background-color: var(--kraft);
+    border-width: 1px;
+    border-color: var(--wood);
+}
+
 /* ---------------------------------------------------------------- abas Crew e Contatos */
 
 .crew__actions {
