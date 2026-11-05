@@ -38,6 +38,11 @@ MonoBehaviour:
   offlineCapHours: 4
   offlineRate: 0.5
   offlineMinSeconds: 60
+  startingAutoHeistSlots: 1
+  autoHeistLootMult: 0.5
+  autoQuietAlertLimit: 70
+  autoAbilityAlert: 60
+  autoEscapeSecondsLeft: 2
   modifierChance: 0.5
   fameDivisor: 10000
   wantedDifficultyMult: 1.12

@@ -2,7 +2,7 @@
 
 > Dono: **Nicolas**. Rubrica Balanceamento (peso 2).
 > Planilha: [`balanceamento/Balanceamento_v1.xlsx`](balanceamento/Balanceamento_v1.xlsx) · [Google Sheets](https://docs.google.com/spreadsheets/d/1pYudXkkM3sUWgJ2zF4S0KOWfcyLhDklo2aWt3NAhmdg/edit?usp=sharing)
-> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído; `--extras` mostra quanto cada golpe extra rende perto da escada; `--ciclos N` simula N prestígios seguidos; `--sem-contatos` é o jogador que só recruta nível 1)
+> Simulador: `python docs/balanceamento/simulador.py` (lê os assets e mostra em que minuto cada golpe é concluído; `--extras` mostra quanto cada golpe extra rende perto da escada; `--ciclos N` simula N prestígios seguidos; `--sem-contatos` é o jogador que só recruta nível 1; `--automatico` compara a curva com e sem golpes no automático, mostra quando o Orelhão entra, o offline e quem só deixa rodando contra quem joga)
 
 ## Metas
 
@@ -23,7 +23,7 @@ Regras de bolso:
 
 ## Onde ficam os números
 
-- `Data/Config/GameConfig.asset`: números globais (chance de evento, contagem da polícia, fugas, prisão, XP, recrutas, bicos, offline, prestígio, autosave).
+- `Data/Config/GameConfig.asset`: números globais (chance de evento, contagem da polícia, fugas, prisão, XP, recrutas, bicos, offline, golpes no automático, prestígio, autosave).
 - `Data/Heists/*`: dificuldade, loot e alerta de cada sala.
 - `Data/Economy/Upgrades/*`: custo base, crescimento, efeito por nível.
 - `Thieves/*/ThiefType_*`: atributos base e ganho por nível de cada tipo.
@@ -56,6 +56,9 @@ Regras de bolso:
 | Modificador no mapa | cada golpe liberado: 50% de chance de 1 modificador, escolhido pelo `weight`; muda só depois de um golpe (abrir e fechar o mapa não troca); a Lotérica não sorteia antes do tutorial | `ProgressionService.RollModifiers` |
 | Renda de bico | `renda × (1 + 0,1 × (nível−1)) × (2 se tipo certo) × (1 + PontoDeBico%) × (1 + Fama Rede%)`, mais o Catar latinha fixo | `EconomyService.GetSideJobIncome` |
 | Ganho offline | `renda dos bicos × min(tempo fora, 4 h) × 50%`, em Cr$ inteiros; menos de 60 s fora ou relógio voltando não paga | `EconomyService.ApplyOfflineEarnings` |
+| Golpe no automático | o mesmo motor sem cena, na 1x: loot de cada sala `× autoHeistLootMult` (0,5); Na moita mete o pé com alerta 70, Até o cofre segue até a sirene | `AutoHeistService`, `AutoPilot` |
+| Golpes no automático ao mesmo tempo | `startingAutoHeistSlots (1) + Orelhão` (máx 3) | `AutoHeistService.MaxRunning` |
+| Offline do automático | golpes com Repetir: `× offlineRate (50%)` em cima do 0,5, até 4 h, sem prisão (fuga forçada só perde sacola) | `AutoHeistService.RunOffline` |
 
 ## Tabela dos golpes (v1)
 
@@ -110,6 +113,41 @@ O simulador agora faz o prestígio: soma a Fama do ciclo, compra o bônus mais b
 - O topo pesa mais pra quem não renova a crew (o Cassino vai de 26 pra 35–55 min) e fica estável pra quem usa os Contatos. Nenhum ciclo trava: o ciclo 5 ainda fecha.
 - No fim do ciclo todos os upgrades estão no máximo e sobra Cr$: no topo quem segura é o nível da crew, não o dinheiro. Por isso o recruta de nível alto é a alavanca que mais mexe na curva.
 
+## Golpes no automático (v3)
+
+Pedido do professor (ESCOPO 6.11). O simulador (`--automatico`) põe no automático quem não vai no golpe na mão, nos golpes com o cofre já limpo, quando isso rende mais que o bico; recruta até 2 ladrões a mais por golpe no automático e compra o Orelhão junto dos outros upgrades. O piloto é o do jogo: Na moita mete o pé com alerta 70, Até o cofre foge na sirene (com Pé-na-Tábua vai até a polícia e sai no Cavalo de pau), sem tempo de interface.
+
+| Números | Valor | Onde |
+|---|---|---|
+| Loot do automático | **×0,5** do mesmo golpe na mão (era 0,6 no ESCOPO, como ponto de partida) | `GameConfig.autoHeistLootMult` |
+| Golpes ao mesmo tempo | 1, até 3 com o Orelhão | `GameConfig.startingAutoHeistSlots` |
+| **Orelhão** | Cr$ 10.000 → Cr$ 40.000 (custo base 10.000, crescimento ×4, 2 níveis) | `Data/Economy/Upgrades/Upgrade_orelhao` |
+
+Minutos de jogo ativo até concluir cada golpe da escada (ciclo 1, jogador perfeito):
+
+| | Lotérica | Joalheria | Câmbio | Cassino | Banco Central |
+|---|---|---|---|---|---|
+| Sem automático | 0,8 | 3,8 | 11,7 | 25,6 | **42,0** |
+| Com automático | 0,8 | 3,4 | 11,3 | 23,2 | **39,9** |
+
+- O automático faz ~24% do loot do ciclo. O Orelhão entra no meio do Câmbio (14 min) e o segundo perto do Cassino (19 min).
+- O que mais acelera é o **XP**, não o dinheiro: a crew que roda a Banca do Bicho no automático sobe de nível rápido. Sem o loot do automático (só a crew a mais) o Banco Central sai em 41,4 min; com o loot e sem o XP, em 39,6; com os dois, 35,0 com o 0,6 e o Orelhão a Cr$ 2.000. Por isso o 0,5 e o Orelhão mais caro: a curva volta pra perto dos 42 da v1.
+- **Offline:** 4 h fora com o Cassino no Repetir no fim do ciclo dão ~Cr$ 8,2 milhões, o mesmo que ~23 min jogando o golpe que mais rende na mão (fora os bicos).
+
+Quem só deixa rodando (a crew toda em até 3 automáticos + bicos) dividido por quem joga na mão o golpe que mais rende e deixa o resto da crew rodando igual. Abaixo de 100%, jogar na mão rende mais (ESCOPO 11):
+
+| Mirando | Deixar rodando ÷ jogar | Só com bicos (sem automático) |
+|---|---|---|
+| Lotérica | 113% | 113% |
+| Joalheria | 148% | 101% |
+| Câmbio | 89% (máx 95%) | 68% |
+| Cassino | 42% | 20% |
+| Banco Central | 38% | 5% |
+
+Pra ficar de olho no playtest:
+- **Nos primeiros ~3 min deixar rodando rende mais que jogar.** Já era assim só com os bicos (os 2 novatos no bico rendem Cr$ 12/s, a Lotérica na mão ~Cr$ 11/s) e o automático da Lotérica e da Banca reforça até a Joalheria entrar. Golpe novo só sai na mão, então ninguém progride parado, mas se o playtest mostrar gente esperando no começo, a alavanca é a renda do bico (`incomePerSecond` 3) ou o loot da Lotérica, não o automático.
+- No Câmbio fica perto do empate (máx 95%): é a hora em que o automático da Banca e do Câmbio é mais forte.
+
 ## Registro de ajustes
 
 | Data | O que mudou | Por quê (dado do playtest) |
@@ -117,6 +155,7 @@ O simulador agora faz o prestígio: soma a Fama do ciclo, compra o bônus mais b
 | 20/10 | Valores iniciais | Setup da fundação |
 | 25/10 | Dificuldade: Joalheria ×1,6, Câmbio ×1,4, Cassino ×0,9, Banco ×0,6. Alerta/s: Cassino ×0,8, Banco ×0,7 | Simulador: o Cassino virava parede (nem com tudo no máximo fechava) e o Banco Central nunca era concluído, com salas de 22–36 s (regra: 5–20 s). Câmbio liberava em 2 min |
 | 30/10 | Recruta: crescimento do custo por nível de ×1,8 pra ×6. Procurado: dificuldade de ×1,25 pra ×1,12 e alerta de ×1,1 pra ×1,05 por nível (loot fica ×1,5) | Simulador com Contatos e prestígio: recrutando nível 6 por Cr$ 945 (o Cassino paga Cr$ 60 mil por golpe) o Banco Central saía em 26 min no ciclo 1 (meta 40–60). Com o Procurado de antes o ciclo 2 levava 100 min e o ciclo 3 travava no Banco Central; com ×1,15 de dificuldade o ciclo 5 ainda travava |
+| 05/11 | Golpes no automático: loot ×0,6 → ×0,5; Orelhão novo a Cr$ 10.000 e 40.000 | Simulador (`--automatico`): com 0,6 e o Orelhão a Cr$ 2.000 o Banco Central caía de 42 pra 35 min (o XP do automático acelera a crew). Com 0,5 e 10.000 volta pra 39,9, e deixar rodando nunca passa jogar na mão do Câmbio pra frente |
 | 30/10 | Golpes extras: Bicho Cr$ 900; Carro-forte de Cr$ 30 mil pra 20 mil e alerta 4,5–7 pra 6–10; Museu de Cr$ 150 mil pra 375 mil | Simulador (`--extras`): o Carro-forte rendia 133% do Cassino e o jogador perfeito ficava 16 min nele, atrasando o Cassino em 5 min; o Museu rendia só 32% do Banco Central e ninguém ia |
 
 ## Playtest cronometrado (modelo)

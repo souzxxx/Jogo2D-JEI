@@ -258,7 +258,7 @@ Cada upgrade tem níveis e o custo cresce a cada nível.
 | Lavanderia | +% de todo loot |
 | Rádio da polícia | +segundos na contagem da polícia |
 | Ponto de bico | +% de renda dos bicos |
-| Orelhão | +1 golpe no automático ao mesmo tempo (1 → 3) |
+| Orelhão | +1 golpe no automático ao mesmo tempo (1 → 3), Cr$ 10.000 e 40.000 |
 
 ### 6.9 Mapa e golpes
 Os golpes formam uma escada. Cada um libera o próximo e apresenta algo novo:
@@ -307,7 +307,7 @@ Pra o jogo ter cara de idle: a firma trabalha enquanto você faz outra coisa. Se
   - **Até o cofre:** só para no cofre ou na sirene, saindo na fuga apressada. Rende mais e pode dar cana.
   - **Repetir** (liga/desliga): a crew emenda um golpe atrás do outro até você chamar de volta ou alguém ir preso.
 - **Como roda:** o mesmo motor do golpe, sem cena e na velocidade 1x. As portas seguem a ordem; nos eventos a crew escolhe sozinha a escolha com melhor chance que ela pode fazer; as habilidades disparam sozinhas na hora certa (Lábia e Loop com alerta alto, Pé-de-cabra em sala de Fechadura, Cavalo de pau quando a polícia está chegando).
-- **Rende menos que na mão:** loot × 0,6 (ponto de partida). Cofre limpo no automático não libera golpe novo e não dá bip de marco: golpe novo é sempre na mão.
+- **Rende menos que na mão:** loot × 0,5 (o ponto de partida era 0,6; o simulador mostrou que com 0,6 o Banco Central chegava cedo demais, ver `BALANCEAMENTO.md`). Cofre limpo no automático não libera golpe novo e não dá bip de marco: golpe novo é sempre na mão.
 - **Quantos ao mesmo tempo:** 1 no começo, até 3 com o upgrade **Orelhão**. Quem está no automático fica "Em golpe": não vai pra bico nem pro golpe na mão. O golpe na mão e os automáticos rodam juntos.
 - **Na tela:** a faixa **Golpes rolando** no esconderijo mostra cada golpe no automático: miniatura do prédio, retratos da crew, as salas como bolinhas (feita, atual, falta), barra de alerta, sacola subindo e o giroflex piscando na sirene. Terminou: mini manchete do jornal e "+Cr$" voando pro caixa. Botão **Chamar de volta** (vira "meter o pé" na hora).
 - **Offline:** os golpes com Repetir ligado continuam com o jogo fechado, junto dos bicos e com a mesma regra (até 4 h, a 50%). Fora do jogo ninguém vai preso: fuga forçada só perde sacola. Entra no popup "Enquanto você tava fora…".
@@ -406,7 +406,7 @@ Começa logo depois da abertura. O primeiro golpe (Lotérica) é guiado pela Don
 - Joalheria liberada em ~3 min; Banco Central alcançável em **~40–60 min** de jogo ativo no primeiro ciclo.
 - Ciclos de prestígio seguintes mais rápidos no começo (bônus de Fama) e mais difíceis no topo.
 - Nenhum upgrade inútil; nenhum ladrão sem função; ficar sem especialista sempre dói, mas é possível.
-- Jogar na mão sempre rende mais: o mesmo golpe no automático rende ~60%, e 3 golpes no automático + bicos não podem passar a renda de quem joga ativo o golpe mais alto liberado.
+- Jogar na mão sempre rende mais: o mesmo golpe no automático rende ~50%, e 3 golpes no automático + bicos não podem passar a renda de quem joga ativo o golpe mais alto liberado.
 - Loot por tier cresce ~×6 (ponto de partida: Lotérica ~Cr$ 500 → Joalheria ~3 mil → Câmbio ~18 mil → Cassino ~100 mil → Banco Central ~600 mil). Custos de upgrade crescem ~×1,6 por nível.
 - Todos os números ficam em ScriptableObjects e numa planilha de balanceamento; ninguém coloca número mágico no código.
 

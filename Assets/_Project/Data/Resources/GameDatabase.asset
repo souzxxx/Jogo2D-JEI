@@ -78,6 +78,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1dc686fda9df14005bb858dbe1c450c9, type: 2}
   - {fileID: 11400000, guid: f8a860ba38fc745e686be383feebdf69, type: 2}
   - {fileID: 11400000, guid: 90af18edb1b2b435ba69a54a61ef3d5f, type: 2}
+  - {fileID: 11400000, guid: 631bfc30c24a44659517ffc8de402a78, type: 2}
   sideJobs:
   - {fileID: 11400000, guid: 6a55b85e32b694ac986d21e949d1743b, type: 2}
   - {fileID: 11400000, guid: 51edbb76a1d1840b7afaaf11b961cef3, type: 2}

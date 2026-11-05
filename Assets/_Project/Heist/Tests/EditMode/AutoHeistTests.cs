@@ -27,6 +27,9 @@ namespace AFirma.Tests
             Services.Db.heists.Add(heist); // o load acha o golpe pelo id
         }
 
+        /// <summary>Loot de sala no automático: o número vem do GameConfig, pra o teste não quebrar a cada ajuste de balanceamento.</summary>
+        static double Auto(double loot) => Math.Round(loot * Services.Config.autoHeistLootMult);
+
         [TearDown]
         public void TearDown()
         {
@@ -92,13 +95,9 @@ namespace AFirma.Tests
             Assert.IsFalse(auto.CanSend(second, crew, out var reason));
             StringAssert.Contains("Orelhão", reason);
 
-            var orelhao = ScriptableObject.CreateInstance<UpgradeDef>();
-            created.Add(orelhao);
-            orelhao.id = "orelhao";
-            orelhao.effect = UpgradeEffect.AutoHeistSlots;
-            orelhao.valuePerLevel = 1f;
-            Services.Db.upgrades.Add(orelhao);
-            GameState.SetLevel(Services.State.upgrades, "orelhao", 1);
+            var orelhao = Services.Db.upgrades.Find(u => u != null && u.effect == UpgradeEffect.AutoHeistSlots);
+            Assert.IsNotNull(orelhao, "O Orelhão tem que estar no GameDatabase.");
+            GameState.SetLevel(Services.State.upgrades, orelhao.id, 1);
 
             Assert.AreEqual(2, auto.MaxRunning);
             Assert.IsTrue(auto.CanSend(second, crew, out reason), reason);
@@ -140,8 +139,8 @@ namespace AFirma.Tests
             Assert.IsNotNull(finished);
             Assert.IsTrue(finished.auto);
             Assert.IsTrue(finished.completed);
-            Assert.AreEqual(120.0, finished.moneyGained); // (100 + 100) × 0,6
-            Assert.AreEqual(before + 120.0, Services.Economy.Money);
+            Assert.AreEqual(Auto(200), finished.moneyGained); // (100 + 100) × autoHeistLootMult
+            Assert.AreEqual(before + Auto(200), Services.Economy.Money);
             Assert.IsNull(stopReason);
             Assert.AreEqual(ThiefStatus.Available, thief.status);
             Assert.AreEqual(0, Services.State.autoHeists.Count);
@@ -165,7 +164,7 @@ namespace AFirma.Tests
             Assert.IsNotNull(handResult);
             Assert.AreEqual("na-mao", handResult.heistId);
             Assert.IsFalse(handResult.auto);
-            Assert.AreEqual(before + 1000.0 + 120.0, Services.Economy.Money);
+            Assert.AreEqual(before + 1000.0 + Auto(200), Services.Economy.Money);
         }
 
         [Test]
@@ -204,7 +203,7 @@ namespace AFirma.Tests
             Assert.AreEqual(HeistOutcome.CleanEscape, result.outcome);
             Assert.IsFalse(result.sirenHappened);
             Assert.AreEqual(1, result.roomsCleared);
-            Assert.AreEqual(60.0, result.moneyGained);
+            Assert.AreEqual(Auto(100), result.moneyGained);
         }
 
         [Test]
@@ -238,7 +237,7 @@ namespace AFirma.Tests
 
             Assert.AreEqual(HeistOutcome.PerfectEscape, result.outcome);
             Assert.AreEqual(1, result.roomsCleared);
-            Assert.AreEqual(60.0, result.moneyGained, "Cavalo de pau leva a sacola inteira.");
+            Assert.AreEqual(Auto(100), result.moneyGained, "Cavalo de pau leva a sacola inteira.");
         }
 
         [Test]
@@ -346,7 +345,7 @@ namespace AFirma.Tests
             Assert.AreEqual(4, started);
             Assert.AreEqual(1, auto.Running.Count);
             Assert.AreEqual(ThiefStatus.OnHeist, thief.status);
-            Assert.AreEqual(before + 360.0, Services.Economy.Money);
+            Assert.AreEqual(before + 3 * Auto(200), Services.Economy.Money);
 
             auto.Recall(run);
 
@@ -367,7 +366,7 @@ namespace AFirma.Tests
             auto.Recall(run);
 
             Assert.AreEqual(HeistOutcome.CleanEscape, run.lastResult.outcome);
-            Assert.AreEqual(before + 60.0, Services.Economy.Money);
+            Assert.AreEqual(before + Auto(100), Services.Economy.Money);
             Assert.AreEqual(ThiefStatus.Available, thief.status);
         }
 
@@ -444,7 +443,7 @@ namespace AFirma.Tests
 
             Assert.AreEqual(0, auto.Running.Count);
             Assert.AreEqual(0, Services.State.autoHeists.Count);
-            Assert.AreEqual(before + 60.0, Services.Economy.Money, "O golpe do meio conta como meter o pé com a sacola.");
+            Assert.AreEqual(before + Auto(100), Services.Economy.Money, "O golpe do meio conta como meter o pé com a sacola.");
             Assert.AreEqual(ThiefStatus.Available, Services.State.FindThief(id).status);
         }
 
@@ -460,7 +459,7 @@ namespace AFirma.Tests
             Reload(5); // pouco tempo fora: sem offline
 
             Assert.AreEqual(1, auto.Running.Count);
-            Assert.AreEqual(before + 60.0, Services.Economy.Money);
+            Assert.AreEqual(before + Auto(100), Services.Economy.Money);
             Assert.AreEqual(ThiefStatus.OnHeist, Services.State.FindThief(id).status);
             Assert.AreSame(Services.State.FindThief(id), auto.Running[0].crew[0], "A faixa aponta pra crew do save novo.");
         }

@@ -9,6 +9,7 @@ guloso do zero até concluir o Banco Central. Mostra em que minuto cada golpe é
     python docs/balanceamento/simulador.py --sem-habilidades
     python docs/balanceamento/simulador.py --extras   # quanto cada golpe extra rende perto da escada
     python docs/balanceamento/simulador.py --ciclos 3  # prestígio: ciclos seguidos com Procurado e bônus de Fama
+    python docs/balanceamento/simulador.py --automatico  # golpes no automático: curva com e sem, Orelhão, idle × ativo
 
 O que o jogador simulado faz:
 - recruta o especialista que falta pro próximo golpe (e um Pé-na-Tábua a partir do Câmbio);
@@ -20,6 +21,11 @@ O que o jogador simulado faz:
 - mete o pé na porta antes da sirene, ou segue com sirene se a sala acaba antes da polícia
   (cofre limpo com sirene = concluído com 80% da sacola);
 - usa as habilidades do jeito ideal (Lábia −25, Loop 15 s, Pé-de-cabra na sala de Fechadura mais cara).
+
+Com --automatico, quem não vai no golpe na mão vai pro automático (golpes com o cofre já limpo na mão, rendendo
+autoHeistLootMult, sem tempo de interface, Na moita ou Até o cofre, o que render mais) quando isso rende mais que o bico,
+e o Orelhão entra nas compras. O relatório compara quem só deixa rodando (até 3 automáticos + bicos) com quem joga na
+mão o golpe que mais rende e deixa o resto rodando igual: tem que ficar abaixo de 100% (ESCOPO 11).
 
 No prestígio (--ciclos) ele soma a Fama do ciclo, compra sempre o bônus de Fama mais barato (no empate:
 Esquema, Herança, Lenda, Sangue-frio, Rede, Reputação) e começa o ciclo seguinte com o Procurado +1.
@@ -92,8 +98,12 @@ REPUTACAO, HERANCA, LENDA, ESQUEMA, REDE, SANGUE_FRIO = range(6)
 PERK_PRIORITY = ["esquema", "heranca", "lenda", "sangue-frio-da-firma", "rede", "reputacao"]
 
 
-def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, smart_recruits=True):
-    """Um ciclo, do zero até o Banco Central. wanted e perk_levels vêm do prestígio (ciclo 1: 0 e nenhum)."""
+def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, smart_recruits=True, auto=False):
+    """
+    Um ciclo, do zero até o Banco Central. wanted e perk_levels vêm do prestígio (ciclo 1: 0 e nenhum).
+    auto: quem não vai no golpe na mão pode ir pro automático (nos golpes com o cofre já limpo na mão) em vez do bico,
+    e o Orelhão entra nas compras.
+    """
     cfg, T = P["cfg"], P["thieves"]
     perk_levels = perk_levels or {}
 
@@ -137,7 +147,8 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
     def skill(x): return x["skill"] * (1 + total("ferramentas") / 100)
     def stealth(x): return x["stealth"] * (1 + total("tenis-de-molinha") / 100)
 
-    def run(h, team, push_siren):
+    def prepare(h, team):
+        """Sala a sala: [obstáculo, segundos, alerta/s, loot, alerta fixo], já com as habilidades do jeito ideal."""
         rooms = P["heists"][h]["rooms"]
         avg_stealth = sum(stealth(x) for x in team) / len(team)
         types = {x["type"] for x in team}
@@ -160,6 +171,14 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
                 p = max(plan, key=lambda p: p[2] * min(15, p[1]))
                 if p[1] > 0: p[2] *= max(0.0, 1 - 15 / p[1])
             if CON in types: budget += 25
+        return plan, budget, countdown, keep_siren, types
+
+    def payout(bag):
+        return bag * (1 + total("lavanderia") / 100) * (1 + perk(ESQUEMA) / 100)
+
+    def run(h, team, push_siren):
+        rooms = P["heists"][h]["rooms"]
+        plan, budget, countdown, keep_siren, types = prepare(h, team)
         alert, secs, bag, done, siren, police = 0.0, 0.0, 0.0, 0, False, 0.0
         for _, seconds, rate, loot, fixed in plan:
             if not siren and alert + rate * seconds + fixed >= budget:
@@ -174,8 +193,82 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
                 alert += rate * seconds + fixed
             secs += seconds + OVERHEAD_ROOM; bag += loot; done += 1
         keep = keep_siren if siren else 1
-        return {"secs": secs + OVERHEAD_HEIST, "loot": bag * keep * (1 + total("lavanderia") / 100) * (1 + perk(ESQUEMA) / 100),
+        return {"secs": secs + OVERHEAD_HEIST, "loot": payout(bag * keep),
                 "done": done, "complete": done == len(rooms), "alert": alert, "siren": siren}
+
+    # ---------------- Golpes no automático (ESCOPO 6.11), do jeito do AutoPilot ----------------
+    auto_mult = cfg.get("autoHeistLootMult", 0.6)
+    quiet_limit = cfg.get("autoQuietAlertLimit", 70)
+    auto_cache = {}
+
+    def run_auto(h, team, order):
+        """
+        Uma volta sem cena, na velocidade 1x e sem tempo de interface (o piloto decide na hora).
+        Na moita: só entra na sala se ela inteira não tocar a sirene e mete o pé (sem sirene, 100%) quando o alerta
+        passa do limite. Até o cofre: segue até a sirene e foge na hora com a fuga apressada; com Pé-na-Tábua na crew
+        ainda trabalha até a polícia chegar e sai no Cavalo de pau (100%). A Lábia entra como +25 no limite.
+        """
+        plan, budget, countdown, keep_siren, types = prepare(h, team)
+        limit = quiet_limit + (budget - 100)
+        alert, secs, bag, done, keep, police, siren = 0.0, 0.0, 0.0, 0, 1.0, 0.0, False
+        for _, seconds, rate, loot, fixed in plan:
+            end = alert + rate * seconds + fixed
+            if order == "moita":
+                if alert >= limit or end >= budget: break
+                if end >= limit:
+                    secs += (limit - alert - fixed) / rate if rate > 0 else 0
+                    break
+            elif siren:
+                if seconds + cfg.get("autoEscapeSecondsLeft", 2) >= police: break
+                police -= seconds
+                secs += seconds; bag += loot; done += 1
+                continue
+            elif end >= budget:
+                to_siren = (budget - alert - fixed) / rate if rate > 0 else 0
+                if DRIVER not in types:
+                    secs += to_siren; keep = keep_siren
+                    break
+                if seconds - to_siren + cfg.get("autoEscapeSecondsLeft", 2) >= countdown:
+                    secs += to_siren + countdown; break               # a polícia chega antes: Cavalo de pau com o que tem
+                siren, police = True, countdown - (seconds - to_siren)
+            alert = min(budget, end)
+            secs += seconds; bag += loot; done += 1
+        return {"secs": max(secs, 1.0), "loot": payout(bag * keep) * auto_mult, "done": done}
+
+    def best_auto(h, team):
+        """Melhor ordem (Na moita ou Até o cofre) pra essa crew nesse golpe: (Cr$/s, volta)."""
+        key = (h, tuple(sorted((x["type"], x["lvl"]) for x in team)), tuple(up.values()))
+        if key not in auto_cache:
+            runs = [run_auto(h, team, order) for order in ("moita", "cofre")]
+            r = max(runs, key=lambda r: r["loot"] / r["secs"])
+            auto_cache[key] = (r["loot"] / r["secs"], r)
+        return auto_cache[key]
+
+    def bico_rate(x):
+        return P["sideJob"] * (1 + cfg.get("sideJobLevelBonus", 0.1) * (x["lvl"] - 1)) * P["sideMatch"] \
+            * (1 + total("ponto-de-bico") / 100) * (1 + perk(REDE) / 100)
+
+    def allocate(free, heists, slots, van):
+        """
+        Quem sobra vai pro automático ou pro bico: escolhe até `slots` crews (cada golpe uma vez só), uma por vez,
+        a que mais ganha em cima do bico que aquela gente faria. Devolve [(golpe, crew, Cr$/s, volta)].
+        """
+        free, used, chosen = list(free), set(), []
+        while len(chosen) < slots and free and heists:
+            best = None
+            for n in range(1, min(van, len(free)) + 1):
+                for team in itertools.combinations(free, n):
+                    bico = sum(bico_rate(x) for x in team)
+                    for h in heists:
+                        if h in used: continue
+                        rate, r = best_auto(h, list(team))
+                        if r["done"] and rate - bico > 0 and (best is None or rate - bico > best[0]):
+                            best = (rate - bico, h, list(team), rate, r)
+            if best is None: break
+            _, h, team, rate, r = best
+            chosen.append((h, team, rate, r)); used.add(h)
+            free = [x for x in free if all(x is not y for y in team)]
+        return chosen
 
     def passive(dt, team):
         idle = [x for x in crew if x not in team]
@@ -183,6 +276,10 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
             P["sideJob"] * (1 + cfg.get("sideJobLevelBonus", 0.1) * (x["lvl"] - 1)) * P["sideMatch"] for x in idle)
         return income * (1 + total("ponto-de-bico") / 100) * (1 + perk(REDE) / 100) * dt
 
+    def auto_slots():
+        return int(cfg.get("startingAutoHeistSlots", 1) + total("orelhao"))
+
+    idle_vs_active, auto_total, orelhao_bought, last_autos = [], 0.0, [], ([], 0.0)
     starting = [CON, LOCKSMITH]  # GameConfig.startingCrew
     for kind in starting: recruit(kind)
     H = P["heists"]
@@ -206,13 +303,27 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
             if rolled is not None:
                 money -= recruit_price(rolled); recruit(kind, rolled)
                 log.append(f"{t / 60:5.1f} min  recruta {['Pé-na-Tábua', 'Gazua', 'Disquete', '171'][kind]} nível {crew[-1]['lvl']}")
+        if auto and completed:
+            # gente a mais pro automático: até 2 por golpe no automático além da van, do tipo que a crew tem menos
+            while len(crew) < slots + 2 * auto_slots():
+                if len(crew) >= cfg["startingCrewSlots"] + total("quartos"):
+                    c = cost("quartos")
+                    if c is None or money < c: break
+                    money -= c; up["quartos"] += 1
+                rolled = next((r for r in range(best_rolled(), 0, -1) if money >= recruit_price(r)), None)
+                if rolled is None: break
+                kind = min((LOCKSMITH, HACKER, CON, DRIVER), key=lambda k: sum(x["type"] == k for x in crew))
+                money -= recruit_price(rolled); recruit(kind, rolled)
+                log.append(f"{t / 60:5.1f} min  recruta {['Pé-na-Tábua', 'Gazua', 'Disquete', '171'][kind]} nível {crew[-1]['lvl']} pro automático")
         if len(crew) > slots and cost("van") is not None and money >= cost("van"):
             money -= cost("van"); up["van"] += 1; slots += 1
-        buyable = ("ferramentas", "tenis-de-molinha", "lavanderia", "ponto-de-bico", "radio-da-policia") + (("contatos",) if smart_recruits else ())
+        buyable = ("ferramentas", "tenis-de-molinha", "lavanderia", "ponto-de-bico", "radio-da-policia") + (("contatos",) if smart_recruits else ()) \
+            + (("orelhao",) if auto else ())
         while True:
             options = sorted((cost(k), k) for k in buyable if k in up and cost(k) is not None)
             if not options or money < options[0][0]: break
             money -= options[0][0]; up[options[0][1]] += 1
+            if options[0][1] == "orelhao": orelhao_bought.append((round(t / 60, 1), options[0][0]))
         if smart_recruits:
             rolled = best_rolled()
             for i, x in enumerate(crew):
@@ -222,23 +333,44 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
                     kind = x["type"]; crew.pop(i); recruit(kind, rolled); crew.insert(i, crew.pop())
                     log.append(f"{t / 60:5.1f} min  troca o {['Pé-na-Tábua', 'Gazua', 'Disquete', '171'][kind]} nível {x['lvl']} por um nível {new_lvl}")
 
-        best, rate_by_heist = None, {}
+        best, rate_by_heist, team_by_heist = None, {}, {}
         for h in unlocked:
             for n in range(1, min(slots, len(crew)) + 1):
                 for team in itertools.combinations(crew, n):
                     for push in (False, True):
                         r = run(h, list(team), push)
                         if r["done"] == 0: continue
-                        rate_by_heist[h] = max(rate_by_heist.get(h, 0), r["loot"] / r["secs"])
+                        if r["loot"] / r["secs"] > rate_by_heist.get(h, 0):
+                            rate_by_heist[h], team_by_heist[h] = r["loot"] / r["secs"], list(team)
                         score = (h == target and r["complete"] and h not in completed, r["loot"] / r["secs"])
                         if best is None or score > best[0]: best = (score, h, list(team), r)
         rates.append((t / 60, target, rate_by_heist))
+        if auto and rate_by_heist:
+            # Quem só deixa rodando (a crew toda em até 3 automáticos + bicos) contra quem joga na mão o golpe que mais
+            # rende e deixa o resto rodando do mesmo jeito.
+            def background(people):
+                autos_ = allocate(people, sorted(completed), 3, slots)
+                in_auto = [x for _, team_, _, _ in autos_ for x in team_]
+                return sum(rate for _, _, rate, _ in autos_) + passive(1, in_auto + [x for x in crew if all(x is not y for y in people)])
+            top = max(rate_by_heist, key=rate_by_heist.get)       # o golpe que mais rende na mão com essa crew
+            rest = [x for x in crew if all(x is not y for y in team_by_heist[top])]
+            idle_vs_active.append((t / 60, target, background(crew), rate_by_heist[top] + background(rest)))
         if best is None:
             t += 30; money += passive(30, []); continue
         _, h, team, r = best
-        t += r["secs"]; money += r["loot"] + passive(r["secs"], team); cycle_loot += r["loot"]
-        for x in team:
-            x["xp"] += cfg["xpPerRoom"] * r["done"]
+        free = [x for x in crew if all(x is not y for y in team)]
+        autos = allocate(free, sorted(completed), auto_slots(), slots) if auto else []
+        auto_income = sum(rate for _, _, rate, _ in autos) * r["secs"]
+        busy = team + [x for _, team_, _, _ in autos for x in team_]
+        t += r["secs"]; money += r["loot"] + auto_income + passive(r["secs"], busy); cycle_loot += r["loot"] + auto_income
+        auto_total += auto_income
+        if autos: last_autos = (autos, r["loot"] / r["secs"])
+        if autos and (not log or "automático:" not in log[-1]):
+            log.append(f"{t / 60:5.1f} min  automático: " + ", ".join(f"{H[a]['name'].split()[0]} ({len(c)})" for a, c, _, _ in autos))
+        gains = [(x, cfg["xpPerRoom"] * r["done"]) for x in team]
+        gains += [(x, cfg["xpPerRoom"] * ra["done"] * r["secs"] / ra["secs"]) for _, team_, _, ra in autos for x in team_]
+        for x, xp in gains:
+            x["xp"] += xp
             while x["lvl"] < cfg["maxLevel"] and x["xp"] >= cfg["xpPerLevelFactor"] * x["lvl"]:
                 x["xp"] -= cfg["xpPerLevelFactor"] * x["lvl"]; x["lvl"] += 1
                 x["skill"] += T[x["type"]]["skillPerLevel"]; x["stealth"] += T[x["type"]]["stealthPerLevel"]
@@ -248,7 +380,8 @@ def simulate(P, abilities=True, limit_minutes=120, wanted=0, perk_levels=None, s
                    f"{' sirene' if r['siren'] else '       '}  +Cr$ {r['loot']:>9,.0f}  caixa Cr$ {money:>11,.0f}"
                    f"  níveis {[x['lvl'] for x in crew]}")
     return {"milestones": milestones, "minutes": round(t / 60, 1), "upgrades": up, "log": log, "rates": rates,
-            "cycleLoot": cycle_loot, "done": last in completed}
+            "cycleLoot": cycle_loot, "done": last in completed, "idleVsActive": idle_vs_active, "autoTotal": auto_total,
+            "orelhao": orelhao_bought, "lastAutos": last_autos}
 
 
 def perk_cost(P, perk_id, level):
@@ -293,6 +426,36 @@ def cycles_report(P, cycles):
     return "\n".join(lines)
 
 
+def auto_report(P, manual, with_auto):
+    """Golpes no automático: a curva com e sem, quando o Orelhão entra e quem só deixa rodando contra quem joga."""
+    names = [h["name"] for h in P["heists"] if not h["extra"]]
+    H = P["heists"]
+    lines = ["Golpes no automático (min de jogo ativo até concluir cada golpe da escada):",
+             "  " + f"{'':<14}" + "".join(f"{n.split()[0][:10]:>11}" for n in names)]
+    for label, r in (("sem", manual), ("com", with_auto)):
+        lines.append("  " + f"{label + ' automático':<14}" + "".join(f"{r['milestones'].get(n, float('nan')):>11.1f}" for n in names))
+    share = with_auto["autoTotal"] / max(1, with_auto["cycleLoot"])
+    lines.append(f"  o automático fez {share:.0%} do loot do ciclo; Orelhão comprado em: "
+                 + (", ".join(f"{m} min (Cr$ {c:,.0f})" for m, c in with_auto["orelhao"]) or "nunca"))
+    autos, hand_rate = with_auto["lastAutos"]
+    if autos:
+        cfg = P["cfg"]
+        hours = cfg.get("offlineCapHours", 4)
+        offline = sum(rate for _, _, rate, _ in autos) * hours * 3600 * cfg.get("offlineRate", 0.5)
+        lines.append(f"  offline no fim do ciclo ({', '.join(H[h]['name'].split()[0] for h, _, _, _ in autos)} no Repetir): "
+                     f"{hours:g} h fora = Cr$ {offline:,.0f} dos golpes, o mesmo que {offline / hand_rate / 60:.0f} min "
+                     f"do golpe na mão (fora os bicos)")
+    lines.append("Quem só deixa rodando (crew toda em até 3 automáticos + bicos) ÷ quem joga na mão o golpe que mais rende")
+    lines.append("e deixa o resto da crew rodando igual (abaixo de 100%: jogar na mão rende mais):")
+    by_target = {}
+    for minute, target, idle, active in with_auto["idleVsActive"]:
+        by_target.setdefault(target, []).append(idle / active)
+    for target, values in by_target.items():
+        values = sorted(values)
+        lines.append(f"  mirando {H[target]['name'][:30]:<30} mediana {values[len(values) // 2]:4.0%} · máx {values[-1]:4.0%}")
+    return "\n".join(lines)
+
+
 def extras_report(P, result):
     """
     Pra cada golpe extra, na faixa dele (de quando libera até concluir o degrau da escada que estava na mira):
@@ -320,6 +483,7 @@ if __name__ == "__main__":
     parser.add_argument("--extras", action="store_true", help="mostra quanto cada golpe extra rende perto da escada")
     parser.add_argument("--ciclos", type=int, default=0, help="simula N ciclos seguidos de prestígio")
     parser.add_argument("--sem-contatos", action="store_true", help="o jogador só recruta nível 1 (não usa Contatos)")
+    parser.add_argument("--automatico", action="store_true", help="golpes no automático: curva com e sem, Orelhão e idle × ativo")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
     project = load_project()
@@ -330,4 +494,8 @@ if __name__ == "__main__":
     if not any(name.startswith("Banco Central") for name in result["milestones"]):
         print(f"  (parou em {result['minutes']} min sem concluir o último golpe)")
     if args.extras: print(extras_report(project, result))
+    if args.automatico:
+        with_auto = simulate(project, abilities=not args.sem_habilidades, smart_recruits=not args.sem_contatos, auto=True)
+        if args.log: print("\n".join(with_auto["log"]))
+        print(auto_report(project, result, with_auto))
     if args.ciclos: print(cycles_report(project, simulate_cycles(project, args.ciclos, not args.sem_habilidades, not args.sem_contatos)))
