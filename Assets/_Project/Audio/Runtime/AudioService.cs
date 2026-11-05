@@ -45,6 +45,7 @@ namespace AFirma.Audio
                 if (Time.unscaledTime - lastArrest > 1f) PlaySfx(Sound("Viatura")); // uma viatura só pra crew presa junta
                 lastArrest = Time.unscaledTime;
             };
+            GameEvents.AutoHeistFinished += (_, _) => PlaySfx(Sound("UI_Buy"), 0.35f); // discreto: o golpe no automático voltou
         }
 
         static AudioClip Sound(string name) => Resources.Load<AudioClip>("Sons/" + name);

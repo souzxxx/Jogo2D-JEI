@@ -49,7 +49,7 @@ namespace AFirma.Tests
             var dialog = root.Q(className: "dialog");
             Assert.IsNotNull(dialog, "Novo jogo com save precisa pedir confirmação.");
             yield return Print("menu_confirmar_novo_jogo");
-            Assert.AreEqual(999, Services.State.money, "Não pode apagar antes de confirmar.");
+            Assert.GreaterOrEqual(Services.State.money, 999, "Não pode apagar antes de confirmar (a latinha rende uns trocados).");
 
             Click(dialog.Query<Button>().Last());
             yield return SkipIntroToHideout();

@@ -121,7 +121,9 @@ namespace AFirma.UI
         {
             switch (thief.status)
             {
-                case ThiefStatus.OnHeist: return "Num golpe";
+                case ThiefStatus.OnHeist:
+                    var run = AutoHeistStrip.RunOf(thief);
+                    return run != null ? $"Em golpe (automático): {run.heist.displayName}" : "Num golpe";
                 case ThiefStatus.OnSideJob:
                     var job = Services.Db.GetSideJob(thief.sideJobId);
                     return $"No bico: {job?.displayName} (+{Formulas.Money(Services.Economy.GetSideJobIncome(thief, job))}/s)";

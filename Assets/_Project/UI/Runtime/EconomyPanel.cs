@@ -19,6 +19,8 @@ namespace AFirma.UI
                 var total = Ui.Text("", "h2");
                 updates.Add(() => total.text = $"Bicos · +{Formulas.Money(Economy.IncomePerSecond)}/s");
                 panel.Add(total);
+                var away = Services.Crew.Crew.Where(t => AutoHeistStrip.RunOf(t) != null).Select(t => t.nickname).ToList();
+                if (away.Count > 0) panel.Add(Ui.Text("Em golpe (automático): " + string.Join(", ", away), "muted"));
                 var list = new ScrollView();
                 list.AddToClassList("grow");
                 foreach (var job in Services.Db.sideJobs.Where(j => j != null)) list.Add(JobCard(job, panel));

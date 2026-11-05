@@ -7,7 +7,8 @@ namespace AFirma.UI
 {
     /// <summary>
     /// Esconderijo (hub, cena Hideout): caixa com contador rolando, renda por segundo, abas da pasta
-    /// (Mapa, Crew, Contatos, Bicos, Upgrades, Prestígio), o menu (Opções, Créditos) e os avisos do jogo. Cada aba monta o seu painel em #content.
+    /// (Mapa, Crew, Contatos, Bicos, Upgrades, Prestígio), a faixa Golpes rolando, o menu (Opções, Créditos) e os avisos do jogo.
+    /// Cada aba monta o seu painel em #content.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public class HideoutScreen : MonoBehaviour
@@ -48,6 +49,7 @@ namespace AFirma.UI
             // depois das boas-vindas da Dona Cida, que saem no primeiro frame
             root.schedule.Execute(() => Tutorial.Step("mapa", root.Q("map"), "Abre o Mapa aqui na pasta, chefia. É lá que a gente escolhe o serviço.")).StartingIn(300);
 
+            AutoHeistStrip.Attach(root);
             Notices.Attach(root);
             Services.Audio.PlayMusic(MusicTrack.Hideout);
         }

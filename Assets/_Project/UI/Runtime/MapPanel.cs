@@ -7,7 +7,8 @@ namespace AFirma.UI
 {
     /// <summary>
     /// Aba Mapa do esconderijo: o mapa de Nova Guanabara com um pino por golpe (bloqueado, liberado, concluído)
-    /// e o modificador sorteado na visita. Escolher um golpe e Planejar abre o planejamento: crew, especialistas e Ir.
+    /// e o modificador sorteado na visita. Escolher um golpe e Planejar abre o planejamento: crew, especialistas e Ir,
+    /// ou Mandar no automático (golpe com o cofre já limpo na mão) com a ordem e o Repetir.
     /// </summary>
     static class MapPanel
     {
@@ -93,6 +94,35 @@ namespace AFirma.UI
             go.name = "go";
             Tutorial.Step("ir", go, "Especialista na sala certa trabalha mais rápido. Escolheu a crew? Manda ver.");
 
+            // golpes no automático (ESCOPO 6.11): mesma crew, ordem pra crew e Repetir
+            var auto = Services.AutoHeist;
+            var order = AutoHeistOrder.Quiet;
+            bool repeat = false;
+            Button orderButton = null, repeatButton = null, send = null; // o Refresh dos cliques usa os três
+            orderButton = Ui.Btn("", () =>
+            {
+                order = order == AutoHeistOrder.Quiet ? AutoHeistOrder.ToTheVault : AutoHeistOrder.Quiet;
+                Ui.Toast(content, order == AutoHeistOrder.Quiet
+                    ? "Na moita: mete o pé antes da sirene. Seguro, rende menos."
+                    : "Até o cofre: só para no cofre ou na sirene. Rende mais e pode dar cana.");
+                Refresh();
+            });
+            orderButton.name = "auto-order";
+            repeatButton = Ui.Btn("", () => { repeat = !repeat; Refresh(); });
+            repeatButton.name = "auto-repeat";
+            send = Ui.Btn("Mandar no automático", () =>
+            {
+                if (!auto.CanSend(heist, chosen, out var reason)) { Ui.Toast(content, reason); return; }
+                auto.Send(heist, chosen, order, repeat);
+                UiSounds.Stamp();
+                content.Clear();
+                Build(content);
+                Ui.Toast(content, $"{heist.displayName} no automático. Acompanha na faixa Golpes rolando.");
+            });
+            send.name = "auto-send";
+            if (auto.IsAutoUnlocked(heist))
+                Tutorial.Tip("automatico", $"{heist.displayName} a rapaziada já faz de olho fechado. Manda eles sozinhos: Mandar no automático.");
+
             void Refresh()
             {
                 foreach (var card in list.Query<Button>(className: "card").ToList())
@@ -104,6 +134,11 @@ namespace AFirma.UI
                 bool can = Services.Heist.CanStart(heist, chosen, out var reason);
                 go.text = can ? $"Ir! ({chosen.Count}/{crew.HeistSlots})" : reason;
                 go.SetAvailable(can);
+                orderButton.text = order == AutoHeistOrder.Quiet ? "Ordem: Na moita" : "Ordem: Até o cofre";
+                repeatButton.text = AutoHeistStrip.RepeatText(repeat);
+                orderButton.SetShown(auto.IsAutoUnlocked(heist));
+                repeatButton.SetShown(auto.IsAutoUnlocked(heist));
+                send.SetAvailable(auto.CanSend(heist, chosen, out _));
             }
 
             foreach (var thief in crew.Crew)
@@ -111,7 +146,8 @@ namespace AFirma.UI
                 var type = Services.Db.GetThiefType(thief.type);
                 bool free = thief.status == ThiefStatus.Available || thief.status == ThiefStatus.OnSideJob;
                 var status = thief.status == ThiefStatus.Jailed ? $"Preso: sai em {Clock(crew.SecondsLeftInJail(thief))}"
-                    : thief.status == ThiefStatus.OnSideJob ? "No bico (sai do bico se for)" : $"Nível {thief.level}";
+                    : thief.status == ThiefStatus.OnSideJob ? "No bico (sai do bico se for)"
+                    : thief.status == ThiefStatus.OnHeist ? "Em golpe (automático)" : $"Nível {thief.level}";
                 var card = new Button { userData = thief };
                 card.AddToClassList("card");
                 card.AddToClassList("row");
@@ -137,7 +173,7 @@ namespace AFirma.UI
             content.Add(Ui.El("row plan",
                 Ui.El("paper plan__brief", Ui.Text(heist.briefing), Ui.Text(Obstacles(heist), "muted"), warnings),
                 Ui.El("plan__crew", Ui.Text($"Crew (cabem {crew.HeistSlots} na van)", "muted"), list)));
-            content.Add(go);
+            content.Add(Ui.El("row plan__actions", orderButton, repeatButton, Ui.El("grow"), send, go));
             Refresh();
         }
 
