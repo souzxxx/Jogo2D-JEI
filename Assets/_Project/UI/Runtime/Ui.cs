@@ -59,6 +59,25 @@ namespace AFirma.UI
             return image;
         }
 
+        /// <summary>Animação quadro a quadro em loop (cena do bico): troca o fundo no ritmo de fps.</summary>
+        public static VisualElement Flipbook(IReadOnlyList<Sprite> frames, float fps, string classes)
+        {
+            var image = Image(frames.Count > 0 ? frames[0] : null, classes);
+            if (frames.Count > 1)
+                image.schedule.Execute(() => image.style.backgroundImage = new StyleBackground(frames[(int)(Time.unscaledTime * fps) % frames.Count]))
+                    .Every(Mathf.Max(16, (int)(500 / fps)));
+            return image;
+        }
+
+        /// <summary>"+Cr$" que sobe e some de dentro do elemento (bico rendendo, golpe que voltou).</summary>
+        public static void Pop(VisualElement element, string text)
+        {
+            var pop = Text(text, "pop");
+            element.Add(pop);
+            pop.schedule.Execute(() => pop.AddToClassList("pop--up")).StartingIn(20);
+            pop.schedule.Execute(pop.RemoveFromHierarchy).StartingIn(1200);
+        }
+
         /// <summary>Aviso que some sozinho, embaixo da tela (a tela precisa ter um #toasts).</summary>
         public static void Toast(VisualElement anyElement, string text)
         {
