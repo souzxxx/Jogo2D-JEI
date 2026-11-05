@@ -51,7 +51,7 @@ namespace AFirma.Tests
         [Test]
         public void HeistSounds_Exist()
         {
-            foreach (var name in new[] { "Passos", "Alarme", "Sirene", "Viatura" })
+            foreach (var name in new[] { "Passos", "Alarme", "Sirene", "Viatura", "Kombi", "Cofre", "Algemas" })
                 Assert.IsNotNull(Resources.Load<AudioClip>("Sons/" + name), $"Falta Resources/Sons/{name} (Source~/gerar_sfx.py).");
         }
 

@@ -37,5 +37,9 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="toasts" class="toasts" picking-mode="Ignore" />
+        <ui:VisualElement name="intro-caption" class="intro hidden">
+            <ui:Label name="intro-text" text="" class="h2 intro__text" />
+        </ui:VisualElement>
+        <ui:Button name="intro-skip" text="Pular" class="btn hud__skip hidden" />
     </ui:VisualElement>
 </ui:UXML>

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using AFirma.Core;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -7,7 +8,7 @@ namespace AFirma.UI
 {
     /// <summary>
     /// Esconderijo (hub, cena Hideout): caixa com contador rolando, renda por segundo, abas da pasta
-    /// (Mapa, Crew, Contatos, Bicos, Upgrades, Prestígio), a faixa Golpes rolando, o menu (Opções, Créditos) e os avisos do jogo.
+    /// (Mapa, Crew, Contatos, Bicos, Upgrades, Prestígio), o objetivo, a faixa Golpes rolando, o menu (Opções, Créditos) e os avisos do jogo.
     /// Cada aba monta o seu painel em #content.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
@@ -49,9 +50,38 @@ namespace AFirma.UI
             // depois das boas-vindas da Dona Cida, que saem no primeiro frame
             root.schedule.Execute(() => Tutorial.Step("mapa", root.Q("map"), "Abre o Mapa aqui na pasta, chefia. É lá que a gente escolhe o serviço.")).StartingIn(300);
 
+            Objective();
             AutoHeistStrip.Attach(root);
             Notices.Attach(root);
             Services.Audio.PlayMusic(MusicTrack.Hideout);
+            if (MenuPanels.CreditsPending)
+            {
+                MenuPanels.CreditsPending = false;
+                MenuPanels.Credits(root);
+            }
+        }
+
+        /// <summary>
+        /// "Objetivo: Banco Central" sempre no topo (ESCOPO 5), com a escada de golpes até lá: limpo, liberado, bloqueado.
+        /// Clicar abre o Mapa. Depois da revanche o objetivo vira sumir do mapa (prestígio).
+        /// </summary>
+        void Objective()
+        {
+            var objective = root.Q<Button>("objective");
+            var intro = Services.Db.intro;
+            objective.SetShown(intro != null && intro.heist != null);
+            if (intro == null || intro.heist == null) return;
+
+            var progression = Services.Progression;
+            bool done = progression.IsCompleted(intro.heist);
+            objective.Add(Ui.Text(done ? "Objetivo: Sumir do mapa" : intro.objective));
+            var ladder = new List<HeistDef>();
+            for (var heist = intro.heist; heist != null && !ladder.Contains(heist); heist = heist.unlockedBy) ladder.Insert(0, heist);
+            if (!done)
+                foreach (var heist in ladder)
+                    objective.Add(Ui.El("objective__step" + (progression.IsCompleted(heist) ? " objective__step--done"
+                        : progression.IsUnlocked(heist) ? " objective__step--next" : "")));
+            objective.OnClick(() => { if (done) Open("prestige", PrestigePanel.Build); else Open("map", MapPanel.Build); });
         }
 
         void Tab(string name, Action<VisualElement> build) => root.OnClick(name, () => Open(name, build));

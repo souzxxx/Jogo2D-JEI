@@ -181,6 +181,55 @@
     margin-bottom: 3px;
 }
 
+/* capa da revanche: borda dupla vermelha */
+.news--special {
+    border-width: 3px;
+    border-color: var(--red);
+}
+
+/* foto da capa da abertura (Bastos com a firma algemada, 64x44) */
+.news__photo {
+    width: 128px;
+    height: 88px;
+    flex-shrink: 0;
+    margin-right: 8px;
+    border-width: 1px;
+    border-color: var(--ink);
+}
+
+.news__sub {
+    color: var(--ink);
+    white-space: normal;
+}
+
+/* ---------------------------------------------------------------- abertura */
+
+/* letreiro: tela preta com o texto batendo à máquina */
+.intro {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--ink);
+    align-items: center;
+    justify-content: center;
+}
+
+.intro__text {
+    color: var(--cream);
+    max-width: 480px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+/* em cima do Meter o pé */
+.hud__skip {
+    position: absolute;
+    right: 8px;
+    bottom: 44px;
+}
+
 /* avisos no canto de baixo, em cima dos cartões da crew: no meio da tela eles caíam em cima dos balões da cena */
 .hud .toasts {
     bottom: 64px;

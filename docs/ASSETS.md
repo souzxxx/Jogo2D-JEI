@@ -118,7 +118,7 @@ Arte e sons feitos pelo time (sem licença de terceiro, ficam no repositório):
 | Cena do bico Catar latinha (8 quadros 96×64, sem cena vazia) | Script Python na paleta, com o boneco da Cena do Golpe | `Data/Economy/SideJobs/Bico` (script em `HeistScene/Art/Source~/gerar_latinha.py`) | Miguel |
 | Fundo do esconderijo (porão da Auto Elétrica) e mapa de Nova Guanabara | Script Python que desenha pixel a pixel na paleta | `UI/Art` (script em `UI/Art/Source~/gerar_ui.py`) | Enzo |
 | Fonte da UI (FirmaPixel) | Script Python que vira as letras pixel da cena em TTF | `UI/Fonte` (script em `UI/Art/Source~`) | Enzo |
-| Sons da UI (clique, hover, compra, erro, bip, máquina de escrever, carimbo, papel), do golpe (passos, alarme, sirene, viatura) e do Disquete (teclado, fita rebobinando) | Sintetizados por script, sem sample | `Audio/Resources/Sons`, `Thieves/Disquete/Audio` (script em `Audio/Source~/gerar_sfx.py`) | Enzo |
+| Sons da UI (clique, hover, compra, erro, bip, máquina de escrever, carimbo, papel), do golpe (passos, alarme, sirene, viatura, cofre, algemas), da abertura (Kombi) e do Disquete (teclado, fita rebobinando) | Sintetizados por script, sem sample | `Audio/Resources/Sons`, `Thieves/Disquete/Audio` (script em `Audio/Source~/gerar_sfx.py`) | Enzo |
 
 Importados com o padrão de pixel art (Point, sem compressão, PPU 32) pelo `PixelArtImporter`. Os sprite sheets ainda precisam ser fatiados (Sprite Mode Multiple) por quem for usar.
 

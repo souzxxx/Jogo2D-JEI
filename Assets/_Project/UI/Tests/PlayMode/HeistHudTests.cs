@@ -157,6 +157,33 @@ namespace AFirma.Tests
         }
 
         [UnityTest]
+        public IEnumerator Revenge_SpecialCoverThenCredits()
+        {
+            var root = Root<HeistHud>();
+            var banco = Services.Db.intro.heist;
+            Services.Heist.Flee();
+            yield return null;
+            root.Q("news")?.parent.RemoveFromHierarchy(); // o jornal do golpe de verdade
+
+            GameEvents.RaiseHeistFinished(new HeistResult
+            {
+                heistId = banco.id, completed = true, outcome = HeistOutcome.CleanEscape,
+                roomsCleared = banco.rooms.Count, totalRooms = banco.rooms.Count
+            });
+            yield return null;
+            var news = root.Q("news");
+            Assert.IsTrue(news.ClassListContains("news--special"), "Primeiro Banco Central limpo: capa especial.");
+            Assert.AreEqual(Services.Db.intro.revengeHeadline, news.Q<Label>(className: "news__headline").text);
+            yield return new WaitForSecondsRealtime(0.8f);
+            yield return Print("jornal_revanche");
+
+            Click(root, "back");
+            yield return WaitForScene(SceneFlow.Hideout);
+            yield return null;
+            Assert.IsTrue(Root<HideoutScreen>().Query<Label>(className: "h2").ToList().Any(l => l.text == "Créditos"), "Depois da revanche, os créditos.");
+        }
+
+        [UnityTest]
         public IEnumerator Pause_FreezesTheHeist()
         {
             var root = Root<HeistHud>();
