@@ -46,7 +46,17 @@ namespace AFirma.Audio
                 lastArrest = Time.unscaledTime;
             };
             GameEvents.AutoHeistFinished += (_, _) => PlaySfx(Sound("UI_Buy"), 0.35f); // discreto: o golpe no automático voltou
+
+            // Abertura (ESCOPO 5): a Kombi chega quando o letreiro some, o cofre abre e a firma sai algemada. A sirene é a do golpe.
+            GameEvents.IntroCaption += text => { if (text == null && IntroDirector.IsPlaying) PlaySfx(Sound("Kombi"), 0.8f); };
+            GameEvents.RoomCleared += (index, _, _) => { if (IsVault(index)) PlaySfx(Sound("Cofre"), 0.8f); };
+            GameEvents.HeistFinished += result => { if (result?.arrestedThiefIds?.Count > 0) PlaySfx(Sound("Algemas")); };
         }
+
+        /// <summary>Cofre: a última sala do golpe; na abertura, a sala em que o cofre abre antes da porta.</summary>
+        static bool IsVault(int roomIndex) => IntroDirector.IsPlaying
+            ? roomIndex == IntroHeistService.RoomsBeforeTheDoor - 1
+            : Services.Heist.CurrentHeist != null && roomIndex == Services.Heist.CurrentHeist.rooms.Count - 1;
 
         static AudioClip Sound(string name) => Resources.Load<AudioClip>("Sons/" + name);
 

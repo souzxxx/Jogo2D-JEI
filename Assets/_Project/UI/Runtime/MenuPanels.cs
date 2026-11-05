@@ -7,6 +7,9 @@ namespace AFirma.UI
     /// <summary>Janelas de Opções e Créditos (menu principal, esconderijo e pausa do golpe).</summary>
     static class MenuPanels
     {
+        /// <summary>Créditos esperando o esconderijo abrir (depois da capa da revanche).</summary>
+        public static bool CreditsPending;
+
         /// <summary>Volumes, tela cheia e apagar o save (dupla confirmação).</summary>
         public static void Options(VisualElement anyElement) => Ui.Modal(anyElement, "Opções", body =>
         {

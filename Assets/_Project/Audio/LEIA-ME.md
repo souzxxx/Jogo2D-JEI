@@ -27,12 +27,16 @@ Todos sintetizados por `Source~/gerar_sfx.py` (só matemática, sem sample). Imp
 | UI_Click / UI_Hover | clique e mouse em cima de botão | `Ui.OnClick` |
 | UI_Buy / UI_Error | compra feita / não deu (upgrade, bônus, fiança, contratar) | painéis da UI |
 | UI_Bip | bip da Dona Cida no pager | `Notices` |
-| UI_Typewriter | capa do jornal no fim do golpe | `HeistHud` |
+| UI_Typewriter | capa do jornal no fim do golpe e o letreiro da abertura | `HeistHud` |
 | UI_Stamp | confirmou ação irreversível (carimbo) | `Ui.Confirm` |
 | UI_Paper | abriu aba, janela, porta ou evento do golpe | `Ui.Modal`, `HideoutScreen`, `HeistHud` |
 | Passos | crew entrando numa sala (`RoomEntered`) | `AudioService` |
 | Alarme + Sirene | começou a contagem da polícia (`SirenStarted`) | `AudioService` |
 | Viatura | ladrão preso (`ThiefJailed`), uma vez pra crew presa junta | `AudioService` |
+| Algemas | golpe acabou com alguém preso (`HeistFinished`), inclusive a firma antiga na abertura | `AudioService` |
+| Cofre | a última sala do golpe foi limpa (`RoomCleared`); na abertura, a sala em que o cofre abre | `AudioService` |
+| Kombi | abertura: a Kombi chega quando o letreiro some (`IntroCaption` null) | `AudioService` |
+| UI_Buy (baixinho) | um golpe no automático voltou (`AutoHeistFinished`) | `AudioService` |
 
 Porta abrindo e grana na sacola são da Cena do Golpe (`HeistScene/Audio`); o som de cada habilidade fica com o dono do ladrão (`actionSfx`/`sfx`).
 

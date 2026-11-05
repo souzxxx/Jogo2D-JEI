@@ -66,6 +66,35 @@ namespace AFirma.Tests
         }
 
         [UnityTest]
+        public IEnumerator ReplayIntro_CaptionNewspaperAndBackToTheMenu()
+        {
+            SceneManager.LoadScene(SceneFlow.MainMenu);
+            yield return WaitForScene(SceneFlow.MainMenu);
+            Click(Root<MainMenuScreen>(), "replay-intro");
+            yield return WaitForScene(SceneFlow.Heist);
+            yield return new WaitForSecondsRealtime(1f);
+            var root = Root<HeistHud>();
+            Assert.IsFalse(Find<VisualElement>(root, "intro-caption").ClassListContains("hidden"), "Letreiro na tela preta.");
+            StringAssert.StartsWith("Nova", Find<Label>(root, "intro-text").text, "O letreiro vai batendo à máquina.");
+            Assert.IsFalse(Find<Button>(root, "intro-skip").ClassListContains("hidden"), "Pular na tela.");
+            Assert.IsFalse(IntroDirector.ShowPlaceholderOverlay, "A HUD desliga o letreiro provisório.");
+            yield return Print("abertura_letreiro");
+
+            Services.Heist.Speed = 10f;
+            for (float t = 0f; t < 10f && root.Q("news") == null; t += Time.unscaledDeltaTime) yield return null;
+            Services.Heist.Speed = 1f;
+            var news = root.Q("news");
+            Assert.IsNotNull(news, "A abertura acaba na capa do jornal.");
+            Assert.IsNotNull(news.Q(className: "news__photo"), "Capa com a foto do Bastos.");
+            yield return new WaitForSecondsRealtime(0.8f);
+            yield return Print("abertura_jornal");
+
+            Click(root, "back");
+            yield return WaitForScene(SceneFlow.MainMenu);
+            Assert.IsFalse(IntroDirector.IsPlaying, "Ver abertura volta pro menu.");
+        }
+
+        [UnityTest]
         public IEnumerator Continue_GoesToHideout()
         {
             Services.StartNewGame();

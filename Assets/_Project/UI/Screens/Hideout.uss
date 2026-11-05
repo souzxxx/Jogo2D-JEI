@@ -17,6 +17,44 @@
     color: var(--mint);
 }
 
+/* "Objetivo: Banco Central" e a escada de golpes até lá */
+.hideout__objective,
+.hideout__objective:hover,
+.hideout__objective:active,
+.hideout__objective:focus {
+    align-items: center;
+    margin: 0 0 0 4px;
+    padding: 0 4px;
+    border-radius: 0;
+    border-width: 1px;
+    border-color: var(--bronze);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.hideout__objective:hover {
+    border-color: var(--lamp);
+}
+
+.hideout__objective Label {
+    color: var(--lamp);
+    margin-right: 3px;
+}
+
+.objective__step {
+    width: 6px;
+    height: 6px;
+    margin-left: 2px;
+    background-color: var(--slate);
+}
+
+.objective__step--done {
+    background-color: var(--money);
+}
+
+.objective__step--next {
+    background-color: var(--lamp);
+}
+
 .hideout__body {
     flex-grow: 1;
     align-items: stretch;

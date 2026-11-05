@@ -12,15 +12,17 @@ namespace AFirma.UI
     /// a crew com o botão de habilidade e Meter o pé. No meio abre o popup de porta, o cartão de evento
     /// e a contagem da polícia; no fim, o jornal. Lê o Services.Heist todo frame: o popup abre sozinho
     /// quando o golpe para esperando uma decisão.
+    /// Na abertura (IntroDirector) mostra o letreiro batendo à máquina na tela preta, o Pular e a capa com a foto do Bastos;
+    /// no primeiro Banco Central limpo, a capa da revanche e depois os créditos.
     /// </summary>
     [RequireComponent(typeof(UIDocument))]
     public class HeistHud : MonoBehaviour
     {
         public static readonly string[] ObstacleNames = { "Fechadura", "Sistema", "Pessoa" };
 
-        VisualElement root, popup, paused, crewBar, roomFill, alertFill;
-        Label heistName, room, alertText, bag, countdown;
-        Button speed;
+        VisualElement root, popup, paused, crewBar, roomFill, alertFill, introCaption;
+        Label heistName, room, alertText, bag, countdown, introText;
+        Button speed, introSkip;
         readonly List<(ThiefState thief, Button button)> abilities = new List<(ThiefState, Button)>();
         object shownDecision;
         Label hint;
@@ -39,6 +41,10 @@ namespace AFirma.UI
             alertText = root.Q<Label>("alert-text");
             bag = root.Q<Label>("bag");
             countdown = root.Q<Label>("countdown");
+            introCaption = root.Q("intro-caption");
+            introText = root.Q<Label>("intro-text");
+            introSkip = root.OnClick("intro-skip", IntroDirector.Skip);
+            IntroDirector.ShowPlaceholderOverlay = false; // o letreiro e o Pular de verdade são estes
 
             speed = root.OnClick("speed", () =>
                 Services.Heist.Speed = Services.Heist.Speed > 1f ? 1f : Services.Config.speedFast);
@@ -133,8 +139,19 @@ namespace AFirma.UI
 
         void Update()
         {
-            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && Services.Heist.IsRunning)
-                SetPaused(!GameClock.Paused);
+            if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && Services.Heist.IsRunning && !IntroDirector.IsPlaying)
+                SetPaused(!GameClock.Paused); // na abertura o Esc pula (o diretor cuida)
+
+            var intro = IntroDirector.Current;
+            introSkip.SetShown(intro != null);
+            var caption = intro?.Caption;
+            introCaption.SetShown(caption != null);
+            if (caption != null)
+            {
+                int chars = Mathf.Clamp((int)(intro.Time * 30f), 0, caption.Length);
+                if (chars > 0 && string.IsNullOrEmpty(introText.text)) UiSounds.Play(UiSounds.Get?.typewriter);
+                introText.text = caption.Substring(0, chars);
+            }
 
             var h = Services.Heist;
             if (!h.IsRunning) return;
@@ -227,7 +244,10 @@ namespace AFirma.UI
             countdown.SetShown(false);
             if (GameClock.Paused) SetPaused(false);
             var heist = Services.Db.GetHeist(result.heistId);
+            var intro = IntroDirector.IsPlaying ? Services.Db.intro : null;
+            bool revenge = IsRevenge(result);
             var headline = !string.IsNullOrEmpty(result.headline) ? result.headline // abertura
+                : revenge ? Services.Db.intro.revengeHeadline
                 : Services.Db.headlines != null
                 ? Services.Db.headlines.Pick(result, heist != null ? heist.displayName : "", new System.Random())
                 : heist?.displayName;
@@ -247,23 +267,39 @@ namespace AFirma.UI
                 crew.Add(line);
             }
 
-            var news = Ui.El("news news--folded",
-                Ui.Text("O GUANABARENSE", "h1 news__mast"),
-                Ui.Text("Nova Guanabara, 1992 · Edição extra · Cr$ 500", "muted news__mast"),
-                Ui.El("news__rule"),
-                Ui.Text(headline, "h2 news__headline"),
-                Ui.El("row",
+            // abertura: a foto do Bastos com a firma algemada no lugar dos números; o Pular segue pro esconderijo (ou pro menu no "Ver abertura")
+            var body = intro != null
+                ? Ui.El("row", Ui.Image(intro.headlinePhoto, "news__photo"), Ui.Text(intro.subheadline, "news__col news__sub"))
+                : Ui.El("row",
                     Ui.El("news__col",
                         Ui.Text($"Salas limpas: {result.roomsCleared}/{result.totalRooms}"),
                         Ui.Text($"Na sacola: {Formulas.Money(result.bag)}"),
                         Ui.Text($"Pro caixa: +{Formulas.Money(result.moneyGained)}", "h2 money")),
-                    crew),
+                    crew);
+            var back = intro != null ? Ui.Btn("Continuar", IntroDirector.Skip, "btn--green")
+                : Ui.Btn("Voltar pro esconderijo", () => { MenuPanels.CreditsPending |= revenge; SceneFlow.GoToHideout(); }, "btn--green");
+            var news = Ui.El(revenge ? "news news--special news--folded" : "news news--folded",
+                Ui.Text("O GUANABARENSE", "h1 news__mast"),
+                Ui.Text(revenge ? "Nova Guanabara, 1992 · EDIÇÃO ESPECIAL · Cr$ 500" : "Nova Guanabara, 1992 · Edição extra · Cr$ 500", "muted news__mast"),
                 Ui.El("news__rule"),
-                Named(Ui.Btn("Voltar pro esconderijo", SceneFlow.GoToHideout, "btn--green"), "back"));
+                Ui.Text(headline, "h2 news__headline"),
+                body,
+                Ui.El("news__rule"),
+                Named(back, "back"));
             news.name = "news";
             root.Add(Ui.El("scrim", news));
             news.schedule.Execute(() => news.RemoveFromClassList("news--folded")).StartingIn(50);
             UiSounds.Play(UiSounds.Get?.typewriter);
+        }
+
+        /// <summary>Primeiro Banco Central limpo na mão (ESCOPO 5): a revanche, uma vez por save.</summary>
+        static bool IsRevenge(HeistResult result)
+        {
+            var intro = Services.Db.intro;
+            if (intro == null || intro.heist == null || result.auto || !result.completed || IntroDirector.IsPlaying
+                || result.heistId != intro.heist.id || Services.State.seenTips.Contains("revanche")) return false;
+            Services.State.seenTips.Add("revanche");
+            return true;
         }
 
         static Button Named(Button button, string name)
