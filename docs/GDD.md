@@ -175,7 +175,14 @@ _Números atuais: ver [ESCOPO.md](ESCOPO.md) e [BALANCEAMENTO.md](BALANCEAMENTO.
 
 **Áudio como interface:** a música do golpe ganha camadas com o alerta; cada ação importante tem som.
 
-_Mockups das telas: colar aqui e no Milanote._
+Telas (prints do jogo):
+
+| | |
+|---|---|
+| ![Esconderijo com o objetivo e a escada de golpes até o Banco Central](img/ui_esconderijo.png) | ![Bicos como vitrines: a cena de quem está lá e "VOLTO JÁ" no vazio](img/ui_bicos.png) |
+| ![Faixa Golpes rolando: o golpe no automático com sacola, alerta, crew e salas](img/ui_golpes_rolando.png) | ![Planejamento](img/ui_planejamento.png) |
+| ![Fim da abertura: o jornal com a foto do Bastos](img/ui_abertura_jornal.png) | ![Revanche: a edição especial do Banco Central limpo, antes dos créditos](img/ui_jornal_revanche.png) |
+| ![HUD do golpe com a porta](img/ui_hud_porta.png) | ![Jornal do golpe](img/ui_jornal.png) |
 
 Cena do Golpe (prints do jogo):
 
@@ -285,3 +292,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 30/10/2026 | Blueprint, Mechanics | 6 eventos dos golpes extras, 2 por golpe, que só saem no golpe deles | Cada golpe extra é a vitrine de um ladrão |
 | 30/10/2026 | Blueprint, Experience | Abertura implementada: Novo jogo toca o golpe roteirizado no Banco Central (letreiro, bordões, Loop e Lábia, cofre aberto, sirene, "só mais uma", prisão, jornal e bip da segunda chance) e cai no esconderijo; Pular e Esc a qualquer hora; "Ver abertura" no menu. Não paga, não prende e não gasta bip de marco | Objetivo claro desde o primeiro minuto, sem mexer no save |
 | 30/10/2026 | Interface, Arte e Som | Abertura contada pela cena (chuva de dinheiro, placas da porta, Bastos, prisão e congelamento); prédios dos 3 golpes extras; miniaturas dos 8 prédios; cenas dos bicos Chaveiro 24h e Catar latinha; esconderijo vivo (bicos nos monitores soltando "+Cr$", um objeto por upgrade, crew no porão, presos no mural) | Pedidos do professor: mais visual na parte idle e ver a firma crescer quando compra upgrade; aprender jogando passando o mouse nas coisas |
+| 04/11/2026 | Interface, Experience | Telas da parte idle e da abertura prontas: faixa Golpes rolando (cartão com miniatura, sacola, alerta, crew e salas; mini manchete e "+Cr$" voando pro caixa no fim da volta), Planejar com Na moita / Até o cofre e Repetir, bicos como vitrines animadas, letreiro e jornal da abertura, objetivo sempre no topo do esconderijo e a capa especial da revanche antes dos créditos. Sons da Kombi, do cofre e das algemas | Fim da Sprint 2: objetivo visível o tempo todo e a firma trabalhando na tela enquanto o jogador planeja |
