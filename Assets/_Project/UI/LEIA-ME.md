@@ -18,7 +18,9 @@ Interface (Enzo): menus, telas, HUD, popups, tutorial. Feita em **UI Toolkit** (
 | Tela | Onde | Script |
 |---|---|---|
 | Menu principal | cena `MainMenu` | `MainMenuScreen` |
-| Esconderijo (hub) e abas | cena `Hideout` | `HideoutScreen`; aba Mapa e planejamento em `MapPanel` |
+| Esconderijo (hub) e abas | cena `Hideout` | `HideoutScreen`; aba Mapa e planejamento (jogar na mão ou Mandar no automático) em `MapPanel` |
+| Faixa Golpes rolando | embaixo das abas do esconderijo: um cartão por golpe no automático, mini manchete e "+Cr$" voando pro caixa no fim de cada volta; clicar abre Repetir e Chamar de volta | `AutoHeistStrip` |
+| Vitrine dos bicos | aba Bicos: a cena do bico (`SideJobDef.sceneFrames`) no lugar do ícone, animada com gente e apagada sem; `Ui.Flipbook` serve pra qualquer animação quadro a quadro | `EconomyPanel` |
 | HUD do golpe, porta, evento, contagem, pausa e jornal | prefab `HeistHUD`, na cena `Heist` | `HeistHud` |
 | Opções e Créditos | janelas por cima do menu, do esconderijo (botão Menu) e da pausa | `MenuPanels` |
 | Bips (pager), toasts de aviso e "Enquanto você tava fora…" | canto de cima do esconderijo e da HUD; no menu só os toasts | `Notices` |

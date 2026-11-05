@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using AFirma.Core;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -14,7 +15,7 @@ namespace AFirma.UI
     {
         static readonly Queue<(string sender, string message)> bips = new Queue<(string, string)>();
         static readonly Queue<string> notices = new Queue<string>();
-        static (double money, double seconds)? offline;
+        static (double money, double heists, int runs, double seconds)? offline;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
         static void Listen()
@@ -24,8 +25,16 @@ namespace AFirma.UI
             offline = null;
             GameEvents.Bip += (sender, message) => bips.Enqueue((sender, message));
             GameEvents.Notice += notices.Enqueue;
-            // Bicos e golpes no automático avisam cada um o seu: o popup soma os dois.
-            GameEvents.OfflineEarnings += (money, seconds) => offline = (money + (offline?.money ?? 0), Math.Max(seconds, offline?.seconds ?? 0));
+            // Bicos e golpes no automático avisam cada um o seu: o popup soma os dois. As voltas de fora ficam no moneyEarned
+            // de cada golpe no automático, e é assim que dá pra separar a parte dos golpes.
+            GameEvents.OfflineEarnings += (money, seconds) =>
+            {
+                var runs = Services.AutoHeist?.Running;
+                double heists = runs?.Sum(r => r.moneyEarned) ?? 0;
+                bool fromHeists = heists > 0 && Math.Abs(heists - money) < 1;
+                offline = (money + (offline?.money ?? 0), (fromHeists ? money : 0) + (offline?.heists ?? 0),
+                    (fromHeists ? runs.Sum(r => r.runsDone) : 0) + (offline?.runs ?? 0), Math.Max(seconds, offline?.seconds ?? 0));
+            };
             GameEvents.NewGameStarted += () => { bips.Clear(); offline = null; }; // o que estava na fila era do jogo anterior
         }
 
@@ -47,10 +56,14 @@ namespace AFirma.UI
                 {
                     offline = null;
                     var time = TimeSpan.FromSeconds(away.seconds);
-                    Ui.Modal(screen, "Enquanto você tava fora…", body => body.Add(Ui.Text(
-                        $"A firma rendeu {Formulas.Money(away.money)} em " +
-                        (time.TotalHours >= 1 ? $"{(int)time.TotalHours} h {time.Minutes} min." : $"{Math.Max(1, time.Minutes)} min."),
-                        "dialog__body")));
+                    Ui.Modal(screen, "Enquanto você tava fora…", body =>
+                    {
+                        body.Add(Ui.Text($"A firma rendeu {Formulas.Money(away.money)} em " +
+                            (time.TotalHours >= 1 ? $"{(int)time.TotalHours} h {time.Minutes} min." : $"{Math.Max(1, time.Minutes)} min."),
+                            "dialog__body"));
+                        if (away.heists > 0)
+                            body.Add(Ui.Text($"Bicos: {Formulas.Money(away.money - away.heists)} · Golpes no automático: {Formulas.Money(away.heists)} ({away.runs} voltas no Repetir)", "dialog__body"));
+                    });
                 }
 
                 // O jornal do golpe ocupa o meio da tela e o pager do canto cairia em cima da capa (em tela estreita não

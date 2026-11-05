@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using AFirma.Core;
 using AFirma.UI;
 using NUnit.Framework;
@@ -56,6 +57,45 @@ namespace AFirma.Tests
             Assert.IsTrue(Services.State.tutorialDone);
             Assert.IsNull(root.Q(className: "glow"), "Pulou: some o brilho.");
             Assert.IsTrue(Find<Button>(root, "skip-tutorial").ClassListContains("hidden"));
+        }
+
+        [UnityTest]
+        public IEnumerator AutoHeist_SendFromPlanningShowsInTheStrip()
+        {
+            Services.State.tutorialDone = true;
+            Services.Progression.MarkCompleted(Services.Db.GetHeist("loterica"));
+            var root = Root<HideoutScreen>();
+            Click(root, "map");
+            yield return null;
+            Click(root, "loterica");
+            Click(root, "plan");
+            yield return null;
+            Assert.IsFalse(Find<Button>(root, "auto-order").ClassListContains("hidden"), "Cofre limpo na mão: aparece a ordem.");
+            Click(root, "auto-order");
+            Click(root, "auto-repeat");
+            yield return Print("planejamento_automatico");
+
+            Click(root, "auto-send");
+            yield return new WaitForSecondsRealtime(0.5f);
+            Assert.AreEqual(1, Services.AutoHeist.Running.Count, "Mandou pro automático.");
+            var run = Services.AutoHeist.Running[0];
+            Assert.AreEqual(AutoHeistOrder.ToTheVault, run.order);
+            Assert.IsTrue(run.repeat);
+            var card = Find<Button>(root, "auto-loterica");
+            Click(root, "crew");
+            yield return new WaitForSecondsRealtime(0.3f);
+            Assert.IsTrue(root.Query<Label>().ToList().Any(l => l.text.StartsWith("Em golpe (automático)")), "A ficha diz que tá no automático.");
+            yield return Print("golpes_rolando");
+
+            Click(card);
+            yield return null;
+            Click(root, "auto-repeat-toggle");
+            Assert.IsFalse(run.repeat, "Desliga o Repetir pelo cartão.");
+            Click(root, "auto-recall");
+            Assert.AreEqual(0, Services.AutoHeist.Running.Count, "Chamar de volta tira da faixa.");
+            yield return new WaitForSecondsRealtime(0.3f);
+            yield return Print("golpes_rolando_fim");
+            Assert.IsNotNull(root.Q(className: "auto__news"), "A volta acabou: mini manchete ao lado do cartão.");
         }
 
         [UnityTest]

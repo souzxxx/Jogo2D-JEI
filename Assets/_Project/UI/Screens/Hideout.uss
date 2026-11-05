@@ -121,6 +121,145 @@
     flex-grow: 1;
 }
 
+/* ---------------------------------------------------------------- faixa Golpes rolando (embaixo das abas) */
+
+.auto {
+    margin-top: 6px;
+}
+
+.auto__head {
+    padding: 0 2px;
+    background-color: rgba(14, 12, 21, 0.86);
+}
+
+.auto__empty {
+    white-space: normal;
+    padding: 2px;
+    color: var(--tan);
+}
+
+.auto__card,
+.auto__card:hover,
+.auto__card:active,
+.auto__card:focus {
+    margin: 2px 0 0 0;
+    padding: 2px;
+    border-radius: 0;
+    border-width: 1px;
+    border-color: var(--slate);
+    background-color: rgba(14, 12, 21, 0.86);
+    align-items: stretch;
+}
+
+.auto__card:hover {
+    border-color: var(--lamp);
+}
+
+.auto__card--red {
+    border-color: var(--red);
+}
+
+.auto__card--blue {
+    border-color: var(--blue);
+}
+
+.auto__thumb {
+    width: 32px;
+    height: 24px;
+    flex-shrink: 0;
+    margin-right: 2px;
+    background-size: 32px 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.auto__bag {
+    color: var(--mint);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.auto__bar {
+    height: 3px;
+    margin: 1px 0 2px 0;
+    background-color: var(--night);
+}
+
+.auto__fill {
+    height: 100%;
+    background-color: var(--gold);
+}
+
+.auto__fill--high {
+    background-color: var(--red);
+}
+
+.auto__face {
+    width: 14px;
+    height: 14px;
+    margin-right: 1px;
+    background-size: 22px 22px;
+    background-position-x: center;
+    background-position-y: center;
+    border-width: 1px;
+    border-color: var(--slate);
+}
+
+.auto__dots {
+    margin-top: 2px;
+    flex-wrap: wrap;
+}
+
+.auto__dot {
+    width: 4px;
+    height: 4px;
+    margin: 0 1px 1px 0;
+    background-color: var(--steel);
+}
+
+.auto__dot--done {
+    background-color: var(--money);
+}
+
+.auto__dot--now {
+    background-color: var(--lamp);
+}
+
+.auto__jail {
+    position: absolute;
+    left: 2px;
+    top: 8px;
+    rotate: -6deg;
+}
+
+/* mini capa do jornal ao lado do cartão no fim de cada volta */
+.auto__news {
+    position: absolute;
+    left: 102px;
+    width: 210px;
+    padding: 3px 5px;
+    color: var(--ink);
+    background-color: var(--paper);
+    border-width: 1px;
+    border-color: var(--umber);
+    transition: opacity 0.4s;
+}
+
+.auto__mast {
+    color: var(--wine);
+    border-bottom-width: 1px;
+    border-color: var(--umber);
+    margin-bottom: 2px;
+}
+
+.auto__fly {
+    position: absolute;
+    color: var(--mint);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: var(--ink);
+    transition: translate 0.8s ease-in;
+}
+
 /* ---------------------------------------------------------------- aba Bicos: a vitrine (cena 96x64) */
 
 .showcase {

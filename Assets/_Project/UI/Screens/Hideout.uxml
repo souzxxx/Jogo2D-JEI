@@ -17,6 +17,7 @@
                 <ui:Button name="jobs" text="Bicos" class="btn tab" />
                 <ui:Button name="upgrades" text="Upgrades" class="btn tab" />
                 <ui:Button name="prestige" text="Prestígio" class="btn tab" />
+                <ui:VisualElement name="auto-heists" class="auto hidden" />
             </ui:VisualElement>
             <ui:VisualElement name="content" class="panel hideout__content hidden" />
         </ui:VisualElement>
