@@ -37,7 +37,7 @@ MonoBehaviour:
       delaySeconds: 0
       jailRandomThief: 0
     failure:
-      resultText: "Fechou um fusca da pol\xEDcia. Que vergonha."
+      resultText: "Fechou um Fusca da pol\xEDcia. Que vergonha."
       alertDelta: 20
       bagPercentDelta: 0
       delaySeconds: 0

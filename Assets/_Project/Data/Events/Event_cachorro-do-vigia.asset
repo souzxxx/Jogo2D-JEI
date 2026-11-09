@@ -42,7 +42,7 @@ MonoBehaviour:
       bagPercentDelta: 0
       delaySeconds: 0
       jailRandomThief: 0
-  - label: Esperar ele pegar no sono de novo
+  - label: Esperar o sono pesar
     requiresType: 0
     requiredType: 0
     check: 0

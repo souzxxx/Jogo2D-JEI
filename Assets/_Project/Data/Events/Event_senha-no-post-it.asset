@@ -49,7 +49,7 @@ MonoBehaviour:
     baseChance: 0.35
     chancePerStatPoint: 0
     success:
-      resultText: Era "senha123". Claro que era.
+      resultText: Era o nome do cachorro dele. Claro que era.
       alertDelta: -10
       bagPercentDelta: 0
       delaySeconds: 0

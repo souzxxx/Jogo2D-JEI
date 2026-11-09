@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: AFirma.Core::AFirma.Core.HeistEventDef
   id: segredo-de-novela
   displayName: Segredo de novela
-  description: "O segredo do cofre t\xE1 num post-it: \"casamento da Marisol na novela das oito\". Ningu\xE9m lembra a data."
+  description: "O segredo do cofre t\xE1 num papelzinho colado na porta: \"casamento da Marisol na novela das oito\". Ningu\xE9m lembra a data."
   icon: {fileID: 0}
-  body: "O segredo do cofre t\xE1 num post-it: \"casamento da Marisol na novela das oito\". Ningu\xE9m lembra a data."
+  body: "O segredo do cofre t\xE1 num papelzinho colado na porta: \"casamento da Marisol na novela das oito\". Ningu\xE9m lembra a data."
   art: {fileID: 0}
   tutorialOnly: 0
   anyRoom: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
     baseChance: 0.4
     chancePerStatPoint: 0
     success:
-      resultText: Acertou de primeira. Que fase!
+      resultText: Acertou de primeira. Sorte de principiante.
       alertDelta: 0
       bagPercentDelta: 10
       delaySeconds: 0
