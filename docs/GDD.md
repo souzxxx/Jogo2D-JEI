@@ -209,7 +209,12 @@ Cena do Golpe (prints do jogo):
 - **Mão vs. automático.** Golpe novo e o cofre que libera o próximo são sempre na mão; o automático só farma o que você já domina e rende menos. A crew boa vai pro golpe difícil e a segunda linha fica rodando a Banca do Bicho ou a Joalheria no automático, ou no bico. Cada ladrão tem três lugares pra estar, e escolher é a estratégia do idle.
 - **Estratégias emergentes esperadas:** farm seguro de golpe baixo, "uma porta a mais" no limite da sirene, crew especializada vs. generalista, guardar o Cavalo de pau pro cofre, crew "Na moita" farmando enquanto o time principal arrisca na mão. No topo, as habilidades viram obrigatórias: sem elas o Banco Central leva ~108 min em vez de ~42.
 
-_Dinâmicas observadas em playtest: registrar aqui (Sprint 2–3)._
+**Observado (teste interno, 09/11, ainda sem jogador de fora):** simulador de balanceamento e uma passada pelo jogo no editor.
+- **Habilidades no topo:** confirmado. O jogador perfeito chega no Banco Central em ~42 min com as habilidades e ~108 sem elas.
+- **Mão vs. automático:** do Câmbio pra frente jogar na mão rende mais (deixar tudo rodando dá 89% da renda de quem joga no Câmbio e 38% no Banco Central). Nos dois primeiros golpes é o contrário: deixar rodando rende 113% (Lotérica) e 148% (Joalheria) de quem joga na mão. No começo o automático pode passar a sensação de "o jogo joga sozinho"; ver no playtest se alguém para de jogar na mão cedo.
+- **Pé-na-Tábua como seguro:** a passiva pesa (sem ela o Banco Central atrasa 6 min), mas está num platô: mexer um pouco nos números não muda a curva.
+- **Sirene e porta:** a abertura mostra a regra principal (sirene, "só mais uma", prisão) antes do primeiro golpe.
+- **A conferir no playtest:** se os jogadores leem a porta e metem o pé na hora certa, se usam o Cavalo de pau no cofre ou esquecem dele, e o tempo real até cada golpe (o simulador é o piso).
 
 ---
 
