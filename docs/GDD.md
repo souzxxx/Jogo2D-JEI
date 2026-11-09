@@ -81,6 +81,7 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 - **Limpar a sala (automático):** o poder é a Perícia do melhor especialista do obstáculo; sem especialista, 35% da maior Perícia da crew. Tempo = dificuldade × modificador ÷ poder (nunca menos de 0,5 s).
 - **Loot:** loot da sala × modificador × manhas (Fominha +20%, Mão-boba +30% em sala de Pessoa) entra na sacola, e todo mundo ganha XP.
 - **Alerta por segundo:** taxa da sala × (1 − 0,5 × Discrição média/100) × 2 sem especialista × modificador × manhas (Boca-aberta +20%) × (1 − Fama Sangue-frio%). Não sobe com a crew parada na porta nem durante um evento.
+- **Velocidade:** o botão 1x/2x da HUD acelera o golpe (e a abertura).
 - **Porta:** entre salas o golpe pausa e mostra a próxima (obstáculo, loot estimado, se tem especialista): **próxima sala** ou **meter o pé**.
 - **Eventos:** 30% por sala (Pé-frio +50%), filtrados por golpe e tipo de sala e sorteados por peso. Cada um tem 2 ou 3 escolhas: algumas pedem um tipo de ladrão (indisponível mostra o motivo), outras testam um atributo (chance = base + por ponto × melhor atributo da crew). Efeitos: alerta, % da sacola, atraso ou prender alguém (vai em cana no fim do golpe). Todo evento tem pelo menos uma escolha sem requisito; se mesmo assim a crew não tiver nenhuma escolha possível, o evento não abre. O primeiro golpe tem o evento roteirizado do Seu Zé. Hoje são 28 eventos (27 no sorteio + o tutorial): 9 gerais, 3 de cada ladrão e 2 de cada golpe extra, que só saem no golpe dele e puxam o ladrão que brilha ali (Banca do Bicho: Palpite do Tonhão e Rifa da quermesse, do 171; Carro-forte: Baú com trava de tempo, do Gazua, e Engarrafamento no porto, do Pé-na-Tábua; Museu: Feixe infravermelho e O quadro da balança, do Disquete).
 - **Habilidades (uma vez por golpe; o botão diz o motivo quando não dá):**
@@ -114,7 +115,7 @@ Esconderijo ─▶ Mapa ─▶ Planejamento ─▶ GOLPE ─▶ Jornal ─▶ Es
 
 **Economia.**
 - **Cr$** vem dos golpes e dos bicos. O dinheiro nunca fica negativo e toda compra impossível explica o motivo ("Falta Cr$ 70.", "Nível máximo.").
-- **Bicos:** ladrões ociosos geram renda passiva, em dobro no bico do próprio tipo. Catar latinha rende sempre, sem ladrão. Cada bico tem a sua cena animada (Lotação pirata, Chaveiro 24h, Gatonet, Bilhete premiado, Catar latinha): vazia fica apagada, com gente mostra o ladrão trabalhando e o "+Cr$" subindo.
+- **Bicos:** ladrões ociosos geram renda passiva, em dobro no bico do próprio tipo e +10% por nível do ladrão acima do 1. Catar latinha rende sempre, sem ladrão. Cada bico tem a sua cena animada (Lotação pirata, Chaveiro 24h, Gatonet, Bilhete premiado, Catar latinha): vazia fica apagada, com gente mostra o ladrão trabalhando e o "+Cr$" subindo.
 - **Ganho offline:** até 4 h, a 50% (bicos e golpes no automático com Repetir).
 - **Upgrades:** 10 upgrades do esconderijo com níveis, custo = custo base × crescimento^nível: Van (+1 vaga no golpe), Quartos (+1 vaga na crew), Ferramentas (+5% Perícia), Tênis de molinha (+5% Discrição), Advogado (−10% prisão e fiança), Contatos (recrutas melhores), Lavanderia (+5% loot), Rádio da polícia (+2 s na contagem), Ponto de bico (+10% renda dos bicos), por nível, e Orelhão (+1 golpe no automático ao mesmo tempo, até 3; Cr$ 10.000 e 40.000).
 
