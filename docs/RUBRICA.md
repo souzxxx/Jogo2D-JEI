@@ -47,14 +47,14 @@ Os prédios continuam no jogo (são o palco do golpe), mas não têm mais rubric
 
 ## Mecânicas · Leonardo · peso 2
 **O A pede:** mecânicas polidas, coesas, com profundidade/variação, que se combinam pra criar uma jogabilidade central sólida.
-- [ ] Decisão de porta com informação suficiente pra escolher (loot estimado, obstáculo, especialista).
-- [ ] Especialista faz diferença clara (sem ele: mais lento e o dobro de alerta).
-- [ ] Sirene + contagem + 3 tipos de fuga funcionando como no escopo.
-- [ ] Cada ladrão tem papel único (passiva + ativa + eventos).
-- [ ] Eventos com escolhas que usam a crew e os atributos.
-- [ ] Manhas mudam o jeito de jogar.
-- [ ] Bicos, upgrades e prestígio se conectam ao golpe (combinação de sistemas).
-- [ ] Zero bug que trave o golpe (testes EditMode do motor).
+- [x] Decisão de porta com informação suficiente pra escolher (loot estimado, obstáculo, especialista).
+- [x] Especialista faz diferença clara (sem ele: mais lento e o dobro de alerta).
+- [x] Sirene + contagem + 3 tipos de fuga funcionando como no escopo.
+- [x] Cada ladrão tem papel único (passiva + ativa + eventos).
+- [x] Eventos com escolhas que usam a crew e os atributos.
+- [x] Manhas mudam o jeito de jogar.
+- [x] Bicos, upgrades e prestígio se conectam ao golpe (combinação de sistemas).
+- [x] Zero bug que trave o golpe (testes EditMode do motor).
 
 ## Feedback e Clareza de Interação · Miguel
 **O A pede:** feedback visual e sonoro **integrado ao mundo** muito claro na maioria das situações, sem depender só da HUD.
@@ -117,12 +117,12 @@ Os prédios continuam no jogo (são o palco do golpe), mas não têm mais rubric
 
 ## Estados e Erros · Leonardo · obrigatória
 **O A pede:** jogo muito robusto, sem dead ends, falha tratada de forma clara e justa, erros raros.
-- [ ] Save automático + backup + recuperação de save corrompido (testado).
-- [ ] Golpe interrompido recuperado ao abrir o jogo.
-- [ ] Anti dead-end: catar latinha, novato grátis da Dona Cida, prisão que acaba sozinha, Lotérica sempre aberta.
-- [ ] Nenhuma ação leva a erro: botões desabilitados com motivo.
-- [ ] Pausa segura em qualquer momento.
-- [ ] Bug bash final com checklist de cenários estranhos (aba em segundo plano, fechar no meio, sem dinheiro, crew toda presa).
+- [x] Save automático + backup + recuperação de save corrompido (testado).
+- [x] Golpe interrompido recuperado ao abrir o jogo.
+- [x] Anti dead-end: catar latinha, novato grátis da Dona Cida, prisão que acaba sozinha, Lotérica sempre aberta.
+- [x] Nenhuma ação leva a erro: botões desabilitados com motivo.
+- [x] Pausa segura em qualquer momento.
+- [x] Bug bash final com checklist de cenários estranhos (aba em segundo plano, fechar no meio, sem dinheiro, crew toda presa).
 
 ## GDD (DDE) · Nicolas · obrigatória
 **O A pede:** GDD bem escrito, completo, organizado, atualizado, refletindo o produto final e útil durante o desenvolvimento.
