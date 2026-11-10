@@ -1,6 +1,14 @@
 # Página do itch.io
 
-Textos e configuração prontos pra colar na página do jogo (#13 e #62). Jam: <https://itch.io/jam/projeto-jogo-2d-insper-20262>.
+Textos e configuração da página do jogo (#13 e #62). Jam: <https://itch.io/jam/projeto-jogo-2d-insper-20262>.
+
+**Publicada em 10/11/2026** na conta do Leonardo:
+
+| | |
+|---|---|
+| Página | <https://souzxxx.itch.io/a-firma> |
+| Inscrição na jam | <https://itch.io/jam/projeto-jogo-2d-insper-20262/rate/5300361> (curso: Ciência da Computação) |
+| Build no ar | `a-firma-html.zip` no canal `html` (butler, 10/11 15:11). A build de teste de 04/11 ficou escondida ("Hide this file") |
 
 ## Configuração do projeto (#13)
 
@@ -9,8 +17,8 @@ Textos e configuração prontos pra colar na página do jogo (#13 e #62). Jam: <
 | Title | A Firma |
 | Project URL | `a-firma` |
 | Kind of project | HTML |
-| Release status | In development (vira Released na entrega) |
-| Visibility | Draft até a build final; Public na entrega |
+| Release status | Released |
+| Visibility | Public (desde 10/11) |
 | Uploads | build WebGL no canal `html` pelo butler: `butler push Builds/WebGL souzxxx/a-firma:html --userversion 1.0` (o itch já marca pra rodar no navegador). Só uma build de navegador na página |
 | Embed options | Viewport 1280 × 720 · Mobile friendly: não · Fullscreen button: sim · Scrollbars: não |
 | Frame options | Click to launch in fullscreen: não · Automatically start on page load: sim |
@@ -18,9 +26,13 @@ Textos e configuração prontos pra colar na página do jogo (#13 e #62). Jam: <
 | Tags | idle, heist, pixel-art, management, push-your-luck, brazil, 90s, singleplayer, unity |
 | Languages | Portuguese (Brazil) |
 | Inputs | Mouse, Keyboard |
+| Average session | About an hour (Metadata) |
+| Engine | Unity (Metadata › Engines & tools) |
+| AI disclosure | Sim: graphics, audio e code (os scripts que desenham a arte e sintetizam os sons, como nos créditos) |
+| Pricing | No payments |
 | Admins | Leonardo, Nicolas e Miguel (pedir o usuário do itch de cada um) |
 
-Depois: entrar na jam pelo link acima e pôr o link da página no README (linha "Jogar").
+Feito: inscrita na jam e link da página no README (linha "Jogar").
 
 ## Textos da página (#62)
 
@@ -83,12 +95,16 @@ A lista completa é a seção Créditos do README. A tela de Créditos do jogo (
 
 ## Imagens
 
-- **Capa** (630 × 500): print do esconderijo ou do golpe com a sirene. Pedir o GIF/print final ao Miguel (#76).
-- **Screenshots** (`docs/img`): `ui_menu.png`, `ui_esconderijo.png`, `ui_bicos.png`, `ui_golpes_rolando.png`, `ui_mapa.png`, `ui_planejamento.png`, `ui_hud.png`, `ui_hud_evento.png`, `ui_jornal.png`, `ui_abertura_jornal.png`, `ui_jornal_revanche.png`, `ui_bip.png`. GIFs: `gif_abertura.gif`, `gif_golpe_loterica.gif`, `gif_sirene_cassino.gif`.
+- **Capa** (630 × 500): `docs/img/itch_capa.png`, o logo do menu em cima da Joalheria com a sirene tocando.
+- **Screenshots na página** (8, de `docs/img`): `gif_sirene_cassino.gif`, `cena_cambio_porta.png`, `abertura_porta.png`, `ui_esconderijo.png`, `ui_golpes_rolando.png`, `esconderijo_vivo.png`, `ui_hud_evento.png`, `ui_jornal.png`.
+- Outras opções em `docs/img`: `ui_menu.png`, `ui_bicos.png`, `ui_mapa.png`, `ui_planejamento.png`, `ui_hud.png`, `ui_abertura_jornal.png`, `ui_jornal_revanche.png`, `ui_bip.png`, `gif_abertura.gif`, `gif_golpe_loterica.gif`.
+
+**Descrição na página:** os textos acima (descrição, como jogar, dicas e créditos) mais uma seção "O que tem no jogo" (5 golpes + 3 extras, 4 ladrões e 8 manhas, 28 eventos, automático e bicos, prestígio, save com backup) e o link do repositório.
 
 ## Antes de publicar
 
-- [ ] Jogar a build no Chrome e em outro navegador (Firefox ou Safari), em 1280×720 e no botão de tela cheia
-- [ ] Save sobrevive a recarregar a página
-- [ ] Créditos da página batendo com o README
+- [x] Jogar a build no Chrome, em 1280×720 (página do itch abre direto no menu)
+- [ ] Jogar em outro navegador (Firefox ou Safari) e no botão de tela cheia
+- [x] Save sobrevive a recarregar a página (build WebGL, 10/11; save corrompido cai no backup)
+- [x] Créditos da página batendo com o README
 - [x] Link da página no README
