@@ -11,7 +11,7 @@ Textos e configuração prontos pra colar na página do jogo (#13 e #62). Jam: <
 | Kind of project | HTML |
 | Release status | In development (vira Released na entrega) |
 | Visibility | Draft até a build final; Public na entrega |
-| Uploads | zip da build WebGL, marcado "This file will be played in the browser" |
+| Uploads | build WebGL no canal `html` pelo butler: `butler push Builds/WebGL souzxxx/a-firma:html --userversion 1.0` (o itch já marca pra rodar no navegador). Só uma build de navegador na página |
 | Embed options | Viewport 1280 × 720 · Mobile friendly: não · Fullscreen button: sim · Scrollbars: não |
 | Frame options | Click to launch in fullscreen: não · Automatically start on page load: sim |
 | Genre | Strategy |
@@ -36,7 +36,9 @@ Depois: entrar na jam pelo link acima e pôr o link da página no README (linha 
 >
 > Entre uma sala e outra, a decisão é sua: **abrir mais uma porta ou meter o pé com o que já pegou?** Se a sirene tocar, é contagem regressiva.
 >
-> O loot vira upgrade no esconderijo, gente melhor nos contatos e golpes maiores, da Lotérica do Seu Zé até o Banco Central.
+> O loot vira upgrade no esconderijo, gente melhor nos contatos e golpes maiores, da Lotérica do Seu Zé até o Banco Central, onde a firma caiu. **Voltar lá e fazer direito é a revanche.**
+>
+> Golpe que você já limpou na mão pode ir pro **automático**: a crew repete sozinha enquanto você planeja o próximo, e a faixa Golpes rolando mostra a sacola, o alerta e a sala de cada um. Os **bicos** rendem em cena no esconderijo, e a firma continua trabalhando com o jogo fechado.
 
 **Como jogar**
 
@@ -49,7 +51,9 @@ Depois: entrar na jam pelo link acima e pôr o link da página no README (linha 
 
 - Especialista na sala certa trabalha mais rápido.
 - Alerta cheio liga a sirene. Antes dela a fuga é limpa; com a contagem rolando a fuga é apressada, e se a polícia chegar alguém pode ser preso.
-- Quem não vai pro golpe pode ir pro **bico** e render dinheiro parado.
+- Quem não vai pro golpe pode ir pro **bico** e render dinheiro parado. Ladrão no bico do tipo dele rende o dobro.
+- Golpe com o cofre limpo libera **Mandar no automático** no Planejar: "Na moita" mete o pé antes da sirene e é seguro; "Até o cofre" rende mais e pode dar cana. Com **Repetir**, a crew volta sozinha.
+- Com o jogo fechado, os bicos e os golpes com Repetir continuam rendendo (até 4 h, a 50%).
 - Ladrão preso sai sozinho com o tempo, ou na hora pagando a fiança.
 - O jogo salva sozinho no navegador.
 
@@ -80,11 +84,11 @@ A lista completa é a seção Créditos do README. A tela de Créditos do jogo (
 ## Imagens
 
 - **Capa** (630 × 500): print do esconderijo ou do golpe com a sirene. Pedir o GIF/print final ao Miguel (#76).
-- **Screenshots** (`docs/img`): `ui_menu.png`, `ui_esconderijo.png`, `ui_mapa.png`, `ui_planejamento.png`, `ui_hud.png`, `ui_hud_evento.png`, `ui_jornal.png`, `ui_bip.png`.
+- **Screenshots** (`docs/img`): `ui_menu.png`, `ui_esconderijo.png`, `ui_bicos.png`, `ui_golpes_rolando.png`, `ui_mapa.png`, `ui_planejamento.png`, `ui_hud.png`, `ui_hud_evento.png`, `ui_jornal.png`, `ui_abertura_jornal.png`, `ui_jornal_revanche.png`, `ui_bip.png`. GIFs: `gif_abertura.gif`, `gif_golpe_loterica.gif`, `gif_sirene_cassino.gif`.
 
 ## Antes de publicar
 
 - [ ] Jogar a build no Chrome e em outro navegador (Firefox ou Safari), em 1280×720 e no botão de tela cheia
 - [ ] Save sobrevive a recarregar a página
 - [ ] Créditos da página batendo com o README
-- [ ] Link da página no README
+- [x] Link da página no README
