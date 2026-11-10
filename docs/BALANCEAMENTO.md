@@ -161,9 +161,17 @@ Pra ficar de olho no playtest:
 | 05/11 | Golpes no automático: loot ×0,6 → ×0,5; Orelhão novo a Cr$ 10.000 e 40.000 | Simulador (`--automatico`): com 0,6 e o Orelhão a Cr$ 2.000 o Banco Central caía de 42 pra 35 min (o XP do automático acelera a crew). Com 0,5 e 10.000 volta pra 39,9, e deixar rodando nunca passa jogar na mão do Câmbio pra frente |
 | 30/10 | Golpes extras: Bicho Cr$ 900; Carro-forte de Cr$ 30 mil pra 20 mil e alerta 4,5–7 pra 6–10; Museu de Cr$ 150 mil pra 375 mil | Simulador (`--extras`): o Carro-forte rendia 133% do Cassino e o jogador perfeito ficava 16 min nele, atrasando o Cassino em 5 min; o Museu rendia só 32% do Banco Central e ninguém ia |
 | 09/11 | Pé-na-Tábua (#78): nada muda. Passiva fica +4 s de contagem, +10% da sacola na fuga com sirene, −15 na chance de prisão; Cavalo de pau segue uso único por golpe | Simulador variando um número por vez: +3 a +5 s e +5% a +20% dão o mesmo Banco Central (42 min); +2 s ou 0% atrasam pra 44–45; sem passiva vai pra 48. Perícia 20–30 não muda nada (ele não abre sala); Discrição 20 atrasa o Cassino 6 min. O jogador simulado não usa o Cavalo de pau na mão nem sorteia prisão, então a habilidade e o −15 ficam pro playtest |
+| 10/11 | Nada muda | Playtest com 3 jogadores de fora: Cassino em ~14 min no que foi mais longe (simulador 11,3, meta ~20), ninguém travou nem foi preso. O Cavalo de pau não foi usado, mas ninguém chegou no Banco Central, onde ele é o seguro do cofre |
 
-## Playtest cronometrado (modelo)
+## Playtest cronometrado
 
 | Data | Jogador | Tempo até Joalheria | Até Câmbio | Até Cassino | Até Banco Central | Travou em | Observações |
 |---|---|---|---|---|---|---|---|
-| | | | | | | | |
+| 10/11 | 3 jogadores de fora, sem experiência técnica | não cronometrado | não cronometrado | ~14 min (o que foi mais longe) | ninguém chegou | ninguém travou | Ninguém foi preso nem pediu ajuda; 1 dos 3 pulou a abertura |
+
+O que o playtest mostrou:
+- **Ritmo:** o que foi mais longe chegou no Cassino (4º golpe) em ~14 min. O simulador libera o Cassino em 11,3 min com o automático e a meta era ~20: o jogador de verdade ficou ~25% mais lento que o piso, como esperado. Na mesma proporção o Banco Central sairia em ~50 min (meta 40–60). É projeção: ninguém jogou até lá.
+- **Porta e sirene:** os 3 abriram porta até a sirene tocar e fugiram durante a contagem, antes da polícia chegar. Ninguém foi preso, então a prisão e a fiança quase não apareceram.
+- **Habilidades:** os 3 usaram Pé-de-cabra, Loop na câmera e Lábia; ninguém usou o Cavalo de pau. A fuga na contagem já salva 80–90% da sacola, então ele fica como o seguro do cofre do Banco Central, e ninguém chegou lá.
+- **Esconderijo:** sem explicação, os 3 mandaram golpe no automático, puseram ladrão no bico e compraram upgrade. Ninguém ficou parado esperando o automático.
+- **Ajuste:** nenhum. Os tempos ficaram entre o piso do simulador e a meta, e nada travou.

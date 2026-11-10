@@ -82,7 +82,7 @@ Os prédios continuam no jogo (são o palco do golpe), mas não têm mais rubric
 - [ ] Tutorial da Dona Cida curto e pulável.
 - [ ] Sempre tem um "próximo objetivo" visível ("Objetivo: Banco Central", próximo golpe, próximo upgrade, prestígio).
 - [ ] Dicas de primeira vez nos momentos certos.
-- [ ] Playtest com pelo menos 3 pessoas de fora, com anotações (Sprint 2/3).
+- [x] Playtest com pelo menos 3 pessoas de fora, com anotações (10/11: BALANCEAMENTO e GDD › Dynamics).
 - [ ] Música e ambiente reforçam a tensão do golpe.
 - [ ] Cada golpe novo apresenta algo novo, na ordem do escopo 6.9 (Lotérica só Pessoa/Fechadura → Joalheria introduz Sistema → …).
 - [ ] O Banco Central é um "final de ciclo" memorável (túnel, cofre central).

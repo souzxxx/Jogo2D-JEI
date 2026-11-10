@@ -214,7 +214,12 @@ Cena do Golpe (prints do jogo):
 - **Mão vs. automático:** do Câmbio pra frente jogar na mão rende mais (deixar tudo rodando dá 89% da renda de quem joga no Câmbio e 38% no Banco Central). Nos dois primeiros golpes é o contrário: deixar rodando rende 113% (Lotérica) e 148% (Joalheria) de quem joga na mão. No começo o automático pode passar a sensação de "o jogo joga sozinho"; ver no playtest se alguém para de jogar na mão cedo.
 - **Pé-na-Tábua como seguro:** a passiva pesa (sem ela o Banco Central atrasa 6 min), mas está num platô: mexer um pouco nos números não muda a curva.
 - **Sirene e porta:** a abertura mostra a regra principal (sirene, "só mais uma", prisão) antes do primeiro golpe.
-- **A conferir no playtest:** se os jogadores leem a porta e metem o pé na hora certa, se usam o Cavalo de pau no cofre ou esquecem dele, e o tempo real até cada golpe (o simulador é o piso).
+
+**Observado no playtest (10/11, 3 jogadores de fora, sem experiência técnica):**
+- **Ganância vs. segurança:** confirmado. Os 3 abriram porta até a sirene tocar e fugiram durante a contagem, antes da polícia: ninguém foi preso. A sirene funciona como a segunda aposta.
+- **Mão vs. automático:** sem explicação, os 3 mandaram golpe no automático, puseram ladrão no bico e compraram upgrade, e ninguém ficou parado esperando.
+- **Habilidades:** Pé-de-cabra, Loop na câmera e Lábia foram usadas; o Cavalo de pau não. Com a fuga na contagem salvando 80–90% da sacola, ele fica pro cofre do Banco Central, e ninguém chegou lá.
+- **Ritmo:** o que foi mais longe chegou no Cassino em ~14 min (simulador 11,3, meta ~20). Ninguém travou nem pediu ajuda; 1 dos 3 pulou a abertura. Todos gostaram.
 
 ---
 
@@ -303,3 +308,4 @@ Detalhes e lista de packs: [ASSETS.md](ASSETS.md).
 | 05/11/2026 | Todas | Milanote sincronizado com este arquivo: números novos, personalidade do Disquete e do 171, esconderijo vivo e os prints das telas e da Cena do Golpe (22 imagens e a paleta) | O GDD oficial é o do Milanote (rubrica) |
 | 09/11/2026 | Blueprint, Mechanics | Tom revisado nos 6 eventos novos (opção do cachorro mais curta, sem "senha123" nem "que fase", sem post-it repetido); números do Pé-na-Tábua mantidos (+4 s, +10% da sacola na fuga com sirene, −15 na prisão; Cavalo de pau uma vez por golpe) | Guia de tom (anacronismo e tamanho da opção); no simulador a passiva está num platô (+3 a +5 s e +5% a +20% dão o mesmo Banco Central, 42 min) |
 | 10/11/2026 | Mechanics, Dynamics | Milanote sincronizado: botão 1x/2x, Cavalo de pau até com a polícia chegando, "Observado" marcado como teste interno e o que conferir no playtest | O GDD oficial é o do Milanote (rubrica) |
+| 10/11/2026 | Dynamics | Playtest com 3 jogadores de fora: porta até a sirene e fuga na contagem, ninguém preso, automático, bicos e upgrades usados sem explicação, Cassino em ~14 min, Cavalo de pau sem uso | Dinâmicas observadas com jogador de verdade (rubricas Balanceamento e Engajamento) |
